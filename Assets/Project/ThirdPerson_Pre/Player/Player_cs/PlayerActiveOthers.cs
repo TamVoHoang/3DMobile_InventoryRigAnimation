@@ -9,7 +9,7 @@ public class PlayerActiveOthers : MonoBehaviour
     [SerializeField] SwitchCamPosition switchCam; // phai bat len de lan dau tien ko bi giat lay vi thieu data
     
     [SerializeField] ChracterAim _characterAim; // huong nhin mouse x y
-    [SerializeField]PlayerControllers _cc; // movement
+    [SerializeField]PlayerController _cc; // movement
 
     [SerializeField] GameObject iconPlayer; // icon hien thi tren mini map
     public GameObject camera_miniMap; // camera cua mini map
@@ -18,7 +18,7 @@ public class PlayerActiveOthers : MonoBehaviour
     {
 
         _characterAim = GetComponent<ChracterAim>();
-        _cc = GetComponent<PlayerControllers>();
+        _cc = GetComponent<PlayerController>();
         switchCam = GetComponentInChildren<SwitchCamPosition>();
     }
 
@@ -32,7 +32,7 @@ public class PlayerActiveOthers : MonoBehaviour
         switchCam.GetComponentInChildren<SwitchCamPosition>().enabled = true;
 
         _characterAim.GetComponent<ChracterAim>().enabled = true;
-        _cc.GetComponent<PlayerControllers>().enabled = true;
+        _cc.GetComponent<PlayerController>().enabled = true;
 
         //iconPlayer.SetActive(true);
         //camera_miniMap.SetActive(true);
@@ -45,7 +45,7 @@ public class PlayerActiveOthers : MonoBehaviour
         switchCam.GetComponent<SwitchCamPosition>().enabled = false; // tat script chuyen cam
 
         _characterAim.GetComponent<ChracterAim>().enabled = false;
-        _cc.GetComponent<PlayerControllers>().enabled = false;
+        _cc.GetComponent<PlayerController>().enabled = false;
 
         //iconPlayer.SetActive(false);
         //camera_miniMap.SetActive(false);
