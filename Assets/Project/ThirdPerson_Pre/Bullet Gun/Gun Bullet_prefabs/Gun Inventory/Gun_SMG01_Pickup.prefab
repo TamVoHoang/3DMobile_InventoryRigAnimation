@@ -324,6 +324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948bfa992b1b8d44eb9fcf56b5ec4659, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponPrefab: {fileID: 117576653468840352, guid: c8c2e4e9613d7b547b569b4600fb8b76, type: 3}
 --- !u!33 &2695463700158168625
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -389,7 +390,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

@@ -7,6 +7,8 @@ public class RaycastWeapon : MonoBehaviour
     [SerializeField] private Transform raycastDestination;
     [SerializeField] TrailRenderer tracerEffect;
 
+    [SerializeField] public string weaponName; 
+
     private Ray ray;
     private RaycastHit hitInfo;
 
