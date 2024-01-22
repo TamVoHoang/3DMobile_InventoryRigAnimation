@@ -5,7 +5,8 @@ public class ChracterAim : MonoBehaviour
 {
     [SerializeField] public float mouseSentivity = 1f;
     [SerializeField] public float xAixs, yAxis;
-    [SerializeField] Transform camFollowPos;
+    [SerializeField] private Transform camFollowPos;
+    [SerializeField] float yAxisLimit = 45f;
 
     //RaycastWeapon weapon; // tai scrip nay trong folder player
     //public float aimDuration = 0.3f;
@@ -22,7 +23,7 @@ public class ChracterAim : MonoBehaviour
         xAixs += InputManager.Instance.GetAim.x * mouseSentivity;
         yAxis -= InputManager.Instance.GetAim.y * mouseSentivity;
 
-        yAxis = Mathf.Clamp(yAxis, -45, 45);
+        yAxis = Mathf.Clamp(yAxis, -yAxisLimit, yAxisLimit);
 
     }
     private void LateUpdate()
