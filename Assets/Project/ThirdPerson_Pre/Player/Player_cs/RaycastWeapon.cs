@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class RaycastWeapon : MonoBehaviour
 {
+    public ActiveGun.WeaponSlots weaponSlot; // cho phep chon o nao trong enum class Active
+    [SerializeField] public string weaponName; 
     [SerializeField] private bool isFiring = false;
     [SerializeField] private Transform raycsatOrigin;
     [SerializeField] private Transform raycastDestination;
     [SerializeField] TrailRenderer tracerEffect;
 
-    [SerializeField] public string weaponName; 
 
     private Ray ray;
     private RaycastHit hitInfo;
@@ -31,7 +32,7 @@ public class RaycastWeapon : MonoBehaviour
         if(Physics.Raycast(ray, out hitInfo))
         {
             Debug.Log("Hit: " + hitInfo.transform.name);
-            //Debug.DrawLine(ray.origin, hitInfo.point, Color.red, 1f);
+            Debug.DrawLine(ray.origin, hitInfo.point, Color.red, 1f);
 
             tracerEffectObject.transform.position = hitInfo.point;
         }
