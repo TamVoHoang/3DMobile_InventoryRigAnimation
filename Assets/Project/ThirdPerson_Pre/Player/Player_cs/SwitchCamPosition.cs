@@ -26,8 +26,8 @@ public class SwitchCamPosition : MonoBehaviour
     }
     void getObjects()
     {
-        camPlayerFollow = GameObject.Find("camPlayerFollow");
-        povPlayerParent = GameObject.Find("povPlayerParent");
+        camPlayerFollow = GameObject.Find("CamPlayerFollow");
+        povPlayerParent = GameObject.Find("POVPlayerCam");
         pov[0] = povPlayerParent.transform.Find("POV0");
         pov[1] = povPlayerParent.transform.Find("POV1");
         pov[2] = povPlayerParent.transform.Find("POV2");
