@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class WalkState : MovementBaseState
 {
-    public override void EnterState(PlayerController movement) => movement.animator.SetBool("Walking", true);
+    public override void EnterState(PlayerGun movement) => movement.animator.SetBool("Walking", true);
 
-    public override void UpdateState(PlayerController movement)
+    public override void UpdateState(PlayerGun movement)
     {
         if (InputManager.Instance.GetSprintButton) ExitState(movement, movement.Run);
         //else if (Input.GetKeyDown(KeyCode.C)) ExitState(movement, movement.Crouch);
@@ -21,7 +21,7 @@ public class WalkState : MovementBaseState
         }
     }
 
-    void ExitState(PlayerController movement, MovementBaseState state)
+    void ExitState(PlayerGun movement, MovementBaseState state)
     {
         movement.animator.SetBool("Walking", false);
         movement.SwitchState(state);

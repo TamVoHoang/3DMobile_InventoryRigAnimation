@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class JumpState : MovementBaseState
 {
-    public override void EnterState(PlayerController movement)
+    public override void EnterState(PlayerGun movement)
     {
         if (movement.previousState == movement.Idle) movement.animator.SetTrigger("IdleJump");
         else if (movement.previousState == movement.Walk || movement.previousState == movement.Run) movement.animator.SetTrigger("RunJump");
     }
 
-    public override void UpdateState(PlayerController movement)
+    public override void UpdateState(PlayerGun movement)
     {
         if(movement.isJumped && movement.SetIsGrounded())
         {

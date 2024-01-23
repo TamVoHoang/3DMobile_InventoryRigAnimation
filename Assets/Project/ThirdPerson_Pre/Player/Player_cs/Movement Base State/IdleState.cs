@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class IdleState : MovementBaseState
 {
-    public override void EnterState(PlayerController movement) {}
+    public override void EnterState(PlayerGun movement) {}
 
-    public override void UpdateState(PlayerController movement)
+    public override void UpdateState(PlayerGun movement)
     {
         if (movement.dir.magnitude > 0.1f)
         {

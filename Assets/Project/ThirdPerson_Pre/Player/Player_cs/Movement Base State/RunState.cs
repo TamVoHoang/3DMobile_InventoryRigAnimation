@@ -1,9 +1,9 @@
 
 public class RunState : MovementBaseState
 {
-    public override void EnterState(PlayerController movement) => movement.animator.SetBool("Running", true);
+    public override void EnterState(PlayerGun movement) => movement.animator.SetBool("Running", true);
 
-    public override void UpdateState(PlayerController movement)
+    public override void UpdateState(PlayerGun movement)
     {
         if (!InputManager.Instance.GetSprintButton) ExitState(movement, movement.Walk);
         else if (movement.dir.magnitude < 0.1f) ExitState(movement, movement.Idle);
@@ -18,7 +18,7 @@ public class RunState : MovementBaseState
         }
     }
 
-    void ExitState(PlayerController movement, MovementBaseState state)
+    void ExitState(PlayerGun movement, MovementBaseState state)
     {
         movement.animator.SetBool("Running", false);
         movement.SwitchState(state);

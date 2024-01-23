@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5559871724267339434
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8291543691050601684}
+  - component: {fileID: 8114437060953252116}
+  m_Layer: 0
+  m_Name: ItemAssets
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8291543691050601684
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5559871724267339434}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8114437060953252116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5559871724267339434}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4058c0488e721438e09196c487486b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pfItemWorld: {fileID: 3268610279840981696, guid: 04b7560ff0623b645b628c3e87832265, type: 3}
+  pfWeaponInfomWorld: {fileID: 3268610279840981696, guid: 936a6756927f27449978418dbde45aa0, type: 3}
+  swordSprite_01: {fileID: 21300000, guid: 0567c05197d0d374ca05f1aed297c2e4, type: 3}
+  swordSprite_02: {fileID: 21300000, guid: e661ef2bafdefd542be4bcc9b8506907, type: 3}
+  swordSprite_broken: {fileID: 21300000, guid: 1b67dc66f707d0041a77e17d88a1da91, type: 3}
+  swordSprite_iron: {fileID: 21300000, guid: 92677d765f220fc4b914c033e6914e90, type: 3}
+  swordSprite_gold: {fileID: 21300000, guid: 20b856a781b5d5c44bb02fd8ccd45ad9, type: 3}
+  helmetSprite_01: {fileID: -769420157, guid: ac0db0eda216b8d459401670456cd70d, type: 3}
+  armorSprite_01: {fileID: -2146888147, guid: 35687f3b95ff00f4880cc71f7cb96ca6, type: 3}
+  armorSprite_02: {fileID: -1277992061, guid: f2ab17bfa5ae12340876be530df90d7a, type: 3}
+  healthPotionSprite: {fileID: 21300000, guid: 28cd643389c25de4eb77f49567812e47, type: 3}
+  manaPotionSprite: {fileID: 21300000, guid: 567c1dba48fd591478dcf0bb74786ddf, type: 3}
+  coinSprite: {fileID: 21300000, guid: cf36dfe8f1a0e82469863e44b6425d50, type: 3}
+  medkitSprite: {fileID: 21300000, guid: fbb108ca9ae39704c94c4c6321df3d1a, type: 3}
+  iron: {fileID: 21300000, guid: 9a44fc6fb5d5715448c63cf93850a5f8, type: 3}
+  gold: {fileID: 21300000, guid: a21aa4d990f57944cbfb3968f98658bc, type: 3}
+  swordPrefab_01: {fileID: 5341788859323144850, guid: 50f13f23ee6e7d4438a2c9bacc0f708d, type: 3}
+  swordPrefab_02: {fileID: 7801401201170597062, guid: e2d01f58ff96b184da825c9567b4a7e0, type: 3}
+  swordPrefab_broken: {fileID: 7801401201170597062, guid: 0d4ba1d55bc218c46ada0ab0ac6f6066, type: 3}
+  swordPrefab_iron: {fileID: 7801401201170597062, guid: 7bdfb30a0e4afcd46a9f6d6fd2d25431, type: 3}
+  swordPrefab_gold: {fileID: 7801401201170597062, guid: fad88a79e6bb62a44bbcf8fc70173d0e, type: 3}
+  armorPrefab_01: {fileID: 68689722966679646, guid: 7e17df94efa7883479a3392304dc9298, type: 3}
+  armorPrefab_02: {fileID: 8696968958918190384, guid: 1a3c415001b78eb4aa469d766ee31a2d, type: 3}
+  helmetPrefab_01: {fileID: 8121241068358521275, guid: ca8b58dd4680d4943a13979f141f2038, type: 3}
