@@ -32,7 +32,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
 
     private void Awake() {
         playerController = GetComponent<PlayerController>();
-        activeWeaponSpawnPoint = transform.Find("ActiveWeapon");
+        //activeWeaponSpawnPoint = transform.Find("ActiveWeapon");
         activeArmorSpawnPoint = transform.Find("ActiveArmor");
         activeHelmetSpawnPoint = transform.Find("ActiveHelmet");
 
@@ -85,10 +85,12 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
         }
         if(weaponItem != null) {
             Destroy(weaponEquipedCurrent);
+
             GameObject weaponToSpawn = weaponItem.GetPrefab();
-            weaponEquipedCurrent = Instantiate(weaponToSpawn, activeWeaponSpawnPoint.position, Quaternion.identity);
-            activeWeaponSpawnPoint.transform.rotation = Quaternion.Euler(0,0,0);
+            weaponEquipedCurrent = Instantiate(weaponToSpawn, activeWeaponSpawnPoint.position, activeWeaponSpawnPoint.rotation);
+
             weaponEquipedCurrent.transform.parent = activeWeaponSpawnPoint.transform;
+
         }
 
     }

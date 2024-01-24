@@ -107,7 +107,9 @@ public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IE
 
     public void SetItem(Item item) {
         this.item = item;
-        SetSprite(item.GetSprite());
+        SetSprite(item.GetSprite()); // lay sprite ben ngoai ItemAsset
+        //SetSprite(item.itemScriptableObject.itemSprite); // lay sprite ben trong ItemScriptableObject
+
         SetAmountText(item.amount);
     }
 

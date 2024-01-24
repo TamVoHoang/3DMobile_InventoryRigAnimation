@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
         // ui_Inventory.SetInventoryEquip(inventoryEquip); //todo-> tesing.cs chy ham nay
 
         //? dung static itemWorld goi phuong thuc Spawnworld ra vat phan world
-        // ItemWorld.SpawnItemWorld(new Vector3(3,3), new Item {itemType = Item.ItemType.HealthPotion, amount =1});
+        //ItemWorld.SpawnItemWorld(new Vector3(3,3), new Item {itemType = Item.ItemType.HealthPotion, amount =1});
         // ItemWorld.SpawnItemWorld(new Vector3(-3,3), new Item {itemType = Item.ItemType.ManaPotion, amount =1});
         // ItemWorld.SpawnItemWorld(new Vector3(0,-3), new Item {itemType = Item.ItemType.Sword, amount =1});
         // ItemWorld.SpawnItemWorld(new Vector3(0,3), new Item {itemType = Item.ItemType.Medkit, amount =1});
@@ -131,14 +131,16 @@ public class PlayerController : MonoBehaviour
             itemWorlEquipment.DestroySelf();
         }
 
+    }
+    private void OnTriggerEnter(Collider other) {
         //! pickup kieu ItemWorld3D chi lay vu khi vao ban cam ung
         ItemWorld3D itemWorld3DEquipment = other.GetComponent<ItemWorld3D>();
-        if(itemWorld3DEquipment != null && !itemWorld3DEquipment.GetItem().IsStackable()) {
+        if(itemWorld3DEquipment != null) {
+            Debug.Log("co cham item3D");
             inventoryEquipment.AddItemEquipment(itemWorld3DEquipment.GetItem());
             itemWorld3DEquipment.DestroySelf();
         }
-
     }
 
-
+    //todo
 }

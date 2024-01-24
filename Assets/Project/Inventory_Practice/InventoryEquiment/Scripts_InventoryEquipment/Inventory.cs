@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using UnityEngine.Rendering.Universal;
-using Unity.VisualScripting;
+
 
 public class Inventory : IItemHolder
 {
@@ -28,10 +27,10 @@ public class Inventory : IItemHolder
             inventorySlotArray[i] = new InventorySlot(i);
 
         }
-        //? tao moi item va add vao itemList kieu Item
-        // AddItemEquip(new Item {itemType = Item.ItemType.Sword});
-        // AddItemEquip(new Item { itemType = Item.ItemType.HealthPotion});
-        // AddItemEquip(new Item { itemType = Item.ItemType.ManaPotion});
+        //? tao moi item va add vao itemList kieu Item weapon
+        // AddItemEquipment(new Item {itemScriptableObject = new ItemScriptableObject() {
+        //     itemType = Item.ItemType.Sword_01 },
+        //     amount = 1});
     }
 
     //TODO HAM KHOI TOA CHO ITEM 
@@ -42,10 +41,10 @@ public class Inventory : IItemHolder
         Debug.Log("player -> khoi tao Inventory -> itemList -> add");
         itemList = new List<Item>();
 
-        //? tao moi item va add vao itemList kieu Item
-        // AddItem(new Item {itemType = Item.ItemType.Sword, amount =1});
-        // AddItem(new Item { itemType = Item.ItemType.HealthPotion, amount = 1 });
-        // AddItem(new Item { itemType = Item.ItemType.ManaPotion, amount = 1 });
+        //? tao moi item va add vao itemList kieu Item item
+        // AddItem(new Item {itemScriptableObject = new ItemScriptableObject() {
+        //     itemType = Item.ItemType.ManaPotion },
+        //     amount = 5});
 
         // PrinItemList();
     }

@@ -80,7 +80,8 @@ public class UI_ItemDrag : MonoBehaviour {
         gameObject.SetActive(true);
 
         SetItem(item);
-        SetSprite(item.GetSprite());
+        //SetSprite(item.GetSprite());
+        SetSprite(item.itemScriptableObject.itemSprite);
         SetAmountText(item.amount);
         UpdatePosition();
     }

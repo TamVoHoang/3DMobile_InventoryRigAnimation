@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class ActiveGun : MonoBehaviour
+public class ActiveGun : Singleton<ActiveGun>
 {
     public enum WeaponSlots
     {
@@ -20,7 +20,7 @@ public class ActiveGun : MonoBehaviour
     [SerializeField] private RaycastWeapon weapon; //? gun tren nguoi player
     [SerializeField] private Animator rigAnimator;
 
-    private void Awake() {
+    protected override void Awake() {
         // rigAnimator.updateMode = AnimatorUpdateMode.AnimatePhysics;
         // rigAnimator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
         // rigAnimator.cullingMode = AnimatorCullingMode.AlwaysAnimate;

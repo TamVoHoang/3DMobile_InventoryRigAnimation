@@ -24,7 +24,7 @@ public class Testing : MonoBehaviour
         CraftingSystem craftingSystem = new CraftingSystem(recipeScriptableObjectList);
 
         // tao ra item - setItem vao o itemArray[0,0]
-        // Item item = new Item{itemType = Item.ItemType.Gold, amount =10};
+        //Item item = new Item{itemType = Item.ItemType.Gold, amount =10};
         // craftingSystem.SetItem(item,0,0);
         // Debug.Log(craftingSystem.GetItem(0,0));
 
