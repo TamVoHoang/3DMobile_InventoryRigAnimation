@@ -7,14 +7,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Inventory inven;
     [SerializeField] Inventory inventoryEquipment;
     [SerializeField] UI_Inventory ui_Inventory; // dung de goi ham SetInventoy()
-    [SerializeField] private float moveSpeed =1f;
-    private Vector2 movement;
+    //[SerializeField] private float moveSpeed =1f;
+    //private Vector2 movement;
     private Rigidbody2D rb;
-    private PlayerControls playerControls;
+    //private PlayerControls playerControls;
 
 
     private void Awake() {
-        playerControls = new PlayerControls();
+        //playerControls = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
 
         inventory = new Inventory(UseItem); // => khoi tao Inventory() => itemList
@@ -35,17 +35,17 @@ public class PlayerController : MonoBehaviour
     }
 
     private void OnEnable() {
-        playerControls.Enable();
+        //playerControls.Enable();
     }
 
     void Update()
     {
-        PlayerInput();
+        //PlayerInput();
 
     }
 
     private void FixedUpdate() {
-        Move();
+        //Move();
     }
     public Vector3 GetPosition() {
         return transform.position;
@@ -57,7 +57,7 @@ public class PlayerController : MonoBehaviour
     }
 
     private void Move(){
-        rb.MovePosition(rb.position + movement * moveSpeed * Time.deltaTime);
+        //rb.MovePosition(rb.position + movement * moveSpeed * Time.deltaTime);
     }
     public Inventory GetInventory() {
         return inventoryEquipment;
