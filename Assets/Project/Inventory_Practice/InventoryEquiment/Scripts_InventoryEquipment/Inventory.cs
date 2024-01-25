@@ -29,8 +29,8 @@ public class Inventory : IItemHolder
         }
         //? tao moi item va add vao itemList kieu Item weapon
         // AddItemEquipment(new Item {itemScriptableObject = new ItemScriptableObject() {
-        //     itemType = Item.ItemType.Sword_01 },
-        //     amount = 1});
+        //         itemType = Item.ItemType.Sword_01 },
+        //         amount = 1});
     }
 
     //TODO HAM KHOI TOA CHO ITEM 
@@ -43,8 +43,8 @@ public class Inventory : IItemHolder
 
         //? tao moi item va add vao itemList kieu Item item
         // AddItem(new Item {itemScriptableObject = new ItemScriptableObject() {
-        //     itemType = Item.ItemType.ManaPotion },
-        //     amount = 5});
+        //     itemType = Item.ItemType.GunSMG3D_01 },
+        //     amount = 1});
 
         // PrinItemList();
     }

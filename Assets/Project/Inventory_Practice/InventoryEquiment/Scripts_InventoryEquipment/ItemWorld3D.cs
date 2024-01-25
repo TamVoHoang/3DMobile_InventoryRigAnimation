@@ -60,7 +60,9 @@ public class ItemWorld3D : MonoBehaviour
     public static ItemWorld3D DropItem(Vector3 dropPosition, Item item)
     {
         Vector3 randomDir = UtilsClass.GetRandomDir();
-        ItemWorld3D itemWorld3D = SpawnItemWorld3D(dropPosition + randomDir * 3f, item);
+        ItemWorld3D itemWorld3D = SpawnItemWorld3D(dropPosition + randomDir * 1f, item);
+        Debug.Log("itemWorld3D = " + itemWorld3D);
+
         itemWorld3D.GetComponent<Rigidbody>().AddForce(randomDir * 3f, ForceMode.Impulse);
         return itemWorld3D;
     }

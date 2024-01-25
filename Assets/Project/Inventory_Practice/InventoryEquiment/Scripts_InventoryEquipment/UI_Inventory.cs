@@ -87,6 +87,7 @@ public class UI_Inventory : MonoBehaviour
             itemSlotRectTransform.gameObject.SetActive(true);
 
             //? sau khi add Button_UI codeMonkey su dung mouse left right de se dung or return
+
             itemSlotRectTransform.GetComponent<Button_UI>().ClickFunc = () => {
                 // Use item
                 inventory.UseItem(item);
@@ -166,15 +167,17 @@ public class UI_Inventory : MonoBehaviour
                 // todo ko dung doubleclik ben ui_item khi tia day su dung MouseClick vi co click thi o day se thuc thi ngay lap tuc
                 uiItemTransform.GetComponent<Button_UI>().ClickFunc= () => {
                     // Use item
-                    // Debug.Log("single click use amount");
+                    Debug.Log("single click use amount");
                     inventoryEquipment.UseItemEquipment(item);
                 };
 
                 uiItemTransform.GetComponent<Button_UI>().MouseRightClickFunc = () => {
-                    Debug.Log("co nha nchuot tai o slot co item");
+                    Debug.Log("co nhan chuot phai tai o slot co item");
                     Item duplicateItem = new Item { itemScriptableObject = item.itemScriptableObject, amount = item.amount};
+                    Debug.Log(duplicateItem);
                     inventoryEquipment.RemoveItemEquipment(item);
-                    ItemWorld.DropItem(playerController.GetPosition(),duplicateItem);
+                    ItemWorld3D.DropItem(playerController.GetPosition(),duplicateItem);
+
                 };
                 
             }

@@ -152,6 +152,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 602f74cbbbd80034b96f88091a8e7c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  requiredHoldTime: 0.5
+  onLongClick:
+    m_PersistentCalls:
+      m_Calls: []
   hoverBehaviourType: 0
   hoverBehaviour_Color_Enter: {r: 0, g: 0, b: 0, a: 0}
   hoverBehaviour_Color_Exit: {r: 0, g: 0, b: 0, a: 0}

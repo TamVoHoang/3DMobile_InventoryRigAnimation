@@ -17,6 +17,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 namespace CodeMonkey.Utils {
     
@@ -38,6 +39,10 @@ namespace CodeMonkey.Utils {
         public Action MouseOverPerSecFunc = null; //Triggers every sec if mouseOver
         public Action MouseUpdate = null;
         public Action<PointerEventData> OnPointerClickFunc;
+
+        //! test long touch
+
+        //! end test long touch
 
         public enum HoverBehaviour {
             Custom,
@@ -123,7 +128,11 @@ namespace CodeMonkey.Utils {
             }
             if (MouseUpdate != null) MouseUpdate();
 
+            //! test long touch
+
+            //! end test long touch
         }
+
         void Awake() {
             posExit = transform.localPosition;
             posEnter = (Vector2)transform.localPosition + hoverBehaviour_Move_Amount;
