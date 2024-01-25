@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pfItemWorld: {fileID: 3268610279840981696, guid: 04b7560ff0623b645b628c3e87832265, type: 3}
-  pfWeaponInfomWorld: {fileID: 3268610279840981696, guid: 936a6756927f27449978418dbde45aa0, type: 3}
+  pfItemWorld3D: {fileID: 3268610279840981696, guid: 84bdd0afe47736f46adee1f98760cad4, type: 3}
   swordSprite_01: {fileID: 21300000, guid: 0567c05197d0d374ca05f1aed297c2e4, type: 3}
   swordSprite_02: {fileID: 21300000, guid: e661ef2bafdefd542be4bcc9b8506907, type: 3}
   swordSprite_broken: {fileID: 21300000, guid: 1b67dc66f707d0041a77e17d88a1da91, type: 3}
@@ -60,6 +60,8 @@ MonoBehaviour:
   medkitSprite: {fileID: 21300000, guid: fbb108ca9ae39704c94c4c6321df3d1a, type: 3}
   iron: {fileID: 21300000, guid: 9a44fc6fb5d5715448c63cf93850a5f8, type: 3}
   gold: {fileID: 21300000, guid: a21aa4d990f57944cbfb3968f98658bc, type: 3}
+  swordSprite3D_01: {fileID: 21300000, guid: c80da427c556a05468cabdb4ecaa7fd9, type: 3}
+  gunSMGSprite3D_01: {fileID: 21300000, guid: e6c826691fde84284bcdb5bcc8d7631b, type: 3}
   swordPrefab_01: {fileID: 5341788859323144850, guid: 50f13f23ee6e7d4438a2c9bacc0f708d, type: 3}
   swordPrefab_02: {fileID: 7801401201170597062, guid: e2d01f58ff96b184da825c9567b4a7e0, type: 3}
   swordPrefab_broken: {fileID: 7801401201170597062, guid: 0d4ba1d55bc218c46ada0ab0ac6f6066, type: 3}
@@ -68,3 +70,5 @@ MonoBehaviour:
   armorPrefab_01: {fileID: 68689722966679646, guid: 7e17df94efa7883479a3392304dc9298, type: 3}
   armorPrefab_02: {fileID: 8696968958918190384, guid: 1a3c415001b78eb4aa469d766ee31a2d, type: 3}
   helmetPrefab_01: {fileID: 8121241068358521275, guid: ca8b58dd4680d4943a13979f141f2038, type: 3}
+  swordPrefab3D_01: {fileID: 2334020579491521255, guid: 5dc064c35f0b9bd489950a6c1119b5e2, type: 3}
+  gunSMGPrefab3D_01: {fileID: 3399535637859106267, guid: afceb55152fa2a247acbe50112ad73df, type: 3}

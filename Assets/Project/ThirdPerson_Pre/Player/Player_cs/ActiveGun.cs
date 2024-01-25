@@ -21,6 +21,7 @@ public class ActiveGun : Singleton<ActiveGun>
     [SerializeField] private Animator rigAnimator;
 
     protected override void Awake() {
+        base.Awake();
         // rigAnimator.updateMode = AnimatorUpdateMode.AnimatePhysics;
         // rigAnimator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
         // rigAnimator.cullingMode = AnimatorCullingMode.AlwaysAnimate;

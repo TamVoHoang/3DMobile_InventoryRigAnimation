@@ -14,13 +14,12 @@ public class ItemWorld3D : MonoBehaviour
     public static ItemWorld3D SpawnItemWorld3D(Vector3 pos, Item item)
     {
         Transform transform = Instantiate(ItemAssets.Instance.pfItemWorld3D, pos, Quaternion.identity);
-        transform.rotation = Quaternion.Euler(0, 0, 45);
+        transform.rotation = Quaternion.Euler(0, 45, 0);
         ItemWorld3D itemWorld3D = transform.GetComponent<ItemWorld3D>();
         itemWorld3D.SetItem3D(item);
 
         return itemWorld3D;
     }
-
     private Item item;
     private TextMeshPro textMeshPro; // xet gia tri so luong item ben duoi khi spawn
     [SerializeField] private MeshFilter meshFilter;
@@ -30,6 +29,7 @@ public class ItemWorld3D : MonoBehaviour
         meshFilter = GetComponent<MeshFilter>();
         meshRenderer = GetComponent<MeshRenderer>();
         textMeshPro = transform.Find("Text").GetComponent<TextMeshPro>();
+
     }
     private void Start() {
         
@@ -40,6 +40,7 @@ public class ItemWorld3D : MonoBehaviour
         this.item = item;
         meshFilter.mesh = item.itemScriptableObject.pfItem.GetComponent<MeshFilter>().sharedMesh;
         meshRenderer.material = item.itemScriptableObject.pfItem.GetComponent<MeshRenderer>().sharedMaterial;
+
 
         if (item.amount > 1) {
             textMeshPro.SetText(item.amount.ToString());

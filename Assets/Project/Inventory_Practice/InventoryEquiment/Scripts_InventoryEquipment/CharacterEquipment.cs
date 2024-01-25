@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterEquipment : MonoBehaviour,IItemHolder
@@ -15,23 +13,24 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
         Weapon
     }
     public event EventHandler OnEquipmentChanged; //! duoc += col 63 UI_chatacterEquipment || tesing Awake () - run SetCharacterEquipment()
-    private PlayerController playerController;
     [SerializeField] private Transform activeWeaponSpawnPoint; //? noi se spawn vu khi ra
     [SerializeField] private Transform activeArmorSpawnPoint; //? noi se spawn vu khi ra
     [SerializeField] private Transform activeHelmetSpawnPoint; //? noi se spawn vu khi ra
 
 
-    private GameObject weaponEquipedCurrent;
+    private GameObject equipedWeaponTemp_GO;
     private GameObject armorEquipedCurrent;
     private GameObject helmetEquipedCurrent;
-
-
     private Item weaponItem;
     private Item helmetItem;
     private Item armorItem;
 
+
+    [SerializeField] private RaycastWeapon gunPrefabTemp_Raycast; //! testing
+    public ActiveGun activeGun; //! testing
+
+
     private void Awake() {
-        playerController = GetComponent<PlayerController>();
         //activeWeaponSpawnPoint = transform.Find("ActiveWeapon");
         activeArmorSpawnPoint = transform.Find("ActiveArmor");
         activeHelmetSpawnPoint = transform.Find("ActiveHelmet");
@@ -63,34 +62,33 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
     // col 42 UI_CharacterEquipment.cs goi -> gan loai weapontrong weaponSlot vao this.weaponItem
     public void SetWeaponItem(Item weaponItem) {
         this.weaponItem = weaponItem;
-        if (weaponItem != null) {
-            weaponItem.SetItemHolder(this);
-        } 
-        else {
-            // Unequipped weapon
-            //player.SetEquipment(Item.ItemType.SwordNone);
+
+        if (this.weaponItem != null) {
+            this.weaponItem.SetItemHolder(this);
         }
 
         //! kich hoat chay UpdateVisual() thong qua delegate col 61 UI_characterEquipment.cs
         //! co dia chi ham de chay la nho vao awke() da kich hoat cho CharacterEquipment
         OnEquipmentChanged?.Invoke(this, EventArgs.Empty);
 
-        //todo xet trang bi loai vu khi cho player
+        //todo xet trang bi loai vu khi cho player. o equipSlot go item ra
         //todo xet currentWeapon tai day khi da biet loai weapon nao co trong player
         // todo tuong tu khi quet duoc vu khi trong activeInventory - instantiate item.prefab - gan currentweapon
 
-        if(weaponItem == null) {
-            Destroy(weaponEquipedCurrent);
+        if(this.weaponItem == null) {
+            ActiveGun.Instance.ToggleActiveWeapon();
+            Destroy(gunPrefabTemp_Raycast.gameObject);
             return;
         }
-        if(weaponItem != null) {
-            Destroy(weaponEquipedCurrent);
+        if(this.weaponItem != null) {
 
-            GameObject weaponToSpawn = weaponItem.GetPrefab();
-            weaponEquipedCurrent = Instantiate(weaponToSpawn, activeWeaponSpawnPoint.position, activeWeaponSpawnPoint.rotation);
-
-            weaponEquipedCurrent.transform.parent = activeWeaponSpawnPoint.transform;
-
+            int weaponSlotIndex = (int)this.weaponItem.itemScriptableObject.gunPrefabRaycast.GetComponent<RaycastWeapon>().weaponSlot; //=0
+            Debug.Log("weaponSlotIndex " + weaponSlotIndex);
+            gunPrefabTemp_Raycast = Instantiate(this.weaponItem.itemScriptableObject.gunPrefabRaycast, ActiveGun.Instance.weaponSlots[weaponSlotIndex].position,
+                ActiveGun.Instance.weaponSlots[weaponSlotIndex].transform.rotation, ActiveGun.Instance.weaponSlots[weaponSlotIndex]);
+                
+            gunPrefabTemp_Raycast.transform.SetParent(ActiveGun.Instance.weaponSlots[weaponSlotIndex], false);
+            ActiveGun.Instance.Equip(gunPrefabTemp_Raycast);
         }
 
     }
@@ -117,6 +115,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
 
     public void SetArmorItem(Item armorItem) {
         this.armorItem = armorItem;
+
         if (armorItem != null) {
             armorItem.SetItemHolder(this);
         }
@@ -129,6 +128,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
         }
         if(armorItem != null) {
             Destroy(armorEquipedCurrent);
+
             GameObject armorToSpawn = armorItem.GetPrefab();
             armorEquipedCurrent = Instantiate(armorToSpawn, activeArmorSpawnPoint.position, Quaternion.identity);
             activeArmorSpawnPoint.transform.rotation = Quaternion.Euler(0,0,0);

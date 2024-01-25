@@ -136,6 +136,7 @@ public class PlayerController : MonoBehaviour
         //! pickup kieu ItemWorld3D chi lay vu khi vao ban cam ung
         ItemWorld3D itemWorld3DEquipment = other.GetComponent<ItemWorld3D>();
         if(itemWorld3DEquipment != null) {
+
             Debug.Log("co cham item3D");
             inventoryEquipment.AddItemEquipment(itemWorld3DEquipment.GetItem());
             itemWorld3DEquipment.DestroySelf();

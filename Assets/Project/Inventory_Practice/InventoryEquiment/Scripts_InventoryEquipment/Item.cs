@@ -31,9 +31,9 @@ public class Item
 
         Iron,
         Gold,
-        Sword3D_01
+        Sword3D_01,
+        GunSMG3D_01
     }
-
 
     //public ItemType itemType;
     public ItemScriptableObject itemScriptableObject;
@@ -106,6 +106,7 @@ public class Item
         case ItemType.Gold:             return ItemAssets.Instance.gold;
 
         case ItemType.Sword3D_01:       return ItemAssets.Instance.swordSprite3D_01;
+        case ItemType.GunSMG3D_01:      return ItemAssets.Instance.gunSMGSprite3D_01;
         }
     }
 
@@ -152,6 +153,7 @@ public class Item
             case ItemType.Helmet_01:        return ItemAssets.Instance.helmetPrefab_01;
 
             case ItemType.Sword3D_01:       return ItemAssets.Instance.swordPrefab3D_01;
+            case ItemType.GunSMG3D_01:      return ItemAssets.Instance.gunSMGPrefab3D_01;
 
         }
     }
@@ -184,6 +186,7 @@ public class Item
         case ItemType.Armor_02:
         
         case ItemType.Sword3D_01:
+        case ItemType.GunSMG3D_01:
             return false;
         }
     }
