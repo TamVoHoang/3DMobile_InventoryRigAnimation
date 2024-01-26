@@ -1,18 +1,4 @@
-﻿/* 
-    ------------------- Code Monkey -------------------
-
-    Thank you for downloading this package
-    I hope you find it useful in your projects
-    If you have any questions let me know
-    Cheers!
-
-               unitycodemonkey.com
-    --------------------------------------------------
- */
-
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
@@ -20,7 +6,7 @@ using CodeMonkey.Utils;
 
 public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler 
 {
-
+    //todo gameObject la doi tuong item nam trong itemSlot
     private Canvas canvas;
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
@@ -39,6 +25,7 @@ public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IE
     private void Update() {
         //todo dung khi col 162 UI_inventory su dung click de Use || nen o day phai dung MouseMidleDunc
         //SpitItem();
+        //RemoveAndDrop();
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
@@ -49,12 +36,19 @@ public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IE
 
     public void OnDrag(PointerEventData eventData) {
         //rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        if(Input.GetKeyDown(KeyCode.Y)) Debug.Log("press Y buuton");
     }
 
     public void OnEndDrag(PointerEventData eventData) {
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true; // todo true o day de con co the drag sau khi trigger
         UI_ItemDrag.Instance.Hide();
+
+        //? keo tha item out and drop world position
+        if(EventSystem.current.IsPointerOverGameObject()){
+            return;
+        }
+        DropItemOutWorld();
     }
 
     //? KHI NHAP CHUOT phai VAO O VAT PHAM SE CHIA DOI
@@ -149,6 +143,7 @@ public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IE
     //todo dung khi col 162 UI_inventory su dung click de Use || nen o day phai dung MouseMidleDunc || ko the dung doubleClick
     private void SpitItem() {
         rectTransform.GetComponent<Button_UI>().MouseMiddleClickFunc = () => {
+        Debug.Log("midleClick Split ben UI_item.cs");
         if (item != null) {
                 // Has item
                 if (item.IsStackable()) {
@@ -172,5 +167,21 @@ public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IE
         };
     }
 
+    //? rightmouse click de remove thay vi run 177 ui_inventory.cs
+    private void RemoveAndDrop(){
+        rectTransform.GetComponent<Button_UI>().MouseRightClickFunc = () => {
+            Debug.Log("rightClick ben UI_item.cs");
+            Item duplicateItem = new Item { itemScriptableObject = item.itemScriptableObject, amount = item.amount};
+            item.GetItemHolder().RemoveItemEquipment(item);
+            ItemWorld3D.DropItem(PlayerController.Instance.GetPosition(),duplicateItem);
+        };
+    }
     
+    //? detect tin hieu de dropitem UI_item.cs
+    private void DropItemOutWorld() {
+        Item duplicateItem = new Item { itemScriptableObject = item.itemScriptableObject, amount = item.amount};
+            item.GetItemHolder().RemoveItemEquipment(item);
+            ItemWorld3D.DropItem(PlayerController.Instance.GetPosition(),duplicateItem);
+    }
+
 }

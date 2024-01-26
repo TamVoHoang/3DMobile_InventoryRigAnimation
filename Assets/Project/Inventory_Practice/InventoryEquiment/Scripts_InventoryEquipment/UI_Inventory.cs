@@ -128,6 +128,7 @@ public class UI_Inventory : MonoBehaviour
     }
 
     private void RefreshIventoryEquipment() {
+        Debug.Log("Start run");
 
         //! tranh tao ra tranform khi duyet Inventory || itemList se tao ra qua nhiu child in itemSlotContainer
         foreach (Transform child in itemSlotContainer1) {
@@ -153,7 +154,7 @@ public class UI_Inventory : MonoBehaviour
             //? xet vi tri cho o vat pham UI
             itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, -y * itemSlotCellSize);
 
-            //? equip
+            //? equip chen ngang khi co tin hieu mouse click
             if (!inventorySlot.IsEmpty()) {
                 // Not Empty, has Item
                 Transform uiItemTransform = Instantiate(pfUI_Item, itemSlotContainer1);
@@ -162,9 +163,11 @@ public class UI_Inventory : MonoBehaviour
                 uiItem.SetItem(item);
                 
                 //? REMOVE VU KHI BANG BUTTON_UI.cs DUOC GAN TORNG DOI TUONG pfUI_Item
-                //todo neu o day dung MouseClick de use - ui_item phai dung MouseMidle de split
-                // todo neu o day ko dung MouseClick - ui_Item co he dung DoubleClick
-                // todo ko dung doubleclik ben ui_item khi tia day su dung MouseClick vi co click thi o day se thuc thi ngay lap tuc
+                //todo neu o day DUNG MouseClick de use() -> ui_item phai dung MouseMidle de split()
+                // todo neu o day KO DUNG MouseClick de use() -> ui_Item co the dung DoubleClick de slit()
+
+                //! todo ko dung duoc doubleclik ben ui_item de Split() khi tai day su dung MouseClick 
+                //! Ly do: khi tai day co tin hieu mouseClick se use() va khong cho tin hieu doubleClick ben UI_item de split()
                 uiItemTransform.GetComponent<Button_UI>().ClickFunc= () => {
                     // Use item
                     Debug.Log("single click use amount");
@@ -174,25 +177,26 @@ public class UI_Inventory : MonoBehaviour
                 uiItemTransform.GetComponent<Button_UI>().MouseRightClickFunc = () => {
                     Debug.Log("co nhan chuot phai tai o slot co item");
                     Item duplicateItem = new Item { itemScriptableObject = item.itemScriptableObject, amount = item.amount};
-                    Debug.Log(duplicateItem);
+
                     inventoryEquipment.RemoveItemEquipment(item);
                     ItemWorld3D.DropItem(playerController.GetPosition(),duplicateItem);
 
                 };
-                
+
             }
 
             Inventory.InventorySlot tmpInventorySlot = inventorySlot;
+
             UI_ItemSlot uiItemSlot = itemSlotRectTransform.GetComponent<UI_ItemSlot>();
 
-            
             uiItemSlot.SetOnDropAction(() => {
+
+                Debug.Log("Start run OnDropAction");
                 // Dropped on this UI Item Slot
                 Item draggedItem = UI_ItemDrag.Instance.GetItem();
                 draggedItem.RemoveFromItemHolder();
                 inventoryEquipment.AddItemEquipment(draggedItem, tmpInventorySlot);
             });
-            
 
             // offset x, y vi tri o vat pham tren bang vat pham
             x++;

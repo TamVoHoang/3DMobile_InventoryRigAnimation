@@ -1,5 +1,6 @@
+using UnityEngine.EventSystems;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
+
 
 public class PlayerGun : Singleton<PlayerGun>
 {
@@ -65,8 +66,9 @@ public class PlayerGun : Singleton<PlayerGun>
 
     public void Update()
     {
-        GetIsGrounded = SetIsGrounded();
+        //if(EventSystem.current.IsPointerOverGameObject()) return;
 
+        GetIsGrounded = SetIsGrounded();
         // hzInput = Input.GetAxis("Horizontal");
         // vInput = Input.GetAxis("Vertical");
         hzInput = InputManager.Instance.GetMove.x;

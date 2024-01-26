@@ -1,6 +1,7 @@
 
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ActiveGun : Singleton<ActiveGun>
 {
@@ -52,6 +53,8 @@ public class ActiveGun : Singleton<ActiveGun>
     }
 
     private void Update() {
+        if(EventSystem.current.IsPointerOverGameObject()) return;
+        
         var weapon = GetWeapon(activeWeaponIndex);
         if(weapon && !isHolstered) {
             if(Input.GetButtonDown("Fire1")) {

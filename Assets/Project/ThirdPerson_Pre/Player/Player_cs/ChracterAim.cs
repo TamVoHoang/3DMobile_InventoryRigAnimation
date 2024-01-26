@@ -1,4 +1,4 @@
-
+using UnityEngine.EventSystems;
 using UnityEngine;
 
 public class ChracterAim : MonoBehaviour
@@ -17,6 +17,8 @@ public class ChracterAim : MonoBehaviour
     }
     void Update()
     {
+        if(EventSystem.current.IsPointerOverGameObject()) return;
+        
         // xAixs += Input.GetAxisRaw("Mouse X") * mouseSentivity;
         // yAxis -= Input.GetAxisRaw("Mouse Y") * mouseSentivity;
 

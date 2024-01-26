@@ -1,8 +1,9 @@
 
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : Singleton<PlayerController>
 {
+    [SerializeField] private int itemSlotAmount = 10;
     [SerializeField] Inventory inventory; // se duoc Awake() goi de khoi tao new inventory
     [SerializeField] Inventory inven;
     [SerializeField] Inventory inventoryEquipment;
@@ -13,12 +14,13 @@ public class PlayerController : MonoBehaviour
     //private PlayerControls playerControls;
 
 
-    private void Awake() {
+    protected override void Awake() {
+        base.Awake();
         //playerControls = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
 
         inventory = new Inventory(UseItem); // => khoi tao Inventory() => itemList
-        inventoryEquipment = new Inventory(UseItemEquipment, 12);
+        inventoryEquipment = new Inventory(UseItemEquipment, itemSlotAmount);
 
         //ui_Inventory.SetPlayerPos(this); // uiInventory lay vi tri player //todo-> tesing.cs chy ham nay
     }
