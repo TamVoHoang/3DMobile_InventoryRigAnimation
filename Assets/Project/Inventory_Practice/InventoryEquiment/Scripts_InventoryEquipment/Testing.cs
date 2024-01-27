@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using UnityEngine;
 
 public class Testing : MonoBehaviour
@@ -11,9 +12,15 @@ public class Testing : MonoBehaviour
     [SerializeField] private UI_CraftingSystem uICraftingSystem;
     [SerializeField] private List<RecipeScriptableObject> recipeScriptableObjectList;
 
+    [SerializeField] private GameObject UI_CraftingSystem_Go;
+    [SerializeField] private GameObject UI_Inventory_Go;
+    [SerializeField] private GameObject UI_CharacterEquipment_Go;
+
+
 
     void Start()
     {
+
         uiInventory.SetPlayerPos(playerController);
         uiInventory.SetInventoryEquipment(playerController.GetInventory());
 
@@ -29,6 +36,30 @@ public class Testing : MonoBehaviour
         // Debug.Log(craftingSystem.GetItem(0,0));
 
         uICraftingSystem.SetCraftingSystem(craftingSystem); //? tao ket noi UI_craftingStem (chua cac grid + craftingSystem)
+
+        DeActiveAllUI();
+
+    }
+
+    private void Update() {
+        ActiveSelfUI();
+    }
+
+    private void DeActiveAllUI(){
+        UI_CraftingSystem_Go.SetActive(false);
+        UI_Inventory_Go.SetActive(false);
+        UI_CharacterEquipment_Go.SetActive(false);
+    }
+
+    private void ActiveSelfUI(){
+        if(Input.GetKeyDown(KeyCode.I)){
+            UI_Inventory_Go.SetActive(!UI_Inventory_Go.activeSelf);
+            UI_CharacterEquipment_Go.SetActive(!UI_CharacterEquipment_Go.activeSelf);
+        }
+
+        if(Input.GetKeyDown(KeyCode.K)){
+            UI_CraftingSystem_Go.SetActive(!UI_CraftingSystem_Go.activeSelf);
+        }
     }
 
 }

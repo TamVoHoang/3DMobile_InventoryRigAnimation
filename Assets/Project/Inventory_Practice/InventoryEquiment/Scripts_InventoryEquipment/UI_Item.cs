@@ -7,20 +7,23 @@ using CodeMonkey.Utils;
 public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler 
 {
     //todo gameObject la doi tuong item nam trong itemSlot
+
+    [SerializeField] private Image image;
+    [SerializeField] private TextMeshProUGUI amountText;
+
     private Canvas canvas;
     private RectTransform rectTransform;
     private CanvasGroup canvasGroup;
-    private Image image;
     private Item item;
-    private TextMeshProUGUI amountText;
 
     private void Awake() {
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         canvas = GetComponentInParent<Canvas>();
-        image = transform.Find("image").GetComponent<Image>();
 
-        amountText = transform.Find("amountText").GetComponent<TextMeshProUGUI>();
+        //! neu de tu dong tim kiem khi doi tuong pfUI_item duoc sinh ra thi se ko the tim thay 2 bien image va amountText
+        //image = transform.Find("image").GetComponent<Image>();//! testing
+        //amountText = transform.Find("amountText").GetComponent<TextMeshProUGUI>(); //! testing
     }
     private void Update() {
         //todo dung khi col 162 UI_inventory su dung click de Use || nen o day phai dung MouseMidleDunc
@@ -79,6 +82,7 @@ public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IE
     }
 
     public void SetSprite(Sprite sprite) {
+        Debug.Log(sprite);
         image.sprite = sprite;
     }
 
@@ -101,8 +105,8 @@ public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IE
 
     public void SetItem(Item item) {
         this.item = item;
-        //SetSprite(item.GetSprite()); // lay sprite ben ngoai ItemAsset
-        SetSprite(item.itemScriptableObject.itemSprite); // lay sprite ben trong ItemScriptableObject
+        SetSprite(item.GetSprite()); // lay sprite ben ngoai ItemAsset
+        //SetSprite(item.itemScriptableObject.itemSprite); // lay sprite ben trong ItemScriptableObject
 
         SetAmountText(item.amount);
     }
