@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Net.Http.Headers;
 using UnityEngine;
 
 public class Testing : MonoBehaviour
@@ -8,14 +6,13 @@ public class Testing : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private UI_Inventory uiInventory;
     [SerializeField] private UI_CharacterEquipment uICharacterEquipment;
-    [SerializeField] private CharacterEquipment characterEquipment;
+    [SerializeField] private CharacterEquipment characterEquipment; // keo the player.go vao day
     [SerializeField] private UI_CraftingSystem uICraftingSystem;
     [SerializeField] private List<RecipeScriptableObject> recipeScriptableObjectList;
 
     [SerializeField] private GameObject UI_CraftingSystem_Go;
     [SerializeField] private GameObject UI_Inventory_Go;
     [SerializeField] private GameObject UI_CharacterEquipment_Go;
-
 
 
     void Start()
@@ -42,7 +39,7 @@ public class Testing : MonoBehaviour
     }
 
     private void Update() {
-        ActiveSelfUI();
+        
     }
 
     private void DeActiveAllUI(){
@@ -61,5 +58,16 @@ public class Testing : MonoBehaviour
             UI_CraftingSystem_Go.SetActive(!UI_CraftingSystem_Go.activeSelf);
         }
     }
+
+    public void ActiveEquipmentUI(){
+        UI_Inventory_Go.SetActive(!UI_Inventory_Go.activeSelf);
+        UI_CharacterEquipment_Go.SetActive(!UI_CharacterEquipment_Go.activeSelf);
+    }
+
+    public void ActiveCraftingSystemUI(){
+        UI_CraftingSystem_Go.SetActive(!UI_CraftingSystem_Go.activeSelf);
+    }
+
+
 
 }

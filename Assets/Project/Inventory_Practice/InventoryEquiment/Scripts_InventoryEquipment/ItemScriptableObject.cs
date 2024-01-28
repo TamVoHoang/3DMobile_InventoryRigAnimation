@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 [CreateAssetMenu(menuName = "ScriptableObjects/ItemScriptableObject")]
 public class ItemScriptableObject : ScriptableObject
@@ -9,7 +8,6 @@ public class ItemScriptableObject : ScriptableObject
     public Sprite itemSprite; //? 2D
     public GameObject pfItem;
     public RaycastWeapon gunPrefabRaycast;
-
     public CharacterEquipment.EquipSlot equipSlot;
-
+    
 }

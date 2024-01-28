@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using CodeMonkey.Utils;
 using UnityEngine;
 
@@ -10,7 +8,7 @@ public class UI_CharacterEquipment : MonoBehaviour
     //todo dung de kiem tra keo tha dung doi tuong tu o weaponContainer into UI characterEquipment
 
     [SerializeField] private Transform pfUI_Item;
-    private CharacterEquipment characterEquipment;
+    private CharacterEquipment characterEquipment; // bien duoc gan ben testing.cs
     private Transform itemContainer;
     
     private UI_CharacterEquipmentSlot weaponSlot;
@@ -35,7 +33,7 @@ public class UI_CharacterEquipment : MonoBehaviour
         // //! click mouse 1 de remove khoi weaponSLot trang bi 3 o
         // weaponSlot.OnItemPointerRightClicked += WeaponSlot_OnItemPointerRightClicked;
 
-        //? wepontSlot (ITEM duoc bo Droped vao) - event UI_characterEquipment.cs - reun WeaponSlot_OnItemDropped() 
+        //? - wepontSlot (ITEM duoc bo Droped vao) - event UI_characterEquipment.cs - reun WeaponSlot_OnItemDropped() 
         //? - run SetWeaponItem(e.item) -> dem ITEM chuyen qua CharacterEquipment.cs (player) - event OnEquipmentChanged col 38 45 50
         //? - characterEquipment.OnEquipmentChanged duco gan dia chi ham ben testing Awake()
         //? - run += CharacterEquipment_OnEquipmentChnaged() => update hinh anh Item len WeaponSLot
@@ -55,6 +53,7 @@ public class UI_CharacterEquipment : MonoBehaviour
 
         CharacterEquipment.EquipSlot equipSlot = CharacterEquipment.EquipSlot.Weapon;
         if (characterEquipment.IsEquipSlotEmpty(equipSlot) && characterEquipment.CanEquipItem(equipSlot, e.item)) {
+            Debug.Log("weapon move from weaponInventory to weaponSlotEquipment");
             e.item.RemoveFromItemHolder();
             characterEquipment.EquipItem(e.item);
         }
@@ -122,6 +121,13 @@ public class UI_CharacterEquipment : MonoBehaviour
             UI_Item uiItem = uiItemTransform.GetComponent<UI_Item>();
             uiItem.SetItem(weaponItem);
             weaponSlot.transform.Find("emptyImage").gameObject.SetActive(false);
+
+            //!testing doi dung thong qua nut nhan tren UI_WeaponItem - click vao item tren weaponSlotEquipment
+            uiItemTransform.GetComponent<RectTransform>().GetComponent<Button_UI>().ClickFunc = () => {
+                // Use item
+                Debug.Log("click vao item tren weaponSlot");
+                ActiveGun.Instance.ToggleActiveWeapon();
+            };
         }
         else {
             weaponSlot.transform.Find("emptyImage").gameObject.SetActive(true);

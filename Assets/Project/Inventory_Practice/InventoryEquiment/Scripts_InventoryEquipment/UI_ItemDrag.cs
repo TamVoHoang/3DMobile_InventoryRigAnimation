@@ -1,18 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
 using TMPro;
 
 public class UI_ItemDrag : MonoBehaviour {
+    //! gameObject = pfUI_itemDrag se active khi keo pfUI_Item di chuyen tu slot nay sang slot khac
 
     public static UI_ItemDrag Instance { get; private set; }
 
     private Canvas canvas;
+    private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
     private RectTransform parentRectTransform;
-    private CanvasGroup canvasGroup;
+    
     private Image image;
     private Item item;
     private TextMeshProUGUI amountText;

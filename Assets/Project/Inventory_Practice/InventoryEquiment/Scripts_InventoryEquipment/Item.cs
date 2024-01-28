@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 [Serializable]
@@ -40,6 +36,7 @@ public class Item
     public int amount = 1;
     private IItemHolder itemHolder;
     public bool isSplited; //! them vao
+
     public void SetItemHolder(IItemHolder itemHolder) {
         this.itemHolder = itemHolder;
     }

@@ -1,4 +1,3 @@
-
 using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -89,10 +88,10 @@ public class ActiveGun : Singleton<ActiveGun>
         }
         weapon = newWeapon;
         weapon.SetRaycastDes(crossHairTarget);
-        //rigAnimator.Play("equip_" + weapon.weaponName);
+        //rigAnimator.Play("equip_" + weapon.weaponName);//
 
         equipped_weapons[weaponSlotIndex] = weapon;
-        //activeWeaponIndex = weaponSlotIndex;
+        //activeWeaponIndex = weaponSlotIndex;//
         SetActiveWeapon(newWeapon.weaponSlot);
 
     }

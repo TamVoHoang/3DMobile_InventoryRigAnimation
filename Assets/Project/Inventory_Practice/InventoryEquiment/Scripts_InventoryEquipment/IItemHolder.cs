@@ -9,4 +9,5 @@ public interface IItemHolder {
     bool CanAddItemEquipment();
     void AddItemAfterSliting(Item item);
 
+    //todo
 }

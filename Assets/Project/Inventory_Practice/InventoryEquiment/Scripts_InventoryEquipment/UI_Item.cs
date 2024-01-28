@@ -6,7 +6,7 @@ using CodeMonkey.Utils;
 
 public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler, IPointerClickHandler 
 {
-    //todo gameObject la doi tuong item nam trong itemSlot
+    //todo gameObject la doi tuong item nam trong itemSlot pfUI_item prefabs
 
     [SerializeField] private Image image;
     [SerializeField] private TextMeshProUGUI amountText;
@@ -39,7 +39,6 @@ public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IE
 
     public void OnDrag(PointerEventData eventData) {
         //rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
-        if(Input.GetKeyDown(KeyCode.Y)) Debug.Log("press Y buuton");
     }
 
     public void OnEndDrag(PointerEventData eventData) {
