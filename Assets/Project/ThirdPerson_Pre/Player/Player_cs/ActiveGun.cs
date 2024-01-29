@@ -103,7 +103,7 @@ public class ActiveGun : Singleton<ActiveGun>
         if (isHolstered) StartCoroutine(ActivateWeapon(activeWeaponIndex));
         else StartCoroutine(HolsterWeapon(activeWeaponIndex));
     }
-    void SetActiveWeapon(WeaponSlots weaponSlot)
+    public void SetActiveWeapon(WeaponSlots weaponSlot)
     {
         int holsterIndex = activeWeaponIndex; // con so de kt xem co sung equip tai 0 1 2
         int activeIndex = (int)weaponSlot;

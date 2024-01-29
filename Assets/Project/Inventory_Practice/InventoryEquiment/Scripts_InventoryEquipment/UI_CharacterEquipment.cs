@@ -12,6 +12,8 @@ public class UI_CharacterEquipment : MonoBehaviour
     private Transform itemContainer;
     
     private UI_CharacterEquipmentSlot weaponSlot;
+    private UI_CharacterEquipmentSlot weaponSlotPistol;
+
     private UI_CharacterEquipmentSlot armorSlot;
     private UI_CharacterEquipmentSlot helmetSlot;
 
@@ -22,11 +24,13 @@ public class UI_CharacterEquipment : MonoBehaviour
         itemContainer = transform.Find("itemContainer");
 
         weaponSlot = transform.Find("weaponSlot").GetComponent<UI_CharacterEquipmentSlot>();
+        weaponSlotPistol = transform.Find("weaponSlotPistol").GetComponent<UI_CharacterEquipmentSlot>();
         armorSlot = transform.Find("armorSlot").GetComponent<UI_CharacterEquipmentSlot>();
         helmetSlot = transform.Find("helmetSlot").GetComponent<UI_CharacterEquipmentSlot>();
 
         //! event col 27 UI_CharacterEquipmentSlot.cs goi khi co item dat vao weaponSlot
         weaponSlot.OnItemDropped += WeaponSlot_OnItemDropped;
+        weaponSlotPistol.OnItemDropped += WeaponSlotPistol_OnItemDropped;
         armorSlot.OnItemDropped += ArmorSlot_OnItemDropped;
         helmetSlot.OnItemDropped += HelmetSlot_OnItemDropped;
 
@@ -47,6 +51,18 @@ public class UI_CharacterEquipment : MonoBehaviour
     // #endregion rightClick to remove Item on weaponSLot
 
     #region droped Item on weaponSLot
+    private void WeaponSlotPistol_OnItemDropped(object sender, UI_CharacterEquipmentSlot.OnItemDroppedEventArgs e)
+    {
+        // Item dropped in weapon slot
+        Debug.Log("doi tuong weaponSlot thong bao || equipweapon " + e.item.itemScriptableObject.itemType);
+
+        CharacterEquipment.EquipSlot equipSlot = CharacterEquipment.EquipSlot.WeaponPistol;
+        if (characterEquipment.IsEquipSlotEmpty(equipSlot) && characterEquipment.CanEquipItem(equipSlot, e.item)) {
+            Debug.Log("weapon move from weaponInventory to weaponSlotEquipment");
+            e.item.RemoveFromItemHolder();
+            characterEquipment.EquipItem(e.item);
+        }
+    }
     private void WeaponSlot_OnItemDropped(object sender, UI_CharacterEquipmentSlot.OnItemDroppedEventArgs e) {
         // Item dropped in weapon slot
         Debug.Log("doi tuong weaponSlot thong bao || equipweapon " + e.item.itemScriptableObject.itemType);
@@ -67,7 +83,6 @@ public class UI_CharacterEquipment : MonoBehaviour
             e.item.RemoveFromItemHolder();
             characterEquipment.EquipItem(e.item);
         }
-
     }
     private void HelmetSlot_OnItemDropped(object sender, UI_CharacterEquipmentSlot.OnItemDroppedEventArgs e) {
         // Item dropped in Helmet slot
@@ -109,6 +124,33 @@ public class UI_CharacterEquipment : MonoBehaviour
             
             Destroy(child.gameObject);
         }
+        //! testing
+        Item weaponPistolItem = characterEquipment.GetWeaponPistolItem(); //lay loai weapon ben characterEquipment.cs dang co tren nguoi
+        if(weaponPistolItem != null) {
+            // sinh pfItem len
+            Transform uiItemTransform = Instantiate(pfUI_Item, itemContainer);
+            uiItemTransform.GetComponent<RectTransform>().anchoredPosition = weaponSlotPistol.GetComponent<RectTransform>().anchoredPosition;
+            uiItemTransform.localScale = Vector3.one * 1.5f;
+            //uiItemTransform.GetComponent<CanvasGroup>().blocksRaycasts = false;
+
+            UI_Item uiItem = uiItemTransform.GetComponent<UI_Item>();
+            uiItem.SetItem(weaponPistolItem);
+            weaponSlotPistol.transform.Find("emptyImage").gameObject.SetActive(false);
+
+            //!testing doi dung thong qua nut nhan tren UI_WeaponItem - click vao item tren weaponSlotEquipment
+            uiItemTransform.GetComponent<RectTransform>().GetComponent<Button_UI>().ClickFunc = () => {
+                // Use item
+                Debug.Log("click vao item tren weaponSlot");
+                if(!ActiveGun.Instance.isHolstered)
+                    ActiveGun.Instance.ToggleActiveWeapon();
+                else
+                    ActiveGun.Instance.SetActiveWeapon(weaponPistolItem.itemScriptableObject.gunPrefabRaycast.GetComponent<RaycastWeapon>().weaponSlot);
+            };
+        }
+        else {
+            weaponSlotPistol.transform.Find("emptyImage").gameObject.SetActive(true);
+        }
+        //! testing
 
         Item weaponItem = characterEquipment.GetWeaponItem(); //lay loai weapon ben characterEquipment.cs dang co tren nguoi
         if(weaponItem != null) {
@@ -126,7 +168,10 @@ public class UI_CharacterEquipment : MonoBehaviour
             uiItemTransform.GetComponent<RectTransform>().GetComponent<Button_UI>().ClickFunc = () => {
                 // Use item
                 Debug.Log("click vao item tren weaponSlot");
-                ActiveGun.Instance.ToggleActiveWeapon();
+                if(!ActiveGun.Instance.isHolstered)
+                    ActiveGun.Instance.ToggleActiveWeapon();
+                else
+                    ActiveGun.Instance.SetActiveWeapon(weaponItem.itemScriptableObject.gunPrefabRaycast.GetComponent<RaycastWeapon>().weaponSlot);
             };
         }
         else {

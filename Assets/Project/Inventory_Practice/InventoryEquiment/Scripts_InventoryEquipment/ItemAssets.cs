@@ -35,6 +35,7 @@ public class ItemAssets : MonoBehaviour
     public Sprite gold; // cuc vang
     public Sprite swordSprite3D_01;
     public Sprite gunSMGSprite3D_01;
+    public Sprite gunPistolSprite3D_01;
 
 
     //todo item Prefab
@@ -50,6 +51,7 @@ public class ItemAssets : MonoBehaviour
     public GameObject helmetPrefab_01;
     public GameObject swordPrefab3D_01;
     public GameObject gunSMGPrefab3D_01;
+    public GameObject gunPistolPrefab3D_01;
 
 
 
