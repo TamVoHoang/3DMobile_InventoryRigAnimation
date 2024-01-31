@@ -47,7 +47,9 @@ public class Item
     }
 
     public void RemoveFromItemHolder() {
+        if(itemHolder == null) Debug.Log("itemHolder == null");
         if (itemHolder != null) {
+            Debug.Log("itemHolder != null");
             // Remove from current Item Holder
             itemHolder.RemoveItemEquipment(this);
         }

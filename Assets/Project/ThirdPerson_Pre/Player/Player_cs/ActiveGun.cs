@@ -13,8 +13,10 @@ public class ActiveGun : Singleton<ActiveGun>
 
     public Transform[] weaponSlots;
     [SerializeField] RaycastWeapon[] equipped_weapons = new RaycastWeapon[2]; // ko destroy sung 1 khi pickup sung 2
-    public int activeWeaponIndex =1;
-    public bool isHolstered = false; // ko co dang de sung trong tui hoac tren lung
+    [SerializeField] private int activeWeaponIndex =1;
+    public int GetActiveWeaponIndex { get { return activeWeaponIndex; } }
+    private bool isHolstered = false; // ko co dang de sung trong tui hoac tren lung
+    public bool IsHolstered { get { return isHolstered; } }
     public bool isReload = false; // ko co dang thay dan
     public Transform crossHairTarget;
     [SerializeField] private RaycastWeapon weapon; //? gun tren nguoi player
