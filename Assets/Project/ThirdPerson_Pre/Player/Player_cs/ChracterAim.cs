@@ -5,9 +5,8 @@ public class ChracterAim : MonoBehaviour
 {
     [SerializeField] public float mouseSentivity = 1f;
     [SerializeField] public float xAixs, yAxis;
-    [SerializeField] private Transform camFollowPos;
-    [SerializeField] float yAxisLimit = 45f;
-
+    [SerializeField] private Transform camFollowPos; // maincamera se move den day, vi trong main camera co virtul camera
+    [SerializeField] private Vector2 yAxixLimit = new Vector2(20, 20);
     //RaycastWeapon weapon; // tai scrip nay trong folder player
     //public float aimDuration = 0.3f;
     void Start()
@@ -17,15 +16,14 @@ public class ChracterAim : MonoBehaviour
     }
     void Update()
     {
-        if(EventSystem.current.IsPointerOverGameObject()) return;
-        
+        //?using mouse to aim player => muon dung thi phai active InputManager.cs coll 2 dong 54 va 84
         // xAixs += Input.GetAxisRaw("Mouse X") * mouseSentivity;
         // yAxis -= Input.GetAxisRaw("Mouse Y") * mouseSentivity;
 
+        //?using virtual UI to aim player. gia tri lay tu khi SetAIm trong UICanvasControllerInput.cs coll 33
         xAixs += InputManager.Instance.GetAim.x * mouseSentivity;
         yAxis -= InputManager.Instance.GetAim.y * mouseSentivity;
-
-        yAxis = Mathf.Clamp(yAxis, -yAxisLimit, yAxisLimit);
+        yAxis = Mathf.Clamp(yAxis, -yAxixLimit.x, yAxixLimit.y);
 
     }
     private void LateUpdate()

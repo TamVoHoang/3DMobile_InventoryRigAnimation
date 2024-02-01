@@ -1,4 +1,3 @@
-using UnityEngine.EventSystems;
 using UnityEngine;
 
 
@@ -12,9 +11,9 @@ public class PlayerGun : Singleton<PlayerGun>
     private CharacterController characterController;
 
     public float airSpeed = 1f;
-    public float walkSpeed = 5, walkBackSpeed = 3;
-    private float runSpeed = 7, runBackSpeed = 5;
-    private float crouchSpeed = 2, crouchBackSpeed = 1;
+    [SerializeField] private float walkSpeed = 3, walkBackSpeed = 2;
+    [SerializeField] private float runSpeed = 5, runBackSpeed = 3;
+    [SerializeField] private float crouchSpeed = 2, crouchBackSpeed = 1;
 
     public float WalkSpeed { get => walkSpeed; set => walkSpeed = value; }
     public float WalkBackSpeed { get => walkBackSpeed; set => walkBackSpeed = value; }
@@ -69,8 +68,6 @@ public class PlayerGun : Singleton<PlayerGun>
         //if(EventSystem.current.IsPointerOverGameObject()) return;
 
         GetIsGrounded = SetIsGrounded();
-        // hzInput = Input.GetAxis("Horizontal");
-        // vInput = Input.GetAxis("Vertical");
         hzInput = InputManager.Instance.GetMove.x;
         vInput = InputManager.Instance.GetMove.y;
 

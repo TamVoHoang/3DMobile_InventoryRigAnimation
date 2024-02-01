@@ -4,12 +4,16 @@ public class UICanvasControllerInput : MonoBehaviour
 {
 
     [Header("Output")]
-    public InputManager inputs;
+    [SerializeField] private InputManager inputs;
+
+    private void Start() {
+        inputs = InputManager.Instance;
+    }
 
     public void VirtualMoveInput(Vector2 virtualMoveDirection)
     {
         inputs.SetMove(Vector2.ClampMagnitude(virtualMoveDirection, 1));
-        //inputs.SetMove(virtualMoveDirection);
+        //inputs.SetMove(virtualMoveDirection); // khi chua Clamp gia gia tri neu di xeo se bi over 1
 
     }
     

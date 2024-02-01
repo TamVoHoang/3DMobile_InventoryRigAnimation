@@ -20,7 +20,6 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
     [SerializeField] private Transform activeArmorSpawnPoint; //? noi se spawn vu khi ra
     [SerializeField] private Transform activeHelmetSpawnPoint; //? noi se spawn vu khi ra
 
-
     private GameObject equipedWeaponTemp_GO;
     private GameObject armorEquipedCurrent;
     private GameObject helmetEquipedCurrent;
@@ -98,40 +97,40 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
         //? neu muon gan gia tri cho bien gunPrefabPistolTemp_Raycast thong qua ham trung gian thi phai them ref
         SetBothWeaponItem(weaponPistolItem, ref gunPrefabPistolTemp_Raycast);
 
-        // if (weaponPistolItem != null) {
-        //     weaponPistolItem.SetItemHolder(this);
-        // }
+        /* if (weaponPistolItem != null) {
+            weaponPistolItem.SetItemHolder(this);
+        }
 
-        // //! kich hoat chay UpdateVisual() thong qua delegate col 61 UI_characterEquipment.cs
-        // //! co dia chi ham de chay la nho vao awke() da kich hoat cho CharacterEquipment
-        // OnEquipmentChanged?.Invoke(this, EventArgs.Empty);
+        //! kich hoat chay UpdateVisual() thong qua delegate col 61 UI_characterEquipment.cs
+        //! co dia chi ham de chay la nho vao awke() da kich hoat cho CharacterEquipment
+        OnEquipmentChanged?.Invoke(this, EventArgs.Empty);
 
-        // //todo xet trang bi loai vu khi cho player. o equipSlot go item ra
-        // //todo xet currentWeapon tai day khi da biet loai weapon nao co trong player
-        // // todo tuong tu khi quet duoc vu khi trong activeInventory - instantiate item.prefab - gan currentweapon
+        //todo xet trang bi loai vu khi cho player. o equipSlot go item ra
+        //todo xet currentWeapon tai day khi da biet loai weapon nao co trong player
+        // todo tuong tu khi quet duoc vu khi trong activeInventory - instantiate item.prefab - gan currentweapon
 
-        // if(weaponPistolItem == null) {
-        //     Debug.Log("weaponItem == null");
-        //     Destroy(gunPrefabPistolTemp_Raycast.gameObject);
+        if(weaponPistolItem == null) {
+            Debug.Log("weaponItem == null");
+            Destroy(gunPrefabPistolTemp_Raycast.gameObject);
 
-        //     if(!ActiveGun.Instance.IsHolstered) {
-        //         ActiveGun.Instance.ToggleActiveWeapon();
-        //     }
-        //     return;
-        // }
+            if(!ActiveGun.Instance.IsHolstered) {
+                ActiveGun.Instance.ToggleActiveWeapon();
+            }
+            return;
+        }
 
-        // if(weaponPistolItem != null) {
-        //     Debug.Log("weaponItem != null");
-        //     int weaponSlotIndex = (int)weaponPistolItem.itemScriptableObject.gunPrefabRaycast.GetComponent<RaycastWeapon>().weaponSlot; //=0
-        //     Debug.Log("weaponSlotIndex " + weaponSlotIndex);
+        if(weaponPistolItem != null) {
+            Debug.Log("weaponItem != null");
+            int weaponSlotIndex = (int)weaponPistolItem.itemScriptableObject.gunPrefabRaycast.GetComponent<RaycastWeapon>().weaponSlot; //=0
+            Debug.Log("weaponSlotIndex " + weaponSlotIndex);
 
-        //     gunPrefabPistolTemp_Raycast = Instantiate(weaponPistolItem.itemScriptableObject.gunPrefabRaycast, ActiveGun.Instance.weaponSlots[weaponSlotIndex].position,
-        //         ActiveGun.Instance.weaponSlots[weaponSlotIndex].transform.rotation, ActiveGun.Instance.weaponSlots[weaponSlotIndex]);
+            gunPrefabPistolTemp_Raycast = Instantiate(weaponPistolItem.itemScriptableObject.gunPrefabRaycast, ActiveGun.Instance.weaponSlots[weaponSlotIndex].position,
+                ActiveGun.Instance.weaponSlots[weaponSlotIndex].transform.rotation, ActiveGun.Instance.weaponSlots[weaponSlotIndex]);
                 
-        //     gunPrefabPistolTemp_Raycast.transform.SetParent(ActiveGun.Instance.weaponSlots[weaponSlotIndex], false);
+            gunPrefabPistolTemp_Raycast.transform.SetParent(ActiveGun.Instance.weaponSlots[weaponSlotIndex], false);
 
-        //     ActiveGun.Instance.Equip(gunPrefabPistolTemp_Raycast);
-        // }
+            ActiveGun.Instance.Equip(gunPrefabPistolTemp_Raycast);
+        } */
     }
 
     // col 42 UI_CharacterEquipment.cs goi -> gan loai weapon trong UI_weaponSlot vao this.weaponItem
@@ -142,40 +141,40 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
         //? neu muon gan gia tri cho bien gunPrefabRifleTemp_Raycast thong qua ham trung gian thi phai them ref
         SetBothWeaponItem(weaponItem, ref gunPrefabRifleTemp_Raycast);
 
-        // if (weaponItem != null) {
-        //     weaponItem.SetItemHolder(this);
-        // }
+        /* if (weaponItem != null) {
+            weaponItem.SetItemHolder(this);
+        }
 
-        // //! kich hoat chay UpdateVisual() thong qua delegate col 61 UI_characterEquipment.cs
-        // //! co dia chi ham de chay la nho vao awke() da kich hoat cho CharacterEquipment
-        // OnEquipmentChanged?.Invoke(this, EventArgs.Empty);
+        //! kich hoat chay UpdateVisual() thong qua delegate col 61 UI_characterEquipment.cs
+        //! co dia chi ham de chay la nho vao awke() da kich hoat cho CharacterEquipment
+        OnEquipmentChanged?.Invoke(this, EventArgs.Empty);
 
-        // //todo xet trang bi loai vu khi cho player. o equipSlot go item ra
-        // //todo xet currentWeapon tai day khi da biet loai weapon nao co trong player
-        // // todo tuong tu khi quet duoc vu khi trong activeInventory - instantiate item.prefab - gan currentweapon
+        //todo xet trang bi loai vu khi cho player. o equipSlot go item ra
+        //todo xet currentWeapon tai day khi da biet loai weapon nao co trong player
+        // todo tuong tu khi quet duoc vu khi trong activeInventory - instantiate item.prefab - gan currentweapon
 
-        // if(weaponItem == null) {
-        //     Debug.Log("weaponItem == null");
-        //     Destroy(gunPrefabRifleTemp_Raycast.gameObject);
+        if(weaponItem == null) {
+            Debug.Log("weaponItem == null");
+            Destroy(gunPrefabRifleTemp_Raycast.gameObject);
 
-        //     if(!ActiveGun.Instance.IsHolstered) {
-        //         ActiveGun.Instance.ToggleActiveWeapon();
-        //     }
-        //     return;
-        // }
+            if(!ActiveGun.Instance.IsHolstered) {
+                ActiveGun.Instance.ToggleActiveWeapon();
+            }
+            return;
+        }
 
-        // if(weaponItem != null) {
-        //     Debug.Log("weaponItem != null");
-        //     int weaponSlotIndex = (int)weaponItem.itemScriptableObject.gunPrefabRaycast.GetComponent<RaycastWeapon>().weaponSlot; //=0
-        //     Debug.Log("weaponSlotIndex " + weaponSlotIndex);
+        if(weaponItem != null) {
+            Debug.Log("weaponItem != null");
+            int weaponSlotIndex = (int)weaponItem.itemScriptableObject.gunPrefabRaycast.GetComponent<RaycastWeapon>().weaponSlot; //=0
+            Debug.Log("weaponSlotIndex " + weaponSlotIndex);
 
-        //     gunPrefabRifleTemp_Raycast = Instantiate(weaponItem.itemScriptableObject.gunPrefabRaycast, ActiveGun.Instance.weaponSlots[weaponSlotIndex].position,
-        //         ActiveGun.Instance.weaponSlots[weaponSlotIndex].transform.rotation, ActiveGun.Instance.weaponSlots[weaponSlotIndex]);
+            gunPrefabRifleTemp_Raycast = Instantiate(weaponItem.itemScriptableObject.gunPrefabRaycast, ActiveGun.Instance.weaponSlots[weaponSlotIndex].position,
+                ActiveGun.Instance.weaponSlots[weaponSlotIndex].transform.rotation, ActiveGun.Instance.weaponSlots[weaponSlotIndex]);
                 
-        //     gunPrefabRifleTemp_Raycast.transform.SetParent(ActiveGun.Instance.weaponSlots[weaponSlotIndex], false);
+            gunPrefabRifleTemp_Raycast.transform.SetParent(ActiveGun.Instance.weaponSlots[weaponSlotIndex], false);
 
-        //     ActiveGun.Instance.Equip(gunPrefabRifleTemp_Raycast);
-        // }
+            ActiveGun.Instance.Equip(gunPrefabRifleTemp_Raycast);
+        } */
     }
 #endregion Set GunPrefabRaycast
 

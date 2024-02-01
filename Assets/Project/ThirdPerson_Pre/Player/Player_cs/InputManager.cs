@@ -1,13 +1,12 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputManager : MonoBehaviour
+public class InputManager : Singleton<InputManager>
 {
-    public static InputManager Instance;
     private PlayerControls playerControls;
 
     private bool isAttackButton;
-    [SerializeField] private Vector2 move;
+    [SerializeField] private Vector2 move;//ok
     private Vector2 look;
     [SerializeField] private Vector2 aim;
     private bool isSwitchBallButton;
@@ -29,8 +28,8 @@ public class InputManager : MonoBehaviour
     public Vector2 GetAim {get{return aim;} private set{aim = value;}}
     public void SetAim(Vector2 aim) => this.aim = aim;
 
-    private void Awake() {
-        if(Instance == null) Instance = this;
+    protected override void Awake() {
+        base.Awake();
         playerControls = new PlayerControls();
         
         // playerControls.Player.Attack.started += _ => StartAttacking();
@@ -41,21 +40,21 @@ public class InputManager : MonoBehaviour
         // playerControls.Player.SwitchState.canceled += _ => isSwitchBallButton = false;
 
         //todo lay gia tri trong PlayerOCntrols -> LeftShift
-        playerControls.Player.Sprint.performed += _ => isSprintButton = true;
-        playerControls.Player.Sprint.canceled += _ => isSprintButton = false;
+        // playerControls.Player.Sprint.performed += _ => isSprintButton = true;
+        // playerControls.Player.Sprint.canceled += _ => isSprintButton = false;
 
         //todo lay gia tri trong PlayerOCntrols -> SpaceButton
-        playerControls.Player.Jump.started += _ => isJumpButton = true;
-        playerControls.Player.Jump.canceled += _ => isJumpButton = false;
+        // playerControls.Player.Jump.started += _ => isJumpButton = true;
+        // playerControls.Player.Jump.canceled += _ => isJumpButton = false;
     }
 
     private void OnEnable() {
         playerControls.Player.Move.Enable();
-        playerControls.Player.Look.Enable();
-        playerControls.Player.Aim.Enable();
+        //playerControls.Player.Look.Enable();
+        //playerControls.Player.Aim.Enable();
         // playerControls.Player.SwitchState.Enable();
-        playerControls.Player.Sprint.Enable();
-        playerControls.Player.Jump.Enable();
+        //playerControls.Player.Sprint.Enable();
+        //playerControls.Player.Jump.Enable();
         // playerControls.Player.Attack.Enable();
     }
 
@@ -73,19 +72,18 @@ public class InputManager : MonoBehaviour
     }
 
     private void Update() {
-        //? neu dung OnScreenControl thi dung dong nay
+        //? neu dung OnScreenControl (joyStick + WASD) thi DUNG dong nay
+        //? neu chi dung UICanvasControllerInput (joyStick) thi KO DUNG dong nay (vi bi xung dot khi Set)
         move = playerControls.Player.Move.ReadValue<Vector2>();
-        if(move.normalized.x < 0 && move.normalized.y < 0) move = new Vector2(-1,-1);
-        else if(move.normalized.x < 0 && move.normalized.y > 0) move = new Vector2(-1,1);
-        else if(move.normalized.x > 0 && move.normalized.y < 0) move = new Vector2(1,-1);
-        else if(move.normalized.x > 0 && move.normalized.y > 0) move = new Vector2(1,1);
+        if(move.normalized.x < -0.5f && move.normalized.y < -0.5f) move = new Vector2(-1,-1);
+        else if(move.normalized.x < -0.5f && move.normalized.y > 0.5) move = new Vector2(-1,1);
+        else if(move.normalized.x > 0.5f && move.normalized.y < -0.5f) move = new Vector2(1,-1);
+        else if(move.normalized.x > 0.5f && move.normalized.y > 0.5f) move = new Vector2(1,1);
 
+        //aim = playerControls.Player.Aim.ReadValue<Vector2>();
         //look = playerControls.Player.Look.ReadValue<Vector2>();
-        aim = playerControls.Player.Aim.ReadValue<Vector2>();
-
     }
     
-
     public void SetAttackButton(bool isAttackButton) {
         this.isAttackButton = isAttackButton;
     }
