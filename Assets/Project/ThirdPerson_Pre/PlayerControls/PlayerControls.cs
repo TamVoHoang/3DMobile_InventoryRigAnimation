@@ -71,6 +71,15 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""cea5ffa2-db99-4c7d-9085-a9d2a8957d75"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -227,6 +236,39 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ca9cf22f-9689-4102-9f93-9567c6563fa7"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1e952d2a-adea-4018-ba4c-362f13f8932a"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""629488a9-81a3-489c-ac54-bc68d236b783"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -240,6 +282,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
         m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
+        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -306,6 +349,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Sprint;
     private readonly InputAction m_Player_Jump;
     private readonly InputAction m_Player_Aim;
+    private readonly InputAction m_Player_Attack;
     public struct PlayerActions
     {
         private @PlayerControls m_Wrapper;
@@ -315,6 +359,7 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
         public InputAction @Jump => m_Wrapper.m_Player_Jump;
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
+        public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -339,6 +384,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Aim.started += instance.OnAim;
             @Aim.performed += instance.OnAim;
             @Aim.canceled += instance.OnAim;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -358,6 +406,9 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @Aim.started -= instance.OnAim;
             @Aim.performed -= instance.OnAim;
             @Aim.canceled -= instance.OnAim;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -382,5 +433,6 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         void OnSprint(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
     }
 }

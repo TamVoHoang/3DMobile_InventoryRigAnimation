@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 50, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2557492968449644739
 CanvasRenderer:
@@ -111,7 +111,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8824843173738072042
 CanvasRenderer:
@@ -450,7 +450,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 60, y: 60}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6781714435991471883
 CanvasRenderer:
@@ -553,7 +553,7 @@ RectTransform:
   m_GameObject: {fileID: 3681350680485299703}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.6, y: 0.6, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 436127115744768856}
@@ -561,7 +561,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -180, y: 450}
+  m_AnchoredPosition: {x: -361, y: 122}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &496051932411346444
@@ -585,7 +585,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -821,10 +821,10 @@ RectTransform:
   - {fileID: 5437958330983878141}
   - {fileID: 2958378626698438654}
   - {fileID: 6368907800285175108}
-  - {fileID: 7037015961619731986}
-  - {fileID: 2469786464152617538}
-  - {fileID: 5327443475554198916}
   - {fileID: 8047209132956470295}
+  - {fileID: 5327443475554198916}
+  - {fileID: 2469786464152617538}
+  - {fileID: 7037015961619731986}
   - {fileID: 7953338628376516181}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -941,7 +941,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8047209132956470295
 RectTransform:
   m_ObjectHideFlags: 0
@@ -959,8 +959,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -176, y: 146}
-  m_SizeDelta: {x: 180, y: 180}
+  m_AnchoredPosition: {x: -270, y: 122}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5328645454915898480
 CanvasRenderer:
@@ -1098,6 +1098,7 @@ GameObject:
   - component: {fileID: 338691831887535742}
   - component: {fileID: 6083279534101521664}
   - component: {fileID: 7897278769536941712}
+  - component: {fileID: 4244840186896051280}
   m_Layer: 5
   m_Name: Image_Handle
   m_TagString: Untagged
@@ -1122,7 +1123,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 900, y: 500}
+  m_SizeDelta: {x: 1100, y: 500}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6083279534101521664
 CanvasRenderer:
@@ -1145,7 +1146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.078431375}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1162,6 +1163,41 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &4244840186896051280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5991505261169853576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9d677f1681015749b15c436eec6d880, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MovementRange: 100
+  m_DynamicOriginRange: 100
+  m_ControlPath: <Gamepad>/rightStick
+  m_Behaviour: 0
+  m_UseIsolatedInputActions: 0
+  m_PointerDownAction:
+    m_Name: Pointer Down
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: fb9da212-5132-4b27-b500-22dfaec9f5ea
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  m_PointerMoveAction:
+    m_Name: Pointer Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: c10a178d-c75a-4292-b916-61b6ae3eae4b
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
 --- !u!1 &6032364046078754507
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,9 +1207,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2958378626698438654}
+  - component: {fileID: 5257029388173742886}
   - component: {fileID: 4228889845938082707}
   - component: {fileID: 2169984801043978631}
-  - component: {fileID: 5257029388173742886}
   m_Layer: 5
   m_Name: UI_Virtual_Joystick_Aim
   m_TagString: Untagged
@@ -1198,9 +1234,42 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 30, y: 0}
-  m_SizeDelta: {x: 1000, y: 600}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1200, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5257029388173742886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6032364046078754507}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2cb8c4d669392748bb924209de33b85, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  containerRect: {fileID: 2958378626698438654}
+  handleRect: {fileID: 338691831887535742}
+  joystickRange: 120
+  magnitudeMultiplier: 1
+  invertXOutputValue: 0
+  invertYOutputValue: 0
+  joystickOutputEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1711589450379942686}
+        m_TargetAssemblyTypeName: UICanvasControllerInput, Assembly-CSharp
+        m_MethodName: VirtualAimInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!222 &4228889845938082707
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1222,7 +1291,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.078431375}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1239,39 +1308,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &5257029388173742886
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6032364046078754507}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2cb8c4d669392748bb924209de33b85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  containerRect: {fileID: 2958378626698438654}
-  handleRect: {fileID: 338691831887535742}
-  joystickRange: 100
-  magnitudeMultiplier: 1
-  invertXOutputValue: 0
-  invertYOutputValue: 0
-  joystickOutputEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1711589450379942686}
-        m_TargetAssemblyTypeName: UICanvasControllerInput, Assembly-CSharp
-        m_MethodName: VirtualAimInput
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!1 &6067558549463093157
 GameObject:
   m_ObjectHideFlags: 0
@@ -1292,7 +1328,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7037015961619731986
 RectTransform:
   m_ObjectHideFlags: 0

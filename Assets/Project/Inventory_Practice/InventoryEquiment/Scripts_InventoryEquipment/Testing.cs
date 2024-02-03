@@ -5,6 +5,7 @@ public class Testing : MonoBehaviour
 {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private UI_Inventory uiInventory;
+
     [SerializeField] private UI_CharacterEquipment uICharacterEquipment;
     [SerializeField] private CharacterEquipment characterEquipment; // keo the player.go vao day
     [SerializeField] private UI_CraftingSystem uICraftingSystem;
@@ -17,9 +18,10 @@ public class Testing : MonoBehaviour
 
     void Start()
     {
-
         uiInventory.SetPlayerPos(playerController);
-        uiInventory.SetInventoryEquipment(playerController.GetInventory());
+        uiInventory.SetInventory(playerController.GetInventory());
+        uiInventory.SetInventoryEquipment(playerController.GetInventoryEquipment());
+        uiInventory.SetInventoryScroll(playerController.GetInventory_scroll());
 
         //todo => characterEquipment.OnEquipmentChanged += CharacterEquipment_OnEquipmentChnaged;
         uICharacterEquipment.SetCharacterEquipment(characterEquipment);
@@ -45,23 +47,13 @@ public class Testing : MonoBehaviour
     private void DeActiveAllUI(){
         UI_CraftingSystem_Go.SetActive(false);
         UI_Inventory_Go.SetActive(false);
-        UI_CharacterEquipment_Go.SetActive(false);
+        //UI_CharacterEquipment_Go.SetActive(false);
     }
 
-    private void ActiveSelfUI(){
-        if(Input.GetKeyDown(KeyCode.I)){
-            UI_Inventory_Go.SetActive(!UI_Inventory_Go.activeSelf);
-            UI_CharacterEquipment_Go.SetActive(!UI_CharacterEquipment_Go.activeSelf);
-        }
-
-        if(Input.GetKeyDown(KeyCode.K)){
-            UI_CraftingSystem_Go.SetActive(!UI_CraftingSystem_Go.activeSelf);
-        }
-    }
 
     public void ActiveEquipmentUI(){
         UI_Inventory_Go.SetActive(!UI_Inventory_Go.activeSelf);
-        UI_CharacterEquipment_Go.SetActive(!UI_CharacterEquipment_Go.activeSelf);
+        //UI_CharacterEquipment_Go.SetActive(!UI_CharacterEquipment_Go.activeSelf);
     }
 
     public void ActiveCraftingSystemUI(){

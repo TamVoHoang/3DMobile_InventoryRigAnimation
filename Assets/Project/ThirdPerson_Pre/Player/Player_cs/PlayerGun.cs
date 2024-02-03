@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlayerGun : Singleton<PlayerGun>
 {
+    private bool isSprinting = false;
+    public bool IsSprinting { get => isSprinting; }
     #region Movement
     public float currentSpeed = 0;
     public float CurrentSpeed (float value) => currentSpeed = value;
@@ -65,7 +67,7 @@ public class PlayerGun : Singleton<PlayerGun>
 
     public void Update()
     {
-        //if(EventSystem.current.IsPointerOverGameObject()) return;
+        SetInputSprintClock(); //? khoa gia tri isPrint  trong 1 lan nhan
 
         GetIsGrounded = SetIsGrounded();
         hzInput = InputManager.Instance.GetMove.x;
@@ -95,6 +97,13 @@ public class PlayerGun : Singleton<PlayerGun>
     {
         currentState = state;
         currentState.EnterState(this);
+    }
+
+    private void SetInputSprintClock() {
+        if(InputManager.Instance.IsSprintButton) {
+            isSprinting = !isSprinting;
+            InputManager.Instance.SetIsSprintButton(false);
+        }
     }
 
     void GetDirectionAndMove()

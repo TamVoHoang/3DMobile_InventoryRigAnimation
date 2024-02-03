@@ -16,6 +16,7 @@ public class Inventory : IItemHolder
 
     public InventorySlot[] inventorySlotArray; // int [] n || n = new int [5]
 
+
     //todo HAM KHOI TAO CHO EQUIPMENT
     public Inventory(Action<Item> useItemEquipmentAction, int inventorySlotCount)
     {
@@ -61,11 +62,16 @@ public class Inventory : IItemHolder
             Debug.Log($"name: {item.itemScriptableObject.itemType}_{item.IsStackable()} _ add vao ItemList");
         }
     }
-
     internal void UseItem(Item item) => useItemAction(item);
     internal void UseItemEquipment(Item item) => useItemEquipmentAction(item);
 
+    //todo ClearInventory_Scroll(List<Item> itemList)
+    public void ClearInventory_Scroll(List<Item> itemList) {
+        itemList.Clear();
+        OnItemListChanged?.Invoke(this, EventArgs.Empty);
+    }
     //todo ADD ITEM VAO TRONG ITEMLIST CO THE + VAO NHAU col 11
+
     public void AddItem(Item item) {
         if(item.IsStackable()) {
             //? neu cung loai thi se tang amount
@@ -127,29 +133,6 @@ public class Inventory : IItemHolder
         itemList.Add(item);
         item.SetItemHolder(this);
         GetEmptyInventorySlot().SetItem(item);
-        OnItemListChanged?.Invoke(this, EventArgs.Empty);
-    }
-    
-    public void AddItemEquip(Item item) {
-        if(item.IsStackable()) {
-            //? neu cung loai thi se tang amount
-            //? so sanh Item chuan vi add voi cac item da co san xem xo cung loai hay khong
-            bool itemAlreadyInInventory = false;
-            foreach (Item inventoryItem in itemList)
-            {
-                if(inventoryItem.itemScriptableObject.itemType == item.itemScriptableObject.itemType) {
-                    inventoryItem.amount += item.amount;
-                    itemAlreadyInInventory = true;
-                }
-            }
-            if(!itemAlreadyInInventory) {
-                itemList.Add(item);
-                GetEmptyInventorySlot().SetItem(item);
-            }
-        }else {
-            itemList.Add(item);
-            GetEmptyInventorySlot().SetItem(item);
-        }
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 
@@ -220,6 +203,7 @@ public class Inventory : IItemHolder
     public InventorySlot[] GetInventorySlotArray() {
         return inventorySlotArray;
     }
+
     public class InventorySlot {
 
         private int index;
@@ -255,6 +239,7 @@ public class Inventory : IItemHolder
                 return inventorySlot;
             }
         }
+
         Debug.LogError("Cannot find an empty InventorySlot!");
         return null;
     }
@@ -265,6 +250,7 @@ public class Inventory : IItemHolder
                 return inventorySlot;
             }
         }
+
         Debug.LogError("Cannot find Item " + item + " in a InventorySlot!");
         return null;
     }

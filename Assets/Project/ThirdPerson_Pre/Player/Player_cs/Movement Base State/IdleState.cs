@@ -10,11 +10,16 @@ public class IdleState : MovementBaseState
     {
         if (movement.dir.magnitude > 0.1f)
         {
-            if (InputManager.Instance.GetJumpButton) movement.SwitchState(movement.Run);
-            else movement.SwitchState(movement.Walk);
+            // if (InputManager.Instance.IsJumpButton) movement.SwitchState(movement.Run);
+            // else movement.SwitchState(movement.Walk);
+
+            movement.SwitchState(movement.Walk);
         }
+
+        if (movement.IsSprinting) movement.SwitchState(movement.Run);
         //if (Input.GetKeyDown(KeyCode.C)) movement.SwitchState(movement.Crouch);
-        if (InputManager.Instance.GetJumpButton && movement.dir.magnitude == 0f) // THEM VAO DE DAM BAO DUNG YEN THI SE IDLE
+
+        if (InputManager.Instance.IsJumpButton && movement.dir.magnitude == 0f) // THEM VAO DE DAM BAO DUNG YEN THI SE IDLE
         {
             movement.previousState = this;
             movement.SwitchState(movement.Jump);

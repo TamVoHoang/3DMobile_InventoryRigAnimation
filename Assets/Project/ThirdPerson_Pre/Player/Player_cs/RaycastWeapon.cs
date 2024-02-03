@@ -9,7 +9,6 @@ public class RaycastWeapon : MonoBehaviour
     [SerializeField] private Transform raycastDestination;
     [SerializeField] TrailRenderer tracerEffect;
 
-
     private Ray ray;
     private RaycastHit hitInfo;
 
@@ -17,10 +16,19 @@ public class RaycastWeapon : MonoBehaviour
     {
         return raycastDestination = rayDes;
     }
+    public bool IsFiring { get => isFiring;}
+    public bool SetIsFiring(bool value) => isFiring = value;
 
+    private void Update() {
+        if(isFiring) {
+            StartFiring();
+
+            isFiring = false;
+        }
+    }
     public void StartFiring()
     {
-        isFiring = true;
+        //isFiring = true;
         Debug.Log("StartFiring");
 
         ray.origin = raycsatOrigin.position;
@@ -40,7 +48,7 @@ public class RaycastWeapon : MonoBehaviour
 
     public void StopFiring()
     {
-        isFiring = false;
+        //isFiring = false;
         Debug.Log("StopFiring");
     }
     

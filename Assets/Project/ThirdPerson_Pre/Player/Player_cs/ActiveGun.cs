@@ -31,7 +31,7 @@ public class ActiveGun : Singleton<ActiveGun>
     }
 
     private void Start() {
-
+        crossHairTarget = GameObject.Find("CroosHairTarget").transform;
         //?kiem tra co san vu khi hay khong
         RaycastWeapon existingWeapon = GetComponentInChildren<RaycastWeapon>();
         if(existingWeapon != null)
@@ -54,21 +54,15 @@ public class ActiveGun : Singleton<ActiveGun>
     }
 
     private void Update() {
-        if(EventSystem.current.IsPointerOverGameObject()) return;
         
         var weapon = GetWeapon(activeWeaponIndex);
-        if(weapon && !isHolstered) {
-            if(Input.GetButtonDown("Fire1")) {
-                weapon.StartFiring();
-            } else if(Input.GetButtonUp("Fire1")) {
-                weapon.StopFiring();
-            }
 
-            // //? chuyen doi trang thai equip and holster
-            // if(Input.GetKeyDown(KeyCode.X)) {
-            //     bool isHolster = rigAnimator.GetBool("holster_weapon");
-            //     rigAnimator.SetBool("holster_weapon", !isHolster);
-            // }
+        if(weapon && !isHolstered) {
+            if(InputManager.Instance.IsAttackButton) {
+                weapon.SetIsFiring(!weapon.IsFiring);
+
+                //InputManager.Instance.SetIsAttackButton(false);
+            } 
         }
 
         if(Input.GetKeyDown(KeyCode.X)) 
@@ -78,6 +72,7 @@ public class ActiveGun : Singleton<ActiveGun>
         if (Input.GetKeyDown(KeyCode.Alpha2))
             SetActiveWeapon(WeaponSlots.Secondary);
     }
+
 
     //TODO equip gun (touch pickup trigger or attactched gun)
     public void Equip(RaycastWeapon newWeapon) {
@@ -95,7 +90,6 @@ public class ActiveGun : Singleton<ActiveGun>
         equipped_weapons[weaponSlotIndex] = weapon;
         //activeWeaponIndex = weaponSlotIndex;//
         SetActiveWeapon(newWeapon.weaponSlot);
-
     }
     #region HOLSTER AND SWITCHING GUN
     public void ToggleActiveWeapon()

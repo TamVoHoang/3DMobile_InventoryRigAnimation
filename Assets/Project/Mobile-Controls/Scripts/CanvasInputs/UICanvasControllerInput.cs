@@ -14,13 +14,11 @@ public class UICanvasControllerInput : MonoBehaviour
     {
         inputs.SetMove(Vector2.ClampMagnitude(virtualMoveDirection, 1));
         //inputs.SetMove(virtualMoveDirection); // khi chua Clamp gia gia tri neu di xeo se bi over 1
-
     }
     
-    public void VirtualAttackInput(bool virtualAttackState)
+    public void VirtualAimInput(Vector2 virtualLookDirection)
     {
-        Debug.Log("VirtualAttackInput set");
-        inputs.SetAttackButton(virtualAttackState);
+        inputs.SetAim(Vector2.ClampMagnitude(virtualLookDirection, 1));
     }
 
     public void VirtualLookInput(Vector2 virtualLookDirection)
@@ -28,24 +26,24 @@ public class UICanvasControllerInput : MonoBehaviour
         inputs.SetLook(Vector2.ClampMagnitude(virtualLookDirection, 1));
 
     }
-    public void VirtualAimInput(Vector2 virtualLookDirection)
+    public void VirtualAttackInput(bool virtualAttackState)
     {
-        inputs.SetAim(Vector2.ClampMagnitude(virtualLookDirection, 1));
+        Debug.Log("co set attack button" + virtualAttackState);
+        inputs.SetIsAttackButton(virtualAttackState);
     }
-
 
     public void VirtualJumpInput(bool virtualJumpState)
     {
-        inputs.SetJumpButton(virtualJumpState);
+        inputs.SetIsJumpButton(virtualJumpState);
     }
 
     public void VirtualSprintInput(bool virtualSprintState)
     {
-        inputs.SetSprintButton(virtualSprintState);
+        inputs.SetIsSprintButton(virtualSprintState);
     }
 
     public void VirtualSwitchBallInput(bool virtualSwitchState)
     {
-        inputs.SetSwitchStateButton(virtualSwitchState);
+        inputs.SetIsSwitchStateButton(virtualSwitchState);
     }
 }

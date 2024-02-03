@@ -5,13 +5,13 @@ public class RunState : MovementBaseState
 
     public override void UpdateState(PlayerGun movement)
     {
-        if (!InputManager.Instance.GetSprintButton) ExitState(movement, movement.Walk);
-        else if (movement.dir.magnitude < 0.1f) ExitState(movement, movement.Idle);
+        if (!movement.IsSprinting) ExitState(movement, movement.Walk);
+        else if (movement.dir.magnitude < 0.1f && !movement.IsSprinting) ExitState(movement, movement.Idle);
 
         if (movement.vInput < 0) movement.CurrentSpeed(movement.RunBackSpeed); // movement.currentSpeed = movement.runBackSpeed
         else movement.CurrentSpeed(movement.RunSpeed); // movement.currentSpeed = movement.runSpeed
         
-        if (InputManager.Instance.GetJumpButton)
+        if (InputManager.Instance.IsJumpButton)
         {
             movement.previousState = this;
             ExitState(movement, movement.Jump);

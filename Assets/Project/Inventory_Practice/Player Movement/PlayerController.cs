@@ -1,32 +1,29 @@
 
+using CodeMonkey.Utils;
 using UnityEngine;
 
 public class PlayerController : Singleton<PlayerController>
 {
     [SerializeField] private int itemSlotAmount = 10;
+    //[SerializeField] private int itemSlotAmount_scroll = 10;
+
     [SerializeField] Inventory inventory; // se duoc Awake() goi de khoi tao new inventory
-    [SerializeField] Inventory inven;
     [SerializeField] Inventory inventoryEquipment;
+    [SerializeField] Inventory inventory_scroll;
     [SerializeField] UI_Inventory ui_Inventory; // dung de goi ham SetInventoy()
-    //[SerializeField] private float moveSpeed =1f;
-    //private Vector2 movement;
     private Rigidbody2D rb;
-    //private PlayerControls playerControls;
-
-
     protected override void Awake() {
         base.Awake();
-        //playerControls = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
 
+        inventory_scroll = new Inventory(UseItemScroll);
         inventory = new Inventory(UseItem); // => khoi tao Inventory() => itemList
         inventoryEquipment = new Inventory(UseItemEquipment, itemSlotAmount);
-
         //ui_Inventory.SetPlayerPos(this); // uiInventory lay vi tri player //todo-> tesing.cs chy ham nay
     }
     private void Start() {
 
-        ui_Inventory.SetInventory(inventory); // bien inventory in doi tuong UI_Inventory duoi canvas da duoc gan gia tri
+        //ui_Inventory.SetInventory(inventory); // bien inventory in doi tuong UI_Inventory duoi canvas da duoc gan gia tri
         // ui_Inventory.SetInventoryEquip(inventoryEquip); //todo-> tesing.cs chy ham nay
 
         //? dung static itemWorld goi phuong thuc Spawnworld ra vat phan world
@@ -36,33 +33,28 @@ public class PlayerController : Singleton<PlayerController>
         // ItemWorld.SpawnItemWorld(new Vector3(0,3), new Item {itemType = Item.ItemType.Medkit, amount =1});
     }
 
-    private void OnEnable() {
-        //playerControls.Enable();
-    }
-
-    void Update()
-    {
-        //PlayerInput();
-
-    }
-
-    private void FixedUpdate() {
-        //Move();
+    private void Update() {
+        
     }
     public Vector3 GetPosition() {
         return transform.position + new Vector3(0, 1f,0);
     }
 
-    //todo lay tinh hieu input de suy ra vector2 movement
-    private void PlayerInput(){
-        //movement = playerControls.Movement.Move.ReadValue<Vector2>();
-    }
-
-    private void Move(){
-        //rb.MovePosition(rb.position + movement * moveSpeed * Time.deltaTime);
+    public Inventory GetInventoryEquipment() {
+        return inventoryEquipment;
     }
     public Inventory GetInventory() {
-        return inventoryEquipment;
+        return inventory;
+    }
+    public Inventory GetInventory_scroll() {
+        return inventory_scroll;
+    }
+
+    private void UseItemScroll(Item item){
+        Debug.Log("su dung item trong itemScroll");
+        inventoryEquipment.AddItemEquipment(item);
+        inventory_scroll.RemoveItem(item);
+        
     }
 
     private void UseItem(Item item) {
@@ -138,10 +130,20 @@ public class PlayerController : Singleton<PlayerController>
         //! pickup kieu ItemWorld3D chi lay vu khi vao ban cam ung
         ItemWorld3D itemWorld3DEquipment = other.GetComponent<ItemWorld3D>();
         if(itemWorld3DEquipment != null) {
-
             Debug.Log("co cham item3D");
-            inventoryEquipment.AddItemEquipment(itemWorld3DEquipment.GetItem());
-            itemWorld3DEquipment.DestroySelf();
+            inventory_scroll.AddItem(itemWorld3DEquipment.GetItem());
+            //inventoryEquipment.AddItemEquipment(itemWorld3DEquipment.GetItem());
+
+            //todo dieu kien de huy itemWorld3D tai day
+            if(Input.GetKeyDown(KeyCode.Escape)) Debug.Log("co nhan E trong luc trigger item3D");
+            //itemWorld3DEquipment.DestroySelf();
+        }
+    }
+    private void OnTriggerExit(Collider other) {
+        ItemWorld3D itemWorld3DEquipment = other.GetComponent<ItemWorld3D>();
+        if(itemWorld3DEquipment != null) {
+            Debug.Log("KO cham item3D");
+            inventory_scroll.ClearInventory_Scroll(inventory_scroll.GetItemList());
         }
     }
 

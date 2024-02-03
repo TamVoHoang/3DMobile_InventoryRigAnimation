@@ -14,18 +14,24 @@ public class UI_Inventory : MonoBehaviour
     //todo Gameobject = duoi tuong nam duoi Canvas Inventory
     [SerializeField] private Inventory inventory; // se duoc gan vao khi SetInventory is called
     [SerializeField] private Inventory inventoryEquipment;
+    [SerializeField] private Inventory inventory_scroll; //!tesitng
     
     //? 2 transform container and templet
     [SerializeField] private Transform itemSlotContainer; // parent folder
     [SerializeField] private Transform itemSlotContainer1; // parent folder
+    [SerializeField] private Transform itemSlotContainer_scroll; //!tesitng
 
     [SerializeField] private Transform itemSlotTemplate; // vi tri cua item se hien len (o vat pham) nam torng bang vat pham
     [SerializeField] private Transform itemSlotTemplate1; // vi tri cua item se hien len (o vat pham) nam torng bang vat pham
+    [SerializeField] private Transform itemSlotTemplate_scroll; //!tesitng
+
 
     private PlayerController playerController;
     [SerializeField] private int ItemAmountOnRow = 5;
     [SerializeField] float itemSlotCellSize = 80f;
 
+    // [SerializeField] private int ItemAmountOnRow_scroll = 2;
+    // [SerializeField] float itemSlotCellSize_scroll = 80f;
     
     private void Awake() {
         //! ITEMSLOTCONTAINER PHAI GOI DAU TIEN NEU KO SE KO CO CHO DE ITEMSLOTTEMPLET INSTANTIATE COL 85 AND 147
@@ -37,6 +43,7 @@ public class UI_Inventory : MonoBehaviour
 
         itemSlotTemplate.gameObject.SetActive(false);
         itemSlotTemplate1.gameObject.SetActive(false);
+        itemSlotTemplate_scroll.gameObject.SetActive(false);
 
     }
 
@@ -45,6 +52,11 @@ public class UI_Inventory : MonoBehaviour
     }
 
     //? gan inventory khi player Awake() -> this.inventory
+    public void SetInventoryScroll(Inventory inventory_scroll) {
+        this.inventory_scroll = inventory_scroll;
+        inventory_scroll.OnItemListChanged += Inventory_OnItemListChanged;
+        RefreshInventoryItem_scroll();
+    }
     public void SetInventory(Inventory inventory) {
         this.inventory = inventory;
         inventory.OnItemListChanged += Inventory_OnItemListChanged;
@@ -59,6 +71,7 @@ public class UI_Inventory : MonoBehaviour
 
     private void Inventory_OnItemListChanged(object sender, EventArgs e)
     {
+        RefreshInventoryItem_scroll();//! testing hien bang khi chan item vat ki
         RefreshIventoryItems();
         RefreshIventoryEquipment();
     }
@@ -66,8 +79,66 @@ public class UI_Inventory : MonoBehaviour
     //? duyet itemList ben trong list itemList | thong qua GetItemList() Inventory.cs
     //todo tao ra transform itemSlotTemplate (o vat pham) trong folder cha itemSlotContainer
     //? sap xep vi tri UI o vat pham ben trong bang vat pham
-    private void RefreshIventoryItems() {
+    private void RefreshInventoryItem_scroll() {
+        Debug.Log("Start run inventory scroll");
+        //! tranh tao ra tranform khi duyet Inventory || itemList se tao ra qua nhiu child in itemSlotContainer
+        foreach (Transform child in itemSlotContainer_scroll) {
+            if (child == itemSlotTemplate_scroll) continue;
+            Destroy(child.gameObject);
+        }
         
+        //? toa do itemSlot ben trong bang vat pham
+        int x = 0;
+        int y = 0;
+
+        foreach (Item item in inventory_scroll.GetItemList()) // cu moi vat pham ben trong listItems trong Item.cs
+        {
+            //? tao ra transform itemSlotTemplate trong hierachy
+            RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate_scroll, itemSlotContainer_scroll).GetComponent<RectTransform>();
+            itemSlotRectTransform.gameObject.SetActive(true);
+
+            //? sau khi add Button_UI codeMonkey su dung mouse left right de se dung or return
+
+            itemSlotRectTransform.GetComponent<Button_UI>().ClickFunc = () => {
+                // Use item
+                inventory_scroll.UseItem(item);
+            };
+            itemSlotRectTransform.GetComponent<Button_UI>().MouseRightClickFunc = () => {
+                // Drop item
+                Item duplicateItem = new Item { itemScriptableObject = item.itemScriptableObject, amount = item.amount }; // khi bi mat item khi drop and add
+                inventory_scroll.RemoveItem(item);
+                ItemWorld.DropItem(playerController.GetPosition(),duplicateItem);
+            };
+
+            //? xet vi tri cho o vat pham UI
+            itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, -y * itemSlotCellSize);
+
+
+            //? thay doi hinh anh hien thi cua tung o vat pham 
+            //Image image = itemSlotRectTransform.Find("image").GetComponent<Image>();
+            Image image = itemSlotRectTransform.GetChild(2).GetComponent<Image>();
+            image.sprite = item.GetSprite();
+
+            //? hien amount cua item tren bang UIsau khi add them vao > 1
+            TextMeshProUGUI uiText = itemSlotRectTransform.Find("amountText").GetComponent<TextMeshProUGUI>();
+            if (item.amount > 1) {
+                uiText.SetText(item.amount.ToString());
+            } else {
+                uiText.SetText(""); // neu la cai dau tien lum vao thi ko hien so 1
+            }
+
+
+            // offset x, y vi tri o vat pham tren bang vat pham
+            x++;
+            if (x >= ItemAmountOnRow) {
+                x = 0;
+                y++;
+            }
+        }
+        Debug.Log(" so luong vat pham trong itemList_scroll = " + inventory_scroll.GetItemList().Count);
+    }
+    private void RefreshIventoryItems() {
+        Debug.Log("Start run inventory items");
         //! tranh tao ra tranform khi duyet Inventory || itemList se tao ra qua nhiu child in itemSlotContainer
         foreach (Transform child in itemSlotContainer) {
             if (child == itemSlotTemplate) continue;
@@ -126,9 +197,9 @@ public class UI_Inventory : MonoBehaviour
         }
         Debug.Log(" so luong vat pham trong itemList item = " + inventory.GetItemList().Count);
     }
-
+    
     private void RefreshIventoryEquipment() {
-        Debug.Log("Start run");
+        Debug.Log("Start run inventory equipment");
 
         //! tranh tao ra tranform khi duyet Inventory || itemList se tao ra qua nhiu child in itemSlotContainer
         foreach (Transform child in itemSlotContainer1) {
@@ -208,5 +279,5 @@ public class UI_Inventory : MonoBehaviour
         Debug.Log(" so luong vat pham trong itemList equip = " + inventoryEquipment.GetItemList().Count);
     }
 
-
-}
+    //todo
+    }

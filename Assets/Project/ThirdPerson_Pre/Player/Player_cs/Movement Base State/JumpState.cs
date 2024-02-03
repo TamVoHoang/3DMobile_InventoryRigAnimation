@@ -7,7 +7,8 @@ public class JumpState : MovementBaseState
     public override void EnterState(PlayerGun movement)
     {
         if (movement.previousState == movement.Idle) movement.animator.SetTrigger("IdleJump");
-        else if (movement.previousState == movement.Walk || movement.previousState == movement.Run) movement.animator.SetTrigger("RunJump");
+        else if (movement.previousState == movement.Walk || movement.previousState == movement.Run) 
+                movement.animator.SetTrigger("RunJump");
     }
 
     public override void UpdateState(PlayerGun movement)
@@ -16,7 +17,7 @@ public class JumpState : MovementBaseState
         {
             movement.SetIsJumped(false);
             if (movement.hzInput == 0 && movement.vInput == 0) movement.SwitchState(movement.Idle);
-            else if (InputManager.Instance.GetSprintButton) movement.SwitchState(movement.Run);
+            else if (movement.IsSprinting) movement.SwitchState(movement.Run);
             else movement.SwitchState(movement.Walk);
         }
     }
