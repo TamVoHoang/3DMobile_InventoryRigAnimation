@@ -69,7 +69,11 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
             Debug.Log("weaponItem == null");
             Destroy(raycastWeaponTemp.gameObject);
 
-            if(!ActiveGun.Instance.IsHolstered) {
+            //? neu loai raycastWeaponTemp co weaponSlot tra ve kieu (int) == activeWeaponIndex
+            //? loai sung dang cam tren tay bi emty - thi thuc hien hanh dong toggleActiveWeapon
+            //? neu sung dang trong tui bi empty - thi KO thuc hien hanh dong toggleActiveWeapon
+            if(!ActiveGun.Instance.IsHolstered &&
+                (int)raycastWeaponTemp.GetComponent<RaycastWeapon>().weaponSlot == ActiveGun.Instance.GetActiveWeaponIndex){
                 ActiveGun.Instance.ToggleActiveWeapon();
             }
             return;

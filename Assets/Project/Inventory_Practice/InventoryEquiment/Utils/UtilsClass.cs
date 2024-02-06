@@ -335,7 +335,7 @@ namespace CodeMonkey.Utils {
 
         // Generate random normalized direction
         public static Vector3 GetRandomDir() {
-            return new Vector3(UnityEngine.Random.Range(-1f,1f), UnityEngine.Random.Range(-1f,1f)).normalized;
+            return new Vector3(UnityEngine.Random.Range(-5f,5f), UnityEngine.Random.Range(0.5f, 1.5f), UnityEngine.Random.Range(5f, 10f)).normalized;
         }
         
 

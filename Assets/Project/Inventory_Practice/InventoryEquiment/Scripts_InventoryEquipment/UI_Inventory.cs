@@ -28,10 +28,10 @@ public class UI_Inventory : MonoBehaviour
 
     private PlayerController playerController;
     [SerializeField] private int ItemAmountOnRow = 5;
-    [SerializeField] float itemSlotCellSize = 80f;
+    [SerializeField] float itemSlotCellSize = 100f;
 
-    // [SerializeField] private int ItemAmountOnRow_scroll = 2;
-    // [SerializeField] float itemSlotCellSize_scroll = 80f;
+    [SerializeField] private int ItemAmountOnRow_scroll = 2;
+    [SerializeField] float itemSlotCellSize_scroll = 100f;
     
     private void Awake() {
         //! ITEMSLOTCONTAINER PHAI GOI DAU TIEN NEU KO SE KO CO CHO DE ITEMSLOTTEMPLET INSTANTIATE COL 85 AND 147
@@ -44,7 +44,6 @@ public class UI_Inventory : MonoBehaviour
         itemSlotTemplate.gameObject.SetActive(false);
         itemSlotTemplate1.gameObject.SetActive(false);
         itemSlotTemplate_scroll.gameObject.SetActive(false);
-
     }
 
     public void SetPlayerPos(PlayerController playerController) {
@@ -98,7 +97,6 @@ public class UI_Inventory : MonoBehaviour
             itemSlotRectTransform.gameObject.SetActive(true);
 
             //? sau khi add Button_UI codeMonkey su dung mouse left right de se dung or return
-
             itemSlotRectTransform.GetComponent<Button_UI>().ClickFunc = () => {
                 // Use item
                 inventory_scroll.UseItem(item);
@@ -111,7 +109,7 @@ public class UI_Inventory : MonoBehaviour
             };
 
             //? xet vi tri cho o vat pham UI
-            itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, -y * itemSlotCellSize);
+            itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize_scroll, -y * itemSlotCellSize_scroll);
 
 
             //? thay doi hinh anh hien thi cua tung o vat pham 
@@ -130,7 +128,7 @@ public class UI_Inventory : MonoBehaviour
 
             // offset x, y vi tri o vat pham tren bang vat pham
             x++;
-            if (x >= ItemAmountOnRow) {
+            if (x >= ItemAmountOnRow_scroll) {
                 x = 0;
                 y++;
             }
@@ -253,7 +251,6 @@ public class UI_Inventory : MonoBehaviour
                     ItemWorld3D.DropItem(playerController.GetPosition(),duplicateItem);
 
                 };
-
             }
 
             Inventory.InventorySlot tmpInventorySlot = inventorySlot;

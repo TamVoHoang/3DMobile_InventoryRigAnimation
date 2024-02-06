@@ -1,6 +1,7 @@
 
 using CodeMonkey.Utils;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : Singleton<PlayerController>
 {
@@ -37,7 +38,7 @@ public class PlayerController : Singleton<PlayerController>
         
     }
     public Vector3 GetPosition() {
-        return transform.position + new Vector3(0, 1f,0);
+        return transform.position + new Vector3(0f, 0f, 0f);
     }
 
     public Inventory GetInventoryEquipment() {
@@ -131,21 +132,29 @@ public class PlayerController : Singleton<PlayerController>
         ItemWorld3D itemWorld3DEquipment = other.GetComponent<ItemWorld3D>();
         if(itemWorld3DEquipment != null) {
             Debug.Log("co cham item3D");
-            inventory_scroll.AddItem(itemWorld3DEquipment.GetItem());
-            //inventoryEquipment.AddItemEquipment(itemWorld3DEquipment.GetItem());
+            
+            //? add itemWorld3D vao trong scrollViewInventory
+            //inventory_scroll.AddItem(itemWorld3DEquipment.GetItem());
 
-            //todo dieu kien de huy itemWorld3D tai day
-            if(Input.GetKeyDown(KeyCode.Escape)) Debug.Log("co nhan E trong luc trigger item3D");
-            //itemWorld3DEquipment.DestroySelf();
+            //? add thang truc tiep vao trong weaponEquipment_UI
+            inventoryEquipment.AddItemEquipment(itemWorld3DEquipment.GetItem());
+            itemWorld3DEquipment.DestroySelf(); //? xoa itemworld3d sau khi bo vao inventory
         }
     }
-    private void OnTriggerExit(Collider other) {
+    /* private void OnTriggerExit(Collider other) {
         ItemWorld3D itemWorld3DEquipment = other.GetComponent<ItemWorld3D>();
         if(itemWorld3DEquipment != null) {
             Debug.Log("KO cham item3D");
-            inventory_scroll.ClearInventory_Scroll(inventory_scroll.GetItemList());
+
+            //? tra lai itemWorld3d tu scrollViewInventory
+            foreach (var item in inventory_scroll.GetItemList()) {
+                Item duplicateItem = new Item { itemScriptableObject = item.itemScriptableObject, amount = item.amount };
+                inventory_scroll.RemoveItem(item);
+                ItemWorld.DropItem(GetPosition(),duplicateItem);
+            }
+            //inventory_scroll.ClearInventory_Scroll(inventory_scroll.GetItemList()); //? clear scrollViewInventory khi ??
         }
-    }
+    } */
 
     //todo
 }
