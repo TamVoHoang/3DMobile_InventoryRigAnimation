@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 using CodeMonkey.Utils;
+using Unity.VisualScripting;
 
 
 public class UI_Inventory : MonoBehaviour
@@ -35,11 +36,11 @@ public class UI_Inventory : MonoBehaviour
     
     private void Awake() {
         //! ITEMSLOTCONTAINER PHAI GOI DAU TIEN NEU KO SE KO CO CHO DE ITEMSLOTTEMPLET INSTANTIATE COL 85 AND 147
-        itemSlotContainer = transform.Find("itemSlotContainer");
-        itemSlotContainer1 = transform.Find("itemSlotContainer1");
+        // itemSlotContainer = transform.Find("itemSlotContainer");
+        // itemSlotContainer1 = transform.Find("itemSlotContainer1");
 
-        itemSlotTemplate = itemSlotContainer.Find("itemSlotTemplate");
-        itemSlotTemplate1 = itemSlotContainer1.Find("itemSlotTemplate1");
+        // itemSlotTemplate = itemSlotContainer.Find("itemSlotTemplate");
+        // itemSlotTemplate1 = itemSlotContainer1.Find("itemSlotTemplate1");
 
         itemSlotTemplate.gameObject.SetActive(false);
         itemSlotTemplate1.gameObject.SetActive(false);
@@ -105,7 +106,7 @@ public class UI_Inventory : MonoBehaviour
                 // Drop item
                 Item duplicateItem = new Item { itemScriptableObject = item.itemScriptableObject, amount = item.amount }; // khi bi mat item khi drop and add
                 inventory_scroll.RemoveItem(item);
-                ItemWorld.DropItem(playerController.GetPosition(),duplicateItem);
+                ItemWorld3D.DropItem(playerController.GetPosition(),duplicateItem);
             };
 
             //? xet vi tri cho o vat pham UI
@@ -254,17 +255,26 @@ public class UI_Inventory : MonoBehaviour
             }
 
             Inventory.InventorySlot tmpInventorySlot = inventorySlot;
-
             UI_ItemSlot uiItemSlot = itemSlotRectTransform.GetComponent<UI_ItemSlot>();
 
             uiItemSlot.SetOnDropAction(() => {
-
                 Debug.Log("Start run OnDropAction");
                 // Dropped on this UI Item Slot
                 Item draggedItem = UI_ItemDrag.Instance.GetItem();
-                draggedItem.RemoveFromItemHolder();
-                inventoryEquipment.AddItemEquipment(draggedItem, tmpInventorySlot);
-            });
+                //todo neu KO dung ScrollView thi chay doan nay
+                // draggedItem.RemoveFromItemHolder();
+                // inventoryEquipment.AddItemEquipment(draggedItem, tmpInventorySlot);
+
+                //todo neu dung ScrollView thi chay doan nay
+                Debug.Log(draggedItem);
+                if(draggedItem != null) {
+                    UI_ItemDrag.Instance.SetItemNull();
+                    Debug.Log("dragItem1 = " + draggedItem);
+                    draggedItem.RemoveFromItemHolder();
+                    inventoryEquipment.AddItemEquipment(draggedItem, tmpInventorySlot);
+                }
+                });
+
 
             // offset x, y vi tri o vat pham tren bang vat pham
             x++;

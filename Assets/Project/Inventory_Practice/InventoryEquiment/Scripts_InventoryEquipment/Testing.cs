@@ -47,13 +47,13 @@ public class Testing : MonoBehaviour
     private void DeActiveAllUI(){
         UI_CraftingSystem_Go.SetActive(false);
         UI_Inventory_Go.SetActive(false);
-        //UI_CharacterEquipment_Go.SetActive(false);
+        UI_CharacterEquipment_Go.SetActive(false);
     }
 
 
     public void ActiveEquipmentUI(){
         UI_Inventory_Go.SetActive(!UI_Inventory_Go.activeSelf);
-        //UI_CharacterEquipment_Go.SetActive(!UI_CharacterEquipment_Go.activeSelf);
+        UI_CharacterEquipment_Go.SetActive(!UI_CharacterEquipment_Go.activeSelf);
     }
 
     public void ActiveCraftingSystemUI(){

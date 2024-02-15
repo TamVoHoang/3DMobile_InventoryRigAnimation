@@ -1,6 +1,5 @@
 using System;
 using CodeMonkey.Utils;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class UI_CharacterEquipment : MonoBehaviour
@@ -9,6 +8,7 @@ public class UI_CharacterEquipment : MonoBehaviour
     //todo dung de kiem tra keo tha dung doi tuong tu o weaponContainer into UI characterEquipment
 
     [SerializeField] private Transform pfUI_Item;
+    [SerializeField] private float pfUI_ItemSCale = 1f;
     private CharacterEquipment characterEquipment; // bien duoc gan ben testing.cs
     private Transform itemContainer;
     
@@ -132,7 +132,7 @@ public class UI_CharacterEquipment : MonoBehaviour
             // sinh pfItem len
             Transform uiItemTransform = Instantiate(pfUI_Item, itemContainer);
             uiItemTransform.GetComponent<RectTransform>().anchoredPosition = weaponSlot.GetComponent<RectTransform>().anchoredPosition;
-            uiItemTransform.localScale = Vector3.one * 1.5f;
+            uiItemTransform.localScale = Vector3.one * pfUI_ItemSCale;
 
             UI_Item uiItem = uiItemTransform.GetComponent<UI_Item>();
             uiItem.SetItem(item);
@@ -269,7 +269,7 @@ public class UI_CharacterEquipment : MonoBehaviour
             // sinh pfItem len
             Transform uiItemTransform = Instantiate(pfUI_Item, itemContainer);
             uiItemTransform.GetComponent<RectTransform>().anchoredPosition = slot.GetComponent<RectTransform>().anchoredPosition;
-            uiItemTransform.localScale = Vector3.one * 1.5f;
+            uiItemTransform.localScale = Vector3.one * pfUI_ItemSCale;
 
             UI_Item uiItem = uiItemTransform.GetComponent<UI_Item>();
             uiItem.SetItem(item);

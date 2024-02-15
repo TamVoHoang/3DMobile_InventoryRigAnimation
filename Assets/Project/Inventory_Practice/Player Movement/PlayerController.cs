@@ -138,23 +138,27 @@ public class PlayerController : Singleton<PlayerController>
 
             //? add thang truc tiep vao trong weaponEquipment_UI
             inventoryEquipment.AddItemEquipment(itemWorld3DEquipment.GetItem());
-            itemWorld3DEquipment.DestroySelf(); //? xoa itemworld3d sau khi bo vao inventory
+            //? xoa itemworld3d sau khi bo vao inventory
+            itemWorld3DEquipment.DestroySelf();
         }
     }
-    /* private void OnTriggerExit(Collider other) {
+
+    private void OnTriggerExit(Collider other) {
         ItemWorld3D itemWorld3DEquipment = other.GetComponent<ItemWorld3D>();
         if(itemWorld3DEquipment != null) {
             Debug.Log("KO cham item3D");
 
             //? tra lai itemWorld3d tu scrollViewInventory
-            foreach (var item in inventory_scroll.GetItemList()) {
-                Item duplicateItem = new Item { itemScriptableObject = item.itemScriptableObject, amount = item.amount };
-                inventory_scroll.RemoveItem(item);
-                ItemWorld.DropItem(GetPosition(),duplicateItem);
-            }
-            //inventory_scroll.ClearInventory_Scroll(inventory_scroll.GetItemList()); //? clear scrollViewInventory khi ??
+            // foreach (var item in inventory_scroll.GetItemList()) {
+            //     Item duplicateItem = new Item { itemScriptableObject = item.itemScriptableObject, amount = item.amount };
+            //     inventory_scroll.RemoveItem(item);
+            //     ItemWorld3D.DropItem(GetPosition(),duplicateItem);
+            // }
+
+            //? clear scrollViewInventory khi ??
+            //inventory_scroll.ClearInventory_Scroll(inventory_scroll.GetItemList()); 
         }
-    } */
+    }
 
     //todo
 }

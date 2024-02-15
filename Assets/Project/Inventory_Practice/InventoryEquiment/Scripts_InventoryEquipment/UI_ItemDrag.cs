@@ -45,6 +45,10 @@ public class UI_ItemDrag : MonoBehaviour {
     public void SetItem(Item item) {
         this.item = item;
     }
+    public void SetItemNull() {
+        this.item = null;
+    }
+
 
     public void SetSprite(Sprite sprite) {
         image.sprite = sprite;
