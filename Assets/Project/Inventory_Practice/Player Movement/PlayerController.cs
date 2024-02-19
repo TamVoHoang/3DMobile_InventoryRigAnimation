@@ -133,12 +133,31 @@ public class PlayerController : Singleton<PlayerController>
         if(itemWorld3DEquipment != null) {
             Debug.Log("co cham item3D");
             
-            //? add itemWorld3D vao trong scrollViewInventory
+            //? add itemWorld3D vao trong scrollViewInventory pickup
             //inventory_scroll.AddItem(itemWorld3DEquipment.GetItem());
 
             //? add thang truc tiep vao trong weaponEquipment_UI
-            inventoryEquipment.AddItemEquipment(itemWorld3DEquipment.GetItem());
+            //inventoryEquipment.AddItemEquipment(itemWorld3DEquipment.GetItem());
+
             //? xoa itemworld3d sau khi bo vao inventory
+            //itemWorld3DEquipment.DestroySelf();
+
+            EquipOrAddToInventoryEquipmentList(itemWorld3DEquipment);
+        }
+    }
+    private void EquipOrAddToInventoryEquipmentList(ItemWorld3D itemWorld3DEquipment) {
+        // todo neu cham && tren tay ko co PREFAB loai vua cham => equip -- else ko lam gi het
+        // todo neu cham && loai vua cham khac loai tren tay => add vao balo
+        var itemWorld3DType = itemWorld3DEquipment.GetItem().itemScriptableObject.itemType;
+        CharacterEquipment characterEquipment = GetComponent<CharacterEquipment>();
+
+        if((itemWorld3DType == Item.ItemType.GunSMG3D_01 && !characterEquipment.GetPrefab_RifleTemp) 
+            || itemWorld3DType == Item.ItemType.GunPistol3D_01 && !characterEquipment.GetPrefab_PistolTemp) {
+            characterEquipment.EquipItem(itemWorld3DEquipment.GetItem());
+            itemWorld3DEquipment.DestroySelf();
+        }
+        else {
+            inventoryEquipment.AddItemEquipment(itemWorld3DEquipment.GetItem());
             itemWorld3DEquipment.DestroySelf();
         }
     }

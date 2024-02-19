@@ -36,7 +36,5 @@ public class UI_CharacterEquipmentSlot : MonoBehaviour, IDropHandler
         
     // }
 
-    
-
 
 }

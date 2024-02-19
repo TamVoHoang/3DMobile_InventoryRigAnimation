@@ -32,6 +32,9 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
 
     [SerializeField] private RaycastWeapon gunPrefabRifleTemp_Raycast; //! testing
     [SerializeField] private RaycastWeapon gunPrefabPistolTemp_Raycast; //! testing
+    public RaycastWeapon GetPrefab_RifleTemp {get{return gunPrefabRifleTemp_Raycast;}}
+    public RaycastWeapon GetPrefab_PistolTemp {get{return gunPrefabPistolTemp_Raycast;}}
+
 
 
     private void Awake() {

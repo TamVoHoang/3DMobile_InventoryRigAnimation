@@ -21,12 +21,11 @@ public class ChracterAim : MonoBehaviour
 
         //?using virtual UI to aim player. gia tri lay tu khi SetAIm trong UICanvasControllerInput.cs coll 33
         
-    }
-    private void FixedUpdate() {
         xAixs += InputManager.Instance.GetAim.x * mouseSentivity;
         yAxis -= InputManager.Instance.GetAim.y * mouseSentivity;
         yAxis = Mathf.Clamp(yAxis, -yAxixLimit.x, yAxixLimit.y);
     }
+
 
     private void LateUpdate()
     {

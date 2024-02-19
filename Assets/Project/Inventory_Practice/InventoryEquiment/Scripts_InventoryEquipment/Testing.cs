@@ -36,30 +36,9 @@ public class Testing : MonoBehaviour
 
         uICraftingSystem.SetCraftingSystem(craftingSystem); //? tao ket noi UI_craftingStem (chua cac grid + craftingSystem)
 
-        DeActiveAllUI();
 
     }
 
-    private void Update() {
-        
-    }
 
-    private void DeActiveAllUI(){
-        UI_CraftingSystem_Go.SetActive(false);
-        UI_Inventory_Go.SetActive(false);
-        UI_CharacterEquipment_Go.SetActive(false);
-    }
-
-
-    public void ActiveEquipmentUI(){
-        UI_Inventory_Go.SetActive(!UI_Inventory_Go.activeSelf);
-        UI_CharacterEquipment_Go.SetActive(!UI_CharacterEquipment_Go.activeSelf);
-    }
-
-    public void ActiveCraftingSystemUI(){
-        UI_CraftingSystem_Go.SetActive(!UI_CraftingSystem_Go.activeSelf);
-    }
-
-
-
+    //todo
 }

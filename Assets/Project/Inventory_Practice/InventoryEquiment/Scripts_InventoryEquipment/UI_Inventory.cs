@@ -1,11 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System;
 using CodeMonkey.Utils;
-using Unity.VisualScripting;
 
 
 public class UI_Inventory : MonoBehaviour
@@ -15,16 +12,16 @@ public class UI_Inventory : MonoBehaviour
     //todo Gameobject = duoi tuong nam duoi Canvas Inventory
     [SerializeField] private Inventory inventory; // se duoc gan vao khi SetInventory is called
     [SerializeField] private Inventory inventoryEquipment;
-    [SerializeField] private Inventory inventory_scroll; //!tesitng
+    [SerializeField] private Inventory inventory_scroll; //!tesitng pickup
     
     //? 2 transform container and templet
     [SerializeField] private Transform itemSlotContainer; // parent folder
     [SerializeField] private Transform itemSlotContainer1; // parent folder
-    [SerializeField] private Transform itemSlotContainer_scroll; //!tesitng
+    [SerializeField] private Transform itemSlotContainerPickup_scroll; //!tesitng pickup
 
     [SerializeField] private Transform itemSlotTemplate; // vi tri cua item se hien len (o vat pham) nam torng bang vat pham
     [SerializeField] private Transform itemSlotTemplate1; // vi tri cua item se hien len (o vat pham) nam torng bang vat pham
-    [SerializeField] private Transform itemSlotTemplate_scroll; //!tesitng
+    [SerializeField] private Transform itemSlotTemplatePickup_scroll; //!tesitng pickup
 
 
     private PlayerController playerController;
@@ -44,7 +41,7 @@ public class UI_Inventory : MonoBehaviour
 
         itemSlotTemplate.gameObject.SetActive(false);
         itemSlotTemplate1.gameObject.SetActive(false);
-        itemSlotTemplate_scroll.gameObject.SetActive(false);
+        itemSlotTemplatePickup_scroll.gameObject.SetActive(false);
     }
 
     public void SetPlayerPos(PlayerController playerController) {
@@ -55,7 +52,7 @@ public class UI_Inventory : MonoBehaviour
     public void SetInventoryScroll(Inventory inventory_scroll) {
         this.inventory_scroll = inventory_scroll;
         inventory_scroll.OnItemListChanged += Inventory_OnItemListChanged;
-        RefreshInventoryItem_scroll();
+        RefreshInventoryItemPickup_scroll();
     }
     public void SetInventory(Inventory inventory) {
         this.inventory = inventory;
@@ -71,7 +68,7 @@ public class UI_Inventory : MonoBehaviour
 
     private void Inventory_OnItemListChanged(object sender, EventArgs e)
     {
-        RefreshInventoryItem_scroll();//! testing hien bang khi chan item vat ki
+        RefreshInventoryItemPickup_scroll();//! testing hien bang khi chan item vat ki
         RefreshIventoryItems();
         RefreshIventoryEquipment();
     }
@@ -79,11 +76,11 @@ public class UI_Inventory : MonoBehaviour
     //? duyet itemList ben trong list itemList | thong qua GetItemList() Inventory.cs
     //todo tao ra transform itemSlotTemplate (o vat pham) trong folder cha itemSlotContainer
     //? sap xep vi tri UI o vat pham ben trong bang vat pham
-    private void RefreshInventoryItem_scroll() {
+    private void RefreshInventoryItemPickup_scroll() {
         Debug.Log("Start run inventory scroll");
         //! tranh tao ra tranform khi duyet Inventory || itemList se tao ra qua nhiu child in itemSlotContainer
-        foreach (Transform child in itemSlotContainer_scroll) {
-            if (child == itemSlotTemplate_scroll) continue;
+        foreach (Transform child in itemSlotContainerPickup_scroll) {
+            if (child == itemSlotTemplatePickup_scroll) continue;
             Destroy(child.gameObject);
         }
         
@@ -94,7 +91,7 @@ public class UI_Inventory : MonoBehaviour
         foreach (Item item in inventory_scroll.GetItemList()) // cu moi vat pham ben trong listItems trong Item.cs
         {
             //? tao ra transform itemSlotTemplate trong hierachy
-            RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate_scroll, itemSlotContainer_scroll).GetComponent<RectTransform>();
+            RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplatePickup_scroll, itemSlotContainerPickup_scroll).GetComponent<RectTransform>();
             itemSlotRectTransform.gameObject.SetActive(true);
 
             //? sau khi add Button_UI codeMonkey su dung mouse left right de se dung or return
@@ -136,6 +133,7 @@ public class UI_Inventory : MonoBehaviour
         }
         Debug.Log(" so luong vat pham trong itemList_scroll = " + inventory_scroll.GetItemList().Count);
     }
+    
     private void RefreshIventoryItems() {
         Debug.Log("Start run inventory items");
         //! tranh tao ra tranform khi duyet Inventory || itemList se tao ra qua nhiu child in itemSlotContainer

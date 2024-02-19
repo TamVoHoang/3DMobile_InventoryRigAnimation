@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -62,6 +61,9 @@ public class Inventory : IItemHolder
             Debug.Log($"name: {item.itemScriptableObject.itemType}_{item.IsStackable()} _ add vao ItemList");
         }
     }
+
+    //todo duyet itemList de kiem tra loai vu khi ben trong
+
     internal void UseItem(Item item) => useItemAction(item);
     internal void UseItemEquipment(Item item) => useItemEquipmentAction(item);
 
@@ -71,7 +73,6 @@ public class Inventory : IItemHolder
         OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
     //todo ADD ITEM VAO TRONG ITEMLIST CO THE + VAO NHAU col 11
-
     public void AddItem(Item item) {
         if(item.IsStackable()) {
             //? neu cung loai thi se tang amount
