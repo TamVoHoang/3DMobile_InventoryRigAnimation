@@ -39,6 +39,7 @@ public class UICanvasControllerInput : MonoBehaviour
 
     public void VirtualSprintInput(bool virtualSprintState)
     {
+        Debug.Log("co nhan sprint button" + virtualSprintState);
         inputs.SetIsSprintButton(virtualSprintState);
     }
 

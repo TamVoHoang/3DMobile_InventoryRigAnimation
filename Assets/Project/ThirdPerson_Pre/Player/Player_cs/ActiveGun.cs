@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class ActiveGun : Singleton<ActiveGun>
 {
+    //todo game object = player
+    //todo 
+    public Action startFiring;
     public enum WeaponSlots
     {
         Primary = 0,
@@ -18,7 +21,7 @@ public class ActiveGun : Singleton<ActiveGun>
     private bool isHolstered = false; // ko co dang de sung trong tui hoac tren lung
     public bool IsHolstered { get { return isHolstered; } }
     public bool isReload = false; // ko co dang thay dan
-    public Transform crossHairTarget;
+    [SerializeField] private Transform crossHairTarget;
     [SerializeField] private RaycastWeapon weapon; //? gun tren nguoi player
     [SerializeField] private Animator rigAnimator;
 
@@ -58,11 +61,11 @@ public class ActiveGun : Singleton<ActiveGun>
         var weapon = GetWeapon(activeWeaponIndex);
 
         if(weapon && !isHolstered) {
-            if(InputManager.Instance.IsAttackButton) {
-                weapon.SetIsFiring(!weapon.IsFiring);
-
-                //InputManager.Instance.SetIsAttackButton(false);
-            } 
+            // if(InputManager.Instance.IsAttackButton) {
+            //     weapon.SetIsFiring(!weapon.IsFiring);
+            //     InputManager.Instance.SetIsAttackButton(false); // ban tung phat khi nhan 1 lan chuot
+            // }
+            weapon.UpdateWeapon();
         }
 
         if(Input.GetKeyDown(KeyCode.X)) 

@@ -111,6 +111,7 @@ public class PlayerGun : Singleton<PlayerGun>
         }
     }
 
+
     void GetDirectionAndMove()
     {
         Vector3 airDir = Vector3.zero; // tao mot bien vector 3 (x,y,z) rong chua gia tri toa do nhap tu ban phim khi o tren khong

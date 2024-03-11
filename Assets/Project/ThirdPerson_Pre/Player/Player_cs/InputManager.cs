@@ -23,7 +23,10 @@ public class InputManager : Singleton<InputManager>
     public void SetMove(Vector2 move) => this.move = move;
     public void SetAim(Vector2 aim) => this.aim = aim;
     public void SetLook(Vector2 look) => this.look = look;
-    public void SetIsAttackButton(bool isAttackButton) => this.isAttackButton = isAttackButton;
+    //public void SetIsAttackButton(bool isAttackButton) => this.isAttackButton = isAttackButton;
+    public void SetIsAttackButton(bool isAttackButton) {
+        this.isAttackButton = isAttackButton;
+    }
     public void SetIsSprintButton(bool isSprintButton) => this.isSprintButton = isSprintButton;
     public void SetIsJumpButton(bool isJumpButton) => this.isJumpButton = isJumpButton;
     public void SetIsSwitchStateButton(bool isSwitchStateButton) => this.isSwitchStateButton = isSwitchStateButton;
