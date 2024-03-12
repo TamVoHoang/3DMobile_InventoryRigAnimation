@@ -21,7 +21,7 @@ public class ActiveGun : Singleton<ActiveGun>
     private bool isHolstered = false; // ko co dang de sung trong tui hoac tren lung
     public bool IsHolstered { get { return isHolstered; } }
     public bool isReload = false; // ko co dang thay dan
-    [SerializeField] private Transform crossHairTarget;
+    [SerializeField] private Transform crossHairTarget; //? crossHairTarget tren mainCamera
     [SerializeField] private RaycastWeapon weapon; //? gun tren nguoi player
     [SerializeField] private Animator rigAnimator;
 
@@ -65,7 +65,7 @@ public class ActiveGun : Singleton<ActiveGun>
             //     weapon.SetIsFiring(!weapon.IsFiring);
             //     InputManager.Instance.SetIsAttackButton(false); // ban tung phat khi nhan 1 lan chuot
             // }
-            weapon.UpdateWeapon();
+            weapon.UpdateWeapon(Time.deltaTime);
         }
 
         if(Input.GetKeyDown(KeyCode.X)) 

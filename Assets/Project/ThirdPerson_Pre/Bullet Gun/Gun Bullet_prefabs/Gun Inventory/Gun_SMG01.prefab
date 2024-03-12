@@ -135,14 +135,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponSlot: 0
   weaponName: rifle
-  isFiring: 0
-  raycsatOrigin: {fileID: 7095179040361038052}
-  raycastDestination: {fileID: 0}
+  raycastOrigin: {fileID: 7095179040361038052}
+  raycastDes: {fileID: 0}
   tracerEffect: {fileID: 2141053679634929815, guid: 7ce2abb6fb949c342b127465ec9039bb, type: 3}
   muzzleFlash:
   - {fileID: 9160704319489342479}
   - {fileID: 987803690892696440}
   hiteffect: {fileID: 2797962787801551162}
+  distance: 0
+  isFiring: 0
+  fireRate: 1
+  accumulateTime: 0
+  ammoCount: 60
+  clipSize: 60
+  bulletSpeed: 500
+  bulletDrop: 0
 --- !u!1 &1925669635841932733
 GameObject:
   m_ObjectHideFlags: 0
