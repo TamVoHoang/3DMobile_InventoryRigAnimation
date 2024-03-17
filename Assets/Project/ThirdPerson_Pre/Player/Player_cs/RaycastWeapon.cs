@@ -158,6 +158,7 @@ public class RaycastWeapon : MonoBehaviour
         {
             hiteffect.transform.position = hitInfo.point; // vi tri cua vet dan la vi tri tia hit va cham
             hiteffect.transform.forward = hitInfo.normal;
+
             hiteffect.Emit(1);
             Debug.DrawLine(ray.origin, hitInfo.point, Color.red, 1.0f); //VE TIA
             Debug.Log(hitInfo.transform.name);

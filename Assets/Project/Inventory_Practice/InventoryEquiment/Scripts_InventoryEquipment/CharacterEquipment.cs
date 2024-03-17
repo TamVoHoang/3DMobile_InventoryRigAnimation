@@ -17,8 +17,8 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
     [SerializeField] private Transform activeWeaponSpawnPoint; //? noi se spawn vu khi ra
     [SerializeField] private Transform activePistolSpawnPoint; //? noi se spawn vu khi ra
 
-    [SerializeField] private Transform activeArmorSpawnPoint; //? noi se spawn vu khi ra
-    [SerializeField] private Transform activeHelmetSpawnPoint; //? noi se spawn vu khi ra
+    [SerializeField] private Transform activeArmorSpawnPoint; //? noi se spawn armor
+    [SerializeField] private Transform activeHelmetSpawnPoint; //? noi se spawn helmet
 
     private GameObject equipedWeaponTemp_GO;
     private GameObject armorEquipedCurrent;
