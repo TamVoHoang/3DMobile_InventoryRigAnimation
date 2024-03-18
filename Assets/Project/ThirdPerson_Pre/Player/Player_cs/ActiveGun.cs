@@ -14,16 +14,17 @@ public class ActiveGun : Singleton<ActiveGun>
         //Tertiary = 2
     }
 
-    public Transform[] weaponSlots;
+    [Header ("Gun")]
+    public Transform[] weaponSlots; //? dung de bo chi so index vao de instatiate vu khi ra dung vi tri transform
     [SerializeField] RaycastWeapon[] equipped_weapons = new RaycastWeapon[2]; // ko destroy sung 1 khi pickup sung 2
-    [SerializeField] private int activeWeaponIndex = 1;
+    [SerializeField] private int activeWeaponIndex = 1; //? slot nao dang trang bi sung
     public int GetActiveWeaponIndex { get { return activeWeaponIndex; } }
-    private bool isHolstered = false; // ko co dang de sung trong tui hoac tren lung
+    [SerializeField] private bool isHolstered = false; // false = dang equip
     public bool IsHolstered { get { return isHolstered; } }
     public bool isReload = false; // ko co dang thay dan
     [SerializeField] private Transform crossHairTarget; //? crossHairTarget tren mainCamera
-    [SerializeField] private RaycastWeapon weapon; //? gun tren nguoi player
     [SerializeField] private Animator rigAnimator;
+    //[SerializeField] private RaycastWeapon weapon; //? gun tren nguoi player
 
     protected override void Awake() {
         base.Awake();
@@ -88,10 +89,10 @@ public class ActiveGun : Singleton<ActiveGun>
         }
         weapon = newWeapon;
         weapon.SetRaycastDes(crossHairTarget);
-        //rigAnimator.Play("equip_" + weapon.weaponName);//
+        //rigAnimator.Play("equip_" + weapon.weaponName);// ko lay
 
         equipped_weapons[weaponSlotIndex] = weapon;
-        //activeWeaponIndex = weaponSlotIndex;//
+        //activeWeaponIndex = weaponSlotIndex;// ko lay
         SetActiveWeapon(newWeapon.weaponSlot);
     }
     #region HOLSTER AND SWITCHING GUN

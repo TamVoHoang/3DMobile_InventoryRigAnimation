@@ -2,10 +2,15 @@ using UnityEngine;
 
 public class HandSwordWeapon : MonoBehaviour
 {
-    [SerializeField] Transform swordHolster_Point;
+    public ActiveSword.SwordSlots swordSlot;
+    
 
     void Update()
     {
         
     }
+    public void UpdateSword(float deltaTime) {
+        Debug.Log("activeSword.cs coll 30 called");
+    }
+
 }

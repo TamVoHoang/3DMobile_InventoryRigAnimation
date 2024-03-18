@@ -161,6 +161,7 @@ public class UI_CharacterEquipment : MonoBehaviour
                 // Use item
                 Debug.Log("click vao weaponPistolItem tren weaponSlot");
                 
+                if(!ActiveSword.Instance.IsHolstered_Sword) ActiveSword.Instance.ToggleActiveSword();
                 if(!ActiveGun.Instance.IsHolstered && 
                     (int)item.itemScriptableObject.gunPrefabRaycast.GetComponent<RaycastWeapon>().weaponSlot == ActiveGun.Instance.GetActiveWeaponIndex) {
                     ActiveGun.Instance.ToggleActiveWeapon();
@@ -291,6 +292,21 @@ public class UI_CharacterEquipment : MonoBehaviour
             UI_Item uiItem = uiItemTransform.GetComponent<UI_Item>();
             uiItem.SetItem(weaponSwordItem);
             weaponSwordSlot.transform.Find("emptyImage").gameObject.SetActive(false);
+
+            //? testing doi dung thong qua nut nhan tren UI_WeaponItem - click vao item tren weaponSlotEquipment
+            uiItemTransform.GetComponent<RectTransform>().GetComponent<Button_UI>().ClickFunc = () => {
+                // Use item
+                Debug.Log("click vao weaponSwordItem tren weaponSlot");
+                if(!ActiveGun.Instance.IsHolstered) ActiveGun.Instance.ToggleActiveWeapon();
+                
+                if(!ActiveSword.Instance.IsHolstered_Sword && 
+                    (int)weaponSwordItem.itemScriptableObject.handSwordPrefab.GetComponent<HandSwordWeapon>().swordSlot == ActiveSword.Instance.GetActiveSwordIndex) {
+                    ActiveSword.Instance.ToggleActiveSword();
+                }
+                else {
+                    ActiveSword.Instance.SetActiveSword(weaponSwordItem.itemScriptableObject.handSwordPrefab.GetComponent<HandSwordWeapon>().swordSlot);
+                }
+            };
         }
         else {
             weaponSwordSlot.transform.Find("emptyImage").gameObject.SetActive(true);
