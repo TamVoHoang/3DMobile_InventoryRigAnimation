@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class CharacterEquipment : MonoBehaviour,IItemHolder
@@ -11,11 +12,15 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
         Helmet,
         Armor,
         WeaponRifle,
-        WeaponPistol
+        WeaponPistol,
+        WeaponSword
     }
     public event EventHandler OnEquipmentChanged; //! duoc += col 63 UI_chatacterEquipment || tesing Awake () - run SetCharacterEquipment()
     [SerializeField] private Transform activeWeaponSpawnPoint; //? noi se spawn vu khi ra
     [SerializeField] private Transform activePistolSpawnPoint; //? noi se spawn vu khi ra
+    [SerializeField] private Transform activeSwordSpawnPoint; //? noi se spawn vu khi ra
+    [SerializeField] Transform swordHolster_Point;
+
 
     [SerializeField] private Transform activeArmorSpawnPoint; //? noi se spawn armor
     [SerializeField] private Transform activeHelmetSpawnPoint; //? noi se spawn helmet
@@ -26,14 +31,18 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
 
     private Item weaponItem;
     private Item weaponPistolItem;
+    private Item weaponSwordItem;
     private Item helmetItem;
     private Item armorItem;
 
 
     [SerializeField] private RaycastWeapon gunPrefabRifleTemp_Raycast; //! testing
     [SerializeField] private RaycastWeapon gunPrefabPistolTemp_Raycast; //! testing
+    [SerializeField] private HandSwordWeapon swordPrefabTemp_HandSword; //! testing
+
     public RaycastWeapon GetPrefab_RifleTemp {get{return gunPrefabRifleTemp_Raycast;}}
     public RaycastWeapon GetPrefab_PistolTemp {get{return gunPrefabPistolTemp_Raycast;}}
+    public HandSwordWeapon GetPrefab_SwordTemp {get{return swordPrefabTemp_HandSword;}}
 
 
 
@@ -43,6 +52,16 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
         activeHelmetSpawnPoint = transform.Find("ActiveHelmet");
     }
 
+    private void Update() {
+        if(Input.GetKey(KeyCode.P)) {
+            Debug.Log("co nhan nut P");
+            swordPrefabTemp_HandSword.transform.SetParent(swordHolster_Point, false);
+
+            swordPrefabTemp_HandSword.transform.SetParent(swordHolster_Point, true);
+        }
+    }
+
+
     public Item GetWeaponRifleItem(){
         Debug.Log("return weaponItem from characterEquipment.cs coll 47");
         return weaponItem;
@@ -51,10 +70,44 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
         Debug.Log("return weaponItem from characterEquipment.cs coll 52");
         return weaponPistolItem;
     }
+    public Item GetWeaponSwordItem() {
+        Debug.Log("return weaponItem from characterEquipment.cs coll 62");
+        return weaponSwordItem;
+    }
     public Item SetWeaponItemNull() => weaponItem = null;
     public Item GetHelmetItem() => helmetItem;
     public Item GetArmorItem() => armorItem;
+    
+    //todo set sword
+    private void SetSwordWeaponItem(Item sword) {
+        this.weaponSwordItem = sword;
+        if (sword != null) {
+            sword.SetItemHolder(this);
+        }
 
+        OnEquipmentChanged?.Invoke(this, EventArgs.Empty);
+
+        if(sword == null) {
+            Destroy(swordPrefabTemp_HandSword.gameObject);
+            return;
+        }
+        if(sword != null) {
+            if(!ActiveGun.Instance.IsHolstered) ActiveGun.Instance.ToggleActiveWeapon(); //? neu co bat ki sung nao dang trang bi theo bien isHolstered thi toggle het
+            //GameObject swordToSpawn = weaponSwordItem.GetPrefab();
+            StartCoroutine(Delaytime(sword));
+            // swordPrefabTemp_HandSword = Instantiate(sword.itemScriptableObject.handSwordPrefab, activeSwordSpawnPoint.position, Quaternion.identity);
+            // swordPrefabTemp_HandSword.transform.rotation = activeSwordSpawnPoint.transform.rotation;
+            // swordPrefabTemp_HandSword.transform.parent = activeSwordSpawnPoint.transform;
+        }
+    }
+    IEnumerator Delaytime(Item sword) {
+        yield return new WaitForSeconds(1f);
+        swordPrefabTemp_HandSword = Instantiate(sword.itemScriptableObject.handSwordPrefab, activeSwordSpawnPoint.position, Quaternion.identity);
+        swordPrefabTemp_HandSword.transform.rotation = activeSwordSpawnPoint.transform.rotation;
+        swordPrefabTemp_HandSword.transform.parent = activeSwordSpawnPoint.transform;
+    }
+
+#region Set GunPrefabRaycast
     private void SetBothWeaponItem(Item weaponItem, ref RaycastWeapon raycastWeaponTemp) {
         if (weaponItem != null) {
             weaponItem.SetItemHolder(this);
@@ -96,7 +149,6 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
         }
     }
 
-#region Set GunPrefabRaycast
     private void SetPistolWeaponItem(Item weaponPistolItem) {
         this.weaponPistolItem = weaponPistolItem;
         Debug.Log("checking weaponItem on characterEquipment" + this.weaponPistolItem);
@@ -183,6 +235,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
             ActiveGun.Instance.Equip(gunPrefabRifleTemp_Raycast);
         } */
     }
+
 #endregion Set GunPrefabRaycast
 
     public void SetHelmetItem(Item helmetItem) {
@@ -232,20 +285,21 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
     public void EquipItem(Item item) {
         switch (item.GetEquipSlot()) {
         default:
-        case EquipSlot.Armor:   SetArmorItem(item);     break;
-        case EquipSlot.Helmet:  SetHelmetItem(item);    break;
-        case EquipSlot.WeaponRifle:  SetWeaponRifleItem(item);    break;
-        case EquipSlot.WeaponPistol:  SetPistolWeaponItem(item);    break;
-
+        case EquipSlot.Armor:           SetArmorItem(item);             break;
+        case EquipSlot.Helmet:          SetHelmetItem(item);            break;
+        case EquipSlot.WeaponRifle:     SetWeaponRifleItem(item);       break;
+        case EquipSlot.WeaponPistol:    SetPistolWeaponItem(item);      break;
+        case EquipSlot.WeaponSword:     SetSwordWeaponItem(item);       break;
         }
     }
     public Item GetEquippedItem(EquipSlot equipSlot) {
         switch (equipSlot) {
         default:
-        case EquipSlot.Armor:   return GetArmorItem();
-        case EquipSlot.Helmet:  return GetHelmetItem();
-        case EquipSlot.WeaponRifle:  return GetWeaponRifleItem();
-        case EquipSlot.WeaponPistol:  return GetWeaponPistolItem();
+        case EquipSlot.Armor:           return GetArmorItem();
+        case EquipSlot.Helmet:          return GetHelmetItem();
+        case EquipSlot.WeaponRifle:     return GetWeaponRifleItem();
+        case EquipSlot.WeaponPistol:    return GetWeaponPistolItem();
+        case EquipSlot.WeaponSword:     return GetWeaponSwordItem();
         }
     }
 
@@ -260,8 +314,10 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
 
 #region interface IItemHolder
     public void RemoveItemEquipment(Item item) {
-        if (GetWeaponRifleItem() == item)    SetWeaponRifleItem(null);
-        if (GetWeaponPistolItem() == item)    SetPistolWeaponItem(null);
+        if (GetWeaponRifleItem() == item)       SetWeaponRifleItem(null);
+        if (GetWeaponPistolItem() == item)      SetPistolWeaponItem(null);
+        if (GetWeaponSwordItem() == item)       SetSwordWeaponItem(null);
+
 
         if (GetHelmetItem() == item)    SetHelmetItem(null);
         if (GetArmorItem() == item)     SetArmorItem(null);

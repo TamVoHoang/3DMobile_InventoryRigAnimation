@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4508176353124982979}
+  - component: {fileID: -3621540570741180511}
   - component: {fileID: 3910263759904665759}
   - component: {fileID: 5000446938133847331}
   - component: {fileID: 4547247310750628258}
-  - component: {fileID: -5347175347204945349}
   m_Layer: 0
   m_Name: SwordPrefab_3D_01
   m_TagString: Untagged
@@ -35,6 +35,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
+--- !u!114 &-3621540570741180511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2334020579491521255}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3249e69505754834fbcfa17c8f346d0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item:
+    itemScriptableObject: {fileID: 11400000, guid: 14cdf16ced14e4044baf738a537bfe35, type: 2}
+    amount: 1
+    isSplited: 0
+    isEquiped: 0
 --- !u!33 &3910263759904665759
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -107,21 +124,3 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 43493028843927964, guid: 1d316f6b08d13ac4cb80f162e65529cb, type: 2}
---- !u!114 &-5347175347204945349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2334020579491521255}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc9f2f4eb430cf041a38384910ee6958, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponSlot: 0
-  weaponName: rifle
-  isFiring: 0
-  raycsatOrigin: {fileID: 0}
-  raycastDestination: {fileID: 0}
-  tracerEffect: {fileID: 0}
