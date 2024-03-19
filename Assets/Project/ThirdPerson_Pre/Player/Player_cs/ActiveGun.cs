@@ -25,6 +25,7 @@ public class ActiveGun : Singleton<ActiveGun>
     [SerializeField] private Transform crossHairTarget; //? crossHairTarget tren mainCamera
     [SerializeField] private Animator rigAnimator;
     //[SerializeField] private RaycastWeapon weapon; //? gun tren nguoi player
+    [SerializeField] private AmmoWidget ammoWidget;
 
     protected override void Awake() {
         base.Awake();
@@ -94,6 +95,7 @@ public class ActiveGun : Singleton<ActiveGun>
         equipped_weapons[weaponSlotIndex] = weapon;
         //activeWeaponIndex = weaponSlotIndex;// ko lay
         SetActiveWeapon(newWeapon.weaponSlot);
+        ammoWidget.Refresh(weapon.ammoCount);
     }
     #region HOLSTER AND SWITCHING GUN
     public void ToggleActiveWeapon()
@@ -124,10 +126,12 @@ public class ActiveGun : Singleton<ActiveGun>
         if (weapon)
         {
             rigAnimator.SetBool("holster_weapon", true); // holster_weapon = cat sung equiped_weapons[] hien co neu co
-        do
+            do
             {
                 yield return new WaitForEndOfFrame();
             } while (rigAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f);
+            
+            ammoWidget.Clear(0); //! sung con tren nguoi dung dang Holster => ko in sl dan len UI
         }
     }
     IEnumerator ActivateWeapon(int index)
@@ -142,12 +146,14 @@ public class ActiveGun : Singleton<ActiveGun>
             rigAnimator.Play("equip_" + weapon.weaponName);
             // DO XET FALSE NEN SE GIU NGUYEN TRNAG THAI EQUIP
             
-        do
+            do
             {
                 yield return new WaitForEndOfFrame();
             } while (rigAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f);
-        isHolstered = false;
+            isHolstered = false;
+            ammoWidget.Refresh(weapon.ammoCount); //? in thong tin ammoWidget sau khi doi sung bang nut UI
         }
+
     }
     #endregion HOLSTER AND SWITCHING GUN
 

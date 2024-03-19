@@ -144,12 +144,13 @@ MonoBehaviour:
   hiteffect: {fileID: 2797962787801551162}
   distance: 0
   isFiring: 0
-  fireRate: 1
+  fireRate: 30
   accumulateTime: 0
   ammoCount: 60
   clipSize: 60
   bulletSpeed: 500
   bulletDrop: 0
+  magazine: {fileID: 1925669635841932733}
 --- !u!1 &1925669635841932733
 GameObject:
   m_ObjectHideFlags: 0

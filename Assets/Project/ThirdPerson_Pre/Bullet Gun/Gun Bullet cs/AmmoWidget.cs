@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class AmmoWidget : MonoBehaviour
@@ -9,4 +8,7 @@ public class AmmoWidget : MonoBehaviour
     {
         ammoText.text = ammoCount.ToString (); 
     }
+    public void Clear(int ammoClear) {
+        ammoText.text = ammoClear.ToString (); 
+    } 
 }

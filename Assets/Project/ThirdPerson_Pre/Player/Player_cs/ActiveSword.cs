@@ -86,7 +86,6 @@ public class ActiveSword : Singleton<ActiveSword>
             animator.SetBool("holster_sword", true);
             characterEquipment.GetPrefab_SwordTemp.transform.SetParent(swordHolster_Point, false);
             characterEquipment.GetPrefab_SwordTemp.transform.SetParent(swordHolster_Point, true);
-            //isHolstered_Sword = true;
             yield return new WaitForSeconds(.5f);
         }
     }
@@ -100,7 +99,7 @@ public class ActiveSword : Singleton<ActiveSword>
             characterEquipment.GetPrefab_SwordTemp.transform.SetParent(swordSlots[index], false);
             characterEquipment.GetPrefab_SwordTemp.transform.SetParent(swordSlots[index], true);
             isHolstered_Sword = false;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(.5f);
         }
     }
 }

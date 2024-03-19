@@ -43,7 +43,9 @@ public class RaycastWeapon : MonoBehaviour
     public float bulletDrop = 0.0f; // bao xa bullet se roi xuong
     List<Bullet> Bullets = new List<Bullet>(); // list add vien dan KHI FIRE
     private float maxLifeTime = 5.0f;
-
+    
+    [Header("           RELOAD")]
+    public GameObject magazine;
     private void Awake() {
         
     }
@@ -70,20 +72,20 @@ public class RaycastWeapon : MonoBehaviour
 
     //? ActiveGun.cs || coll 68 Update() call this function
     public void UpdateWeapon(float deltaTime) {
-        if(InputManager.Instance.IsAttackButton) {
-            //InputManager.Instance.SetIsAttackButton(false); // ban tung phat khi nhan 1 lan chuot
-            StartFiring();
-        }
+        //if (Input.GetButtonDown("Fire1")) StartFiring();
+        if(InputManager.Instance.IsAttackButton && !isFiring) StartFiring(); //? khi dang nhan button + dang chua ban => ban phat dau tien va cho UpdateFiring()
         if (isFiring) UpdateFiring(Time.deltaTime);
         UpdateBullet(Time.deltaTime);
-        if(!InputManager.Instance.IsAttackButton && isFiring) StopFiring();
+
+        //if(Input.GetButtonUp("Fire1")) StopFiring();
+        if(!InputManager.Instance.IsAttackButton) StopFiring();
     }
 
     //? StartFiring() || UpdateFiring()
     private void FireBullet()
     {
-        // if(ammoCount <=0) return;
-        // ammoCount--;
+        if(ammoCount <=0) return;
+        ammoCount--;
         foreach (var particle in muzzleFlash)
         {
             particle.Emit(1);
