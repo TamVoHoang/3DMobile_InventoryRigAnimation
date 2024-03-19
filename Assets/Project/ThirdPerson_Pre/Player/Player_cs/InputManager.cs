@@ -5,8 +5,8 @@ public class InputManager : Singleton<InputManager>
 {
     private PlayerControls playerControls;
     private Vector2 move;//ok
-    private Vector2 aim;
-    private Vector2 look;
+    private Vector2 aim;//aming
+    private Vector2 look; //look arount
     [SerializeField] private bool isAttackButton;
     private bool isJumpButton;
     [SerializeField] private bool isSprintButton;
