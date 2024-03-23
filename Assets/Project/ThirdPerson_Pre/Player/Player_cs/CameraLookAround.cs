@@ -18,12 +18,9 @@ public class CameraLookAround : MonoBehaviour
         camFollowAround = GameObject.Find("CamFollowAround").transform;
     }
     private void Update() {
-        if(InputManager.Instance.GetLook.normalized != Vector2.zero) {
+        /* if(InputManager.Instance.GetLook.normalized != Vector2.zero) {
             bodyAimLayer.weight = 0;
-            weaponPoseLayer.weight = 0;
-            // xRotation += InputManager.Instance.GetLook.y;
-            // yRotation -= InputManager.Instance.GetLook.x;
-            // xRotation = Mathf.Clamp(xRotation, -30f, 70f);
+            weaponPoseLayer.weight = 0f;
 
             xyRotation.x += InputManager.Instance.GetLook.y;
             xyRotation.y -= InputManager.Instance.GetLook.x;
@@ -33,12 +30,12 @@ public class CameraLookAround : MonoBehaviour
         {
             weaponPoseLayer.weight += Time.deltaTime / aimDuration;
             if(bodyAimLayer.weight < 0.5f) bodyAimLayer.weight += Time.deltaTime / aimDuration;
-        }
+        } */
 
     }
     
     private void LateUpdate() {
-        CameraRotation();
+        //CameraRotation();
     }
 
     private void CameraRotation() {
