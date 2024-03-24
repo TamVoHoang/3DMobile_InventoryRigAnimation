@@ -33018,6 +33018,7 @@ GameObject:
   - component: {fileID: 1676693359432264617}
   - component: {fileID: 3094836179703067845}
   - component: {fileID: 590610673020771787}
+  - component: {fileID: 6625560560188278657}
   m_Layer: 6
   m_Name: ScifiWorlds_Soldier_Male_02
   m_TagString: Player
@@ -33309,10 +33310,10 @@ MonoBehaviour:
   - {fileID: 0}
   activeWeaponIndex: 1
   isHolstered: 0
-  isReload: 0
   crossHairTarget: {fileID: 0}
   rigAnimator: {fileID: 4856833749364056662}
   ammoWidget: {fileID: 0}
+  isReload: 0
 --- !u!114 &5043786343982820026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33381,6 +33382,22 @@ MonoBehaviour:
   bodyAimLayer: {fileID: 4998838628877411906}
   weaponPoseLayer: {fileID: 3776687553542722406}
   aimDuration: 5
+--- !u!114 &6625560560188278657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4834554605840437068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da2ba167c4f6d094da63aa3d23a0e447, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerAnimator: {fileID: 0}
+  defaultWeapon: {fileID: 11400000, guid: b703b39930c50af4494e325a555444f7, type: 2}
+  timeBetweenAttacks: 0.5
+  overrideControllers: {fileID: 0}
 --- !u!1 &4865092424051686877
 GameObject:
   m_ObjectHideFlags: 0

@@ -90,17 +90,17 @@ public class RaycastWeapon : MonoBehaviour
         {
             particle.Emit(1);
         }
-        //FireBulletWithRaycast(); //? raycast tai day
+        //FireBulletWithRaycast(); //? BAN DAN raycast tai day
 
         Vector3 directionToAimPoint = (-raycastOrigin.position + raycastDes.position); // huong tu vt tren nong sung den muc tieu
         Debug.Log("dir =" + directionToAimPoint);
 
         Vector3 velocity = directionToAimPoint.normalized * bulletSpeed; // vector van toc ban dau tai nong sung
-        Debug.Log("vel =" + velocity);
+        //Debug.Log("vel =" + velocity);
 
         var bullet = CreateBullet(raycastOrigin.position, velocity); // gan toan bo thuoc tinh cua vien dan tao ra tren ham create bullet cho bien var bullet
         Bullets.Add(bullet); // gan bien bulet sau khi duoc khoi tao tren CREATEBULLET gan vao list => simulate
-        //recoil.GenerateRecoil(weaponName);
+        //recoil.GenerateRecoil(weaponName); //? sun giat
     }
 
     private void StartFiring() //? coll 33 UpdateWeapon() call this function

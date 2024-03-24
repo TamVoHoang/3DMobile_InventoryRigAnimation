@@ -18,29 +18,30 @@ public class ActiveGun : Singleton<ActiveGun>
     public Transform[] weaponSlots; //? dung de bo chi so index vao de instatiate vu khi ra dung vi tri transform
     [SerializeField] RaycastWeapon[] equipped_weapons = new RaycastWeapon[2]; // ko destroy sung 1 khi pickup sung 2
     [SerializeField] private int activeWeaponIndex = 1; //? slot nao dang trang bi sung
-    public int GetActiveWeaponIndex { get { return activeWeaponIndex; } }
     [SerializeField] private bool isHolstered = false; // false = dang equip
-    public bool IsHolstered { get { return isHolstered; } }
-    public bool isReload = false; // ko co dang thay dan
     [SerializeField] private Transform crossHairTarget; //? crossHairTarget tren mainCamera
     [SerializeField] private Animator rigAnimator;
-    //[SerializeField] private RaycastWeapon weapon; //? gun tren nguoi player
     [SerializeField] private AmmoWidget ammoWidget;
+    public int GetActiveWeaponIndex { get { return activeWeaponIndex; } }
+    public bool IsHolstered { get { return isHolstered; } }
+    public bool isReload = false; // ko co dang thay dan
+    //[SerializeField] private RaycastWeapon weapon; //? gun tren nguoi player
 
     protected override void Awake() {
         base.Awake();
-        // rigAnimator.updateMode = AnimatorUpdateMode.AnimatePhysics;
-        // rigAnimator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
-        // rigAnimator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
-        // rigAnimator.updateMode = AnimatorUpdateMode.Normal;
+        /* rigAnimator.updateMode = AnimatorUpdateMode.AnimatePhysics;
+        rigAnimator.cullingMode = AnimatorCullingMode.CullUpdateTransforms;
+        rigAnimator.cullingMode = AnimatorCullingMode.AlwaysAnimate;
+        rigAnimator.updateMode = AnimatorUpdateMode.Normal; */
     }
 
     private void Start() {
+        isHolstered = true; //! dang ko trang bi sung (sung sung ko co tren tay player)
         crossHairTarget = GameObject.Find("CroosHairTarget").transform;
         //?kiem tra co san vu khi hay khong
         RaycastWeapon existingWeapon = GetComponentInChildren<RaycastWeapon>();
-        if(existingWeapon != null)
-        {
+        if(existingWeapon != null) {
+
             Equip(existingWeapon);
         }
     }
@@ -70,12 +71,12 @@ public class ActiveGun : Singleton<ActiveGun>
             weapon.UpdateWeapon(Time.deltaTime);
         }
 
-        if(Input.GetKeyDown(KeyCode.X)) 
+        /* if(Input.GetKeyDown(KeyCode.X)) 
             ToggleActiveWeapon();
         if (Input.GetKeyDown(KeyCode.Alpha1))
             SetActiveWeapon(WeaponSlots.Primary);
         if (Input.GetKeyDown(KeyCode.Alpha2))
-            SetActiveWeapon(WeaponSlots.Secondary);
+            SetActiveWeapon(WeaponSlots.Secondary); */
     }
 
 
@@ -139,7 +140,7 @@ public class ActiveGun : Singleton<ActiveGun>
         var weapon = GetWeapon(index); // kiem tra cay sung moi vua pickup da co trong cai o equiped_weapons[] chua
         if (weapon)
         {
-            rigAnimator.SetBool("holster_weapon", false); //neu ko xet false, sau khi o tren holster_weapon = true cat sung
+            rigAnimator.SetBool("holster_weapon", false);   //neu ko xet false, sau khi o tren holster_weapon = true cat sung
                                                             //den day van true, cho du co animation equip sung loai nao xong thi cung se tro ve trang thai cat sung
                                                             // do bien SetBool("holster_weapon") trong riglayer sung chung ca loai sung
                                                             // XET FALSE de san sang thuc hien hanh dong equip khac
