@@ -20,6 +20,5 @@ public class ItemScriptableObject : ScriptableObject
     [Header("Weapon Interfaces")]
     public GameObject pfWeaponInterface; //! gameobject chua class handInterface.cs : IWeapon
     public AnimatorOverrideController animatorOverrideController;
-    public ActiveWeapon.SwordSlots swordSlot;
     
 }

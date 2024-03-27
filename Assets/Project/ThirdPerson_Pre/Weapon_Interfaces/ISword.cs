@@ -5,6 +5,7 @@ public class ISword : MonoBehaviour, IWeapon
     //todo game object = cay kiem kieu interface
     public ActiveWeapon.SwordSlots swordSlot;
     [SerializeField] private ItemScriptableObject weaponScriptableObject;
+    
 
     public void Attack()
     {

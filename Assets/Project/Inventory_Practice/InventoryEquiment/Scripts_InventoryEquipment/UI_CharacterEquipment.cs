@@ -310,14 +310,14 @@ public class UI_CharacterEquipment : MonoBehaviour
             uiItemTransform.GetComponent<RectTransform>().GetComponent<Button_UI>().ClickFunc = () => {
                 // Use item
                 Debug.Log("click vao weaponSwordItem tren weaponSlot");
-                if(!ActiveGun.Instance.IsHolstered) ActiveGun.Instance.ToggleActiveWeapon();
+                //if(!ActiveGun.Instance.IsHolstered) ActiveGun.Instance.ToggleActiveWeapon();
                 
                 if(!ActiveSword.Instance.IsHolstered_Sword && 
-                    (int)weaponSwordItem.itemScriptableObject.handSwordPrefab.GetComponent<HandSwordWeapon>().swordSlot == ActiveSword.Instance.GetActiveSwordIndex) {
-                    ActiveSword.Instance.ToggleActiveSword();
+                    (int)weaponSwordItem.itemScriptableObject.pfWeaponInterface.GetComponent<ISword>().swordSlot == ActiveWeapon.Instance.GetActiveSwordIndex) {
+                    ActiveWeapon.Instance.ToggleActiveSword();
                 }
                 else {
-                    ActiveSword.Instance.SetActiveSword(weaponSwordItem.itemScriptableObject.handSwordPrefab.GetComponent<HandSwordWeapon>().swordSlot);
+                    ActiveWeapon.Instance.SetActiveSword(weaponSwordItem.itemScriptableObject.pfWeaponInterface.GetComponent<ISword>().swordSlot);
                 }
             };
         }

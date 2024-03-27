@@ -112,7 +112,8 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
         // todo set sword to ActiveWeapon Interface
         if(sword == null) {
             Destroy(I_SwordPrefabTemp); // I_SwordPrefabTemp.GetComponent<ISword>()
-            //if(!activeWeapon.IsHolstered_Sword) activeWeapon.ToggleActiveSword();
+            activeWeapon.SetDefaultWeapon(); // de su dung tay khong
+            if(!activeWeapon.IsHolstered_Sword) activeWeapon.ToggleActiveSword(); //? xet isHoslter = true khi da ko con trang bi
             return;
         }
         if(sword != null) {
@@ -124,7 +125,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
     IEnumerator DelayTimeToSpawn_WeaponInterface(Item iSword, int weaponSlotIndex) {
         yield return new WaitForSeconds(0.5f);
         I_SwordPrefabTemp = Instantiate(iSword.itemScriptableObject.pfWeaponInterface, activeWeapon.swordSlots[weaponSlotIndex].position,
-                            activeWeapon.swordSlots[weaponSlotIndex].transform.rotation, activeWeapon.swordSlots[weaponSlotIndex].transform);
+                activeWeapon.swordSlots[weaponSlotIndex].transform.rotation, activeWeapon.swordSlots[weaponSlotIndex].transform);
         activeWeapon.NewWeapon(I_SwordPrefabTemp.GetComponent<MonoBehaviour>());
     }
     IEnumerator DelaytimeToSpawnSword(Item sword, int weaponSlotIndex) {
