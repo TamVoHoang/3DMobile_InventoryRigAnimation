@@ -1,9 +1,9 @@
 using System.Collections;
 using UnityEngine;
-using System;
 
 public class ActiveSword : Singleton<ActiveSword>
 {
+    
     public enum SwordSlots
     {
         Primary = 0,
@@ -11,7 +11,9 @@ public class ActiveSword : Singleton<ActiveSword>
     }
     [Header ("Sword")]
     public Transform[] swordSlots; //? dung de bo chi so index vao de instatiate vu khi ra dung vi tri transform
+
     [SerializeField] HandSwordWeapon[] equipped_swords = new HandSwordWeapon[1]; // noi se chua handSwordWeapon.cs
+
     [SerializeField] private int activeSwordIndex = 1;
     public int GetActiveSwordIndex { get { return activeSwordIndex; } }
     [SerializeField] private bool isHolstered_Sword = false; // false = dang equip

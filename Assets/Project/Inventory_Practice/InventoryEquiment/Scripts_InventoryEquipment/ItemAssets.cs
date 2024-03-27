@@ -38,6 +38,8 @@ public class ItemAssets : MonoBehaviour
     public Sprite gunPistolSprite3D_01;
 
     public Sprite IHandSprite3D; //? IWeapon
+    public Sprite ISwordSprite3D; //? ISword
+
 
 
 
@@ -57,6 +59,8 @@ public class ItemAssets : MonoBehaviour
     public GameObject gunPistolPrefab3D_01;
 
     public GameObject IHandPrefab; //? IWeapon
+    public GameObject ISwordPrefab; //? IWeapon
+
 
 
 

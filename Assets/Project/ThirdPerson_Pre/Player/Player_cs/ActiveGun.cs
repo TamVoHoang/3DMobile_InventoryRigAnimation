@@ -6,7 +6,7 @@ public class ActiveGun : Singleton<ActiveGun>
 {
     //todo game object = player
     //todo 
-    public Action startFiring;
+    //public Action startFiring;
     public enum WeaponSlots
     {
         Primary = 0,
@@ -89,6 +89,7 @@ public class ActiveGun : Singleton<ActiveGun>
             Destroy(weapon.gameObject);
             Debug.Log("Destroy old weapon");
         }
+
         weapon = newWeapon;
         weapon.SetRaycastDes(crossHairTarget);
         //rigAnimator.Play("equip_" + weapon.weaponName);// ko lay
@@ -101,7 +102,7 @@ public class ActiveGun : Singleton<ActiveGun>
     #region HOLSTER AND SWITCHING GUN
     public void ToggleActiveWeapon()
     {
-        bool isHolstered = rigAnimator.GetBool("holster_weapon");
+        bool isHolstered = rigAnimator.GetBool("holster_weapon"); // = false
         //dao nguoc bien trong script va gan cho bien torng aniamtior
         if (isHolstered) StartCoroutine(ActivateWeapon(activeWeaponIndex));
         else StartCoroutine(HolsterWeapon(activeWeaponIndex));

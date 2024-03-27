@@ -78,7 +78,7 @@ public class RaycastWeapon : MonoBehaviour
         UpdateBullet(Time.deltaTime);
 
         //if(Input.GetButtonUp("Fire1")) StopFiring();
-        if(!InputManager.Instance.IsAttackButton) StopFiring();
+        if(!InputManager.Instance.IsAttackButton && isFiring) StopFiring();
     }
 
     //? StartFiring() || UpdateFiring()
@@ -162,7 +162,7 @@ public class RaycastWeapon : MonoBehaviour
             hiteffect.transform.forward = hitInfo.normal;
 
             hiteffect.Emit(1);
-            Debug.DrawLine(ray.origin, hitInfo.point, Color.red, 1.0f); //VE TIA
+            Debug.DrawLine(ray.origin, hitInfo.point, Color.red, 1.0f); // VE TIA
             Debug.Log(hitInfo.transform.name);
             //drawLaserToAimPoint(); //VE TIA
             bullet.tracer.transform.position = hitInfo.point; // vi tri di den giau man hinh croosHair

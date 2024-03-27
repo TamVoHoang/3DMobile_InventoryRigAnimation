@@ -62,13 +62,26 @@ public class UI_CharacterEquipment : MonoBehaviour
     #region droped Item on weaponSLot
     private void WeaponSwordSlot_OnItemDropped(object sender, UI_CharacterEquipmentSlot.OnItemDroppedEventArgs e)
     {
-        Debug.Log("doi tuong weaponSlot thong bao || equipweapon " + e.item.itemScriptableObject.itemType);
+        //todo testing for sword kieu bin thuong ko override
+        /* Debug.Log("doi tuong weaponSlot thong bao || equipweapon " + e.item.itemScriptableObject.itemType);
         CharacterEquipment.EquipSlot equipSlot = CharacterEquipment.EquipSlot.WeaponSword; // kiem tra slot tren player khi keo tu duoi WeponInvetory len
         if (characterEquipment.IsEquipSlotEmpty(equipSlot) && characterEquipment.CanEquipItem(equipSlot, e.item)) {
-            Debug.Log("sword move from weaponInventory to weaponSlotEquipment");
+            Debug.Log("sword move from weaponInventory to weaponSlot_CharacterEquipment");
+            e.item.RemoveFromItemHolder();
+            characterEquipment.EquipItem(e.item);
+        } */
+        // todo testing for sword kieu bin thuong
+
+        //! testing for ISword Interface
+        Debug.Log("doi tuong weaponSlot thong bao || equipweapon " + e.item.itemScriptableObject.itemType);
+        CharacterEquipment.EquipSlot equipSlot_Interface = CharacterEquipment.EquipSlot.WeaponSword;
+        if (characterEquipment.IsEquipSlotEmpty(equipSlot_Interface) && characterEquipment.CanEquipItem(equipSlot_Interface, e.item)) {
+            Debug.Log("I_sword move from weaponInventory to weaponSlot_CharacterEquipment");
             e.item.RemoveFromItemHolder();
             characterEquipment.EquipItem(e.item);
         }
+        //! testing for ISword Interface
+
     }
 
     private void WeaponPistolSlot_OnItemDropped(object sender, UI_CharacterEquipmentSlot.OnItemDroppedEventArgs e)
@@ -89,7 +102,7 @@ public class UI_CharacterEquipment : MonoBehaviour
     private void ItemSlot_OnItemDropped(CharacterEquipment.EquipSlot equipSlot, Item item) {
         if (characterEquipment.IsEquipSlotEmpty(equipSlot) && characterEquipment.CanEquipItem(equipSlot, item)) {
             Debug.Log("weapon move from weaponInventory to weaponSlotEquipment");
-            item.RemoveFromItemHolder();
+            item.RemoveFromItemHolder(); //! se remove item khi item nay duoc keo tu iventory sang equipment slot
             characterEquipment.EquipItem(item);
         }
     }

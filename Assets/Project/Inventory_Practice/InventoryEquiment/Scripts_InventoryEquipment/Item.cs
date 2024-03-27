@@ -31,7 +31,8 @@ public class Item
         Sword3D_01,
         GunSMG3D_01,
         GunPistol3D_01,
-        IHand //todo IWeapon
+        IHand, //todo IWeapon
+        ISword
     }
 
     //public ItemType itemType;
@@ -53,7 +54,7 @@ public class Item
         if (itemHolder != null) {
             Debug.Log("itemHolder != null");
             // Remove from current Item Holder
-            itemHolder.RemoveItemEquipment(this);
+            itemHolder.RemoveItemEquipment(this); //! rat quan trong de remove khi keo tu characterEquipment slot sang Inventory
         }
     }
 
@@ -112,6 +113,8 @@ public class Item
         case ItemType.GunPistol3D_01:   return ItemAssets.Instance.gunPistolSprite3D_01;
 
         case ItemType.IHand:            return ItemAssets.Instance.IHandSprite3D; //todo IWeapon
+        case ItemType.ISword:            return ItemAssets.Instance.ISwordSprite3D; //todo IWeapon
+
         
 
         }
@@ -164,6 +167,8 @@ public class Item
             case ItemType.GunPistol3D_01:   return ItemAssets.Instance.gunPistolPrefab3D_01;
 
             case ItemType.IHand:            return ItemAssets.Instance.IHandPrefab; //todo IWeapon
+            case ItemType.ISword:            return ItemAssets.Instance.ISwordPrefab; //todo IWeapon
+
 
         }
     }

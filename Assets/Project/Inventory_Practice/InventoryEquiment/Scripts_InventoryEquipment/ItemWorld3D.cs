@@ -15,6 +15,7 @@ public class ItemWorld3D : MonoBehaviour
     {
         Transform transform = Instantiate(ItemAssets.Instance.pfItemWorld3D, pos, Quaternion.identity);
         transform.rotation = Quaternion.Euler(0, 45, 0);
+        
         ItemWorld3D itemWorld3D = transform.GetComponent<ItemWorld3D>();
         itemWorld3D.SetItem3D(item);
 

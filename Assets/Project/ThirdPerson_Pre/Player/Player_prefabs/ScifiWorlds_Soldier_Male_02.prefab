@@ -33326,12 +33326,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b22012edd062934798b11ba7b4322bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swordHolster_Point: {fileID: 3318264870077748762}
   activeArmorSpawnPoint: {fileID: 2503801252497065850}
   activeHelmetSpawnPoint: {fileID: 302205319656574472}
   gunPrefabRifleTemp_Raycast: {fileID: 0}
   gunPrefabPistolTemp_Raycast: {fileID: 0}
   swordPrefabTemp_HandSword: {fileID: 0}
+  I_SwordPrefabTemp: {fileID: 0}
 --- !u!114 &1676693359432264617
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33394,6 +33394,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da2ba167c4f6d094da63aa3d23a0e447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  swordSlots:
+  - {fileID: 1580352913600843239}
+  swordHolster_Point: {fileID: 3318264870077748762}
+  activeSwordIndex: 1
+  isHolstered_Sword: 0
   playerAnimator: {fileID: 0}
   defaultWeapon: {fileID: 11400000, guid: b703b39930c50af4494e325a555444f7, type: 2}
   timeBetweenAttacks: 0.5

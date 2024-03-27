@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04d54756f4b55fe44b6d7e187eb6d8b6, type: 3}
+  m_Name: ISword
+  m_EditorClassIdentifier: 
+  itemType: 19
+  itemName: ISword
+  itemSprite: {fileID: 21300000, guid: 19f2dc7bbdd4441b1811a5304efe5d3f, type: 3}
+  pfItem: {fileID: 2334020579491521255, guid: da36ece520a73e74fb31ddc6dd23a236, type: 3}
+  equipSlot: 5
+  gunPrefabRaycast: {fileID: 0}
+  handSwordPrefab: {fileID: 0}
+  pfWeaponInterface: {fileID: 2334020579491521255, guid: da36ece520a73e74fb31ddc6dd23a236, type: 3}
+  animatorOverrideController: {fileID: 22100000, guid: 9f7e2be0266640a4db405273ab218429, type: 2}

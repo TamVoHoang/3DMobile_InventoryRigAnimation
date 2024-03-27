@@ -19,49 +19,52 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
     // [SerializeField] private Transform activeWeaponSpawnPoint; //? noi se spawn vu khi ra
     // [SerializeField] private Transform activePistolSpawnPoint; //? noi se spawn vu khi ra
     // [SerializeField] private Transform activeSwordSpawnPoint; //? noi se spawn vu khi ra
-    [SerializeField] Transform swordHolster_Point;
 
 
     [SerializeField] private Transform activeArmorSpawnPoint; //? noi se spawn armor
     [SerializeField] private Transform activeHelmetSpawnPoint; //? noi se spawn helmet
+    // [SerializeField] private Transform iSword_SpawnPoint; // vi tri sinh ra cay kiem iSword
 
-    private GameObject equipedWeaponTemp_GO;
     private GameObject armorEquipedCurrent;
     private GameObject helmetEquipedCurrent;
+
 
     private Item weaponItem;
     private Item weaponPistolItem;
     private Item weaponSwordItem;
     private Item helmetItem;
     private Item armorItem;
+
     private ActiveGun activeGun;
     private ActiveSword activeSword;
+    private ActiveWeapon activeWeapon;
 
 
     [SerializeField] private RaycastWeapon gunPrefabRifleTemp_Raycast; //! testing
     [SerializeField] private RaycastWeapon gunPrefabPistolTemp_Raycast; //! testing
     [SerializeField] private HandSwordWeapon swordPrefabTemp_HandSword; //! testing
+    [SerializeField] private GameObject I_SwordPrefabTemp; // game object cua cay kiem
 
     public RaycastWeapon GetPrefab_RifleTemp {get{return gunPrefabRifleTemp_Raycast;}}
     public RaycastWeapon GetPrefab_PistolTemp {get{return gunPrefabPistolTemp_Raycast;}}
     public HandSwordWeapon GetPrefab_SwordTemp {get{return swordPrefabTemp_HandSword;}}
-
+    public GameObject GetI_SwordPrefabTemp {get{return I_SwordPrefabTemp;}}
 
 
     private void Awake() {
         activeGun = GetComponent<ActiveGun>();
         activeSword = GetComponent<ActiveSword>();
-        //activeWeaponSpawnPoint = transform.Find("ActiveWeapon");
+        activeWeapon = GetComponent<ActiveWeapon>();
         activeArmorSpawnPoint = transform.Find("ActiveArmor");
         activeHelmetSpawnPoint = transform.Find("ActiveHelmet");
     }
 
     private void Update() {
-        if(Input.GetKey(KeyCode.P)) {
-            Debug.Log("co nhan nut P");
-            swordPrefabTemp_HandSword.transform.SetParent(swordHolster_Point, false);
-            swordPrefabTemp_HandSword.transform.SetParent(swordHolster_Point, true);
-        }
+        // if(Input.GetKey(KeyCode.P)) {
+        //     Debug.Log("co nhan nut P");
+        //     swordPrefabTemp_HandSword.transform.SetParent(swordHolster_Point, false);
+        //     swordPrefabTemp_HandSword.transform.SetParent(swordHolster_Point, true);
+        // }
     }
 
 
@@ -90,7 +93,8 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
 
         OnEquipmentChanged?.Invoke(this, EventArgs.Empty);
 
-        if(sword == null) {
+        // todo set sword to activeSword
+        /* if(sword == null) {
             Destroy(swordPrefabTemp_HandSword.gameObject);
             if(!activeSword.IsHolstered_Sword &&
                 (int)swordPrefabTemp_HandSword.GetComponent<HandSwordWeapon>().swordSlot == activeSword.GetActiveSwordIndex){
@@ -101,13 +105,27 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
         if(sword != null) {
             int weaponSlotIndex = (int)weaponSwordItem.itemScriptableObject.handSwordPrefab.GetComponent<HandSwordWeapon>().swordSlot; //=1
             Debug.Log("weaponSlotIndex " + weaponSlotIndex);
-
             if(!activeGun.IsHolstered) activeGun.ToggleActiveWeapon(); //? neu co bat ki sung nao dang trang bi theo bien isHolstered thi toggle het
             StartCoroutine(DelaytimeToSpawnSword(sword, weaponSlotIndex));
-            // swordPrefabTemp_HandSword = Instantiate(sword.itemScriptableObject.handSwordPrefab, activeSword.swordSlots[weaponSlotIndex].position,
-            //     activeSword.swordSlots[weaponSlotIndex].transform.rotation, activeSword.swordSlots[weaponSlotIndex]);
-            // activeSword.EquipSword(swordPrefabTemp_HandSword);
+        } */
+
+        // todo set sword to ActiveWeapon Interface
+        if(sword == null) {
+            Destroy(I_SwordPrefabTemp); // I_SwordPrefabTemp.GetComponent<ISword>()
+            //if(!activeWeapon.IsHolstered_Sword) activeWeapon.ToggleActiveSword();
+            return;
         }
+        if(sword != null) {
+            int weaponSlotIndex = (int)weaponSwordItem.itemScriptableObject.pfWeaponInterface.GetComponent<ISword>().swordSlot; //=0
+            StartCoroutine(DelayTimeToSpawn_WeaponInterface(sword, weaponSlotIndex));
+        }
+
+    }
+    IEnumerator DelayTimeToSpawn_WeaponInterface(Item iSword, int weaponSlotIndex) {
+        yield return new WaitForSeconds(0.5f);
+        I_SwordPrefabTemp = Instantiate(iSword.itemScriptableObject.pfWeaponInterface, activeWeapon.swordSlots[weaponSlotIndex].position,
+                            activeWeapon.swordSlots[weaponSlotIndex].transform.rotation, activeWeapon.swordSlots[weaponSlotIndex].transform);
+        activeWeapon.NewWeapon(I_SwordPrefabTemp.GetComponent<MonoBehaviour>());
     }
     IEnumerator DelaytimeToSpawnSword(Item sword, int weaponSlotIndex) {
         yield return new WaitForSeconds(1f);
@@ -119,7 +137,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
 #region Set GunPrefabRaycast
     private void SetBothWeaponItem(Item weaponItem, ref RaycastWeapon raycastWeaponTemp) {
         if (weaponItem != null) {
-            weaponItem.SetItemHolder(this);
+            weaponItem.SetItemHolder(this); //! item se SetItemHolder() tai day, de biet class nao se goi ham trong Interface
         }
 
         //! kich hoat chay UpdateVisual() thong qua delegate col 61 UI_characterEquipment.cs
@@ -157,6 +175,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
             raycastWeaponTemp.transform.SetParent(activeGun.weaponSlots[weaponSlotIndex], false);
 
             activeGun.Equip(raycastWeaponTemp);
+
         }
     }
 

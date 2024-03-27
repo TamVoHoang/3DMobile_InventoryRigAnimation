@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class HandSwordWeapon : MonoBehaviour
 {
+    //todo game object = cay kiem kieu binh thuong
     public ActiveSword.SwordSlots swordSlot;
     
 

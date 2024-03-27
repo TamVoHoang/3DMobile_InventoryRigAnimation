@@ -2,11 +2,33 @@
 using System.Collections;
 using UnityEngine;
 
-public class ActiveWeapon : MonoBehaviour
+public class ActiveWeapon : Singleton<ActiveWeapon>
 {
     //todo gameObject = Player
     //todo goi weapon through interface
 
+    public enum SwordSlots
+    {
+        Primary = 0,
+        Secondary = 1,
+    }
+    public Transform[] swordSlots; //? dung de bo chi so index vao de instatiate vu khi ra dung vi tri transform
+    public Transform swordHolster_Point; //? vi tri sword se cat
+    [SerializeField] ISword[] equipped_swords = new ISword[1];
+    ISword GetSword(int index) {
+        if(index < 0 || index >= swordSlots.Length)
+        {
+            return null;
+        }
+        return equipped_swords[index];
+    }
+    [SerializeField] private int activeSwordIndex = 1;
+    public int GetActiveSwordIndex { get { return activeSwordIndex; } }
+    [SerializeField] private bool isHolstered_Sword = false; // false = dang equip
+    public bool IsHolstered_Sword { get { return isHolstered_Sword; } }
+    private CharacterEquipment characterEquipment;
+
+    //todo override
     [SerializeField] private Animator playerAnimator;
     [SerializeField] public MonoBehaviour CurrenActiveWeapon {get; private set;}
     [SerializeField] ItemScriptableObject defaultWeapon;
@@ -15,22 +37,42 @@ public class ActiveWeapon : MonoBehaviour
     private string weaponName;
     //private int weaponDamage;
     private bool isAttacking = false;
+    protected override void Awake() {
+        base.Awake();
+    }
     
     private void Start() {
+        characterEquipment = GetComponent<CharacterEquipment>();
         playerAnimator = GetComponent<Animator>();
-        CurrenActiveWeapon = defaultWeapon.pfWeaponInterface.GetComponent<MonoBehaviour>();
-        NewWeapon(CurrenActiveWeapon);
+        CurrenActiveWeapon = defaultWeapon.pfWeaponInterface.GetComponent<MonoBehaviour>();//todo gameObject cua phan interface
+        //CurrenActiveWeapon = defaultWeapon.pfItem.GetComponent<MonoBehaviour>(); //todo gameobject cua phan chung
+
+        //NewWeapon(CurrenActiveWeapon);
+        
     }
     private void Update() {
         AttackCurrentWeapon();
     }
 
     public void NewWeapon(MonoBehaviour newWeapon) {
+
+        int swordSlotIndex = (int)newWeapon.GetComponent<ISword>().swordSlot;
+        var sword = GetSword(swordSlotIndex);
+        if(sword) {
+            Destroy(sword.gameObject);
+        }
+
         CurrenActiveWeapon = newWeapon;
         weaponName = (CurrenActiveWeapon as IWeapon).GetWeaponInfo().itemName;
         overrideControllers = (CurrenActiveWeapon as IWeapon).GetWeaponInfo().animatorOverrideController;
         playerAnimator.runtimeAnimatorController = overrideControllers;
+
+
+        sword = CurrenActiveWeapon.GetComponent<ISword>();
+        equipped_swords[swordSlotIndex] = sword;
+        SetActiveSword(sword.swordSlot);
     }
+
 
     private void AttackCurrentWeapon() {
         if(InputManager.Instance.IsAttackButton && !isAttacking && CurrenActiveWeapon && ActiveGun.Instance.IsHolstered) {
@@ -52,6 +94,68 @@ public class ActiveWeapon : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(TimeBetweenAttackRoutine()); //isAttacking = false;
     }
+
+    public void EquipSword(ISword newSword) {
+        int swordSlotIndex = (int)newSword.swordSlot;
+        var sword = GetSword(swordSlotIndex);
+        if(sword) {
+            Destroy(sword.gameObject);
+            Debug.Log("Destroy old sword");
+        }
+
+    }
+
+    public void ToggleActiveSword()
+    {
+        bool isHolstered = playerAnimator.GetBool("holster_sword"); //?false = dang equip
+        //dao nguoc bien trong script va gan cho bien torng aniamtior
+        if (isHolstered) StartCoroutine(ActivateSword(activeSwordIndex));
+        else StartCoroutine(HolsterSword(activeSwordIndex));
+    }
+
+    public void SetActiveSword(SwordSlots swordSlots){
+        int holsterIndex = activeSwordIndex;
+        int activeIndex = (int)swordSlots;
+        if (holsterIndex == activeIndex) holsterIndex = -1;
+        StartCoroutine(SwitchSword(holsterIndex, activeIndex));
+    }
+
+    IEnumerator SwitchSword(int holsterIndex,int activeIndex) // ok
+    {
+        yield return new WaitForSeconds(0.5f);
+        yield return StartCoroutine(HolsterSword(holsterIndex));
+        yield return new WaitForSeconds(.5f);
+        yield return StartCoroutine(ActivateSword(activeIndex));
+        activeSwordIndex = activeIndex;
+    }
+
+    IEnumerator ActivateSword(int index)
+    {
+        var sword = GetSword(index); // kiem tra cay sung moi vua pickup da co trong cai o equiped_weapons[] chua
+        if (sword)
+        {
+            Debug.Log("SetBool holster True sword animation");
+            playerAnimator.SetBool("holster_sword", false);
+            characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordSlots[index], false);
+            characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordSlots[index], true);
+            isHolstered_Sword = false;
+            yield return new WaitForSeconds(.5f);
+        }
+    }
+    IEnumerator HolsterSword(int index)
+    {
+        isHolstered_Sword = true;
+        var sword = GetSword(index); // kiem tra xem cai o equiped_Weapon dang co hay ko de chuan bi thay, neu varWeapon co thi ko thuc hien animation cat sung
+        if (sword)
+        {
+            Debug.Log(" SetBool holster True sword animation");
+            playerAnimator.SetBool("holster_sword", true);
+            characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordHolster_Point, false);
+            characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordHolster_Point, true);
+            yield return new WaitForSeconds(.5f);
+        }
+    }
+    
     
 
 }
