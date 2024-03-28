@@ -33183,7 +33183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd46b2720f3af5e469cc4b7b39eb034a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSentivity: 1
+  mouseSentivity: 1.2
   xAixs: 0
   yAxis: 0
   camFollowPos: {fileID: 7478230868115210541}
@@ -33397,10 +33397,12 @@ MonoBehaviour:
   swordSlots:
   - {fileID: 1580352913600843239}
   swordHolster_Point: {fileID: 3318264870077748762}
+  equipped_swords:
+  - {fileID: 0}
   activeSwordIndex: 1
   isHolstered_Sword: 0
   playerAnimator: {fileID: 0}
-  defaultWeapon: {fileID: 11400000, guid: b703b39930c50af4494e325a555444f7, type: 2}
+  default_IWeapon: {fileID: 11400000, guid: b703b39930c50af4494e325a555444f7, type: 2}
   timeBetweenAttacks: 0.5
   overrideControllers: {fileID: 0}
 --- !u!1 &4865092424051686877
@@ -61162,13 +61164,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8072593228634207482}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.5213338, y: 0.4777144, z: -0.4777144, w: 0.5213338}
-  m_LocalPosition: {x: 0.1085, y: 0.0345, z: -0.0212}
+  m_LocalRotation: {x: -0.5490209, y: 0.39922118, z: -0.48732194, w: 0.54928666}
+  m_LocalPosition: {x: 0.1196, y: 0.0281, z: -0.0141}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2579704349267451029}
-  m_LocalEulerAnglesHint: {x: -5, y: 90, z: -90}
+  m_LocalEulerAnglesHint: {x: -12.359, y: 85.397, z: -94.569}
 --- !u!1 &8094623325516487578
 GameObject:
   m_ObjectHideFlags: 0

@@ -62,6 +62,7 @@ public class UI_CharacterEquipment : MonoBehaviour
     #region droped Item on weaponSLot
     private void WeaponSwordSlot_OnItemDropped(object sender, UI_CharacterEquipmentSlot.OnItemDroppedEventArgs e)
     {
+        Debug.Log("co bo kiem xanh vao kiem do");
         //todo testing for sword kieu bin thuong ko override
         /* Debug.Log("doi tuong weaponSlot thong bao || equipweapon " + e.item.itemScriptableObject.itemType);
         CharacterEquipment.EquipSlot equipSlot = CharacterEquipment.EquipSlot.WeaponSword; // kiem tra slot tren player khi keo tu duoi WeponInvetory len
@@ -79,6 +80,9 @@ public class UI_CharacterEquipment : MonoBehaviour
             Debug.Log("I_sword move from weaponInventory to weaponSlot_CharacterEquipment");
             e.item.RemoveFromItemHolder();
             characterEquipment.EquipItem(e.item);
+        }
+        else {
+            Debug.Log("co bo kiem xanh vao kiem do nhung ko du dieu kien de add vao characterEquipment");
         }
         //! testing for ISword Interface
 
@@ -174,7 +178,7 @@ public class UI_CharacterEquipment : MonoBehaviour
                 // Use item
                 Debug.Log("click vao weaponPistolItem tren weaponSlot");
                 
-                if(!ActiveSword.Instance.IsHolstered_Sword) ActiveSword.Instance.ToggleActiveSword();
+                if(!ActiveWeapon.Instance.IsHolstered_Sword) ActiveWeapon.Instance.ToggleActiveSword();
                 if(!ActiveGun.Instance.IsHolstered && 
                     (int)item.itemScriptableObject.gunPrefabRaycast.GetComponent<RaycastWeapon>().weaponSlot == ActiveGun.Instance.GetActiveWeaponIndex) {
                     ActiveGun.Instance.ToggleActiveWeapon();
@@ -310,7 +314,7 @@ public class UI_CharacterEquipment : MonoBehaviour
             uiItemTransform.GetComponent<RectTransform>().GetComponent<Button_UI>().ClickFunc = () => {
                 // Use item
                 Debug.Log("click vao weaponSwordItem tren weaponSlot");
-                //if(!ActiveGun.Instance.IsHolstered) ActiveGun.Instance.ToggleActiveWeapon();
+                if(!ActiveGun.Instance.IsHolstered) ActiveGun.Instance.ToggleActiveWeapon();
                 
                 if(!ActiveSword.Instance.IsHolstered_Sword && 
                     (int)weaponSwordItem.itemScriptableObject.pfWeaponInterface.GetComponent<ISword>().swordSlot == ActiveWeapon.Instance.GetActiveSwordIndex) {

@@ -167,7 +167,7 @@ public class Item
             case ItemType.GunPistol3D_01:   return ItemAssets.Instance.gunPistolPrefab3D_01;
 
             case ItemType.IHand:            return ItemAssets.Instance.IHandPrefab; //todo IWeapon
-            case ItemType.ISword:            return ItemAssets.Instance.ISwordPrefab; //todo IWeapon
+            case ItemType.ISword:           return ItemAssets.Instance.ISwordPrefab; //todo IWeapon
 
 
         }
@@ -204,6 +204,7 @@ public class Item
         case ItemType.GunSMG3D_01:
 
         case ItemType.IHand: //todo IWeapon
+        case ItemType.ISword: //todo IWeapon
 
             return false;
         }

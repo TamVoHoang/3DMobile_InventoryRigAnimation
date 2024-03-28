@@ -117,10 +117,10 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
             return;
         }
         if(sword != null) {
+            if(!activeGun.IsHolstered) activeGun.ToggleActiveWeapon();
             int weaponSlotIndex = (int)weaponSwordItem.itemScriptableObject.pfWeaponInterface.GetComponent<ISword>().swordSlot; //=0
             StartCoroutine(DelayTimeToSpawn_WeaponInterface(sword, weaponSlotIndex));
         }
-
     }
     IEnumerator DelayTimeToSpawn_WeaponInterface(Item iSword, int weaponSlotIndex) {
         yield return new WaitForSeconds(0.5f);
@@ -165,7 +165,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
 
         if(weaponItem != null) {
             Debug.Log("weaponItem != null");
-            if(!activeSword.IsHolstered_Sword) activeSword.ToggleActiveSword(); //? neu sword dang trang bi thi toggle het
+            if(!activeWeapon.IsHolstered_Sword) activeWeapon.ToggleActiveSword(); //? neu sword dang trang bi thi toggle het
 
             int weaponSlotIndex = (int)weaponItem.itemScriptableObject.gunPrefabRaycast.GetComponent<RaycastWeapon>().weaponSlot; //=0
             Debug.Log("weaponSlotIndex " + weaponSlotIndex);
@@ -320,7 +320,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
         case EquipSlot.Helmet:          SetHelmetItem(item);            break;
         case EquipSlot.WeaponRifle:     SetWeaponRifleItem(item);       break;
         case EquipSlot.WeaponPistol:    SetPistolWeaponItem(item);      break;
-        case EquipSlot.WeaponSword:     SetSword_WeaponItem(item);       break;
+        case EquipSlot.WeaponSword:     SetSword_WeaponItem(item);      break;
         }
     }
     public Item GetEquippedItem(EquipSlot equipSlot) {
