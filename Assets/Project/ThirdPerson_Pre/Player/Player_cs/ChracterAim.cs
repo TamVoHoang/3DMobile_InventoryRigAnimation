@@ -26,6 +26,10 @@ public class ChracterAim : MonoBehaviour
         yAxis = Mathf.Clamp(yAxis, -yAxixLimit.x, yAxixLimit.y);
     }
 
+    /* private void FixedUpdate() {
+        camFollowPos.localEulerAngles = new Vector3(yAxis, camFollowPos.localEulerAngles.y, camFollowPos.localEulerAngles.z);
+        transform.eulerAngles = new Vector3(transform.eulerAngles.x, xAixs, transform.eulerAngles.z);
+    } */
 
     private void LateUpdate()
     {

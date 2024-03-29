@@ -173,6 +173,8 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
 
             isHolstered_Sword = false;
         }
+        
+        
     }
     
     
