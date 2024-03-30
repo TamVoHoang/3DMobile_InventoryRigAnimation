@@ -1065,15 +1065,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2704562938633411046, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2704562938633411046, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2704562938633411046, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2704562938633411046, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1146,6 +1146,42 @@ PrefabInstance:
     - target: {fileID: 2710294051802942626, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
       propertyPath: m_Name
       value: HitEffect
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835554207171219122, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
+      propertyPath: lengthInSec
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835554207171219122, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
+      propertyPath: simulationSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835554207171219122, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
+      propertyPath: SizeModule.enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835554207171219122, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
+      propertyPath: InitialModule.size3D
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835554207171219122, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835554207171219122, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835554207171219122, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835554207171219122, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
+      propertyPath: InitialModule.gravityModifier.scalar
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835554207171219122, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
+      propertyPath: InitialModule.startLifetime.minScalar
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

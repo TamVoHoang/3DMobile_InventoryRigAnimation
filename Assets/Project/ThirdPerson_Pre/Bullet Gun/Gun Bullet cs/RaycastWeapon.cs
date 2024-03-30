@@ -43,6 +43,8 @@ public class RaycastWeapon : MonoBehaviour
     public float bulletDrop = 0.0f; // bao xa bullet se roi xuong
     List<Bullet> Bullets = new List<Bullet>(); // list add vien dan KHI FIRE
     private float maxLifeTime = 5.0f;
+    [SerializeField] private float damage = 10.0f; // damage of sung
+    public float Damage { get => damage; private set => damage = value; }
     
     [Header("           RELOAD")]
     public GameObject magazine;
@@ -170,18 +172,22 @@ public class RaycastWeapon : MonoBehaviour
             end = hitInfo.point;
             print("stop");
 
-            /* //bullet ricohet
-            if (bullet.bounce > 0) {
+            //bullet ricohet
+            /* if (bullet.bounce > 0) {
                 bullet.time = 0;
                 bullet.initialPos = hitInfo.point;
                 bullet.initialVelocity = Vector3.Reflect(bullet.initialVelocity, hitInfo.normal);
                 bullet.bounce--;
-            }
-            //Collision Impluse */
+            } */
 
+            //Collision Impluse
             var rb2d = hitInfo.collider.GetComponent<Rigidbody>();
             if (rb2d) rb2d.AddForceAtPosition(ray.direction * 20, hitInfo.point, ForceMode.Impulse);
+
+            var hitBox = hitInfo.collider.GetComponent<HitBox>();
+            if (hitBox) hitBox.OnRaycastHit(this, ray.direction); //todo this = cs cay sung nay
         }
+
         bullet.tracer.transform.position = end;
     }
 

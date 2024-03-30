@@ -761,6 +761,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: HitEffect
       objectReference: {fileID: 0}
+    - target: {fileID: 2835554207171219122, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
+      propertyPath: lengthInSec
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835554207171219122, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 2835554207171219122, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2836049972711519528, guid: c56cb8fe3fe275840b7290de9e23d9f7, type: 3}
+      propertyPath: InitialModule.maxNumParticles
+      value: 1000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

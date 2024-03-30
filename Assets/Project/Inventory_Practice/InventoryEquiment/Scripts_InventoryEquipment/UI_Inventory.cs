@@ -197,7 +197,6 @@ public class UI_Inventory : MonoBehaviour
     
     private void RefreshIventoryEquipment() {
         Debug.Log("Start run inventory equipment");
-
         //! tranh tao ra tranform khi duyet Inventory || itemList se tao ra qua nhiu child in itemSlotContainer
         foreach (Transform child in itemSlotContainer1) {
             if (child == itemSlotTemplate1) continue;
@@ -208,7 +207,6 @@ public class UI_Inventory : MonoBehaviour
         int x = 0;
         int y = 0;
         //itemSlotCellSize = 80f;
-
         foreach (Inventory.InventorySlot inventorySlot in inventoryEquipment.GetInventorySlotArray()) // cu moi vat pham ben trong listItems trong Item.cs
         {
             Item item = inventorySlot.GetItem(); //? kiem tra item tai tung slot trong foreach
