@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class AIRagdoll : MonoBehaviour
+public class AiRagdoll : MonoBehaviour
 {
     private Rigidbody[] rbs;
     private Animator animator;
@@ -22,5 +22,9 @@ public class AIRagdoll : MonoBehaviour
             rigidBody.isKinematic = false;
         }
         animator.enabled = false;
+    }
+    public void ApplyForceLying(Vector3 force) {
+        var rigidBody = animator.GetBoneTransform(HumanBodyBones.Hips).GetComponent<Rigidbody>();
+        rigidBody.AddForce(force, ForceMode.VelocityChange);
     }
 }
