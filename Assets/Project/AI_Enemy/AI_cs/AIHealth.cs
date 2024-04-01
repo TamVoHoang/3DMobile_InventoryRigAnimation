@@ -9,8 +9,7 @@ public class AiHealth : MonoBehaviour
     //private AiRagdoll aIRagdoll;
     private AiAgent aiAgent;
 
-    void Start()
-    {
+    void Start() {
         uiHealthBar = GetComponentInChildren<AiUIHealthBar>();
         currentHealth = maxHealth;
         //aIRagdoll = GetComponent<AiRagdoll>();
@@ -32,12 +31,17 @@ public class AiHealth : MonoBehaviour
     }
 
     private void Die(Vector3 direction) {
-        AiDeathState deathState = aiAgent.stateMachine.GetState(AiStateID.Death) as AiDeathState;
+        // AiState aiState = aiAgent.stateMachine.GetState(AiStateID.Death);
+        // AiDeathState aiDeathState = aiState as AiDeathState;
+
+        AiDeathState deathState = aiAgent.stateMachine.GetState(AiStateID.Death) as AiDeathState; //cha as con
+
         deathState.direction = direction;
         aiAgent.stateMachine.ChangeState(AiStateID.Death);
-        // aIRagdoll.ActiveRag();
-        // direction.y = 1f;
-        // aIRagdoll.ApplyForceLying(direction * dieForece);
-        // uiHealthBar.gameObject.SetActive(false);
+
+        /* aIRagdoll.ActiveRag();
+        direction.y = 1f;
+        aIRagdoll.ApplyForceLying(direction * dieForece);
+        uiHealthBar.gameObject.SetActive(false); */
     }
 }

@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine;
 
 public class AiChasePlayerState : AiState
 {
@@ -10,19 +8,16 @@ public class AiChasePlayerState : AiState
     // private Transform playerTransform;
     private float timer = 0.0f;
 
-    public AiStateID GetId()
-    {
-        return AiStateID.ChasePlayer;
+    public AiStateID GetId() {
+        return AiStateID.ChasePlayer; //? no se tra ve kieu ten nam trong enum
     }
-    public void Enter(AiAgent agent)
-    {
+    public void Enter(AiAgent agent) {
         // if(playerTransform == null) {
         //     playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         // }
     }
 
-    public void Update(AiAgent agent)
-    {
+    public void Update(AiAgent agent) {
         if(!agent.enabled) return;
 
         timer -= Time.deltaTime;
@@ -41,8 +36,7 @@ public class AiChasePlayerState : AiState
             timer = agent.config.maxTime;
         }
     }
-    public void Exit(AiAgent agent)
-    {
+    public void Exit(AiAgent agent) {
     }
 
 
