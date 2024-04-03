@@ -12,20 +12,26 @@ public class AiAgent : MonoBehaviour
     public AiRagdoll ragdoll;
     public AiUIHealthBar aiUIHealthBar;
     public Transform playerTransform;
+
+    public AiWeapons weapons; // AiFindWeapon.cs call - goi 2 ham ActiveWeapon() HasWeapon AiWeapons.cs
     
     void Start()
     {
         ragdoll = GetComponent<AiRagdoll>();
         aiUIHealthBar = GetComponentInChildren<AiUIHealthBar>();
         navMeshAgent = GetComponent<NavMeshAgent>();
-        
+        weapons = GetComponent<AiWeapons>();
+
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
-        stateMachine = new AiStateMachine(this);                                    //todo 0
+        stateMachine = new AiStateMachine(this);              //todo 0
 
         stateMachine.RegisterState(new AiChasePlayerState()); // add vao array states
         stateMachine.RegisterState(new AiDeathState());
         stateMachine.RegisterState(new AiIdleState());
+        stateMachine.RegisterState(new AiFindWeaponState());
+        stateMachine.RegisterState(new AiAttackPlayerState());
+
 
         stateMachine.ChangeState(intialState); // AiStateID.intialState
         Debug.Log("so states trong AiStateID enum = " 

@@ -145,7 +145,7 @@ public class ActiveGun : Singleton<ActiveGun>
                                                             //den day van true, cho du co animation equip sung loai nao xong thi cung se tro ve trang thai cat sung
                                                             // do bien SetBool("holster_weapon") trong riglayer sung chung ca loai sung
                                                             // XET FALSE de san sang thuc hien hanh dong equip khac
-            rigAnimator.Play("equip_" + weapon.weaponName);
+            rigAnimator.Play("equip_" + weapon.WeaponName);
             // DO XET FALSE NEN SE GIU NGUYEN TRNAG THAI EQUIP
             
             do

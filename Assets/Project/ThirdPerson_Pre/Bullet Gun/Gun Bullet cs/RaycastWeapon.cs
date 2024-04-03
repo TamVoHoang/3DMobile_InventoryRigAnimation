@@ -14,8 +14,10 @@ public class RaycastWeapon : MonoBehaviour
     }
 
     public ActiveGun.WeaponSlots weaponSlot; // cho phep chon o nao trong enum class Active
-    [SerializeField] public string weaponName; 
-    [SerializeField] private Transform raycastOrigin; // tren ong sung
+    [SerializeField] private string weaponName;
+    public string WeaponName {get {return weaponName;}}
+    [HideInInspector] public Transform raycastOrigin; // tren ong sung
+    //public Transform GetRaycastOrigin {get {return raycastOrigin;}}
     [SerializeField] private Transform raycastDes; // crossHairTarget position
     [SerializeField] TrailRenderer tracerEffect;
     [SerializeField] private ParticleSystem[] muzzleFlash; // keo tha muzzleFlash vao khai bao de loa sang khi ban

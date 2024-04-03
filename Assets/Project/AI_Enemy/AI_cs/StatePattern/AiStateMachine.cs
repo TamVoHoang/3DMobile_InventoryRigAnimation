@@ -32,6 +32,8 @@ public class AiStateMachine
         int index = (int)stateID;
         return states[index];
     }
+
+    
     public void Update() {
         GetState(currentState)?.Update(agent);
     }

@@ -34,9 +34,11 @@ public class AiHealth : MonoBehaviour
         // AiState aiState = aiAgent.stateMachine.GetState(AiStateID.Death);
         // AiDeathState aiDeathState = aiState as AiDeathState;
 
-        AiDeathState deathState = aiAgent.stateMachine.GetState(AiStateID.Death) as AiDeathState; //cha as con
+        //(aiAgent.stateMachine.GetState(AiStateID.Death) as AiDeathState).direction = direction;
 
+        AiDeathState deathState = aiAgent.stateMachine.GetState(AiStateID.Death) as AiDeathState; //cha as con
         deathState.direction = direction;
+
         aiAgent.stateMachine.ChangeState(AiStateID.Death);
 
         /* aIRagdoll.ActiveRag();

@@ -20,6 +20,7 @@ public class WeaponRecoil : MonoBehaviour
     float horizontalRecoil;
     float time;
     int index;
+
     private void Awake()
     {
         cameraShake = GetComponent<CinemachineImpulseSource>();
@@ -28,6 +29,7 @@ public class WeaponRecoil : MonoBehaviour
     private void Start()
     {
         // cho phep bien aimRecoil tai day truy cap  vao class characterAim
+        
         //aimRecoil = GetComponentInParent<ChracterAim>();
     }
     public void Reset()

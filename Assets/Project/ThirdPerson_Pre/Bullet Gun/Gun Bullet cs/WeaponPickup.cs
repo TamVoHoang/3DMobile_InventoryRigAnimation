@@ -18,7 +18,15 @@ public class WeaponPickup : MonoBehaviour
             newWeapon.transform.SetParent(activeGun.weaponSlots[weaponSlotIndex], false);
             activeGun.Equip(newWeapon);
 
-            //Destroy(gameObject);
+            Destroy(gameObject);
+        }
+
+        AiWeapons aiWeapons = other.gameObject.GetComponent<AiWeapons>();
+        if(aiWeapons) {
+            RaycastWeapon newWeapon = Instantiate(gunPrefab);
+            aiWeapons.EquipWeapon(newWeapon);
+            Destroy(gameObject);
+
         }
     }
 }
