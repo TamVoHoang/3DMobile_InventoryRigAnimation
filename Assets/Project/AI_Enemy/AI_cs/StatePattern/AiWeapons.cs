@@ -1,6 +1,5 @@
-using System;
 using System.Collections;
-using Mono.Cecil;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AiWeapons : MonoBehaviour
@@ -28,6 +27,7 @@ public class AiWeapons : MonoBehaviour
         sockets.Attach(weapon.transform, MeshSockets.SocketId.Spine); // sung duoc hinh thanh trong aiAgent
     }
 
+
     //todo dung de lien ket voi aiFindWeapon.cs
     public void ActiveWeapon() {
         StartCoroutine(EuipWeapon());
@@ -35,17 +35,20 @@ public class AiWeapons : MonoBehaviour
 
     IEnumerator EuipWeapon() {
         animator.SetBool("Equip", true);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
         while (animator.GetCurrentAnimatorStateInfo(1).normalizedTime < 0.1f) {
             yield return null;
         }
         weaponIK.SetAimTransform(currentWeapon.raycastOrigin);
     }
+
     public void DropWeapon() {
         if(currentWeapon) {
             currentWeapon.transform.SetParent(null);
             currentWeapon.gameObject.GetComponent<BoxCollider>().enabled = true;
             currentWeapon.gameObject.AddComponent<Rigidbody>();
+
+            Destroy(currentWeapon.gameObject);//testing bo sung
             currentWeapon = null;
         }
     }
@@ -56,7 +59,7 @@ public class AiWeapons : MonoBehaviour
     // chen su kien tai day vao animation equip
     public void OnAnimationEvent(string eventName) {
         if(eventName == "equipWeapon") {
-            sockets.Attach(currentWeapon.transform, MeshSockets.SocketId.Righthand);
+            sockets.Attach(currentWeapon.transform, MeshSockets.SocketId.RightHand);
         }
     }
 

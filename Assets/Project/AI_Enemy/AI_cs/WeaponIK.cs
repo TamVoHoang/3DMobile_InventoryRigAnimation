@@ -13,6 +13,7 @@ public class WeaponIK : MonoBehaviour
     Rigidbody rb;
     [SerializeField] private Transform targetTransform;// vi tri cua target
     [SerializeField] private Transform aimTransform;// vi tri ray cast
+    [SerializeField] private Vector3 targetOffset;
     //public Transform bone;
     private int interations = 10;
     [Range(0,1)]
@@ -36,7 +37,7 @@ public class WeaponIK : MonoBehaviour
 
     //todo ham gioi han goc xoay ai agent
     private Vector3 GetTargetPosition() {
-        Vector3 targetDirection = targetTransform.position - aimTransform.position;
+        Vector3 targetDirection = (targetTransform.position + targetOffset) - aimTransform.position;
         Vector3 aimDirection = aimTransform.forward;
         float blendOut = 0.0f;
 

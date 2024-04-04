@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +6,7 @@ public class MeshSockets : MonoBehaviour
     public enum SocketId
     {
         Spine,
-        Righthand
+        RightHand
     }
     Dictionary<SocketId, MeshSocket> socketMap = new Dictionary<SocketId, MeshSocket>();
 

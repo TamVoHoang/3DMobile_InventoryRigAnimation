@@ -14,7 +14,6 @@ public class AiAgent : MonoBehaviour
     public Transform playerTransform;
 
     public AiWeapons weapons; // AiFindWeapon.cs call - goi 2 ham ActiveWeapon() HasWeapon AiWeapons.cs
-    
     void Start()
     {
         ragdoll = GetComponent<AiRagdoll>();

@@ -9,20 +9,21 @@ public class AiAttackPlayerState : AiState
         return AiStateID.AttackPlayer;
     }
 
-    public void Enter(AiAgent agent)
+    public void Enter(AiAgent agent) 
     {
+        Debug.Log("ai enter attack");
         agent.weapons.ActiveWeapon();// khi bat dau tan cong  thi active sung
         agent.weapons.SetTarget(agent.playerTransform); // transform player
-        Debug.Log("ai enter attack");
+        agent.navMeshAgent.stoppingDistance = 5.0f;
     }
 
     public void Update(AiAgent agent)
     {
-        
+        agent.navMeshAgent.destination = agent.playerTransform.position;
     }
 
     public void Exit(AiAgent agent)
     {
-
+        agent.navMeshAgent.stoppingDistance = 0.0f;
     }
 }
