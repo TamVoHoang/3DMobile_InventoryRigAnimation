@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RaycastWeapon : MonoBehaviour
+public class RaycastWeapon_AI : MonoBehaviour
 {
     //todo game object = gun pistol and SMG001
     class Bullet
@@ -192,8 +192,9 @@ public class RaycastWeapon : MonoBehaviour
             var rb2d = hitInfo.collider.GetComponent<Rigidbody>();
             if (rb2d) rb2d.AddForceAtPosition(ray.direction * 20, hitInfo.point, ForceMode.Impulse);
 
-            var hitBox = hitInfo.collider.GetComponent<HitBox>();
-            if (hitBox) hitBox.OnRaycastHit(this, ray.direction); //todo this = cs cay sung nay
+            // raycastweapon_AI ko ban vao enemy
+            // var hitBox = hitInfo.collider.GetComponent<HitBox>();
+            // if (hitBox) hitBox.OnRaycastHit(this, ray.direction); //todo this = cs cay sung nay
         }
 
         bullet.tracer.transform.position = end;

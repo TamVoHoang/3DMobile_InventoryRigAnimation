@@ -9,10 +9,13 @@ public class ReloadWeapon : MonoBehaviour
     [SerializeField] private AmmoWidget ammoWidget;
     private ActiveGun activeGun;
     private GameObject magHand;
+    [SerializeField] private bool isReloading = false;
+    public bool GetIsReloading {get {return isReloading;}}
 
 
     void Start()
     {
+        isReloading = false; // ko co thay dan
         activeGun = GetComponent<ActiveGun>();
         
         animationEvents.WeaponAnimationEvent.AddListener(OnAnimationEvent);
@@ -24,7 +27,7 @@ public class ReloadWeapon : MonoBehaviour
 
         if (weapon)
         {
-            if (Input.GetKeyDown(KeyCode.R) || weapon.ammoCount <=0)
+            if (Input.GetKeyDown(KeyCode.R) || weapon.ammoCount <= 0)
             {
                 rigController.SetTrigger("reload_weapon");
             }
@@ -60,6 +63,7 @@ public class ReloadWeapon : MonoBehaviour
     }
     void deatchMag()
     {
+        isReloading = true; // dang thay dan
         RaycastWeapon weapon= activeGun.GetActiveWeapon();
         magHand = Instantiate(weapon.magazine, leftHand, true);
         weapon.magazine.SetActive(false);
@@ -84,6 +88,8 @@ public class ReloadWeapon : MonoBehaviour
         rigController.ResetTrigger("reload_weapon");
         
         ammoWidget.Refresh(weapon.ammoCount);
+
+        isReloading = false;
     }
 
 

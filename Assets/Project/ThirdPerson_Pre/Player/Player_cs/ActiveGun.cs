@@ -24,8 +24,9 @@ public class ActiveGun : Singleton<ActiveGun>
     [SerializeField] private AmmoWidget ammoWidget;
     public int GetActiveWeaponIndex { get { return activeWeaponIndex; } }
     public bool IsHolstered { get { return isHolstered; } }
-    public bool isReload = false; // ko co dang thay dan
+    //public bool isReload = false; // ko co dang thay dan
     //[SerializeField] private RaycastWeapon weapon; //? gun tren nguoi player
+    private ReloadWeapon reloadWeapon;
 
     protected override void Awake() {
         base.Awake();
@@ -36,6 +37,7 @@ public class ActiveGun : Singleton<ActiveGun>
     }
 
     private void Start() {
+        reloadWeapon = GetComponent<ReloadWeapon>();
         isHolstered = true; //! dang ko trang bi sung (sung sung ko co tren tay player)
         crossHairTarget = GameObject.Find("CroosHairTarget").transform;
         //?kiem tra co san vu khi hay khong
@@ -62,14 +64,17 @@ public class ActiveGun : Singleton<ActiveGun>
     private void Update() {
         
         var weapon = GetWeapon(activeWeaponIndex);
+        var canFire = !isHolstered && !reloadWeapon.GetIsReloading;// ko dang thay dan thi cho ban
+        if(weapon) {
+            if(InputManager.Instance.IsAttackButton && !weapon.isFiring & canFire)
+                weapon.StartFiring();
+            if((!InputManager.Instance.IsAttackButton && weapon.isFiring) || !canFire) 
+                weapon.StopFiring();
 
-        if(weapon && !isHolstered) {
-            // if(InputManager.Instance.IsAttackButton) {
-            //     weapon.SetIsFiring(!weapon.IsFiring);
-            //     InputManager.Instance.SetIsAttackButton(false); // ban tung phat khi nhan 1 lan chuot
-            // }
             weapon.UpdateWeapon(Time.deltaTime);
         }
+
+        
 
         /* if(Input.GetKeyDown(KeyCode.X)) 
             ToggleActiveWeapon();
