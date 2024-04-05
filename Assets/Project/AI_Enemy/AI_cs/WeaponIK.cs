@@ -14,6 +14,7 @@ public class WeaponIK : MonoBehaviour
     [SerializeField] private Transform targetTransform;// vi tri cua target
     [SerializeField] private Transform aimTransform;// vi tri ray cast
     [SerializeField] private Vector3 targetOffset;
+    public Vector3 TargetOffset{get => targetOffset;}
     //public Transform bone;
     private int interations = 10;
     [Range(0,1)]

@@ -137,7 +137,6 @@ MonoBehaviour:
   weaponSlot: 0
   weaponName: rifle
   raycastOrigin: {fileID: 7095179040361038052}
-  raycastDes: {fileID: 0}
   tracerEffect: {fileID: 2141053679634929815, guid: 7ce2abb6fb949c342b127465ec9039bb, type: 3}
   muzzleFlash:
   - {fileID: 9160704319489342479}
@@ -152,6 +151,9 @@ MonoBehaviour:
   bulletDrop: 0
   damage: 10
   magazine: {fileID: 1925669635841932733}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 1025
 --- !u!65 &710594978500733543
 BoxCollider:
   m_ObjectHideFlags: 0

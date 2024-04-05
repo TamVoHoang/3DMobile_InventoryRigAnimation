@@ -1,0 +1,96 @@
+using UnityEngine;
+
+public class Health : MonoBehaviour
+{
+    private AiUIHealthBar uiHealthBar;
+    [SerializeField] private float maxHealth;
+    [SerializeField] private float currentHealth;
+    //private AiAgent aiAgent; //todo ben ke thua se tu tao ra
+
+/*     //!testing Layer at animator override
+    [SerializeField] private AvatarMask baseMask;
+    [SerializeField] private AvatarMask weaponMask;
+    private AnimatorController animatorController;
+    private int baseLayerIndex;
+    private int weaponLayerIndex;
+    //! //!testing Layer at animator override
+ */    
+    private void Awake() {
+/*         animatorController = GetComponent<Animator>().runtimeAnimatorController as AnimatorController;
+        weaponLayerIndex = GetComponent<Animator>().GetLayerIndex("Weapon Layer");
+        baseLayerIndex = GetComponent<Animator>().GetLayerIndex("Base Layer");
+ */    }
+    void Start() {
+        ////SetLayerBegin(); //todo set gia tri weaponMask(chi co phan tren cho weapon Layer[1])
+        Debug.Log("cha chay");
+        uiHealthBar = GetComponentInChildren<AiUIHealthBar>();
+        currentHealth = maxHealth;
+        //aiAgent = GetComponent<AiAgent>(); //todo ke thua tu tao ra
+        var rigidBodies = GetComponentsInChildren<Rigidbody>();
+        foreach (var rigidbody in rigidBodies)
+        {
+            HitBox hitBox =  rigidbody.gameObject.AddComponent<HitBox>();
+            hitBox.health = this; // aIHealth = GetComponentInParent<AiHealth>();
+
+            //!gan layer hitbox vao cho tung game object da duoc add hitbox.cs
+            if(hitBox.gameObject != this.gameObject) {
+                hitBox.gameObject.layer = LayerMask.NameToLayer("Hitbox");
+            }
+        }
+
+        OnStart();
+    }
+
+    //todo hitbox.cs call TakeDamage()
+    public void TakeDamage(float amount, Vector3 direction) {
+        currentHealth -= amount;
+        if(uiHealthBar) {
+            uiHealthBar.SetHealthBarEnemyPercent((float)currentHealth / maxHealth);
+        }
+
+        OnDamage(direction); //! tai sao dat o day
+
+        if (currentHealth <= 0) {
+            Die(direction);
+        }
+    }
+
+    private void Die(Vector3 direction) {
+        /* AiState aiState = aiAgent.stateMachine.GetState(AiStateID.Death);
+        AiDeathState aiDeathState = aiState as AiDeathState;
+        (aiAgent.stateMachine.GetState(AiStateID.Death) as AiDeathState).direction = direction; */
+        
+        OnDeath(direction);
+
+        /* AiDeathState deathState = aiAgent.stateMachine.GetState(AiStateID.Death) as AiDeathState; //cha as con
+        deathState.direction = direction;
+        aiAgent.stateMachine.ChangeState(AiStateID.Death); */
+    }
+
+    protected virtual void OnStart() {
+
+    }
+    protected virtual void OnDeath(Vector3 direction) {
+
+    }
+    protected virtual void OnDamage(Vector3 direction) {
+
+    }
+
+/*     private void SetLayerBegin() {
+        var layers = animatorController.layers;
+        layers[weaponLayerIndex].avatarMask = weaponMask;
+        layers[baseLayerIndex].avatarMask = baseMask;
+        animatorController.layers = layers;
+        Debug.Log("set weapon layer mask for weapon Layer");
+    }
+    
+    public void SetLayerDeath() {
+        var layers = animatorController.layers;
+        //layers[weaponLayerIndex].avatarMask = null;
+        layers[baseLayerIndex].avatarMask = baseMask;
+
+        animatorController.layers = layers;
+        Debug.Log("set null avatar mask for weapon Layer");
+    }
+ */}

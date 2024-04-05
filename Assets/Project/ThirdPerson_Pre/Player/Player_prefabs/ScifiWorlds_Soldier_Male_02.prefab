@@ -1067,12 +1067,10 @@ MonoBehaviour:
   weaponSlot: 0
   weaponName: rifle
   raycastOrigin: {fileID: 0}
-  raycastDes: {fileID: 0}
   tracerEffect: {fileID: 2141053679634929815, guid: 7ce2abb6fb949c342b127465ec9039bb, type: 3}
   muzzleFlash: []
   hiteffect: {fileID: 0}
   distance: 0
-  isFiring: 0
   fireRate: 25
   accumulateTime: 0
   ammoCount: 0
@@ -1081,6 +1079,9 @@ MonoBehaviour:
   bulletDrop: 0
   damage: 10
   magazine: {fileID: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &1382260519254561409
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,7 +1172,7 @@ Transform:
   m_GameObject: {fileID: 1674401899480775129}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.408, y: 1.79, z: -2.99}
+  m_LocalPosition: {x: 0.408, y: 1.79, z: -2.67}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -32995,6 +32996,89 @@ Transform:
   - {fileID: 8264433315088298312}
   m_Father: {fileID: 3640722619355381620}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4692220164164585879
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7172358541460611870}
+  - component: {fileID: 1625527588089366685}
+  - component: {fileID: 6860478358576404030}
+  m_Layer: 0
+  m_Name: TestRb_HitBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7172358541460611870
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4692220164164585879}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 415736408567759676}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!54 &1625527588089366685
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4692220164164585879}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!136 &6860478358576404030
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4692220164164585879}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.18
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 1.05, z: 0}
 --- !u!1 &4834554605840437068
 GameObject:
   m_ObjectHideFlags: 0
@@ -33020,7 +33104,9 @@ GameObject:
   - component: {fileID: 3094836179703067845}
   - component: {fileID: 590610673020771787}
   - component: {fileID: 6625560560188278657}
-  m_Layer: 6
+  - component: {fileID: 8630623321412215908}
+  - component: {fileID: 5608873443822198505}
+  m_Layer: 9
   m_Name: ScifiWorlds_Soldier_Male_02
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -33040,6 +33126,7 @@ Transform:
   m_LocalScale: {x: 1.0000002, y: 1, z: 1.0000002}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7172358541460611870}
   - {fileID: 7478230868115210541}
   - {fileID: 1266108970496254800}
   - {fileID: 8311254748086024433}
@@ -33314,7 +33401,6 @@ MonoBehaviour:
   crossHairTarget: {fileID: 0}
   rigAnimator: {fileID: 4856833749364056662}
   ammoWidget: {fileID: 0}
-  isReload: 0
 --- !u!114 &5043786343982820026
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33349,6 +33435,7 @@ MonoBehaviour:
   animationEvents: {fileID: 1707712997969270867}
   leftHand: {fileID: 351546671111568885}
   ammoWidget: {fileID: 0}
+  isReloading: 0
 --- !u!114 &3094836179703067845
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -33408,6 +33495,32 @@ MonoBehaviour:
   currenActiveWeapon: {fileID: 0}
   timeBetweenAttacks: 0.5
   overrideControllers: {fileID: 0}
+--- !u!114 &8630623321412215908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4834554605840437068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 756692cb4944dab47b0491ac242a5aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5608873443822198505
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4834554605840437068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dd8911e8629adb41961ebe6ca45054c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 0
 --- !u!1 &4865092424051686877
 GameObject:
   m_ObjectHideFlags: 0
@@ -50798,12 +50911,10 @@ MonoBehaviour:
   weaponSlot: 1
   weaponName: pistol
   raycastOrigin: {fileID: 0}
-  raycastDes: {fileID: 0}
   tracerEffect: {fileID: 2141053679634929815, guid: 7ce2abb6fb949c342b127465ec9039bb, type: 3}
   muzzleFlash: []
   hiteffect: {fileID: 0}
   distance: 0
-  isFiring: 0
   fireRate: 25
   accumulateTime: 0
   ammoCount: 0
@@ -50812,6 +50923,9 @@ MonoBehaviour:
   bulletDrop: 0
   damage: 10
   magazine: {fileID: 0}
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &7588714219944226949
 GameObject:
   m_ObjectHideFlags: 0

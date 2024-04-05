@@ -17,7 +17,9 @@ public class ActiveGun : Singleton<ActiveGun>
     [SerializeField] RaycastWeapon[] equipped_weapons = new RaycastWeapon[2]; // ko destroy sung 1 khi pickup sung 2
     [SerializeField] private int activeWeaponIndex = 1; //? slot nao dang trang bi sung
     [SerializeField] private bool isHolstered = false; // false = dang equip
-    [SerializeField] private Transform crossHairTarget; //? crossHairTarget tren mainCamera
+
+    //* crossHairTarget tren mainCamera lam gamobject co cs (diem vacham cua raycast maincamera voi cac object khac)
+    [SerializeField] private Transform crossHairTarget;
     [SerializeField] private Animator rigAnimator;
     [SerializeField] private AmmoWidget ammoWidget;
     public int GetActiveWeaponIndex { get { return activeWeaponIndex; } }
@@ -67,7 +69,7 @@ public class ActiveGun : Singleton<ActiveGun>
                 weapon.StopFiring();
             }
 
-            weapon.UpdateWeapon(Time.deltaTime);
+            weapon.UpdateWeapon(Time.deltaTime, crossHairTarget.position);
         }
 
         /* if(Input.GetKeyDown(KeyCode.X)) 
@@ -77,7 +79,6 @@ public class ActiveGun : Singleton<ActiveGun>
         if (Input.GetKeyDown(KeyCode.Alpha2))
             SetActiveWeapon(WeaponSlots.Secondary); */
     }
-
 
     //TODO equip gun (touch pickup trigger or attactched gun)
     public void Equip(RaycastWeapon newWeapon) {
@@ -90,11 +91,11 @@ public class ActiveGun : Singleton<ActiveGun>
         }
 
         weapon = newWeapon;
-        weapon.SetRaycastDes(crossHairTarget);
-        //rigAnimator.Play("equip_" + weapon.weaponName);// ko lay
+        ////weapon.SetRaycastDes(crossHairTarget);
+        ////rigAnimator.Play("equip_" + weapon.weaponName);// ko lay
 
         equipped_weapons[weaponSlotIndex] = weapon;
-        //activeWeaponIndex = weaponSlotIndex;// ko lay
+        ////activeWeaponIndex = weaponSlotIndex;// ko lay
         SetActiveWeapon(newWeapon.weaponSlot);
         ammoWidget.Refresh(weapon.ammoCount);
     }

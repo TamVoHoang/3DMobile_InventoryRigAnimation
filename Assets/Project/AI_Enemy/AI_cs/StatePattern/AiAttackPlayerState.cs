@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AiAttackPlayerState : AiState
@@ -15,6 +13,8 @@ public class AiAttackPlayerState : AiState
         agent.weapons.ActiveWeapon();// khi bat dau tan cong  thi active sung
         agent.weapons.SetTarget(agent.playerTransform); // transform player
         agent.navMeshAgent.stoppingDistance = 5.0f;
+
+        agent.weapons.SetFiring(true); // bat dau ban khi da trang bi xong
     }
 
     public void Update(AiAgent agent)

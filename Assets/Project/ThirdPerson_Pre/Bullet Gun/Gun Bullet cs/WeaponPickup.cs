@@ -3,13 +3,14 @@ using UnityEngine;
 
 public class WeaponPickup : MonoBehaviour
 {
-    //? instantiate gun prefab on player
+    //? giu gun prefab on player || Ai
+    //? layer = pickup => chi trigger voi player and character Ai
     [SerializeField] private RaycastWeapon gunPrefab;
 
     private void OnTriggerEnter(Collider other) {
-        ActiveGun activeGun = other.GetComponent<ActiveGun>();
         int weaponSlotIndex = (int)gunPrefab.weaponSlot; //=0
 
+        ActiveGun activeGun = other.GetComponent<ActiveGun>();
         if(activeGun)
         {
             RaycastWeapon newWeapon = Instantiate(gunPrefab, activeGun.weaponSlots[weaponSlotIndex].position,

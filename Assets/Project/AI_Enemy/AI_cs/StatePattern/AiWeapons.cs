@@ -1,5 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AiWeapons : MonoBehaviour
@@ -10,6 +9,8 @@ public class AiWeapons : MonoBehaviour
     private MeshSockets sockets;
     private WeaponIK weaponIK;
     [SerializeField] private Transform currentTarget;
+    private bool weaponActive_Ai = false;
+    [SerializeField] private float inaccuracy = 0.5f;
 
 
     /// Initializes components needed by the AI agent's weapons.
@@ -19,6 +20,24 @@ public class AiWeapons : MonoBehaviour
         animator = GetComponent<Animator>();
         sockets = GetComponent<MeshSockets>();
         weaponIK = GetComponent<WeaponIK>();
+    }
+
+    private void Update() {
+        if(currentWeapon && currentTarget && weaponActive_Ai) {
+            Vector3 target = currentTarget.position + weaponIK.TargetOffset;
+            target += Random.insideUnitSphere * inaccuracy;
+            currentWeapon.UpdateWeapon(Time.deltaTime, target);//ok
+            if(currentWeapon.ammoCount <=0 ) currentWeapon.ammoCount = 60;
+        }
+        
+    }
+
+    public void SetFiring(bool enabled) {
+        if(enabled) {
+            currentWeapon.StartFiring(); //=> xet isFiring - UpdateFiring() - FireBullet() - toa vien dan - UpdateBullet() mo phong dan bay vay ly
+        } else {
+            currentWeapon.StopFiring();
+        }
     }
 
     // khi chap voi pickup se goi ham nay chay
@@ -40,6 +59,7 @@ public class AiWeapons : MonoBehaviour
             yield return null;
         }
         weaponIK.SetAimTransform(currentWeapon.raycastOrigin);
+        weaponActive_Ai = true; // da trang bi sung len ai se cho phep ban
     }
 
     public void DropWeapon() {

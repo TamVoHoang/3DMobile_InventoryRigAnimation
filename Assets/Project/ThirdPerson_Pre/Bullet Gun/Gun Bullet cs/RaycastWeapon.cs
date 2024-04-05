@@ -17,8 +17,9 @@ public class RaycastWeapon : MonoBehaviour
     [SerializeField] private string weaponName;
     public string WeaponName {get {return weaponName;}}
     [HideInInspector] public Transform raycastOrigin; // tren ong sung
-    //public Transform GetRaycastOrigin {get {return raycastOrigin;}}
-    [SerializeField] private Transform raycastDes; // crossHairTarget position
+    ////public Transform GetRaycastOrigin {get {return raycastOrigin;}}
+    //[SerializeField] private Transform raycastDes; // crossHairTarget position
+    //public Transform SetRaycastDes (Transform rayDes) => raycastDes = rayDes;
     [SerializeField] TrailRenderer tracerEffect;
     [SerializeField] private ParticleSystem[] muzzleFlash; // keo tha muzzleFlash vao khai bao de loa sang khi ban
     [SerializeField] private ParticleSystem hiteffect; // tao hieu ung bi ban tren be mat - keo tha doi tuong vao 
@@ -26,7 +27,6 @@ public class RaycastWeapon : MonoBehaviour
     [Header("RAYCAST")]
     private Ray ray;
     private RaycastHit hitInfo;
-    public Transform SetRaycastDes (Transform rayDes) => raycastDes = rayDes;
     [SerializeField] private float distance;
     public bool IsFiring { get => isFiring;}
     public bool SetIsFiring(bool value) => isFiring = value;
@@ -50,6 +50,7 @@ public class RaycastWeapon : MonoBehaviour
     
     [Header("           RELOAD")]
     public GameObject magazine;
+    [SerializeField] LayerMask layerMask; //todo loai layerMash ma cay sung se ban trung
     private void Awake() {
         
     }
@@ -75,14 +76,14 @@ public class RaycastWeapon : MonoBehaviour
     }
 
     //? ActiveGun.cs || coll 68 Update() call this function
-    public void UpdateWeapon(float deltaTime) {
-        if (isFiring) UpdateFiring(deltaTime);
+    public void UpdateWeapon(float deltaTime, Vector3 target) {
+        if (isFiring) UpdateFiring(deltaTime, target);
         accumulateTime += deltaTime;
         UpdateBullet(deltaTime);
     }
 
     //? StartFiring() || UpdateFiring()
-    private void FireBullet()
+    private void FireBullet(Vector3 target)
     {
         if(ammoCount <= 0) return;
 
@@ -95,7 +96,7 @@ public class RaycastWeapon : MonoBehaviour
         }
         ////FireBulletWithRaycast(); //? BAN DAN raycast tai day
 
-        Vector3 directionToAimPoint = (-raycastOrigin.position + raycastDes.position); // huong tu vt tren nong sung den muc tieu
+        Vector3 directionToAimPoint = target - raycastOrigin.position; // huong tu vt tren nong sung den muc tieu
         Debug.Log("dir =" + directionToAimPoint);
 
         Vector3 velocity = directionToAimPoint.normalized * bulletSpeed; // vector van toc ban dau tai nong sung
@@ -121,13 +122,13 @@ public class RaycastWeapon : MonoBehaviour
         isFiring = false;
     }
 
-    public void UpdateFiring(float deltaTime) // dang dc goi tu folder player (characterAimming class)
+    public void UpdateFiring(float deltaTime, Vector3 target) // dang dc goi tu folder player (characterAimming class)
     {
         float fireInterval = 1.0f / fireRate; // 1 vien = 1/25s
         while (accumulateTime >= 0.0f) // time.deltaTime la hang so, neu fireRate >> thi vong lap while se chay nhiu lan
                                        // do accumulatedime >=0 va ra nhieu vien dan
         {
-            FireBullet();
+            FireBullet(target);
             accumulateTime -= fireInterval; // phai cho 1/25s de ban vien tiep theo - de dam bao 1s ban duoc 25 vien
         }
     }
@@ -158,7 +159,7 @@ public class RaycastWeapon : MonoBehaviour
         ray.origin = start;
         ray.direction = direction; // co 1 tia ray ban ra tu nong sung
 
-        if (Physics.Raycast(ray, out hitInfo, distance)) // tia ray da ban ra tu nong de co duoc hitInfo
+        if (Physics.Raycast(ray, out hitInfo, distance, layerMask)) // tia ray da ban ra tu nong de co duoc hitInfo
         {
             hiteffect.transform.position = hitInfo.point; // vi tri cua vet dan la vi tri tia hit va cham
             hiteffect.transform.forward = hitInfo.normal;
@@ -184,9 +185,10 @@ public class RaycastWeapon : MonoBehaviour
             var rb2d = hitInfo.collider.GetComponent<Rigidbody>();
             if (rb2d) rb2d.AddForceAtPosition(ray.direction * 20, hitInfo.point, ForceMode.Impulse);
 
-            //? vien dan va cham voi hitbox.cs tren nguoi enemy
+            //? vien dan va cham voi hitbox.cs tren nguoi enemy HOAC tren nguoi Player
             var hitBox = hitInfo.collider.GetComponent<HitBox>();
             if (hitBox) hitBox.OnRaycastHit(this, ray.direction); //todo this = cs cay sung nay
+
         }
 
         bullet.tracer.transform.position = end;
