@@ -6,12 +6,10 @@ public class ActiveGun : Singleton<ActiveGun>
 {
     //todo game object = player
     //todo 
-    //public Action startFiring;
     public enum WeaponSlots
     {
         Primary = 0,
         Secondary = 1,
-        //Tertiary = 2
     }
 
     [Header ("Gun")]
@@ -25,7 +23,6 @@ public class ActiveGun : Singleton<ActiveGun>
     public int GetActiveWeaponIndex { get { return activeWeaponIndex; } }
     public bool IsHolstered { get { return isHolstered; } }
     //public bool isReload = false; // ko co dang thay dan
-    //[SerializeField] private RaycastWeapon weapon; //? gun tren nguoi player
     private ReloadWeapon reloadWeapon;
 
     protected override void Awake() {
@@ -48,33 +45,30 @@ public class ActiveGun : Singleton<ActiveGun>
         }
     }
     
-    RaycastWeapon GetWeapon(int index)
-    {
-        if(index < 0 || index >= weaponSlots.Length)
-        {
-            return null;
-        }
+    RaycastWeapon GetWeapon(int index) {
+        if(index < 0 || index >= weaponSlots.Length) return null;
         return equipped_weapons[index];
     }
-    public RaycastWeapon GetActiveWeapon() // deatchMag() ReloadWeapon goi . kiem tra loai sung thay dan
-    {
+
+    // deatchMag() ReloadWeapon goi . kiem tra loai sung thay dan
+    public RaycastWeapon GetActiveWeapon() {
         return GetWeapon(activeWeaponIndex);
     }
 
     private void Update() {
-        
         var weapon = GetWeapon(activeWeaponIndex);
-        var canFire = !isHolstered && !reloadWeapon.GetIsReloading;// ko dang thay dan thi cho ban
+        var canFire = !isHolstered;// ko dang thay dan thi cho ban
         if(weapon) {
-            if(InputManager.Instance.IsAttackButton && !weapon.isFiring & canFire)
+            if(InputManager.Instance.IsAttackButton && !weapon.IsFiring & canFire) {
                 weapon.StartFiring();
-            if((!InputManager.Instance.IsAttackButton && weapon.isFiring) || !canFire) 
+            }
+                
+            if((!InputManager.Instance.IsAttackButton && weapon.IsFiring) || !canFire) {
                 weapon.StopFiring();
+            }
 
             weapon.UpdateWeapon(Time.deltaTime);
         }
-
-        
 
         /* if(Input.GetKeyDown(KeyCode.X)) 
             ToggleActiveWeapon();

@@ -36,8 +36,8 @@ public class InputManager : Singleton<InputManager>
         playerControls = new PlayerControls();
         
         //todo lay gia tri trong PlayerOCntrols -> AttackButton
-        playerControls.Player.Attack.started += _ => StartAttacking();
-        playerControls.Player.Attack.canceled += StopAttacking;
+        playerControls.Player.Attack.started += _ => StartPressing_AttackButton();
+        playerControls.Player.Attack.canceled += StopPressing_AttackButton;
 
         //todo lay gia tri trong PlayerOCntrols -> SpaceButton
         // playerControls.Player.Jump.started += _ => isJumpButton = true;
@@ -65,14 +65,14 @@ public class InputManager : Singleton<InputManager>
         playerControls.Player.Attack.Disable();
     }
 
-    private void StopAttacking(InputAction.CallbackContext context)
+    private void StopPressing_AttackButton(InputAction.CallbackContext context)
     {
         //Debug.Log(context.phase);
         Debug.Log("Stop_Press Attack Button");
         isAttackButton = false;
     }
 
-    private void StartAttacking()
+    private void StartPressing_AttackButton()
     {
         //Debug.Log(context.phase);
         Debug.Log("Start_Press Attack Button");

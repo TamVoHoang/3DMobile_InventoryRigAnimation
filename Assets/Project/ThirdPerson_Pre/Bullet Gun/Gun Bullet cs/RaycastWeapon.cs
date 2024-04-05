@@ -32,7 +32,7 @@ public class RaycastWeapon : MonoBehaviour
     public bool SetIsFiring(bool value) => isFiring = value;
 
     [Header("FIRE RATE")]
-    public bool isFiring = false;
+    private bool isFiring = false;
     public float fireRate = 25f; // bullets per seconds
     public float accumulateTime; // chi duoc ban khi accumulate >=0
 
@@ -76,23 +76,15 @@ public class RaycastWeapon : MonoBehaviour
 
     //? ActiveGun.cs || coll 68 Update() call this function
     public void UpdateWeapon(float deltaTime) {
-        // //if (Input.GetButtonDown("Fire1")) StartFiring();
-        // if(InputManager.Instance.IsAttackButton && !isFiring) {
-        //     StartFiring(); //? khi dang nhan button + dang chua ban => ban phat dau tien va cho UpdateFiring()
-        // }
-        
-        if (isFiring) UpdateFiring(Time.deltaTime);
+        if (isFiring) UpdateFiring(deltaTime);
         accumulateTime += deltaTime;
-        UpdateBullet(Time.deltaTime);
-
-        // //if(Input.GetButtonUp("Fire1")) StopFiring();
-        // if(!InputManager.Instance.IsAttackButton && isFiring) StopFiring();
+        UpdateBullet(deltaTime);
     }
 
     //? StartFiring() || UpdateFiring()
     private void FireBullet()
     {
-        if(ammoCount <=0) return;
+        if(ammoCount <= 0) return;
 
         ammoCount--;
         Debug.Log("Ban");
@@ -101,7 +93,7 @@ public class RaycastWeapon : MonoBehaviour
         {
             particle.Emit(1);
         }
-        //FireBulletWithRaycast(); //? BAN DAN raycast tai day
+        ////FireBulletWithRaycast(); //? BAN DAN raycast tai day
 
         Vector3 directionToAimPoint = (-raycastOrigin.position + raycastDes.position); // huong tu vt tren nong sung den muc tieu
         Debug.Log("dir =" + directionToAimPoint);
@@ -112,6 +104,7 @@ public class RaycastWeapon : MonoBehaviour
         var bullet = CreateBullet(raycastOrigin.position, velocity); // gan toan bo thuoc tinh cua vien dan tao ra tren ham create bullet cho bien var bullet
         Bullets.Add(bullet); // gan bien bulet sau khi duoc khoi tao tren CREATEBULLET gan vao list => simulate
         //recoil.GenerateRecoil(weaponName); //? sun giat
+
     }
 
     public void StartFiring() //? coll 33 UpdateWeapon() call this function
@@ -130,7 +123,6 @@ public class RaycastWeapon : MonoBehaviour
 
     public void UpdateFiring(float deltaTime) // dang dc goi tu folder player (characterAimming class)
     {
-        //accumulateTime += deltaTime; //  trong khi dang ban acculated + them deltaTime - de tien ve 0
         float fireInterval = 1.0f / fireRate; // 1 vien = 1/25s
         while (accumulateTime >= 0.0f) // time.deltaTime la hang so, neu fireRate >> thi vong lap while se chay nhiu lan
                                        // do accumulatedime >=0 va ra nhieu vien dan
@@ -180,7 +172,7 @@ public class RaycastWeapon : MonoBehaviour
             end = hitInfo.point;
             print("stop");
 
-            //bullet ricohet
+            //? bullet ricohet
             /* if (bullet.bounce > 0) {
                 bullet.time = 0;
                 bullet.initialPos = hitInfo.point;
@@ -188,10 +180,11 @@ public class RaycastWeapon : MonoBehaviour
                 bullet.bounce--;
             } */
 
-            //Collision Impluse
+            //? Collision Impluse
             var rb2d = hitInfo.collider.GetComponent<Rigidbody>();
             if (rb2d) rb2d.AddForceAtPosition(ray.direction * 20, hitInfo.point, ForceMode.Impulse);
 
+            //? vien dan va cham voi hitbox.cs tren nguoi enemy
             var hitBox = hitInfo.collider.GetComponent<HitBox>();
             if (hitBox) hitBox.OnRaycastHit(this, ray.direction); //todo this = cs cay sung nay
         }
@@ -199,7 +192,7 @@ public class RaycastWeapon : MonoBehaviour
         bullet.tracer.transform.position = end;
     }
 
-    //? fire bullet with raycast
+    //? FIRE BULLET WITH RAYCAST
     /* private void FireBulletWithRaycast()
     {
         //Debug.Log("FireBulletWithRaycast");

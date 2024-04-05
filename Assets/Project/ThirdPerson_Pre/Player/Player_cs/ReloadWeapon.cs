@@ -31,7 +31,7 @@ public class ReloadWeapon : MonoBehaviour
             {
                 rigController.SetTrigger("reload_weapon");
             }
-            if (weapon.isFiring) ammoWidget.Refresh(weapon.ammoCount);
+            if (weapon.IsFiring) ammoWidget.Refresh(weapon.ammoCount);
         }
         else
         {
@@ -63,7 +63,7 @@ public class ReloadWeapon : MonoBehaviour
     }
     void deatchMag()
     {
-        isReloading = true; // dang thay dan
+        //isReloading = true; // dang thay dan
         RaycastWeapon weapon= activeGun.GetActiveWeapon();
         magHand = Instantiate(weapon.magazine, leftHand, true);
         weapon.magazine.SetActive(false);
@@ -89,7 +89,7 @@ public class ReloadWeapon : MonoBehaviour
         
         ammoWidget.Refresh(weapon.ammoCount);
 
-        isReloading = false;
+        //isReloading = false;
     }
 
 
