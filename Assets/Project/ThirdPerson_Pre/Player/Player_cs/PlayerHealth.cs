@@ -7,7 +7,7 @@ public class PlayerHealth : Health
         tetsInheritant = GetComponent<TetsInheritant>();
     }
     protected override void OnDeath(Vector3 direction) {
-        tetsInheritant.PlayerRagdoll(direction);
+        
     }
     protected override void OnDamage(Vector3 direction) {
 

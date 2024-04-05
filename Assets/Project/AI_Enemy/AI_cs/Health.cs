@@ -5,15 +5,15 @@ public class Health : MonoBehaviour
     private AiUIHealthBar uiHealthBar;
     [SerializeField] private float maxHealth;
     [SerializeField] private float currentHealth;
-    //private AiAgent aiAgent; //todo ben ke thua se tu tao ra
+    public float CurrentHealth{get => currentHealth;}
+    //private AiAgent aiAgent;//? ben ke thua se tu tao ra
 
-/*     //!testing Layer at animator override
+/*     //testing Layer at animator override
     [SerializeField] private AvatarMask baseMask;
     [SerializeField] private AvatarMask weaponMask;
     private AnimatorController animatorController;
     private int baseLayerIndex;
     private int weaponLayerIndex;
-    //! //!testing Layer at animator override
  */    
     private void Awake() {
 /*         animatorController = GetComponent<Animator>().runtimeAnimatorController as AnimatorController;
@@ -21,18 +21,17 @@ public class Health : MonoBehaviour
         baseLayerIndex = GetComponent<Animator>().GetLayerIndex("Base Layer");
  */    }
     void Start() {
-        ////SetLayerBegin(); //todo set gia tri weaponMask(chi co phan tren cho weapon Layer[1])
-        Debug.Log("cha chay");
+        //SetLayerBegin(); //set gia tri weaponMask(chi co phan tren cho weapon Layer[1])
+        Debug.Log("Health.cs run");
         uiHealthBar = GetComponentInChildren<AiUIHealthBar>();
         currentHealth = maxHealth;
-        //aiAgent = GetComponent<AiAgent>(); //todo ke thua tu tao ra
+        //aiAgent = GetComponent<AiAgent>(); //? ke thua tu tao ra
         var rigidBodies = GetComponentsInChildren<Rigidbody>();
-        foreach (var rigidbody in rigidBodies)
-        {
+        foreach (var rigidbody in rigidBodies) {
             HitBox hitBox =  rigidbody.gameObject.AddComponent<HitBox>();
             hitBox.health = this; // aIHealth = GetComponentInParent<AiHealth>();
 
-            //!gan layer hitbox vao cho tung game object da duoc add hitbox.cs
+            //gan layer hitbox vao cho tung game object da duoc add hitbox.cs
             if(hitBox.gameObject != this.gameObject) {
                 hitBox.gameObject.layer = LayerMask.NameToLayer("Hitbox");
             }
@@ -48,7 +47,7 @@ public class Health : MonoBehaviour
             uiHealthBar.SetHealthBarEnemyPercent((float)currentHealth / maxHealth);
         }
 
-        OnDamage(direction); //! tai sao dat o day
+        OnDamage(direction); // tai sao dat o day
 
         if (currentHealth <= 0) {
             Die(direction);
@@ -61,10 +60,6 @@ public class Health : MonoBehaviour
         (aiAgent.stateMachine.GetState(AiStateID.Death) as AiDeathState).direction = direction; */
         
         OnDeath(direction);
-
-        /* AiDeathState deathState = aiAgent.stateMachine.GetState(AiStateID.Death) as AiDeathState; //cha as con
-        deathState.direction = direction;
-        aiAgent.stateMachine.ChangeState(AiStateID.Death); */
     }
 
     protected virtual void OnStart() {

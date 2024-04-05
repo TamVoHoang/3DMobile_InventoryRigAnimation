@@ -19,7 +19,14 @@ public class AiAttackPlayerState : AiState
 
     public void Update(AiAgent agent)
     {
-        agent.navMeshAgent.destination = agent.playerTransform.position;
+        agent.navMeshAgent.destination = agent.playerTransform.position; // chay thao player
+
+        if(agent.playerTransform.GetComponent<PlayerHealth>().CurrentHealth <= 0) {
+            agent.weapons.UnActiveWeapon();                 // cat sung
+            agent.weapons.SetTarget(null);                  // ko xet target nua do player da chet
+            agent.stateMachine.ChangeState(AiStateID.Idle); // chuyen trang thai idle
+        }
+        
     }
 
     public void Exit(AiAgent agent)

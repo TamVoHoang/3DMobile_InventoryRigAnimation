@@ -52,6 +52,10 @@ public class AiWeapons : MonoBehaviour
         StartCoroutine(EuipWeapon());
     }
 
+    public void UnActiveWeapon() {
+        StartCoroutine(UnEquipWeapon());
+    }
+
     IEnumerator EuipWeapon() {
         animator.SetBool("Equip", true);
         yield return new WaitForSeconds(0.3f);
@@ -60,6 +64,11 @@ public class AiWeapons : MonoBehaviour
         }
         weaponIK.SetAimTransform(currentWeapon.raycastOrigin);
         weaponActive_Ai = true; // da trang bi sung len ai se cho phep ban
+    }
+    IEnumerator UnEquipWeapon() {
+        animator.SetBool("Equip", false);
+        yield return new WaitForSeconds(0.3f);
+        weaponActive_Ai = false; // da trang bi sung len ai se cho phep ban
     }
 
     public void DropWeapon() {
@@ -81,8 +90,10 @@ public class AiWeapons : MonoBehaviour
         if(eventName == "equipWeapon") {
             sockets.Attach(currentWeapon.transform, MeshSockets.SocketId.RightHand);
         }
+        if(eventName == "unEquipWeapon") {
+            sockets.Attach(currentWeapon.transform, MeshSockets.SocketId.Spine);
+        }
     }
-
     public void SetTarget(Transform target) //entr() aiAttackPlayer.cs call
     {
         weaponIK.SetTargetTranform(target);
