@@ -1,3 +1,4 @@
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class AiRagdoll : MonoBehaviour
@@ -32,5 +33,6 @@ public class AiRagdoll : MonoBehaviour
         var rigidBody = animator.GetBoneTransform(HumanBodyBones.Hips).GetComponent<Rigidbody>();
         rigidBody.AddForce(force, ForceMode.VelocityChange); // ForceMode.VelocityChange
     }
+
 
 }

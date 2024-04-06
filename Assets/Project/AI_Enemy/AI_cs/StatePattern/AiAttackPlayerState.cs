@@ -1,4 +1,7 @@
+using System;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AiAttackPlayerState : AiState
 {
@@ -7,9 +10,9 @@ public class AiAttackPlayerState : AiState
         return AiStateID.AttackPlayer;
     }
 
-    public void Enter(AiAgent agent) 
+    public void Enter(AiAgent agent)
     {
-        Debug.Log("ai enter attack");
+        Debug.Log("Enter() attackState");
         agent.weapons.ActiveWeapon();// khi bat dau tan cong  thi active sung
         agent.weapons.SetTarget(agent.playerTransform); // transform player
         agent.navMeshAgent.stoppingDistance = 5.0f;
@@ -20,17 +23,19 @@ public class AiAttackPlayerState : AiState
     public void Update(AiAgent agent)
     {
         agent.navMeshAgent.destination = agent.playerTransform.position; // chay thao player
-
+        //? khi player die thi chuyen qua idleState
         if(agent.playerTransform.GetComponent<PlayerHealth>().CurrentHealth <= 0) {
             agent.weapons.UnActiveWeapon();                 // cat sung
             agent.weapons.SetTarget(null);                  // ko xet target nua do player da chet
-            agent.stateMachine.ChangeState(AiStateID.Idle); // chuyen trang thai idle
+            //agent.stateMachine.ChangeState(AiStateID.Idle); // chuyen trang thai idle
         }
-        
     }
 
     public void Exit(AiAgent agent)
     {
+        Debug.Log("Exit() AttackState");
         agent.navMeshAgent.stoppingDistance = 0.0f;
+        
     }
+
 }

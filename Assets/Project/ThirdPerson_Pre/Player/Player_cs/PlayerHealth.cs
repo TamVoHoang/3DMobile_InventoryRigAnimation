@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class PlayerHealth : Health
 {
-    TetsInheritant tetsInheritant;
+    private AiRagdoll aiRagdoll;
+    Animator animator;
     protected override void OnStart() {
-        tetsInheritant = GetComponent<TetsInheritant>();
+        aiRagdoll = GetComponent<AiRagdoll>();
     }
     protected override void OnDeath(Vector3 direction) {
-        
+        aiRagdoll.ActiveRag();
     }
     protected override void OnDamage(Vector3 direction) {
 

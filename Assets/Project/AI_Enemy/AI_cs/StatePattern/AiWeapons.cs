@@ -15,8 +15,7 @@ public class AiWeapons : MonoBehaviour
 
     /// Initializes components needed by the AI agent's weapons.
     /// Gets references to the Animator and MeshSockets components.
-    private void Start()
-    {
+    private void Start() {
         animator = GetComponent<Animator>();
         sockets = GetComponent<MeshSockets>();
         weaponIK = GetComponent<WeaponIK>();
@@ -29,7 +28,6 @@ public class AiWeapons : MonoBehaviour
             currentWeapon.UpdateWeapon(Time.deltaTime, target);//ok
             if(currentWeapon.ammoCount <=0 ) currentWeapon.ammoCount = 60;
         }
-        
     }
 
     public void SetFiring(bool enabled) {
@@ -77,7 +75,8 @@ public class AiWeapons : MonoBehaviour
             currentWeapon.gameObject.GetComponent<BoxCollider>().enabled = true;
             currentWeapon.gameObject.AddComponent<Rigidbody>();
 
-            Destroy(currentWeapon.gameObject);//testing bo sung
+            //Destroy(currentWeapon.gameObject);//testing bo sung neu ko se bi xoay aiagent
+            
             currentWeapon = null;
         }
     }

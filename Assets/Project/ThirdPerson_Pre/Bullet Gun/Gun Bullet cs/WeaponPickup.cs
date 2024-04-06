@@ -27,7 +27,6 @@ public class WeaponPickup : MonoBehaviour
             RaycastWeapon newWeapon = Instantiate(gunPrefab);
             aiWeapons.EquipWeapon(newWeapon);
             Destroy(gameObject);
-
         }
     }
 }

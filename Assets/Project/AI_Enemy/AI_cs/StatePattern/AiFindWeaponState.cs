@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TreeEditor;
-using UnityEditor.Rendering;
 using UnityEngine;
 
 public class AiFindWeaponState : AiState
@@ -13,6 +9,7 @@ public class AiFindWeaponState : AiState
 
     public void Enter(AiAgent agent)
     {
+        Debug.Log("Enter() AiFindWeapon State");
         WeaponPickup pickup = FindClosestWeapon(agent);
         agent.navMeshAgent.destination = pickup.transform.position;
         agent.navMeshAgent.speed = 5f;
@@ -21,14 +18,13 @@ public class AiFindWeaponState : AiState
     public void Update(AiAgent agent)
     {
         if(agent.weapons.HasWeapon()) {
-            //agent.weapons.ActiveWeapon(); //bo ko lay
             agent.stateMachine.ChangeState(AiStateID.AttackPlayer);
         }
     }
 
     public void Exit(AiAgent agent)
     {
-        
+        Debug.Log("Exit() AiFindWeapon State");
     }
 
     private WeaponPickup FindClosestWeapon(AiAgent aiAgent) {

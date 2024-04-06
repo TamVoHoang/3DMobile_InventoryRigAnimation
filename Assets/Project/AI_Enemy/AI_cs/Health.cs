@@ -7,7 +7,7 @@ public class Health : MonoBehaviour
     [SerializeField] private float currentHealth;
     public float CurrentHealth{get => currentHealth;}
     //private AiAgent aiAgent;//? ben ke thua se tu tao ra
-
+    
 /*     //testing Layer at animator override
     [SerializeField] private AvatarMask baseMask;
     [SerializeField] private AvatarMask weaponMask;
@@ -16,7 +16,7 @@ public class Health : MonoBehaviour
     private int weaponLayerIndex;
  */    
     private void Awake() {
-/*         animatorController = GetComponent<Animator>().runtimeAnimatorController as AnimatorController;
+/*      animatorController = GetComponent<Animator>().runtimeAnimatorController as AnimatorController;
         weaponLayerIndex = GetComponent<Animator>().GetLayerIndex("Weapon Layer");
         baseLayerIndex = GetComponent<Animator>().GetLayerIndex("Base Layer");
  */    }

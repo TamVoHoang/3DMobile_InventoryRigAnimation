@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -47,7 +48,5 @@ public class AiAgent : MonoBehaviour
             // Debug.Log(System.Enum.GetValues(typeof(AiStateID)).Length);
 
             stateMachine.Update();
-            
-            
     }
 }
