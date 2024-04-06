@@ -11,7 +11,7 @@ public class AiWeapons : MonoBehaviour
     [SerializeField] private Transform currentTarget;
     private bool weaponActive_Ai = false;
     [SerializeField] private float inaccuracy = 0.5f;
-
+    [SerializeField] private float waitingTimeEquipWeapon = 0.5f;
 
     /// Initializes components needed by the AI agent's weapons.
     /// Gets references to the Animator and MeshSockets components.
@@ -31,6 +31,7 @@ public class AiWeapons : MonoBehaviour
     }
 
     public void SetFiring(bool enabled) {
+        
         if(enabled) {
             currentWeapon.StartFiring(); //=> xet isFiring - UpdateFiring() - FireBullet() - toa vien dan - UpdateBullet() mo phong dan bay vay ly
         } else {
@@ -56,7 +57,7 @@ public class AiWeapons : MonoBehaviour
 
     IEnumerator EuipWeapon() {
         animator.SetBool("Equip", true);
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(waitingTimeEquipWeapon);
         while (animator.GetCurrentAnimatorStateInfo(1).normalizedTime < 0.1f) {
             yield return null;
         }
