@@ -17,8 +17,16 @@ public class AiFindWeaponState : AiState
 
     public void Update(AiAgent agent)
     {
+        //if(agent.weapons.HasWeapon()) agent.stateMachine.ChangeState(AiStateID.AttackPlayer);
+
+        // da co sung - move den nhan vat
+        // dis < 10 attack firing
+
+        var distance = Vector3.Distance(agent.playerTransform.position, agent.transform.position);
         if(agent.weapons.HasWeapon()) {
-            agent.stateMachine.ChangeState(AiStateID.AttackPlayer);
+            agent.navMeshAgent.destination = agent.playerTransform.position;
+            if(distance <= 10) 
+                agent.stateMachine.ChangeState(AiStateID.AttackPlayer);
         }
     }
 

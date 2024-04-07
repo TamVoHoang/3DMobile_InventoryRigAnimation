@@ -10,6 +10,7 @@ public class MeshSocket : MonoBehaviour
     public Vector3 rotation;
     void Start()
     {
+        
         Animator animator = GetComponentInParent<Animator>();
         //attachPoint = transform.GetChild(0);
         attachPoint = new GameObject("socket" + socketId).transform;

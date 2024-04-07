@@ -23,6 +23,7 @@ public class AiWeapons : MonoBehaviour
 
     private void Update() {
         if(currentWeapon && currentTarget && weaponActive_Ai) {
+            weaponIK.SetTargetOffset(currentWeapon.TargetOffset); // lay targetoffset tung loia bo vao
             Vector3 target = currentTarget.position + weaponIK.TargetOffset;
             target += Random.insideUnitSphere * inaccuracy;
             currentWeapon.UpdateWeapon(Time.deltaTime, target);//ok
@@ -42,20 +43,28 @@ public class AiWeapons : MonoBehaviour
     // khi chap voi pickup se goi ham nay chay
     public void EquipWeapon(RaycastWeapon weapon) {
         currentWeapon = weapon;
-        sockets.Attach(weapon.transform, MeshSockets.SocketId.Spine); // sung duoc hinh thanh trong aiAgent
+        if(currentWeapon.WeaponName == "rifle") {
+            sockets.Attach(weapon.transform, MeshSockets.SocketId.Spine); // sung duoc hinh thanh trong aiAgent
+        }
+        if(currentWeapon.WeaponName == "pistol") {
+            sockets.Attach(weapon.transform, MeshSockets.SocketId.UperLegR); // sung duoc hinh thanh trong aiAgent
+        }
+        
     }
 
 
     //todo dung de lien ket voi aiFindWeapon.cs
     public void ActiveWeapon() {
-        StartCoroutine(EuipWeapon());
+        StartCoroutine(EquipWeapon());
     }
 
     public void UnActiveWeapon() {
         StartCoroutine(UnEquipWeapon());
     }
 
-    IEnumerator EuipWeapon() {
+    IEnumerator EquipWeapon() {
+        // todo override loai equip or unequip tuy tung sung
+        animator.runtimeAnimatorController = currentWeapon.runtimeAnimatorController;
         animator.SetBool("Equip", true);
         yield return new WaitForSeconds(waitingTimeEquipWeapon);
         while (animator.GetCurrentAnimatorStateInfo(1).normalizedTime < 0.1f) {
@@ -65,6 +74,7 @@ public class AiWeapons : MonoBehaviour
         weaponActive_Ai = true; // da trang bi sung len ai se cho phep ban
     }
     IEnumerator UnEquipWeapon() {
+        animator.runtimeAnimatorController = currentWeapon.runtimeAnimatorController;
         animator.SetBool("Equip", false);
         yield return new WaitForSeconds(0.3f);
         weaponActive_Ai = false; // da trang bi sung len ai se cho phep ban
@@ -92,6 +102,13 @@ public class AiWeapons : MonoBehaviour
         }
         if(eventName == "unEquipWeapon") {
             sockets.Attach(currentWeapon.transform, MeshSockets.SocketId.Spine);
+        }
+
+        if(eventName == "equipPistol") {
+            sockets.Attach(currentWeapon.transform, MeshSockets.SocketId.RightHandPistol);
+        }
+        if(eventName == "unEquipPistol") {
+            sockets.Attach(currentWeapon.transform, MeshSockets.SocketId.UperLegR);
         }
     }
     public void SetTarget(Transform target) //entr() aiAttackPlayer.cs call

@@ -26,6 +26,8 @@ public class WeaponIK : MonoBehaviour
 
     [SerializeField] private HumanBone[] humanBones;
     [SerializeField] private Transform[] boneTransforms;
+
+
     private void Awake() {
     }
     private void Start() {
@@ -56,7 +58,8 @@ public class WeaponIK : MonoBehaviour
         Vector3 direction = Vector3.Slerp(targetDirection, aimDirection, blendOut);
         return aimTransform.position + direction;
     }
-    
+    private void Update() {
+    }
 
     private void LateUpdate() {
 
@@ -86,5 +89,8 @@ public class WeaponIK : MonoBehaviour
 
     public void SetAimTransform(Transform aim) {
         aimTransform = aim;
+    }
+    public void SetTargetOffset(Vector3 targetOffset) {
+        this.targetOffset = targetOffset;
     }
 }

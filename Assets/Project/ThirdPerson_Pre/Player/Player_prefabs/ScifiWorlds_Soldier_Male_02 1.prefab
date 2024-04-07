@@ -592,6 +592,8 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 0
+  runtimeAnimatorController: {fileID: 0}
+  targetOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &1141332573187680815
 GameObject:
   m_ObjectHideFlags: 0
@@ -51293,6 +51295,8 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 0
+  runtimeAnimatorController: {fileID: 0}
+  targetOffset: {x: 0, y: 0, z: 0}
 --- !u!1 &7243668302230974292
 GameObject:
   m_ObjectHideFlags: 0
@@ -52352,7 +52356,7 @@ MonoBehaviour:
   hzInput: 0
   vInput: 0
   airSpeed: 1
-  walkSpeed: 7
+  walkSpeed: 14
   walkBackSpeed: 5
   runSpeed: 9
   runBackSpeed: 6
@@ -52380,7 +52384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd46b2720f3af5e469cc4b7b39eb034a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseSentivity: 1.5
+  mouseSentivity: 2
   xAixs: 0
   yAxis: 0
   camFollowPos: {fileID: 2888426948023057121}
@@ -52616,7 +52620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd8911e8629adb41961ebe6ca45054c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1000
+  maxHealth: 100
   currentHealth: 0
 --- !u!114 &5804979155748931068
 MonoBehaviour:

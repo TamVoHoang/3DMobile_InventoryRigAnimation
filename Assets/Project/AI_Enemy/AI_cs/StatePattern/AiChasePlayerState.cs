@@ -19,7 +19,6 @@ public class AiChasePlayerState : AiState
 
     public void Update(AiAgent agent) {
         if(!agent.enabled) return;
-
         timer -= Time.deltaTime;
         if(!agent.navMeshAgent.hasPath) {
             agent.navMeshAgent.destination = agent.playerTransform.position;
@@ -35,6 +34,7 @@ public class AiChasePlayerState : AiState
             }
             timer = agent.config.maxTime;
         }
+
     }
     public void Exit(AiAgent agent) {
     }

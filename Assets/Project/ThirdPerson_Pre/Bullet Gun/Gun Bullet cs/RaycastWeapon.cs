@@ -51,6 +51,10 @@ public class RaycastWeapon : MonoBehaviour
     [Header("           RELOAD")]
     public GameObject magazine;
     [SerializeField] LayerMask layerMask; //todo loai layerMash ma cay sung se ban trung
+
+    public RuntimeAnimatorController runtimeAnimatorController;
+    [SerializeField] private Vector3 targetOffset;
+    public Vector3 TargetOffset{get => targetOffset;}
     private void Awake() {
         
     }
