@@ -19,23 +19,32 @@ public class AiFindWeaponState : AiState
 
     public void Update(AiAgent agent)
     {
-        //if(agent.weapons.HasWeapon()) agent.stateMachine.ChangeState(AiStateID.AttackPlayer);
-
-        // da co sung - move den nhan vat
-        // dis < 10 attack firing
-        var distance = Vector3.Distance(agent.playerTransform.position, agent.transform.position);
-        if(agent.weapons.HasWeapon()) {
-            agent.navMeshAgent.destination = agent.playerTransform.position;
-            if(distance <= 10) 
-                agent.stateMachine.ChangeState(AiStateID.AttackPlayer);
+        //! OK
+        if(agent.weapons.Count() == 2) agent.stateMachine.ChangeState(AiStateID.AttackPlayer);
+        else {
+            WeaponPickup pickup = FindClosestWeapon(agent);
+            agent.navMeshAgent.destination = pickup.transform.position;
         }
+
+        //todo dem so luong sung - do khoang cach - chuyen attack()
+        /* var distance = agent.GetDistance();
+        if(agent.weapons.Count() == 2) {
+            if(distance >= 20) {
+                agent.navMeshAgent.destination = agent.playerTransform.position;
+            } 
+            else {
+                agent.stateMachine.ChangeState(AiStateID.AttackPlayer);
+            } 
+        } else {
+            WeaponPickup pickup = FindClosestWeapon(agent);
+            agent.navMeshAgent.destination = pickup.transform.position;
+        } */
     }
 
     public void Exit(AiAgent agent)
     {
         Debug.Log("Exit() AiFindWeapon State");
     }
-
     private WeaponPickup FindClosestWeapon(AiAgent aiAgent) {
         WeaponPickup[] weapons = Object.FindObjectsOfType<WeaponPickup>();
 

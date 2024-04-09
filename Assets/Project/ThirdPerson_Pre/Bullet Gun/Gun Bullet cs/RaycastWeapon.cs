@@ -13,7 +13,7 @@ public class RaycastWeapon : MonoBehaviour
         public int bounce;
     }
 
-    public ActiveGun.WeaponSlots weaponSlot; // cho phep chon o nao trong enum class Active
+    public ActiveGun.WeaponSlots weaponSlot; //! cho phep chon o nao trong enum class Active
     [SerializeField] private string weaponName;
     public string WeaponName {get {return weaponName;}}
     [HideInInspector] public Transform raycastOrigin; // tren ong sung

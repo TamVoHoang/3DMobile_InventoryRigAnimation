@@ -49,4 +49,7 @@ public class AiAgent : MonoBehaviour
 
             stateMachine.Update();
     }
+    public float GetDistance() {
+        return Vector3.Distance(playerTransform.position, this.transform.position);
+    }
 }

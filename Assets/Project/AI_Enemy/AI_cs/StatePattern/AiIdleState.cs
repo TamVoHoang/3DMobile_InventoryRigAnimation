@@ -7,10 +7,11 @@ public class AiIdleState : AiState
     }
 
     public void Enter(AiAgent agent) {
-        agent.weapons.SetTarget(null); // khong xet, neu xet thi khi player cat sung chuyen qua Idle bi loi
     }
 
     public void Update(AiAgent agent) {
+        if(agent.playerTransform.GetComponent<PlayerHealth>().IsDead) return; // layer die
+
         Vector3 playerDirection = agent.playerTransform.position - agent.transform.position;
         if(playerDirection.magnitude > agent.config.maxSightDistance) {
             return;
@@ -19,8 +20,8 @@ public class AiIdleState : AiState
         Vector3 agentDirection = agent.transform.forward;
         playerDirection.Normalize(); //? vector do dai
         float dotProduct = Vector3.Dot(playerDirection, agentDirection);
-
-        if(dotProduct > 0.0f ) {
+        
+        if(dotProduct > 0.0f) {
             agent.stateMachine.ChangeState(AiStateID.ChasePlayer);
         }
     }

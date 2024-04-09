@@ -7,6 +7,7 @@ public class PlayerHealth : Health
     private ChracterAim chracterAim;
     private Animator animator;
     private CameraManager cameraManager;
+    private PlayerGun playerMovement;
     protected override void OnStart() {
         aiRagdoll = GetComponent<AiRagdoll>();
         activeGun = GetComponent<ActiveGun>();
@@ -20,6 +21,7 @@ public class PlayerHealth : Health
         aiRagdoll.ApplyForceLying(direction);
         activeGun.DropWeapon();
         chracterAim.enabled = false; // tat chatacterAim.cs
+        //playerMovement.enabled = false;
         cameraManager.ActiveDeathCam();
 
     }

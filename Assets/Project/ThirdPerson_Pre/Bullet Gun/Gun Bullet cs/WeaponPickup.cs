@@ -25,7 +25,7 @@ public class WeaponPickup : MonoBehaviour
         AiWeapons aiWeapons = other.gameObject.GetComponent<AiWeapons>();
         if(aiWeapons) {
             RaycastWeapon newWeapon = Instantiate(gunPrefab);
-            aiWeapons.EquipWeapon(newWeapon);
+            aiWeapons.Equip(newWeapon);
             Destroy(gameObject);
         }
     }
