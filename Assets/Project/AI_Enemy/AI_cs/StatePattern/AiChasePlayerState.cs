@@ -12,9 +12,8 @@ public class AiChasePlayerState : AiState
         return AiStateID.ChasePlayer; //? no se tra ve kieu ten nam trong enum
     }
     public void Enter(AiAgent agent) {
-        // if(playerTransform == null) {
-        //     playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
-        // }
+        agent.navMeshAgent.stoppingDistance = 3.0f;
+        
     }
 
     public void Update(AiAgent agent) {

@@ -12,38 +12,30 @@ public class ReloadWeapon : MonoBehaviour
     [SerializeField] private bool isReloading = false;
     public bool GetIsReloading {get {return isReloading;}}
 
-
-    void Start()
-    {
+    void Start() {
         isReloading = false; // ko co thay dan
         activeGun = GetComponent<ActiveGun>();
         
         animationEvents.WeaponAnimationEvent.AddListener(OnAnimationEvent);
     }
 
-    void Update()
-    {
+    void Update() {
         RaycastWeapon weapon = activeGun.GetActiveWeapon();
 
-        if (weapon)
-        {
-            if (Input.GetKeyDown(KeyCode.R) || weapon.ammoCount <= 0)
-            {
+        if (weapon) {
+            if (Input.GetKeyDown(KeyCode.R) || weapon.ammoCount <= 0) {
                 rigController.SetTrigger("reload_weapon");
             }
             if (weapon.IsFiring) ammoWidget.Refresh(weapon.ammoCount);
         }
-        else
-        {
-            ammoWidget.Clear(0); //! ko con sung trang bi tren nguoi player -> keo het ve inventory
+        else {
+            ammoWidget.Clear(0); // ko con sung trang bi tren nguoi player do da keo het ve inventory
         }
     }
 
-    void OnAnimationEvent(string eventName)
-    {
+    void OnAnimationEvent(string eventName) {
         Debug.Log(eventName);
-        switch (eventName)
-        {
+        switch (eventName) {
             case "deatch_mag":
                 deatchMag();
                 break;
@@ -61,36 +53,29 @@ public class ReloadWeapon : MonoBehaviour
                 break;
         }
     }
-    void deatchMag()
-    {
-        //isReloading = true; // dang thay dan
+
+    void deatchMag() {
         RaycastWeapon weapon= activeGun.GetActiveWeapon();
         magHand = Instantiate(weapon.magazine, leftHand, true);
         weapon.magazine.SetActive(false);
     }
-    void dropMag()
-    {
+    void dropMag() {
         GameObject droppedMag = Instantiate(magHand, magHand.transform.position, magHand.transform.rotation);
         droppedMag.AddComponent<Rigidbody>();
         droppedMag.AddComponent<BoxCollider>();
         magHand.SetActive(false);
     }
-    void refillMag()
-    {
+    void refillMag() {
         magHand.SetActive(true);
     }
-    void attachMag()
-    {
+    void attachMag() {
         RaycastWeapon weapon = activeGun.GetActiveWeapon();
         weapon.magazine.SetActive(true);
         Destroy(magHand);
         weapon.ammoCount = weapon.clipSize;
         rigController.ResetTrigger("reload_weapon");
-        
         ammoWidget.Refresh(weapon.ammoCount);
-
-        //isReloading = false;
     }
 
-
+    //todo
 }

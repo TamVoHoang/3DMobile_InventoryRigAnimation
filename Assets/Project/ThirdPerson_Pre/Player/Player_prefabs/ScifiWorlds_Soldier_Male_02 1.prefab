@@ -593,7 +593,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   runtimeAnimatorController: {fileID: 0}
-  targetOffset: {x: 0, y: 0, z: 0}
+  targetOffset_AimWeaponIK: {x: 0, y: 0, z: 0}
 --- !u!1 &1141332573187680815
 GameObject:
   m_ObjectHideFlags: 0
@@ -51296,7 +51296,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   runtimeAnimatorController: {fileID: 0}
-  targetOffset: {x: 0, y: 0, z: 0}
+  targetOffset_AimWeaponIK: {x: 0, y: 0, z: 0}
 --- !u!1 &7243668302230974292
 GameObject:
   m_ObjectHideFlags: 0
@@ -52356,9 +52356,9 @@ MonoBehaviour:
   hzInput: 0
   vInput: 0
   airSpeed: 1
-  walkSpeed: 14
-  walkBackSpeed: 5
-  runSpeed: 9
+  walkSpeed: 6
+  walkBackSpeed: 4
+  runSpeed: 10
   runBackSpeed: 6
   crouchSpeed: 2
   crouchBackSpeed: 1
@@ -52454,7 +52454,7 @@ CharacterController:
   m_Height: 1.8
   m_Radius: 0.2
   m_SlopeLimit: 45
-  m_StepOffset: 0.1
+  m_StepOffset: 0.05
   m_SkinWidth: 0.0001
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 0.9, z: 0}
@@ -52620,7 +52620,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0dd8911e8629adb41961ebe6ca45054c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 200
   currentHealth: 0
 --- !u!114 &5804979155748931068
 MonoBehaviour:

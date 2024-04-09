@@ -25,7 +25,6 @@ public class ActiveGun : Singleton<ActiveGun>
     public int GetActiveWeaponIndex { get { return activeWeaponIndex; } }
     public bool IsHolstered { get { return isHolstered; } }
     //public bool isReload = false; // ko co dang thay dan
-    private ReloadWeapon reloadWeapon;
 
     protected override void Awake() {
         base.Awake();
@@ -36,7 +35,6 @@ public class ActiveGun : Singleton<ActiveGun>
     }
 
     private void Start() {
-        reloadWeapon = GetComponent<ReloadWeapon>();
         isHolstered = true; //! dang ko trang bi sung (sung sung ko co tren tay player)
         crossHairTarget = GameObject.Find("CroosHairTarget").transform;
         //?kiem tra co san vu khi hay khong

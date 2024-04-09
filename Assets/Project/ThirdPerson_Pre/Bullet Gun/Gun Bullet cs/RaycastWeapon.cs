@@ -42,9 +42,9 @@ public class RaycastWeapon : MonoBehaviour
 
     [Header("PHYSICAL BULLET")]
     public float bulletSpeed = 1000.0f;
-    public float bulletDrop = 0.0f; // bao xa bullet se roi xuong
+    [SerializeField] private float bulletDrop = 0.0f; // bao xa bullet se roi xuong
     List<Bullet> Bullets = new List<Bullet>(); // list add vien dan KHI FIRE
-    private float maxLifeTime = 5.0f;
+    private float maxLifeTime = 0.05f; //todo 5
     [SerializeField] private float damage = 10.0f; // damage of sung
     public float Damage { get => damage; private set => damage = value; }
     
@@ -53,8 +53,8 @@ public class RaycastWeapon : MonoBehaviour
     [SerializeField] LayerMask layerMask; //todo loai layerMash ma cay sung se ban trung
 
     public RuntimeAnimatorController runtimeAnimatorController;
-    [SerializeField] private Vector3 targetOffset;
-    public Vector3 TargetOffset{get => targetOffset;}
+    [SerializeField] private Vector3 targetOffset_AimWeaponIK;
+    public Vector3 TargetOffset_AImWeaponIK{get => targetOffset_AimWeaponIK;}
     private void Awake() {
         
     }
@@ -148,12 +148,19 @@ public class RaycastWeapon : MonoBehaviour
 
         });
     }
-    private void DestroyBullets() => Bullets.RemoveAll(bullet => bullet.time >= maxLifeTime); //updateBullet goi
+    private void DestroyBullets() => Bullets.RemoveAll(bullet => bullet.time >= maxLifeTime); //!updateBullet goi
+    private void DesTroyBulletTracer() {
+        foreach (var bulletTracer in Bullets)
+        {
+            if(bulletTracer.time >= maxLifeTime) Destroy(bulletTracer.tracer);
+        }
+    }
     public void UpdateBullet(float deltaTime) //updateWeapon() goi => (simulate + destroy)
     {
         SimulateBullets(deltaTime);
 
-        DestroyBullets();
+        DestroyBullets();       //destroy bullets trong list Bullets
+        DesTroyBulletTracer();  // destory bullet.Tracer
     }
     private void RaycastSegment(Vector3 start, Vector3 end, Bullet bullet) // updateBullet goi
                                                                    // chia theo tung doan nho p0 - p1 theo tiem moi frame

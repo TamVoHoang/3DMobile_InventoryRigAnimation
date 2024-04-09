@@ -3,6 +3,8 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     private AiUIHealthBar uiHealthBar;
+    private bool isDead = false;
+    public bool IsDead {get => isDead;}
     [SerializeField] private float maxHealth;
     [SerializeField] private float currentHealth;
     public float CurrentHealth{get => currentHealth;}
@@ -50,6 +52,7 @@ public class Health : MonoBehaviour
         OnDamage(direction); // tai sao dat o day
 
         if (currentHealth <= 0) {
+            isDead = true;
             Die(direction);
         }
     }

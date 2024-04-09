@@ -34583,6 +34583,7 @@ MonoBehaviour:
   currentTarget: {fileID: 0}
   inaccuracy: 0.3
   waitingTimeEquipWeapon: 1
+  dropFroce: 1.5
 --- !u!54 &1052559987107469572
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -34659,7 +34660,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTransform: {fileID: 0}
   aimTransform: {fileID: 0}
-  targetOffset: {x: 0, y: 0, z: 0}
+  targetOffset: {x: 0, y: 1.2, z: 0}
   weight: 0.8
   angleLimit: 90
   distanceLimit: 1.5

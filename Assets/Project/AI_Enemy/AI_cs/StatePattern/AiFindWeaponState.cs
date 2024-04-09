@@ -13,6 +13,8 @@ public class AiFindWeaponState : AiState
         WeaponPickup pickup = FindClosestWeapon(agent);
         agent.navMeshAgent.destination = pickup.transform.position;
         agent.navMeshAgent.speed = 5f;
+
+        agent.navMeshAgent.stoppingDistance = 1.0f; // dam bao cham duoc sung
     }
 
     public void Update(AiAgent agent)
@@ -21,7 +23,6 @@ public class AiFindWeaponState : AiState
 
         // da co sung - move den nhan vat
         // dis < 10 attack firing
-
         var distance = Vector3.Distance(agent.playerTransform.position, agent.transform.position);
         if(agent.weapons.HasWeapon()) {
             agent.navMeshAgent.destination = agent.playerTransform.position;

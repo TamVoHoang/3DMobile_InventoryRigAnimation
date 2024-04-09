@@ -90,7 +90,7 @@ public class WeaponIK : MonoBehaviour
     public void SetAimTransform(Transform aim) {
         aimTransform = aim;
     }
-    public void SetTargetOffset(Vector3 targetOffset) {
+    public void SetTargetOffset_Aim(Vector3 targetOffset) {
         this.targetOffset = targetOffset;
     }
 }

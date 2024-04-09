@@ -137,16 +137,16 @@ MonoBehaviour:
   weaponSlot: 0
   weaponName: rifle
   raycastOrigin: {fileID: 7095179040361038052}
-  tracerEffect: {fileID: 2141053679634929815, guid: 7ce2abb6fb949c342b127465ec9039bb, type: 3}
+  tracerEffect: {fileID: 2141053679634929815, guid: 45021013dd0de62498ffc4f24cf95b03, type: 3}
   muzzleFlash:
   - {fileID: 9160704319489342479}
   - {fileID: 987803690892696440}
   hiteffect: {fileID: 2797962787801551162}
   distance: 0
-  fireRate: 2
+  fireRate: 5
   accumulateTime: 0
-  ammoCount: 60
-  clipSize: 60
+  ammoCount: 30
+  clipSize: 30
   bulletSpeed: 500
   bulletDrop: 0
   damage: 10
@@ -155,7 +155,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1025
   runtimeAnimatorController: {fileID: 9100000, guid: cc863ca24394faa4ead17c296adbe396, type: 2}
-  targetOffset: {x: 0, y: 1.2, z: 0}
+  targetOffset_AimWeaponIK: {x: 0, y: 1.2, z: 0}
 --- !u!65 &710594978500733543
 BoxCollider:
   m_ObjectHideFlags: 0

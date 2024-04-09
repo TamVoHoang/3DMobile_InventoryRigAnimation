@@ -7,7 +7,7 @@ public class AiIdleState : AiState
     }
 
     public void Enter(AiAgent agent) {
-        
+        agent.weapons.SetTarget(null); // khong xet, neu xet thi khi player cat sung chuyen qua Idle bi loi
     }
 
     public void Update(AiAgent agent) {
