@@ -10,11 +10,20 @@ public class AiSensor : MonoBehaviour
     [SerializeField] private float angel = 30f;
     [SerializeField] private float height = 1.0f;
     [SerializeField] private Color meshColor = Color.blue;
-
+    [SerializeField] private Color detectColor = Color.green;
     //detect sensor
     [SerializeField] private int scanFrequency = 30;
     [SerializeField] private LayerMask layers;
-    public List<GameObject> Objects = new List<GameObject>();
+    [SerializeField] private LayerMask occulusionLayers;
+
+    public List<GameObject> Objects {
+        get {
+            objects.RemoveAll(obj => !obj);
+            return objects;
+        }
+    }
+    private List<GameObject> objects = new List<GameObject>();
+
     private Collider[] colliders = new Collider[50];
     Mesh mesh;
 
@@ -34,15 +43,15 @@ public class AiSensor : MonoBehaviour
         }
     }
 
-    private void Scan()
+    private void Scan() // neu lot vao scan thi add vao list
     {
         count = Physics.OverlapSphereNonAlloc(transform.position, distance, colliders, layers, QueryTriggerInteraction.Collide);
 
-        Objects.Clear(); //xoa list objects
+        objects.Clear(); //xoa list objects
         for (int i = 0; i < count; i++) {
             GameObject obj = colliders[i].gameObject;
             if(IsInSight(obj)) {
-                Objects.Add(obj);
+                objects.Add(obj);
             }
         }
     }
@@ -56,6 +65,10 @@ public class AiSensor : MonoBehaviour
         float deltaAngel = Vector3.Angle(direction, transform.forward);
         if(deltaAngel > angel) return false;
         
+        origin.y += height/2;
+        dest.y = origin.y;
+        if(Physics.Linecast(origin, dest, occulusionLayers)) return false;
+
         return true;
     }
 
@@ -152,13 +165,14 @@ public class AiSensor : MonoBehaviour
             Gizmos.color = meshColor;
             Gizmos.DrawMesh(mesh, transform.position, transform.rotation);
         }
-        Gizmos.DrawWireSphere(transform.position, distance);
+
+        /* Gizmos.DrawWireSphere(transform.position, distance);
         for (int i = 0; i < count; i++)
         {
             Gizmos.DrawSphere(colliders[i].transform.position, 0.2f);
-        }
+        } */
 
-        Gizmos.color = Color.green;
+        Gizmos.color = detectColor;
         foreach (var obj in Objects)
         {
             Gizmos.DrawSphere(obj.transform.position, 0.2f);

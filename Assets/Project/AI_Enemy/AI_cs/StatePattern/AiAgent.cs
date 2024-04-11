@@ -15,13 +15,15 @@ public class AiAgent : MonoBehaviour
     public Transform playerTransform;
 
     public AiWeapons weapons; // AiFindWeapon.cs call - goi 2 ham ActiveWeapon() HasWeapon AiWeapons.cs
+
+    public AiSensor aiSensor;
     void Start()
     {
         ragdoll = GetComponent<AiRagdoll>();
         aiUIHealthBar = GetComponentInChildren<AiUIHealthBar>();
         navMeshAgent = GetComponent<NavMeshAgent>();
         weapons = GetComponent<AiWeapons>();
-
+        aiSensor = GetComponent<AiSensor>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
 
         stateMachine = new AiStateMachine(this);              //todo 0

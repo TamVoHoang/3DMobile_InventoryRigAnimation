@@ -9,8 +9,10 @@ public class AiAttackPlayerState : AiState
     public void Enter(AiAgent agent) {
         Debug.Log("Enter() attackState");
         agent.weapons.ActiveWeapon();                   // khi bat dau tan cong  thi active sung
+
         agent.weapons.SetTarget(agent.playerTransform); // transform player
-        agent.navMeshAgent.stoppingDistance = 5.0f;     //!khi tan cong se dung cach 5
+        agent.navMeshAgent.stoppingDistance = agent.config.attackStopingDestination;     // khi tan cong se dung cach 5
+        agent.navMeshAgent.speed = agent.config.attackSpeed;
 
         //agent.weapons.SetFiring(true);                  // bat dau ban khi da trang bi xong
     }
@@ -60,12 +62,12 @@ public class AiAttackPlayerState : AiState
             Debug.Log("Switch to best weapon = " + bestWeapon);
         }
         //agent.weapons.SetFiring(true); //! OK
-        CanAttackPlayer(agent, 15);
+        CanAttackPlayer(agent, agent.config.canAttackDistance); //20
 
     }
     private AiWeapons.WeaponSlot ChooseWeapon(AiAgent agent) {
         float distance = Vector3.Distance(agent.playerTransform.position, agent.transform.position);
-        if(distance > agent.config.closeRange) {
+        if(distance > agent.config.rangeToChangeWeapon) {
             return AiWeapons.WeaponSlot.Primary; // sung dai over 7 - 20
         }
         else {
