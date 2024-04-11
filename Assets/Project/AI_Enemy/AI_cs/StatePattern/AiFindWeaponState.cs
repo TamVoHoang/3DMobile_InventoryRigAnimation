@@ -26,19 +26,6 @@ public class AiFindWeaponState : AiState
             agent.navMeshAgent.destination = pickup.transform.position;
         }
 
-        //todo dem so luong sung - do khoang cach - chuyen attack()
-        /* var distance = agent.GetDistance();
-        if(agent.weapons.Count() == 2) {
-            if(distance >= 20) {
-                agent.navMeshAgent.destination = agent.playerTransform.position;
-            } 
-            else {
-                agent.stateMachine.ChangeState(AiStateID.AttackPlayer);
-            } 
-        } else {
-            WeaponPickup pickup = FindClosestWeapon(agent);
-            agent.navMeshAgent.destination = pickup.transform.position;
-        } */
     }
 
     public void Exit(AiAgent agent)

@@ -12,7 +12,9 @@ public class AiHealth : Health
         deathState.direction = direction;
         aiAgent.stateMachine.ChangeState(AiStateID.Death);
     }
-    protected override void OnDamage(Vector3 direction) {
+    protected override void OnDamage(Vector3 direction)
+    {
         
     }
+
 }
