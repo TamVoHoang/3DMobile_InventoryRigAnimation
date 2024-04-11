@@ -3,6 +3,7 @@ using UnityEngine;
 public class AiFindWeaponState : AiState
 {
     private GameObject pickup;
+    private GameObject[] pickups = new GameObject[1]; 
     public AiStateID GetId()
     {
         return AiStateID.FindWeapon;
@@ -63,10 +64,10 @@ public class AiFindWeaponState : AiState
     }
     //? fine pickup maskLayers
     private GameObject FindPickup(AiAgent aiAgent) {
-        Debug.Log("Dang findPickup min max AiFindWeapon State");
-        if(aiAgent.aiSensor.Objects.Count > 0) // coll 39 Scan() AiSenor.cs => add gameobject into Objects[]
+        int count = aiAgent.aiSensor.Filter(pickups, "Pickup");
+        if(count > 0) // coll 39 Scan() AiSenor.cs => add gameobject into Objects[]
         {
-            return aiAgent.aiSensor.Objects[0]; // tra ve gameobject
+            return pickups[0]; // tra ve gameobject
         }
         return null;
     }

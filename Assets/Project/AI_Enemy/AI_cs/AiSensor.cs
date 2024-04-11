@@ -55,11 +55,11 @@ public class AiSensor : MonoBehaviour
             }
         }
     }
-    private bool IsInSight(GameObject obj) {
+    public bool IsInSight(GameObject obj) {
         Vector3 origin = transform.position;
         Vector3 dest = obj.transform.position;
-        Vector3 direction = dest- origin;
-        if(direction.y < 0 || direction.y > height) return false;
+        Vector3 direction = dest - origin;
+        if(direction.y < 0 + (-0.2f) || direction.y > height) return false; // -0.1f vi ai.y vao game cao hon 0
 
         direction.y = 0;
         float deltaAngel = Vector3.Angle(direction, transform.forward);
@@ -159,7 +159,6 @@ public class AiSensor : MonoBehaviour
         mesh = CreateWedgeMesh();
         scanInterval = 1.0f / scanFrequency;
     }
-
     private void OnDrawGizmos() {
         if(mesh) {
             Gizmos.color = meshColor;
@@ -178,6 +177,22 @@ public class AiSensor : MonoBehaviour
             Gizmos.DrawSphere(obj.transform.position, 0.2f);
             
         }
+    }
+
+    public int Filter(GameObject[] buffer, string layerName) {
+        int layer = LayerMask.NameToLayer(layerName);
+        int count = 0;
+        foreach (var obj in Objects)
+        {
+            if(obj.layer == layer) {
+                buffer[count++] = obj;
+            }
+
+            if(buffer.Length == count) {
+                break;
+            }
+        }
+        return count;
     }
 
 }

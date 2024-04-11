@@ -46,7 +46,7 @@ public class AiWeapons : MonoBehaviour
     private WeaponIK weaponIK;
     [SerializeField] private Transform currentTarget;
     
-    [SerializeField] private float inaccuracy = 0.5f;
+    [SerializeField] private float inAccuracy = 0.5f;
     [SerializeField] private float waitingTimeEquipWeapon = 0.5f;
 
     //reloading attach drop mag
@@ -75,7 +75,7 @@ public class AiWeapons : MonoBehaviour
         if(currentWeapon && currentTarget) {
             weaponIK.SetTargetOffset_Aim(currentWeapon.TargetOffset_AImWeaponIK);
             Vector3 target = currentTarget.position + weaponIK.TargetOffset;
-            target += Random.insideUnitSphere * inaccuracy;
+            target += Random.insideUnitSphere * inAccuracy;
 
             //if(IsActive()) currentWeapon.StartFiring(); //? OK ban ngay lap tuc
             if(!IsActive() || IsReloading()) currentWeapon.StopFiring();
