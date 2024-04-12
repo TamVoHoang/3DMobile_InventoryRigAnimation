@@ -14,6 +14,7 @@ public class AiFindWeaponState : AiState
         Debug.Log("Enter() AiFindWeapon State");
         pickup = null;
         agent.navMeshAgent.speed = agent.config.findWeaponSpeed;
+        agent.navMeshAgent.stoppingDistance = agent.config.findWeaponStopingDestination;
 
         //? tim sung gan nhat
         /* WeaponPickup pickup = FindClosestWeapon(agent);
@@ -37,20 +38,22 @@ public class AiFindWeaponState : AiState
         if(!agent.navMeshAgent.hasPath) {
             Debug.Log("Dang generate min max AiFindWeapon State");
             WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
-            Vector3 min = worldBounds.min.position;
-            Vector3 max = worldBounds.max.position;
 
+            /* Vector3 min = worldBounds.min.position;
+            Vector3 max = worldBounds.max.position;
             Vector3 randomPostion = new Vector3 (
                 Random.Range(min.x, max.x),
                 Random.Range(min.y, max.y),
                 Random.Range(min.z, max.z)
-            );
-            agent.navMeshAgent.destination = randomPostion;
+            ); */
+
+            agent.navMeshAgent.destination = worldBounds.RandomPosition();
         }
+        if(agent.weapons.Count() == 2) agent.stateMachine.ChangeState(AiStateID.FindTarget);
 
-        if(agent.weapons.Count() == 2) agent.stateMachine.ChangeState(AiStateID.AttackPlayer);
 
-        //? OPTION: tim du 2 sung va tan cong
+        ////if(agent.weapons.Count() == 1) agent.stateMachine.ChangeState(AiStateID.AttackPlayer);
+        //? OPTION: tim du 2 sung va tan cong || tim kieu ep toa do ngay lap tuc
         /* if(agent.weapons.Count() == 2) agent.stateMachine.ChangeState(AiStateID.AttackPlayer);
         else {
             WeaponPickup pickup = FindClosestWeapon(agent);

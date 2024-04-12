@@ -12,5 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6402aed6c2d58b843bb0280832b2ce46, type: 3}
   m_Name: ai_defaul_configulation
   m_EditorClassIdentifier: 
+  maxSightDistance: 7
   maxTime: 1
   maxDistance: 1
+  findWeaponSpeed: 5
+  findWeaponStopingDestination: 0
+  canAttackDistance: 25
+  rangeToChangeWeapon: 10
+  attackStopingDestination: 7
+  attackSpeed: 5
+  dieForece: 5

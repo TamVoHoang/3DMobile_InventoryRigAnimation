@@ -21,7 +21,7 @@ public class PlayerHealth : Health
         aiRagdoll.ApplyForceLying(direction);
         activeGun.DropWeapon();
         chracterAim.enabled = false; // tat chatacterAim.cs
-        //playerMovement.enabled = false;
+        ////playerMovement.enabled = false;
         cameraManager.ActiveDeathCam();
 
     }

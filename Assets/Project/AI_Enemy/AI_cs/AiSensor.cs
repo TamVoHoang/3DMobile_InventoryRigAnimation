@@ -1,14 +1,14 @@
 using System.Collections.Generic;
-using TreeEditor;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
 [ExecuteInEditMode]
 public class AiSensor : MonoBehaviour
 {
-    [SerializeField] private float distance = 10f;
-    [SerializeField] private float angel = 30f;
-    [SerializeField] private float height = 1.0f;
+    [SerializeField] private float distance = 15f;
+    public float Distance{get => distance;}
+    [SerializeField] private float angel = 50f;
+    public float Angle {get => angel;}
+    [SerializeField] private float height = 1.8f;
     [SerializeField] private Vector3 detectBottom;
     [SerializeField] private Color meshColor = Color.blue;
     [SerializeField] private Color detectColor = Color.green;
@@ -52,16 +52,19 @@ public class AiSensor : MonoBehaviour
         objects.Clear(); //xoa list objects
         for (int i = 0; i < count; i++) {
             GameObject obj = colliders[i].gameObject;
-            if(IsInSight(obj)) {
+            if(IsInSight(obj) )//! ko add chinh this.gameobject nao voa list scan || && obj != this.gameObject
+            {
                 objects.Add(obj);
             }
         }
     }
     public bool IsInSight(GameObject obj) {
+        if(obj == this.gameObject) return false; //! ko cho this.gameObject nhin thay chinh no
+
         Vector3 origin = transform.position;
         Vector3 dest = obj.transform.position;
         Vector3 direction = dest - origin;
-        if(direction.y < 0 + (-0.2f) || direction.y > height) return false; // -0.2f vi ai.y vao game cao hon 0
+        if(direction.y < 0 + (-0.2f)  || direction.y > height) return false; // -0.2f vi ai.y vao game cao hon 0
 
         direction.y = 0;
         float deltaAngel = Vector3.Angle(direction, transform.forward);
@@ -85,9 +88,9 @@ public class AiSensor : MonoBehaviour
         Vector3[] vertices = new Vector3[numVertices];
         int[] triangles = new int[numVertices];
 
-        Vector3 bottomCenter = Vector3.zero + detectBottom; //* Vector3.zero
-        Vector3 bottomLeft = (Quaternion.Euler(0, -angel ,0) * Vector3.forward * distance) + detectBottom; //* Quaternion.Euler(0, -angel,0) * Vector3.forward * distance
-        Vector3 bottomRight = (Quaternion.Euler(0, angel ,0) * Vector3.forward * distance) + detectBottom;//* Quaternion.Euler(0, angel,0) * Vector3.forward * distance
+        Vector3 bottomCenter = Vector3.zero + detectBottom + new Vector3(0,0,0.5f); //* Vector3.zero
+        Vector3 bottomLeft = (Quaternion.Euler(0, -angel,0) * Vector3.forward * distance) + detectBottom; //* Quaternion.Euler(0, -angel,0) * Vector3.forward * distance
+        Vector3 bottomRight = (Quaternion.Euler(0, angel,0) * Vector3.forward * distance) + detectBottom;//* Quaternion.Euler(0, angel,0) * Vector3.forward * distance
 
         Vector3 topCenter = bottomCenter + Vector3.up * height ;
         Vector3 topRight = bottomRight + Vector3.up * height ;
@@ -176,7 +179,7 @@ public class AiSensor : MonoBehaviour
         Gizmos.color = detectColor;
         foreach (var obj in Objects)
         {
-            Gizmos.DrawSphere(obj.transform.position, 0.2f);
+            Gizmos.DrawSphere(obj.transform.position, 0.15f);
             
         }
     }

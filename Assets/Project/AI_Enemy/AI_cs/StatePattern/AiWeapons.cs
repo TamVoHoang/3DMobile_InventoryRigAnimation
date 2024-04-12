@@ -40,7 +40,6 @@ public class AiWeapons : MonoBehaviour
     }
     private RaycastWeapon[] weapons =  new RaycastWeapon[2];
     private int current = 0;
-
     private Animator animator;
     private MeshSockets sockets;
     private WeaponIK weaponIK;
@@ -156,6 +155,7 @@ public class AiWeapons : MonoBehaviour
     IEnumerator EquipWeaponAnimation() {
         weaponState = WeaponState.Activating;
 
+        Debug.Log(currentWeapon);
         animator.runtimeAnimatorController = currentWeapon.runtimeAnimatorController;
         animator.SetBool("Equip", true);
         yield return new WaitForSeconds(waitingTimeEquipWeapon);

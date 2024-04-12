@@ -3,7 +3,7 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     private AiUIHealthBar uiHealthBar;
-    private bool isDead = false;
+    [SerializeField] private bool isDead = false;
     public bool IsDead {get => isDead;}
     [SerializeField] private float maxHealth;
     [SerializeField] private float currentHealth;

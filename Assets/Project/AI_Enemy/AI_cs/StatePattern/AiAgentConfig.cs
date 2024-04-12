@@ -15,9 +15,9 @@ public class AiAgentConfig : ScriptableObject
     public float findWeaponStopingDestination = 0f; //! phai ang 0, de co the generate vi tri moi trong qua trinh find weapon
 
     //? Attack Player
-    public float canAttackDistance = 25f;
-    public float rangeToChangeWeapon = 15f; // khoang cach quyet dinh chon sung nao de ban player
-    public float attackStopingDestination = 10f;
+    public float canAttackDistance = 15f;
+    public float rangeToChangeWeapon = 0f; // khoang cach quyet dinh chon sung nao de ban player
+    public float attackStopingDestination = 5f;
     public float attackSpeed = 7f;
 
     //? Death State

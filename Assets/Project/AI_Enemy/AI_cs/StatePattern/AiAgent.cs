@@ -17,6 +17,8 @@ public class AiAgent : MonoBehaviour
     public AiWeapons weapons; // AiFindWeapon.cs call - goi 2 ham ActiveWeapon() HasWeapon AiWeapons.cs
 
     public AiSensor aiSensor;
+    public AiTargetingSystem aiTargetingSystem;
+
     void Start()
     {
         ragdoll = GetComponent<AiRagdoll>();
@@ -25,6 +27,7 @@ public class AiAgent : MonoBehaviour
         weapons = GetComponent<AiWeapons>();
         aiSensor = GetComponent<AiSensor>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+        aiTargetingSystem = GetComponent<AiTargetingSystem>();
 
         stateMachine = new AiStateMachine(this);              //todo 0
 
@@ -32,7 +35,8 @@ public class AiAgent : MonoBehaviour
         stateMachine.RegisterState(new AiDeathState());
         stateMachine.RegisterState(new AiIdleState());
         stateMachine.RegisterState(new AiFindWeaponState());
-        stateMachine.RegisterState(new AiAttackPlayerState());
+        stateMachine.RegisterState(new AiAttackTargetState());
+        stateMachine.RegisterState(new AiFindTargetState());
 
 
         stateMachine.ChangeState(intialState); // AiStateID.intialState
