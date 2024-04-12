@@ -9,8 +9,10 @@ public class AiSensor : MonoBehaviour
     [SerializeField] private float distance = 10f;
     [SerializeField] private float angel = 30f;
     [SerializeField] private float height = 1.0f;
+    [SerializeField] private Vector3 detectBottom;
     [SerializeField] private Color meshColor = Color.blue;
     [SerializeField] private Color detectColor = Color.green;
+    
     //detect sensor
     [SerializeField] private int scanFrequency = 30;
     [SerializeField] private LayerMask layers;
@@ -59,7 +61,7 @@ public class AiSensor : MonoBehaviour
         Vector3 origin = transform.position;
         Vector3 dest = obj.transform.position;
         Vector3 direction = dest - origin;
-        if(direction.y < 0 + (-0.2f) || direction.y > height) return false; // -0.1f vi ai.y vao game cao hon 0
+        if(direction.y < 0 + (-0.2f) || direction.y > height) return false; // -0.2f vi ai.y vao game cao hon 0
 
         direction.y = 0;
         float deltaAngel = Vector3.Angle(direction, transform.forward);
@@ -83,13 +85,13 @@ public class AiSensor : MonoBehaviour
         Vector3[] vertices = new Vector3[numVertices];
         int[] triangles = new int[numVertices];
 
-        Vector3 bottomCenter = Vector3.zero;
-        Vector3 bottomLeft = Quaternion.Euler(0, -angel,0) * Vector3.forward * distance;
-        Vector3 bottomRight = Quaternion.Euler(0, angel,0) * Vector3.forward * distance;
+        Vector3 bottomCenter = Vector3.zero + detectBottom; //* Vector3.zero
+        Vector3 bottomLeft = (Quaternion.Euler(0, -angel ,0) * Vector3.forward * distance) + detectBottom; //* Quaternion.Euler(0, -angel,0) * Vector3.forward * distance
+        Vector3 bottomRight = (Quaternion.Euler(0, angel ,0) * Vector3.forward * distance) + detectBottom;//* Quaternion.Euler(0, angel,0) * Vector3.forward * distance
 
-        Vector3 topCenter = bottomCenter + Vector3.up * height;
-        Vector3 topRight = bottomRight + Vector3.up * height;
-        Vector3 topLeft = bottomLeft + Vector3.up * height;
+        Vector3 topCenter = bottomCenter + Vector3.up * height ;
+        Vector3 topRight = bottomRight + Vector3.up * height ;
+        Vector3 topLeft = bottomLeft + Vector3.up * height ;
         
         int vert = 0;
 
@@ -114,8 +116,8 @@ public class AiSensor : MonoBehaviour
         float currentAngel = - angel;
         float deltaAngel = (angel * 2) / segments;
         for (int i = 0; i < segments; i++) {
-            bottomLeft = Quaternion.Euler(0, currentAngel,0) * Vector3.forward * distance;
-            bottomRight = Quaternion.Euler(0, currentAngel + deltaAngel,0) * Vector3.forward * distance;
+            bottomLeft = Quaternion.Euler(0, currentAngel,0) * Vector3.forward * distance + detectBottom; //* Quaternion.Euler(0, currentAngel,0) * Vector3.forward * distance
+            bottomRight = Quaternion.Euler(0, currentAngel + deltaAngel,0) * Vector3.forward * distance + detectBottom; //* Quaternion.Euler(0, currentAngel + deltaAngel,0) * Vector3.forward * distance
 
             topRight = bottomRight + Vector3.up * height;
             topLeft = bottomLeft + Vector3.up * height;

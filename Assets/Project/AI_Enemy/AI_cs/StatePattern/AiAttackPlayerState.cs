@@ -17,7 +17,8 @@ public class AiAttackPlayerState : AiState
     }
 
     public void Update(AiAgent agent) {
-        agent.navMeshAgent.destination = agent.playerTransform.position; // chay thao player
+        Debug.Log("Attack Update()");
+        agent.navMeshAgent.destination = agent.playerTransform.position; // chay theo huong player
         ReloadWeapon(agent);
         SelectWeapon(agent);
         UpdateFiring(agent); // ban hay ko dua vai IsInsight() layerMask co Scan() duoc hay khong
@@ -28,8 +29,6 @@ public class AiAttackPlayerState : AiState
             agent.weapons.DeActiveWeapon();                 // cat sung
             agent.stateMachine.ChangeState(AiStateID.Idle);
         }
-
-        Debug.Log("Attack Update()");
     }
 
     public void Exit(AiAgent agent) {
@@ -37,20 +36,20 @@ public class AiAttackPlayerState : AiState
         agent.navMeshAgent.stoppingDistance = 0.0f;
     }
 
-    //todo quyet dinh ban dua theo IsInsigh() -> ai co nhin thay player ko co vat can thi ko ban
+    //? quyet dinh ban dua theo IsInsigh() -> ai co nhin thay player ko co vat can thi ko ban
     private void UpdateFiring(AiAgent aiAgent)
     {
         if(aiAgent.aiSensor.IsInSight(aiAgent.playerTransform.gameObject)) {
-            aiAgent.weapons.SetFiring(true);
             Debug.Log("ai CO thay player IsInsight");
+            aiAgent.weapons.SetFiring(true);
         } else {
-            aiAgent.weapons.SetFiring(false);
             Debug.Log("ai KO thay player IsInsight");
+            aiAgent.weapons.SetFiring(false);
         }
     }
 
-    //todo quyet dinh ban dua theo distance ai and player
-    private void CanAttackPlayer(AiAgent agent, float attackedDistance) {
+    //? quyet dinh ban dua theo distance ai and player
+    private void CanAttackPlayer_Distance(AiAgent agent, float attackedDistance) {
         var distance = Vector3.Distance(agent.playerTransform.position, agent.transform.position);
         if(distance <= attackedDistance) {
             agent.weapons.SetFiring(true);
@@ -74,7 +73,7 @@ public class AiAttackPlayerState : AiState
             agent.weapons.SwitchWeapon(bestWeapon);
             Debug.Log("Switch to best weapon = " + bestWeapon);
         }
-        CanAttackPlayer(agent, agent.config.canAttackDistance); // chon best gun -> tan cong theo vector3.Distance
+        //CanAttackPlayer_Distance(agent, agent.config.canAttackDistance); //? chon best gun -> tan cong theo vector3.Distance
 
     }
     private AiWeapons.WeaponSlot ChooseWeapon(AiAgent agent) {
