@@ -20436,7 +20436,7 @@ NavMeshAgent:
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 1.8
-  m_BaseOffset: -0.05
+  m_BaseOffset: 0
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 0
 --- !u!114 &2161415414635446254
@@ -20527,9 +20527,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentTarget: {fileID: 0}
-  inAccuracy: 0
+  inAccuracy: 0.2
   waitingTimeEquipWeapon: 1
-  dropFroce: 2
+  dropFroce: 3
 --- !u!54 &1737657174092953488
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -20631,10 +20631,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distance: 15
-  angel: 50
-  height: 1.8
+  angle: 30
+  height: 1
   detectBottom: {x: 0, y: -0.1, z: 0}
-  meshColor: {r: 0, g: 0.6875, b: 1, a: 0.39215687}
+  meshColor: {r: 0.6415094, g: 0.6415094, b: 0.6415094, a: 0.39215687}
   detectColor: {r: 0, g: 1, b: 0, a: 0.39215687}
   scanFrequency: 30
   layers:

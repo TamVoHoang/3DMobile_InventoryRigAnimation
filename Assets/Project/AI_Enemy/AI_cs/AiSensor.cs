@@ -6,8 +6,8 @@ public class AiSensor : MonoBehaviour
 {
     [SerializeField] private float distance = 15f;
     public float Distance{get => distance;}
-    [SerializeField] private float angel = 50f;
-    public float Angle {get => angel;}
+    [SerializeField] private float angle = 50f;
+    public float Angle {get => angle;}
     [SerializeField] private float height = 1.8f;
     [SerializeField] private Vector3 detectBottom;
     [SerializeField] private Color meshColor = Color.blue;
@@ -50,7 +50,7 @@ public class AiSensor : MonoBehaviour
         count = Physics.OverlapSphereNonAlloc(transform.position, distance, colliders, layers, QueryTriggerInteraction.Collide);
 
         objects.Clear(); //xoa list objects
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < count; ++i) {
             GameObject obj = colliders[i].gameObject;
             if(IsInSight(obj) )//! ko add chinh this.gameobject nao voa list scan || && obj != this.gameObject
             {
@@ -68,7 +68,7 @@ public class AiSensor : MonoBehaviour
 
         direction.y = 0;
         float deltaAngel = Vector3.Angle(direction, transform.forward);
-        if(deltaAngel > angel) return false;
+        if(deltaAngel > angle) return false;
         
         origin.y += height/2;
         dest.y = origin.y;
@@ -88,9 +88,9 @@ public class AiSensor : MonoBehaviour
         Vector3[] vertices = new Vector3[numVertices];
         int[] triangles = new int[numVertices];
 
-        Vector3 bottomCenter = Vector3.zero + detectBottom + new Vector3(0,0,0.5f); //* Vector3.zero
-        Vector3 bottomLeft = (Quaternion.Euler(0, -angel,0) * Vector3.forward * distance) + detectBottom; //* Quaternion.Euler(0, -angel,0) * Vector3.forward * distance
-        Vector3 bottomRight = (Quaternion.Euler(0, angel,0) * Vector3.forward * distance) + detectBottom;//* Quaternion.Euler(0, angel,0) * Vector3.forward * distance
+        Vector3 bottomCenter = Vector3.zero + detectBottom; //* Vector3.zero
+        Vector3 bottomLeft = (Quaternion.Euler(0, -angle,0) * Vector3.forward * distance) + detectBottom; //* Quaternion.Euler(0, -angel,0) * Vector3.forward * distance
+        Vector3 bottomRight = (Quaternion.Euler(0, angle,0) * Vector3.forward * distance) + detectBottom;//* Quaternion.Euler(0, angel,0) * Vector3.forward * distance
 
         Vector3 topCenter = bottomCenter + Vector3.up * height ;
         Vector3 topRight = bottomRight + Vector3.up * height ;
@@ -116,8 +116,8 @@ public class AiSensor : MonoBehaviour
         vertices[vert++] = bottomRight;
         vertices[vert++] = bottomCenter;
 
-        float currentAngel = - angel;
-        float deltaAngel = (angel * 2) / segments;
+        float currentAngel = - angle;
+        float deltaAngel = (angle * 2) / segments;
         for (int i = 0; i < segments; i++) {
             bottomLeft = Quaternion.Euler(0, currentAngel,0) * Vector3.forward * distance + detectBottom; //* Quaternion.Euler(0, currentAngel,0) * Vector3.forward * distance
             bottomRight = Quaternion.Euler(0, currentAngel + deltaAngel,0) * Vector3.forward * distance + detectBottom; //* Quaternion.Euler(0, currentAngel + deltaAngel,0) * Vector3.forward * distance

@@ -31,12 +31,15 @@ public class AiFindWeaponState : AiState
 
             if(pickup) {
                 CollectPickup(agent, pickup);
+                Debug.Log("PICKUP = " + pickup);
+                return; //? co vat pickup thi ko cho set destination thong qua RandomPosition(), xet theo CollectPickup()
             }
         }
         //? WANDER
-        Debug.Log(agent.navMeshAgent.hasPath);
-        if(!agent.navMeshAgent.hasPath) {
-            Debug.Log("Dang generate min max AiFindWeapon State");
+        //Debug.Log(agent.navMeshAgent.hasPath);
+        if(!agent.navMeshAgent.hasPath) //? dat dieu kien !pickup de khi tim thay pickup la ko randomPosition()
+        {
+            Debug.Log("RandomPosition() AiFindWeapon State");
             WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
 
             /* Vector3 min = worldBounds.min.position;
