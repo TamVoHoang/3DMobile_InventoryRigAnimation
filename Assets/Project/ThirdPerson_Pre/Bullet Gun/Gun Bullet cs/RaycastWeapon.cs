@@ -37,8 +37,9 @@ public class RaycastWeapon : MonoBehaviour
     public float accumulateTime; // chi duoc ban khi accumulate >=0
 
     [Header("AMOUNTCOUNT")]
-    public int ammoCount;
-    public int clipSize;
+    public int ammoCount = 30;
+    public int clipSize = 30;
+    public int clipCount =2;// 2 lan thay dan
 
     [Header("PHYSICAL BULLET")]
     public float bulletSpeed = 1000.0f;
@@ -117,13 +118,19 @@ public class RaycastWeapon : MonoBehaviour
         Debug.Log("StartFiring");
         isFiring = true;
         if(accumulateTime > 0.0f) accumulateTime = 0.0f; // khi ban thoi gian cho se tro ve 0
-        
     }
 
     public void StopFiring()
     {
         Debug.Log("StopFiring");
         isFiring = false;
+    }
+
+    public bool ShouldReload() => ammoCount ==0 && clipCount > 0; // het dan, con bang dan
+    public bool IsLowAmmo() => ammoCount == 0 && clipCount == 0; // het dan, het bang dan
+    public void RefillAmmo() {
+        ammoCount = clipSize; // nap so luong dan = so luong dan trong bang dan
+        clipCount --; // giam so luong bang dan
     }
 
     public void UpdateFiring(float deltaTime, Vector3 target) // dang dc goi tu folder player (characterAimming class)

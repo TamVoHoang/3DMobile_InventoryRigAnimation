@@ -23,10 +23,15 @@ public class ReloadWeapon : MonoBehaviour
         RaycastWeapon weapon = activeGun.GetActiveWeapon();
 
         if (weapon) {
-            if (Input.GetKeyDown(KeyCode.R) || weapon.ammoCount <= 0) {
+            if (Input.GetKeyDown(KeyCode.R) || weapon.ShouldReload()) {
+                isReloading = true; // dang thay dan
                 rigController.SetTrigger("reload_weapon");
             }
-            if (weapon.IsFiring) ammoWidget.Refresh(weapon.ammoCount);
+
+            if (weapon.IsFiring &&ammoWidget) {
+                ammoWidget.Refresh(weapon.ammoCount, weapon.clipCount);
+
+            } 
         }
         else {
             ammoWidget.Clear(0); // ko con sung trang bi tren nguoi player do da keo het ve inventory
@@ -72,9 +77,12 @@ public class ReloadWeapon : MonoBehaviour
         RaycastWeapon weapon = activeGun.GetActiveWeapon();
         weapon.magazine.SetActive(true);
         Destroy(magHand);
-        weapon.ammoCount = weapon.clipSize;
+
+        //weapon.ammoCount = weapon.clipSize;
+        weapon.RefillAmmo();
+
         rigController.ResetTrigger("reload_weapon");
-        ammoWidget.Refresh(weapon.ammoCount);
+        ammoWidget.Refresh(weapon.ammoCount, weapon.clipCount);
     }
 
     //todo

@@ -585,6 +585,7 @@ MonoBehaviour:
   accumulateTime: 0
   ammoCount: 0
   clipSize: 0
+  clipCount: 2
   bulletSpeed: 1000
   bulletDrop: 0
   damage: 10
@@ -51288,6 +51289,7 @@ MonoBehaviour:
   accumulateTime: 0
   ammoCount: 0
   clipSize: 0
+  clipCount: 2
   bulletSpeed: 1000
   bulletDrop: 0
   damage: 10
@@ -52376,9 +52378,9 @@ MonoBehaviour:
   hzInput: 0
   vInput: 0
   airSpeed: 1
-  walkSpeed: 15
-  walkBackSpeed: 4
-  runSpeed: 10
+  walkSpeed: 6
+  walkBackSpeed: 5
+  runSpeed: 9
   runBackSpeed: 6
   crouchSpeed: 2
   crouchBackSpeed: 1
@@ -52641,7 +52643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
-  maxHealth: 200
+  maxHealth: 1000
   currentHealth: 0
 --- !u!114 &5804979155748931068
 MonoBehaviour:

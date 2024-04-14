@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AiFindTargetState : AiState
@@ -9,8 +7,8 @@ public class AiFindTargetState : AiState
     }
     public void Enter(AiAgent agent) {
         Debug.Log("Enter() AiFindTarget State");
-        agent.navMeshAgent.speed = agent.config.findWeaponSpeed;
-        agent.navMeshAgent.stoppingDistance = agent.config.findWeaponStopingDestination;
+        agent.navMeshAgent.speed = agent.config.speed_Target;
+        agent.navMeshAgent.stoppingDistance = agent.config.stoppingDis_FindWeapon; //khi find thi stopDis = 0. dam bao trigger
     }
     public void Update(AiAgent agent) {
         //? WANDER

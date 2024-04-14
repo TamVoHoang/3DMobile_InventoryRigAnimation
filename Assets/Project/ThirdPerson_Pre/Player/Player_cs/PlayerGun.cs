@@ -19,12 +19,12 @@ public class PlayerGun : Singleton<PlayerGun>
     [SerializeField] private float runSpeed = 5, runBackSpeed = 3;
     [SerializeField] private float crouchSpeed = 2, crouchBackSpeed = 1;
 
-    public float WalkSpeed { get => walkSpeed; set => walkSpeed = value; }
-    public float WalkBackSpeed { get => walkBackSpeed; set => walkBackSpeed = value; }
-    public float RunSpeed { get => runSpeed; set => runSpeed = value; }
-    public float RunBackSpeed { get => runBackSpeed; set => runBackSpeed = value; }
-    public float CrouchSpeed { get => crouchSpeed; set => crouchSpeed = value; }
-    public float CrouchBackSpeed { get => crouchBackSpeed; set => crouchBackSpeed = value; }
+    public float WalkSpeed { get => walkSpeed;}
+    public float WalkBackSpeed { get => walkBackSpeed;}
+    public float RunSpeed { get => runSpeed;}
+    public float RunBackSpeed { get => runBackSpeed;}
+    public float CrouchSpeed { get => crouchSpeed;}
+    public float CrouchBackSpeed { get => crouchBackSpeed;}
 
     #endregion Movement
 
@@ -62,13 +62,11 @@ public class PlayerGun : Singleton<PlayerGun>
         characterController = GetComponent<CharacterController>();
     }
 
-    void Start()
-    {
+    void Start() {
         SwitchState(Idle);
     }
 
-    public void Update()
-    {
+    public void Update() {
         SetInputSprintClock(); //? khoa gia tri isPrint  trong 1 lan nhan
 
         GetIsGrounded = SetIsGrounded();
@@ -84,8 +82,7 @@ public class PlayerGun : Singleton<PlayerGun>
 
         currentState.UpdateState(this);
     }
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() {
         // Gravity();
         // Falling();
         // GetDirectionAndMove(); // camera bi lac khi dung fixedUpdate
@@ -95,8 +92,7 @@ public class PlayerGun : Singleton<PlayerGun>
         Gravity();
         GetDirectionAndMove(); 
     }
-    public void SwitchState(MovementBaseState state)
-    {
+    public void SwitchState(MovementBaseState state) {
         currentState = state;
         currentState.EnterState(this);
     }
@@ -112,16 +108,14 @@ public class PlayerGun : Singleton<PlayerGun>
     }
 
 
-    void GetDirectionAndMove()
-    {
+    void GetDirectionAndMove() {
         Vector3 airDir = Vector3.zero; // tao mot bien vector 3 (x,y,z) rong chua gia tri toa do nhap tu ban phim khi o tren khong
         if (!SetIsGrounded()) airDir = transform.forward * vInput + transform.right * hzInput; // neu khong cham dat thi di chuyen theo airdir
         else dir = transform.forward * vInput + transform.right * hzInput; // huong di chuyen 2 vector3 x,z. Tu tren nhin xuong
 
         characterController.Move((dir.normalized * currentSpeed + airDir.normalized * airSpeed) * Time.deltaTime); //dir.normalized
     }
-    public bool SetIsGrounded()
-    {
+    public bool SetIsGrounded() {
         if (Physics.CheckSphere(groundCheck.position, groundDistance, groundMask)) return true;
         else return false;
     }

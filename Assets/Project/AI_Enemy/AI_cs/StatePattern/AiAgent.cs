@@ -18,6 +18,10 @@ public class AiAgent : MonoBehaviour
 
     public AiSensor aiSensor;
     public AiTargetingSystem aiTargetingSystem;
+    public AiHealth health;
+    
+
+
 
     void Start()
     {
@@ -28,6 +32,7 @@ public class AiAgent : MonoBehaviour
         aiSensor = GetComponent<AiSensor>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         aiTargetingSystem = GetComponent<AiTargetingSystem>();
+        health = GetComponent<AiHealth>();
 
         stateMachine = new AiStateMachine(this);              //todo 0
 
@@ -37,6 +42,9 @@ public class AiAgent : MonoBehaviour
         stateMachine.RegisterState(new AiFindWeaponState());
         stateMachine.RegisterState(new AiAttackTargetState());
         stateMachine.RegisterState(new AiFindTargetState());
+        stateMachine.RegisterState(new AiFindHealthState());
+        stateMachine.RegisterState(new AiFindAmmoState());
+
 
 
         stateMachine.ChangeState(intialState); // AiStateID.intialState
@@ -55,7 +63,12 @@ public class AiAgent : MonoBehaviour
 
             stateMachine.Update();
     }
-    public float GetDistance() {
-        return Vector3.Distance(playerTransform.position, this.transform.position);
+    // public float GetDistance() {
+    //     return Vector3.Distance(playerTransform.position, this.transform.position);
+    // }
+
+    public void DelayTimeCountine(float time) =>StartCoroutine(DelayTime(time));
+    IEnumerator DelayTime(float time) {
+        yield return new WaitForSeconds(time);
     }
 }

@@ -7,7 +7,9 @@ public class Health : MonoBehaviour
     public bool IsDead {get => isDead;}
     [SerializeField] private float maxHealth;
     [SerializeField] private float currentHealth;
+    private float lowHealth = 100f;
     public float CurrentHealth{get => currentHealth;}
+    public float LowHealth{get => lowHealth;}
     //private AiAgent aiAgent;//? ben ke thua se tu tao ra
     
 /*     //testing Layer at animator override
@@ -38,11 +40,24 @@ public class Health : MonoBehaviour
                 hitBox.gameObject.layer = LayerMask.NameToLayer("Hitbox");
             }
         }
-
         OnStart();
     }
 
-    //todo hitbox.cs call TakeDamage()
+    //?tang mau
+    public void Heal(float amount)
+    {
+        currentHealth += amount;
+        currentHealth = Mathf.Min(currentHealth, maxHealth);    // dam vao may chi nam trong khoang
+
+        if(uiHealthBar) {
+            uiHealthBar.SetHealthBarEnemyPercent((float)currentHealth / maxHealth);
+        }
+
+        OnHeal(amount);
+
+    }
+
+    //? hitbox.cs call TakeDamage()
     public void TakeDamage(float amount, Vector3 direction) {
         currentHealth -= amount;
         if(uiHealthBar) {
@@ -56,7 +71,7 @@ public class Health : MonoBehaviour
             Die(direction);
         }
     }
-
+    public bool IsLowHealth() => currentHealth < lowHealth;
     private void Die(Vector3 direction) {
         /* AiState aiState = aiAgent.stateMachine.GetState(AiStateID.Death);
         AiDeathState aiDeathState = aiState as AiDeathState;
@@ -74,21 +89,27 @@ public class Health : MonoBehaviour
     protected virtual void OnDamage(Vector3 direction) {
 
     }
+    protected virtual void OnHeal(float amount) {
 
-/*     private void SetLayerBegin() {
-        var layers = animatorController.layers;
-        layers[weaponLayerIndex].avatarMask = weaponMask;
-        layers[baseLayerIndex].avatarMask = baseMask;
-        animatorController.layers = layers;
-        Debug.Log("set weapon layer mask for weapon Layer");
     }
+
     
-    public void SetLayerDeath() {
-        var layers = animatorController.layers;
-        //layers[weaponLayerIndex].avatarMask = null;
-        layers[baseLayerIndex].avatarMask = baseMask;
 
-        animatorController.layers = layers;
-        Debug.Log("set null avatar mask for weapon Layer");
-    }
- */}
+    /*     private void SetLayerBegin() {
+            var layers = animatorController.layers;
+            layers[weaponLayerIndex].avatarMask = weaponMask;
+            layers[baseLayerIndex].avatarMask = baseMask;
+            animatorController.layers = layers;
+            Debug.Log("set weapon layer mask for weapon Layer");
+        }
+
+        public void SetLayerDeath() {
+            var layers = animatorController.layers;
+            //layers[weaponLayerIndex].avatarMask = null;
+            layers[baseLayerIndex].avatarMask = baseMask;
+
+            animatorController.layers = layers;
+            Debug.Log("set null avatar mask for weapon Layer");
+        }
+     */
+}

@@ -167,9 +167,10 @@ public class AiWeapons : MonoBehaviour
 
         weaponState = WeaponState.Active;
     }
-    IEnumerator HolsterWeaponAnimation() {
-        weaponState = WeaponState.Holstering; // da trang bi sung len ai se cho phep ban weaponState = WeaponState.Active;
 
+    IEnumerator HolsterWeaponAnimation() {
+        
+        weaponState = WeaponState.Holstering; // da trang bi sung len ai se cho phep ban weaponState = WeaponState.Active;
         animator.runtimeAnimatorController = currentWeapon.runtimeAnimatorController;
         animator.SetBool("Equip", false);
         weaponIK.enabled = false; //! de khi doi sung ngan cu ly gan ko bi loi
@@ -200,13 +201,10 @@ public class AiWeapons : MonoBehaviour
         yield return StartCoroutine(HolsterWeaponAnimation());
         current = index;
         Debug.Log("HolsterWeaponAnimation "+ current + "//" + index);
-        //StartCoroutine(DelayTimeholsterAndEquip());
+        //
         yield return StartCoroutine(EquipWeaponAnimation());
         Debug.Log("EquipWeaponAnimation "+ current + "//" + index);
         Debug.Log("co ra switch animation");
-    }
-    IEnumerator DelayTimeholsterAndEquip() {
-        yield return new WaitForSeconds(0.2f);
     }
 
     public void DropWeapon() {
@@ -295,9 +293,26 @@ public class AiWeapons : MonoBehaviour
         RaycastWeapon weapon = currentWeapon;
         weapon.magazine.SetActive(true);
         Destroy(magHand);
-        weapon.ammoCount = weapon.clipSize;
+        //weapon.ammoCount = weapon.clipSize;
+        weapon.RefillAmmo(); // nap dan
         animator.ResetTrigger("Reload_Weapon");
     }
 
+    public void RefillAmmo(int clipCount) {
+        var weapon = currentWeapon;
+        if(weapon) {
+            weapon.clipCount += clipCount;
+        }
+    }
 
+    public bool IsLowAmmo() {
+        var weapon = currentWeapon;
+        if(weapon) {
+            return weapon.IsLowAmmo();
+        }
+        return false;
+    }
+
+    
+    //todo
 }

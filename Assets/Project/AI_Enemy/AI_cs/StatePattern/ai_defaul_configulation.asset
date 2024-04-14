@@ -13,12 +13,14 @@ MonoBehaviour:
   m_Name: ai_defaul_configulation
   m_EditorClassIdentifier: 
   maxSightDistance: 7
+  speed_Chase: 5
+  stoppingDis_Chase: 5
   maxTime: 1
   maxDistance: 1
-  findWeaponSpeed: 10
-  findWeaponStopingDestination: 0
-  canAttackDistance: 25
-  rangeToChangeWeapon: 10
-  attackStopingDestination: 7
-  attackSpeed: 5
+  speed_FindWeapon: 5
+  stoppingDis_FindWeapon: 0
+  speed_Attack: 5
+  stoppingDis_Attack: 5
+  distance_CanAttack: 20
+  changeBestWeapon_Range: 7
   dieForece: 5

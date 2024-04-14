@@ -3,7 +3,7 @@ using UnityEngine;
 public class AiFindWeaponState : AiState
 {
     private GameObject pickup;
-    private GameObject[] pickups = new GameObject[1]; 
+    private GameObject[] pickups = new GameObject[3]; 
     public AiStateID GetId()
     {
         return AiStateID.FindWeapon;
@@ -13,8 +13,8 @@ public class AiFindWeaponState : AiState
     {
         Debug.Log("Enter() AiFindWeapon State");
         pickup = null;
-        agent.navMeshAgent.speed = agent.config.findWeaponSpeed;
-        agent.navMeshAgent.stoppingDistance = agent.config.findWeaponStopingDestination;
+        agent.navMeshAgent.speed = agent.config.speed_FindWeapon;
+        agent.navMeshAgent.stoppingDistance = agent.config.stoppingDis_FindWeapon;
 
         //? tim sung gan nhat
         /* WeaponPickup pickup = FindClosestWeapon(agent);
@@ -64,16 +64,33 @@ public class AiFindWeaponState : AiState
         } */
     }
 
-    public void Exit(AiAgent agent)
-    {
+    public void Exit(AiAgent agent) {
         Debug.Log("Exit() AiFindWeapon State");
     }
     //? fine pickup maskLayers
     private GameObject FindPickup(AiAgent aiAgent) {
-        int count = aiAgent.aiSensor.Filter(pickups, "Pickup");
+        //todo old van co the dung duoc OK
+        /* int count = aiAgent.aiSensor.Filter(pickups, "Pickup");
         if(count > 0) // coll 39 Scan() AiSenor.cs => add gameobject into Objects[]
         {
             return pickups[0]; // tra ve gameobject
+        }
+        return null; */
+
+        // new
+        int count = aiAgent.aiSensor.Filter(pickups, "Pickup", "Weapon");
+        if(count > 0) {
+            float bestAngle = float.MaxValue;
+            GameObject bestPickup = pickups[0];
+            for (int i = 0; i < count; i++) {
+                GameObject pickup = pickups[i];
+                float pickupAngle = Vector3.Angle(aiAgent.transform.forward, pickup.transform.position - aiAgent.transform.position);
+                if(pickupAngle < bestAngle) {
+                    bestAngle = pickupAngle;
+                    bestPickup = pickup;
+                }
+            }
+            return bestPickup;
         }
         return null;
     }

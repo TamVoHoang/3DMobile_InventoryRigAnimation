@@ -1,9 +1,9 @@
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 [ExecuteInEditMode]
 public class AiTargetingSystem : MonoBehaviour
 {
-    [SerializeField] float memorySpan = 5.0f;
+    [SerializeField] float memorySpan = 3.0f;
     [SerializeField] float distanceWeight = 1.0f;
     [SerializeField] float angleWeight = 1.0f;
     [SerializeField] float ageWeight = 1.0f;

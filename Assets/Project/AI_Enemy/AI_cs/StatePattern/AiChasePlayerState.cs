@@ -9,7 +9,8 @@ public class AiChasePlayerState : AiState
         return AiStateID.ChasePlayer; //? no se tra ve kieu ten nam trong enum
     }
     public void Enter(AiAgent agent) {
-        agent.navMeshAgent.stoppingDistance = 5.0f;
+        agent.navMeshAgent.speed = agent.config.speed_Chase;
+        agent.navMeshAgent.stoppingDistance = agent.config.stoppingDis_Chase;
     }
 
     public void Update(AiAgent agent) {
@@ -29,11 +30,17 @@ public class AiChasePlayerState : AiState
                 }
             }
             timer = agent.config.maxTime;
+
+            //? dang chase neu khoang cach bo xa qu lon thi agen chuyen qua idle
+            var distance = Vector3.Distance(agent.transform.position, agent.playerTransform.position);
+            if(distance > 15) agent.stateMachine.ChangeState(AiStateID.Idle);
         }
 
     }
     public void Exit(AiAgent agent) {
+        Debug.Log("Exit() ChaseState");
+        agent.navMeshAgent.speed = 0f;
+        agent.navMeshAgent.stoppingDistance = 0f;
     }
-
 
 }

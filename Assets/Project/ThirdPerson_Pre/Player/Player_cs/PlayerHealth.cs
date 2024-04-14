@@ -26,6 +26,15 @@ public class PlayerHealth : Health
 
     }
     protected override void OnDamage(Vector3 direction) {
+        Update_Virtual();
+    }
+
+    protected override void OnHeal(float amount) {
+        
+    }
+
+    private void Update_Virtual() {
+        // nhung thay doi hieu ung khi get damage or increase health
         animator.SetBool("GetDamage", true);
     }
 }

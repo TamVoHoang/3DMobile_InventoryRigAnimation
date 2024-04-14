@@ -95,7 +95,7 @@ public class ActiveGun : Singleton<ActiveGun>
         equipped_weapons[weaponSlotIndex] = weapon;
         ////activeWeaponIndex = weaponSlotIndex;// ko lay
         SetActiveWeapon(newWeapon.weaponSlot);
-        ammoWidget.Refresh(weapon.ammoCount);
+        ammoWidget.Refresh(weapon.ammoCount, weapon.clipCount);
     }
     #region HOLSTER AND SWITCHING GUN
     public void ToggleActiveWeapon()
@@ -151,7 +151,7 @@ public class ActiveGun : Singleton<ActiveGun>
                 yield return new WaitForEndOfFrame();
             } while (rigAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f);
             isHolstered = false;
-            ammoWidget.Refresh(weapon.ammoCount); //? in thong tin ammoWidget sau khi doi sung bang nut UI
+            ammoWidget.Refresh(weapon.ammoCount, weapon.clipCount); //? in thong tin ammoWidget sau khi doi sung bang nut UI
         }
 
     }
@@ -168,5 +168,12 @@ public class ActiveGun : Singleton<ActiveGun>
         }
     }
 
+    public void RefillAmmo(int clipCount) {
+        var weapon = GetActiveWeapon();
+        if(weapon) {
+            weapon.clipCount += clipCount;
+            ammoWidget.Refresh(weapon.ammoCount, weapon.clipCount);
+        }
+    }
     //todo
 }
