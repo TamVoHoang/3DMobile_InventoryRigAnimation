@@ -21,9 +21,9 @@ public class ReloadWeapon : MonoBehaviour
 
     void Update() {
         RaycastWeapon weapon = activeGun.GetActiveWeapon();
-
+        
         if (weapon) {
-            if (Input.GetKeyDown(KeyCode.R) || weapon.ShouldReload()) {
+            if ((Input.GetKeyDown(KeyCode.R) || weapon.ShouldReload()) && !activeGun.IsHolstered && !activeGun.IsChangingGun) {
                 isReloading = true; // dang thay dan
                 rigController.SetTrigger("reload_weapon");
             }

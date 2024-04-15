@@ -145,8 +145,9 @@ MonoBehaviour:
   distance: 0
   fireRate: 25
   accumulateTime: 0
-  ammoCount: 60
-  clipSize: 60
+  ammoCount: 30
+  clipSize: 30
+  clipCount: 2
   bulletSpeed: 500
   bulletDrop: 0
   damage: 10
@@ -155,7 +156,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1025
   runtimeAnimatorController: {fileID: 0}
-  targetOffset: {x: 0, y: 0, z: 0}
+  targetOffset_AimWeaponIK: {x: 0, y: 0, z: 0}
 --- !u!65 &710594978500733543
 BoxCollider:
   m_ObjectHideFlags: 0

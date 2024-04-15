@@ -17,13 +17,16 @@ public class ActiveGun : Singleton<ActiveGun>
     [SerializeField] RaycastWeapon[] equipped_weapons = new RaycastWeapon[2]; // ko destroy sung 1 khi pickup sung 2
     [SerializeField] private int activeWeaponIndex = 1; //? slot nao dang trang bi sung
     [SerializeField] private bool isHolstered = false; // false = dang equip
+    [SerializeField] private bool isChangingGun = false; // dang qua trinh switch(active + holster) || Toggle(active + holster)
+    [SerializeField] private float delayTime_ChangeGunCountine = 1f; 
 
-    //* crossHairTarget tren mainCamera lam gamobject co cs (diem vacham cua raycast maincamera voi cac object khac)
+    //? crossHairTarget tren mainCamera lam gamobject co cs (diem vacham cua raycast maincamera voi cac object khac)
     [SerializeField] private Transform crossHairTarget;
     [SerializeField] private Animator rigAnimator;
     [SerializeField] private AmmoWidget ammoWidget;
     public int GetActiveWeaponIndex { get { return activeWeaponIndex; } }
     public bool IsHolstered { get { return isHolstered; } }
+    public bool IsChangingGun{get => isChangingGun;}
     //public bool isReload = false; // ko co dang thay dan
 
     protected override void Awake() {
@@ -57,7 +60,7 @@ public class ActiveGun : Singleton<ActiveGun>
 
     private void Update() {
         var weapon = GetWeapon(activeWeaponIndex);
-        var canFire = !isHolstered;// ko dang thay dan thi cho ban
+        var canFire = !isHolstered && !isChangingGun;// ko dang cat sung + ko dang change sung + ko dang toggle
         if(weapon) {
             if(InputManager.Instance.IsAttackButton && !weapon.IsFiring & canFire) {
                 weapon.StartFiring();
@@ -100,18 +103,26 @@ public class ActiveGun : Singleton<ActiveGun>
     #region HOLSTER AND SWITCHING GUN
     public void ToggleActiveWeapon()
     {
+        isChangingGun = true; // dang thay sung
+
         bool isHolstered = rigAnimator.GetBool("holster_weapon"); // = false
         //dao nguoc bien trong script va gan cho bien torng aniamtior
         if (isHolstered) StartCoroutine(ActivateWeapon(activeWeaponIndex));
         else StartCoroutine(HolsterWeapon(activeWeaponIndex));
+
+        StartCoroutine(DelayTime_ChangeGunCountine(delayTime_ChangeGunCountine));
     }
     public void SetActiveWeapon(WeaponSlots weaponSlot)
     {
+        isChangingGun = true; // dang thay sung
+
         int holsterIndex = activeWeaponIndex; // con so de kt xem co sung equip tai 0 1 2
         int activeIndex = (int)weaponSlot;
         // dieu kien de khi cham lai cay sung cung loai animation se ko thuc hien
         if (holsterIndex == activeIndex) holsterIndex = -1;
         StartCoroutine(SwitchWeapon(holsterIndex, activeIndex));
+
+        StartCoroutine(DelayTime_ChangeGunCountine(delayTime_ChangeGunCountine));
     }
     IEnumerator SwitchWeapon(int holsterIndex,int activeIndex) // ok
     {
@@ -122,6 +133,7 @@ public class ActiveGun : Singleton<ActiveGun>
     IEnumerator HolsterWeapon(int index)
     {
         isHolstered = true;
+
         var weapon = GetWeapon(index); // kiem tra xem cai o equiped_Weapon dang co hay ko de chuan bi thay, neu varWeapon co thi ko thuc hien animation cat sung
         if (weapon)
         {
@@ -134,7 +146,7 @@ public class ActiveGun : Singleton<ActiveGun>
             ammoWidget.Clear(0); //! sung con tren nguoi dung dang Holster => ko in sl dan len UI
         }
     }
-    IEnumerator ActivateWeapon(int index)
+    IEnumerator ActivateWeapon(int index) // lay sung len tay isHolster = false
     {
         var weapon = GetWeapon(index); // kiem tra cay sung moi vua pickup da co trong cai o equiped_weapons[] chua
         if (weapon)
@@ -151,6 +163,7 @@ public class ActiveGun : Singleton<ActiveGun>
                 yield return new WaitForEndOfFrame();
             } while (rigAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1.0f);
             isHolstered = false;
+            
             ammoWidget.Refresh(weapon.ammoCount, weapon.clipCount); //? in thong tin ammoWidget sau khi doi sung bang nut UI
         }
 
@@ -174,6 +187,10 @@ public class ActiveGun : Singleton<ActiveGun>
             weapon.clipCount += clipCount;
             ammoWidget.Refresh(weapon.ammoCount, weapon.clipCount);
         }
+    }
+    IEnumerator DelayTime_ChangeGunCountine(float time) {
+        yield return new WaitForSeconds(time);
+        isChangingGun = false;
     }
     //todo
 }
