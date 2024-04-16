@@ -130,26 +130,31 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     }
 
     IEnumerator SwitchSword(int holsterIndex,int activeIndex) {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
         yield return StartCoroutine(HolsterSword(holsterIndex));
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.3f);
         yield return StartCoroutine(ActivateSword(activeIndex));
         activeSwordIndex = activeIndex;
     }
     IEnumerator HolsterSword(int index) {
-        isHolstered_Sword = true;
+        
         
         var sword = GetSword(index); // kiem tra xem cai o equiped_Weapon dang co hay ko de chuan bi thay, neu varWeapon co thi ko thuc hien animation cat sung
         if (sword)
         {
             Debug.Log(" SetBool holster True sword animation");
-            playerAnimator.SetBool("holster_sword", true);
-            characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordHolster_Point, false);
-            characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordHolster_Point, true);
+            playerAnimator.SetBool("holster_sword", true); // thuc hien animation holster
+            playerAnimator.SetBool("ReadyAttack", false);
+            yield return new WaitForSeconds(0.5f);
+            if(characterEquipment.GetI_SwordPrefabTemp != null) {
+                characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordHolster_Point, false);
+                characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordHolster_Point, true);
+            }
+            
 
             Switch_DeafaultWeapon(defaultActiveWeapon);
-
-            yield return new WaitForSeconds(0.5f);
+            
+            isHolstered_Sword = true;
         }
     }
     private void Switch_DeafaultWeapon(MonoBehaviour weapon) {
@@ -165,6 +170,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
         {
             Debug.Log("SetBool holster True sword animation");
             playerAnimator.SetBool("holster_sword", false);
+            playerAnimator.SetBool("ReadyAttack", true);
             yield return new WaitForSeconds(.5f); //! cho cat sung xong se sin hra cay kiem
             characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordSlots[index], false);
             characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordSlots[index], true);

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using CodeMonkey.Utils;
 using UnityEngine;
 
@@ -178,19 +179,33 @@ public class UI_CharacterEquipment : MonoBehaviour
                 // Use item
                 Debug.Log("click vao weaponPistolItem tren weaponSlot");
                 
-                if(!ActiveWeapon.Instance.IsHolstered_Sword) ActiveWeapon.Instance.ToggleActiveSword();
-                if(!ActiveGun.Instance.IsHolstered && 
+                if(!ActiveWeapon.Instance.IsHolstered_Sword) ActiveWeapon.Instance.ToggleActiveSword(); // cat kiem xong -delay-lay sung
+                
+                /* if(!ActiveGun.Instance.IsHolstered && 
                     (int)item.itemScriptableObject.gunPrefabRaycast.GetComponent<RaycastWeapon>().weaponSlot == ActiveGun.Instance.GetActiveWeaponIndex) {
                     ActiveGun.Instance.ToggleActiveWeapon();
                 }
                 else {
                     ActiveGun.Instance.SetActiveWeapon(item.itemScriptableObject.gunPrefabRaycast.GetComponent<RaycastWeapon>().weaponSlot);
-                }
+                } */
+
+                StartCoroutine(DelayTimeCountine(0.5f, item)); // click vao sung, cat kiem - delay 0.5s - setActiveWeapon(sung)
             };
         } else {
             weaponSlot.transform.Find("emptyImage").gameObject.SetActive(true);
         }
     }
+        IEnumerator DelayTimeCountine(float time, Item item) {
+        yield return new WaitForSeconds(time);
+        if(!ActiveGun.Instance.IsHolstered && 
+            (int)item.itemScriptableObject.gunPrefabRaycast.GetComponent<RaycastWeapon>().weaponSlot == ActiveGun.Instance.GetActiveWeaponIndex) {
+            ActiveGun.Instance.ToggleActiveWeapon();
+        }
+        else {
+            ActiveGun.Instance.SetActiveWeapon(item.itemScriptableObject.gunPrefabRaycast.GetComponent<RaycastWeapon>().weaponSlot);
+        }
+    }
+
 
     //todo hien thi loai item keo tu pfUI_Item - tu o weapon Container len weaponSlot
     private void UpdateVisual() {
@@ -314,19 +329,29 @@ public class UI_CharacterEquipment : MonoBehaviour
             uiItemTransform.GetComponent<RectTransform>().GetComponent<Button_UI>().ClickFunc = () => {
                 // Use item
                 Debug.Log("click vao weaponSwordItem tren weaponSlot");
-                if(!ActiveGun.Instance.IsHolstered) ActiveGun.Instance.ToggleActiveWeapon();
+                if(!ActiveGun.Instance.IsHolstered) ActiveGun.Instance.ToggleActiveWeapon(); // cat sung
                 
                 if(!ActiveSword.Instance.IsHolstered_Sword && 
                     (int)weaponSwordItem.itemScriptableObject.pfWeaponInterface.GetComponent<ISword>().swordSlot == ActiveWeapon.Instance.GetActiveSwordIndex) {
                     ActiveWeapon.Instance.ToggleActiveSword();
-                }
-                else {
+                } else {
                     ActiveWeapon.Instance.SetActiveSword(weaponSwordItem.itemScriptableObject.pfWeaponInterface.GetComponent<ISword>().swordSlot);
                 }
+
+                //StartCoroutine(DelayTimeToEquipSword_UI(0.5f, weaponSwordItem)); // cat sung - cho 0.5s- dam baocat xong - active kiem
             };
         }
         else {
             weaponSwordSlot.transform.Find("emptyImage").gameObject.SetActive(true);
+        }
+    }
+    IEnumerator DelayTimeToEquipSword_UI(float time, Item weaponSwordItem) {
+        yield return new WaitForSeconds(time);
+        if(!ActiveSword.Instance.IsHolstered_Sword && 
+            (int)weaponSwordItem.itemScriptableObject.pfWeaponInterface.GetComponent<ISword>().swordSlot == ActiveWeapon.Instance.GetActiveSwordIndex) {
+            ActiveWeapon.Instance.ToggleActiveSword();
+        } else {
+            ActiveWeapon.Instance.SetActiveSword(weaponSwordItem.itemScriptableObject.pfWeaponInterface.GetComponent<ISword>().swordSlot);
         }
     }
 
@@ -345,6 +370,7 @@ public class UI_CharacterEquipment : MonoBehaviour
             slot.transform.Find("emptyImage").gameObject.SetActive(true);
         }
     }
+
 
     //todo
 }

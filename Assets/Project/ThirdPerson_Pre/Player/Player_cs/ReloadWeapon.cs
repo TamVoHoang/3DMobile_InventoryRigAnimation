@@ -28,7 +28,7 @@ public class ReloadWeapon : MonoBehaviour
                 rigController.SetTrigger("reload_weapon");
             }
 
-            if (weapon.IsFiring &&ammoWidget) {
+            if (weapon.IsFiring && ammoWidget) {
                 ammoWidget.Refresh(weapon.ammoCount, weapon.clipCount);
             } 
         }

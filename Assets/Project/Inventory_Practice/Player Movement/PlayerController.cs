@@ -12,15 +12,16 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] Inventory inventoryEquipment;
     [SerializeField] Inventory inventory_scroll;
     [SerializeField] UI_Inventory ui_Inventory; // dung de goi ham SetInventoy()
-    private Rigidbody2D rb;
+    private ActiveGun activeGun;
+    
     protected override void Awake() {
         base.Awake();
-        rb = GetComponent<Rigidbody2D>();
 
-        inventory_scroll = new Inventory(UseItemScroll);
-        inventory = new Inventory(UseItem); // => khoi tao Inventory() => itemList
-        inventoryEquipment = new Inventory(UseItemEquipment, itemSlotAmount);
+        inventory_scroll = new Inventory(UseItemScroll);                        // inventory ao, pickup
+        inventory = new Inventory(UseItem);                                     // => khoi tao Inventory() => itemList (vat pham co the chong len nhau)
+        inventoryEquipment = new Inventory(UseItemEquipment, itemSlotAmount);   // inventoryEquipment - nhung thu !istackable
         //ui_Inventory.SetPlayerPos(this); // uiInventory lay vi tri player //todo-> tesing.cs chy ham nay
+        activeGun = GetComponent<ActiveGun>();
     }
     private void Start() {
 
@@ -61,7 +62,7 @@ public class PlayerController : Singleton<PlayerController>
     private void UseItem(Item item) {
         switch (item.itemScriptableObject.itemType)
         {
-            case Item.ItemType.HealthPotion:
+            /* case Item.ItemType.HealthPotion:
             {
                 Debug.Log("su dung HealthPotion");
                 inventory.RemoveItem(new Item {itemScriptableObject = item.itemScriptableObject, amount =1});
@@ -83,6 +84,18 @@ public class PlayerController : Singleton<PlayerController>
             {
                 Debug.Log("su dung Coin");
                 inventory.RemoveItem(new Item {itemScriptableObject = item.itemScriptableObject, amount =1});
+                break;
+            } */
+            case Item.ItemType.IMagPistol3D_01:
+            {
+                Debug.Log("su dung IMagPistol3D_01");
+                var weapon = activeGun.GetActiveWeapon();
+                if(activeGun && weapon) {
+                    activeGun.RefillAmmo(item.itemScriptableObject.clipAmount);
+                    inventory.RemoveItem(new Item {itemScriptableObject = item.itemScriptableObject, amount = 1});
+                }
+                
+                
                 break;
             }
         }
@@ -127,6 +140,7 @@ public class PlayerController : Singleton<PlayerController>
         }
 
     }
+    
     private void OnTriggerEnter(Collider other) {
         //! pickup kieu ItemWorld3D chi lay vu khi vao ban cam ung
         ItemWorld3D itemWorld3DEquipment = other.GetComponent<ItemWorld3D>();
@@ -142,7 +156,15 @@ public class PlayerController : Singleton<PlayerController>
             //? xoa itemworld3d sau khi bo vao inventory
             //itemWorld3DEquipment.DestroySelf();
 
-            EquipOrAddToInventoryEquipmentList(itemWorld3DEquipment);
+            if(itemWorld3DEquipment.GetItem().IsStackable()) {
+                inventory.AddItem(itemWorld3DEquipment.GetItem());
+                itemWorld3DEquipment.DestroySelf();
+            }
+            else {
+                EquipOrAddToInventoryEquipmentList(itemWorld3DEquipment);
+            }
+            
+
         }
     }
     private void EquipOrAddToInventoryEquipmentList(ItemWorld3D itemWorld3DEquipment) {
@@ -151,8 +173,9 @@ public class PlayerController : Singleton<PlayerController>
         var itemWorld3DType = itemWorld3DEquipment.GetItem().itemScriptableObject.itemType;
         CharacterEquipment characterEquipment = GetComponent<CharacterEquipment>();
 
-        if((itemWorld3DType == Item.ItemType.GunSMG3D_01 && !characterEquipment.GetPrefab_RifleTemp) 
-            || itemWorld3DType == Item.ItemType.GunPistol3D_01 && !characterEquipment.GetPrefab_PistolTemp) {
+        if((itemWorld3DType == Item.ItemType.GunSMG3D_01 && !characterEquipment.GetPrefab_RifleTemp) || 
+            (itemWorld3DType == Item.ItemType.GunPistol3D_01 && !characterEquipment.GetPrefab_PistolTemp) || 
+            (itemWorld3DType == Item.ItemType.ISword_Red_01 ||itemWorld3DType == Item.ItemType.ISword_Green_02) && !characterEquipment.GetI_SwordPrefabTemp) {
             characterEquipment.EquipItem(itemWorld3DEquipment.GetItem());
             itemWorld3DEquipment.DestroySelf();
         }

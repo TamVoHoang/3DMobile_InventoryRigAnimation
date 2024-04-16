@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 04d54756f4b55fe44b6d7e187eb6d8b6, type: 3}
-  m_Name: ISword
+  m_Name: IMagPistol_01
   m_EditorClassIdentifier: 
-  itemType: 19
-  itemName: ISword01_Red
-  itemSprite: {fileID: 21300000, guid: ebebfb7fb0ef3456696d94d8a3690692, type: 3}
-  pfItem: {fileID: 2334020579491521255, guid: da36ece520a73e74fb31ddc6dd23a236, type: 3}
-  equipSlot: 5
+  itemType: 21
+  itemName: IMagPistol_01
+  itemSprite: {fileID: 21300000, guid: 351594ea836124960bc28f1b3bcbea6a, type: 3}
+  pfItem: {fileID: 2334020579491521255, guid: 701aed973b001fe46b8cf3a6a93e3426, type: 3}
+  equipSlot: 0
   gunPrefabRaycast: {fileID: 0}
+  clipAmount: 1
   handSwordPrefab: {fileID: 0}
-  pfWeaponInterface: {fileID: 2334020579491521255, guid: da36ece520a73e74fb31ddc6dd23a236, type: 3}
-  animatorOverrideController: {fileID: 22100000, guid: 9f7e2be0266640a4db405273ab218429, type: 2}
+  pfWeaponInterface: {fileID: 2334020579491521255, guid: 701aed973b001fe46b8cf3a6a93e3426, type: 3}
+  animatorOverrideController: {fileID: 0}

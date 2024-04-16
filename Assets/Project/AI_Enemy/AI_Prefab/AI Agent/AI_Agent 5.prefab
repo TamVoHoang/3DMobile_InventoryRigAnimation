@@ -33270,7 +33270,7 @@ Transform:
   m_GameObject: {fileID: 6652036800560184306}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.81999993, y: 1.66, z: -2.3899994}
+  m_LocalPosition: {x: 0.82, y: 1.66, z: -2.3899994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -35678,7 +35678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e565d363a2f579d4cb7b06da306ec3bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intialState: 3
+  intialState: 2
   navMeshAgent: {fileID: 0}
   config: {fileID: 11400000, guid: d01a3be13b02b1e40963b9b4f76e6278, type: 2}
   ragdoll: {fileID: 0}
@@ -35804,8 +35804,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eff81ac2e1beb74db34a4d8de4f980b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distance: 20
-  angle: 40
+  distance: 15
+  angle: 35
   height: 1.8
   detectBottom: {x: 0, y: -0.1, z: 0}
   meshColor: {r: 0.81879896, g: 1, b: 0.6556604, a: 0.13725491}

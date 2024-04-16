@@ -111,22 +111,27 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
 
         // todo set sword to ActiveWeapon Interface
         if(sword == null) {
-            Destroy(I_SwordPrefabTemp); // I_SwordPrefabTemp.GetComponent<ISword>()
+            
             activeWeapon.SetDefaultWeapon(); // de su dung tay khong
-            if(!activeWeapon.IsHolstered_Sword) activeWeapon.ToggleActiveSword(); //? xet isHoslter = true khi da ko con trang bi
+            if(!activeWeapon.IsHolstered_Sword){
+                activeWeapon.ToggleActiveSword(); //? xet isHoslter = true khi da ko con trang bi
+            }
+
+            Destroy(I_SwordPrefabTemp); // I_SwordPrefabTemp.GetComponent<ISword>()
             return;
         }
         if(sword != null) {
             if(!activeGun.IsHolstered) activeGun.ToggleActiveWeapon();
+
             int weaponSlotIndex = (int)weaponSwordItem.itemScriptableObject.pfWeaponInterface.GetComponent<ISword>().swordSlot; //=0
             StartCoroutine(DelayTimeToSpawn_WeaponInterface(sword, weaponSlotIndex));
         }
     }
     IEnumerator DelayTimeToSpawn_WeaponInterface(Item iSword, int weaponSlotIndex) {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.6f);
         I_SwordPrefabTemp = Instantiate(iSword.itemScriptableObject.pfWeaponInterface, activeWeapon.swordSlots[weaponSlotIndex].position,
                 activeWeapon.swordSlots[weaponSlotIndex].transform.rotation, activeWeapon.swordSlots[weaponSlotIndex].transform);
-        activeWeapon.NewWeapon(I_SwordPrefabTemp.GetComponent<MonoBehaviour>());
+        activeWeapon.NewWeapon(I_SwordPrefabTemp.GetComponent<MonoBehaviour>()); // khi new weapon da set active luon
     }
     IEnumerator DelaytimeToSpawnSword(Item sword, int weaponSlotIndex) {
         yield return new WaitForSeconds(1f);
@@ -160,6 +165,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
                 (int)raycastWeaponTemp.GetComponent<RaycastWeapon>().weaponSlot == activeGun.GetActiveWeaponIndex){
                 activeGun.ToggleActiveWeapon();
             }
+            
             return;
         }
 
@@ -172,12 +178,17 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
 
             raycastWeaponTemp = Instantiate(weaponItem.itemScriptableObject.gunPrefabRaycast, activeGun.weaponSlots[weaponSlotIndex].position,
                 activeGun.weaponSlots[weaponSlotIndex].transform.rotation, activeGun.weaponSlots[weaponSlotIndex]);
-                
             raycastWeaponTemp.transform.SetParent(activeGun.weaponSlots[weaponSlotIndex], false);
-
-            activeGun.Equip(raycastWeaponTemp);
-
+            
+            //activeGun.Equip(raycastWeaponTemp); //co the dung OK
+            StartCoroutine(DelayTimeToSpawnEquipGuns(0.5f, raycastWeaponTemp));
+            
         }
+    }
+    IEnumerator DelayTimeToSpawnEquipGuns(float time, RaycastWeapon raycastWeaponTemp) {
+        yield return new WaitForSeconds(time);
+
+        activeGun.Equip(raycastWeaponTemp);
     }
 
     private void SetPistolWeaponItem(Item weaponPistolItem) {
