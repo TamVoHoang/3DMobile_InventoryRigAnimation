@@ -6,9 +6,9 @@ public class HealthPickup : MonoBehaviour
 
     public float amount = 50f;
     private void OnTriggerEnter(Collider other) {
-        Health health = other.GetComponent<Health>();
-        AiHealth aiHealth = other.GetComponent<AiHealth>();
-        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
+        Health health = other.GetComponent<Health>();                   //co helath.cs
+        AiHealth aiHealth = other.GetComponent<AiHealth>();             //co aiHealth.cs Enemy cham vao
+        PlayerHealth playerHealth = other.GetComponent<PlayerHealth>(); // player cham vao
 
         if((health && aiHealth.IsLowHealth()) || playerHealth) {
             health.Heal(amount);

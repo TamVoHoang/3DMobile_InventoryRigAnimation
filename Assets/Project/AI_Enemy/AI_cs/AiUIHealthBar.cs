@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class AiUIHealthBar : MonoBehaviour
 {
+    // game object = enemy dat tren nguoi enemy de show health bar
     [SerializeField] private Transform target;
     [SerializeField] private Vector3 offset;
     [SerializeField] private Image backGroundImage;

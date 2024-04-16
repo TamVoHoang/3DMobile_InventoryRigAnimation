@@ -6,8 +6,9 @@ public class AmmoPickup : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         //tang dan cho player khi va cham. co the dung de khi use bang dan trong kho do
-        ActiveGun activeGun = other.GetComponent<ActiveGun>();
-        if(activeGun) {
+        ActiveGun activeGun = other.GetComponent<ActiveGun>();      //co activeGun.cs tren player
+        var weapon = activeGun.GetActiveWeapon();                  // lay weapon cua player
+        if(activeGun && weapon) {
             activeGun.RefillAmmo(clipAmount);
             Destroy(this.gameObject, 0.2f);
         }

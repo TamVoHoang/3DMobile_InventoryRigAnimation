@@ -30,7 +30,6 @@ public class ReloadWeapon : MonoBehaviour
 
             if (weapon.IsFiring &&ammoWidget) {
                 ammoWidget.Refresh(weapon.ammoCount, weapon.clipCount);
-
             } 
         }
         else {

@@ -2,12 +2,13 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    private AiUIHealthBar uiHealthBar;
     [SerializeField] private bool isDead = false;
-    public bool IsDead {get => isDead;}
     [SerializeField] private float maxHealth;
     [SerializeField] private float currentHealth;
+    private AiUIHealthBar uiHealthBar;
+    public bool IsDead {get => isDead;}
     private float lowHealth = 100f;
+    public float MaxHealth{get => maxHealth;}
     public float CurrentHealth{get => currentHealth;}
     public float LowHealth{get => lowHealth;}
     //private AiAgent aiAgent;//? ben ke thua se tu tao ra
