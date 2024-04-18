@@ -660,13 +660,14 @@ MonoBehaviour:
   - {fileID: 9211538458913255410}
   hiteffect: {fileID: 6259506207034361109}
   distance: 0
-  fireRate: 5
+  fireRate: 10
   accumulateTime: 0
-  ammoCount: 30
-  clipSize: 30
+  ammoCount: 20
+  clipSize: 20
+  clipCount: 2
   bulletSpeed: 500
   bulletDrop: 0
-  damage: 10
+  damage: 20
   magazine: {fileID: 423585392980484696}
   layerMask:
     serializedVersion: 2

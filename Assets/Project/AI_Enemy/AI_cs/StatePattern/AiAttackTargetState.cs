@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class AiAttackTargetState : AiState
@@ -12,7 +10,7 @@ public class AiAttackTargetState : AiState
         Debug.Log("Enter() attackState");
         agent.weapons.ActiveWeapon();                       //khi bat dau tan cong  thi active sung
 
-        //agent.weapons.SetTarget(agent.playerTransform);   //attack ma ko can phai ai sensor detect
+        ////agent.weapons.SetTarget(agent.playerTransform);   //attack ma ko can phai ai sensor detect
         
         agent.navMeshAgent.speed = agent.config.speed_Attack;
         agent.navMeshAgent.stoppingDistance = agent.config.stoppingDis_Attack;
@@ -21,13 +19,16 @@ public class AiAttackTargetState : AiState
 
     public void Update(AiAgent agent) {
         Debug.Log("Attack Update()");
+        if(agent.playerTransform.GetComponent<PlayerHealth>().IsDead) {
+            // agent.weapons.SetTarget(null);  //! set null target player | quan trong co trong DeActive()
+            // agent.weapons.DeActiveWeapon();
+            agent.stateMachine.ChangeState(AiStateID.Idle);
+            return;
+        }
 
         //? khi player die thi chuyen qua idleState
-        if(!agent.aiTargetingSystem.HasTarget)           // neu ko co target (player death)
-        {
-            agent.weapons.SetTarget(null);            //! set null target player | quan trong co trong DeActive()
-            agent.weapons.DeActiveWeapon();             // cat sung
-            agent.stateMachine.ChangeState(AiStateID.FindTarget);
+        if(!agent.aiTargetingSystem.HasTarget) {
+            agent.stateMachine.ChangeState(AiStateID.FindTarget); //!NEU CHO NHIEU AI ATTACK() THI DUNG DONG NAY => TIM AI KHAC TAN CONG
             return;
         }
         
@@ -36,15 +37,15 @@ public class AiAttackTargetState : AiState
         
         ReloadWeapon(agent);
         SelectWeapon(agent);
-        UpdateFiring(agent); //ban hay ko dua vai IsInsight() layerMask co Scan() duoc hay khong
-        UpdateLowhHealth(agent); // khi dang tan cong, neu heal < lowHealth thi di tim mau
+        UpdateFiring(agent);        //ban hay ko dua vai IsInsight() layerMask co Scan() duoc hay khong
+        UpdateLowhHealth(agent);    // khi dang tan cong, neu heal < lowHealth thi di tim mau
         UpdateLowAmmo(agent);
-    }
 
+        
+    }
 
     public void Exit(AiAgent agent) {
         Debug.Log("Exit() AttackState");
-        //agent.weapons.DeActiveWeapon(); //! them o day, thi khi dung qua gan, vua trang bi khong doi sung kip
         agent.navMeshAgent.stoppingDistance = 0.0f;
     }
 
@@ -88,8 +89,8 @@ public class AiAttackTargetState : AiState
             Debug.Log("Switch to best weapon = " + bestWeapon);
         }
         //CanAttackPlayer_Distance(agent, agent.config.canAttackDistance); //? chon best gun -> tan cong theo vector3.Distance
-
     }
+    
     private AiWeapons.WeaponSlot ChooseWeapon(AiAgent agent) {
         float distance = agent.aiTargetingSystem.TargetDistance;
         if(distance > agent.config.changeBestWeapon_Range) {
@@ -99,16 +100,15 @@ public class AiAttackTargetState : AiState
             return AiWeapons.WeaponSlot.Secondary; // sung ngan under 7
         }
     }
-
+    
     private void UpdateLowhHealth(AiAgent agent) {
         if(agent.health.IsLowHealth()) {
             agent.stateMachine.ChangeState(AiStateID.FindHealth);
         }
     }
-
-    private void UpdateLowAmmo(AiAgent agent)
-    {
-        if(agent.weapons.IsLowAmmo()) {
+    
+    private void UpdateLowAmmo(AiAgent agent) {
+        if(agent.weapons.IsLowAmmo_AiWeapon()) {
             agent.stateMachine.ChangeState(AiStateID.FindAmmo);
         }
     }

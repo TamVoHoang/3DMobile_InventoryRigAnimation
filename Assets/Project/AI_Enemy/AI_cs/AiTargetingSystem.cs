@@ -14,7 +14,7 @@ public class AiTargetingSystem : MonoBehaviour
     public bool TargetInSight { get => bestMemory.Age < 0.5f;}
     public float TargetDistance { get => bestMemory.distance;}
 
-    AiSensorMemory memory = new AiSensorMemory(10);
+    AiSensorMemory memory = new AiSensorMemory(20);
     AiSensor sensor;
     AiMemory bestMemory;
 

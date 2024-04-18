@@ -67,8 +67,10 @@ public class AiAgent : MonoBehaviour
     //     return Vector3.Distance(playerTransform.position, this.transform.position);
     // }
 
-    public void DelayTimeCountine(float time) =>StartCoroutine(DelayTime(time));
+    public void DelayTimeCountine_Agent(float time) =>StartCoroutine(DelayTime(time));
     IEnumerator DelayTime(float time) {
         yield return new WaitForSeconds(time);
     }
+
+    
 }

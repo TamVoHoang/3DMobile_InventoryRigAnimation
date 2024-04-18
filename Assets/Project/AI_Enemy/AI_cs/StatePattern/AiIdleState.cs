@@ -7,11 +7,15 @@ public class AiIdleState : AiState
     }
 
     public void Enter(AiAgent agent) {
-
+        
     }
 
     public void Update(AiAgent agent) {
-        if(agent.playerTransform.GetComponent<PlayerHealth>().IsDead) return; // layer die
+        if(agent.playerTransform.GetComponent<PlayerHealth>().IsDead) {
+            agent.weapons.SetTarget(null);  //! set null target player | quan trong co trong DeActive()
+            agent.weapons.DeActiveWeapon();
+            return;
+        }
 
         Vector3 playerDirection = agent.playerTransform.position - agent.transform.position;
         if(playerDirection.magnitude > agent.config.maxSightDistance) {

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AmmoPickup : MonoBehaviour
 {
-    public int clipAmount = 2;
+    public int clipAmount = 1;
 
     private void OnTriggerEnter(Collider other) {
         //tang dan cho player khi va cham. co the dung de khi use bang dan trong kho do
@@ -15,8 +15,8 @@ public class AmmoPickup : MonoBehaviour
 
         // tang dan cho ai agen
         AiWeapons aiWeapons = other.GetComponent<AiWeapons>();
-        if (aiWeapons && aiWeapons.IsLowAmmo()) {
-            aiWeapons.RefillAmmo(clipAmount);
+        if (aiWeapons && aiWeapons.IsLowAmmo_AiWeapon()) {
+            aiWeapons.RefillAmmo_AiWeapon(clipAmount);
             Destroy(this.gameObject, 0.2f);
         }
     }

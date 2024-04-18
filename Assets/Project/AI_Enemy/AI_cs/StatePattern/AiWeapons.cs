@@ -12,8 +12,7 @@ public class AiWeapons : MonoBehaviour
         Reloading
     }
 
-    public enum WeaponSlot
-    {
+    public enum WeaponSlot {
         Primary,
         Secondary
     }
@@ -35,6 +34,7 @@ public class AiWeapons : MonoBehaviour
             return weapons[current];
         }
     }
+
     public WeaponSlot currentWeaponSlot {
         get { return (WeaponSlot)current; }
     }
@@ -43,12 +43,10 @@ public class AiWeapons : MonoBehaviour
     private Animator animator;
     private MeshSockets sockets;
     private WeaponIK weaponIK;
-    [SerializeField] private Transform currentTarget;
-    
+    [SerializeField] private Transform currentTarget;    
     [SerializeField] private float inAccuracy = 0.5f;
     [SerializeField] private float waitingTimeEquipWeapon = 0.5f;
 
-    //reloading attach drop mag
     private GameObject magHand;
     [SerializeField] private float dropFroce = 1.5f;
     
@@ -70,13 +68,11 @@ public class AiWeapons : MonoBehaviour
         } */
 
         //! testing
-        
         if(currentWeapon && currentTarget) {
             weaponIK.SetTargetOffset_Aim(currentWeapon.TargetOffset_AImWeaponIK);
             Vector3 target = currentTarget.position + weaponIK.TargetOffset;
             target += Random.insideUnitSphere * inAccuracy;
 
-            //if(IsActive()) currentWeapon.StartFiring(); //? OK ban ngay lap tuc
             if(!IsActive() || IsReloading()) currentWeapon.StopFiring();
 
             currentWeapon.UpdateWeapon(Time.deltaTime, target);//ok
@@ -93,7 +89,6 @@ public class AiWeapons : MonoBehaviour
     public bool HasWeapon() {
         return currentWeapon != null;
     }
-
     public void SetTarget(Transform target) {
         weaponIK.SetTargetTranform(target);
         currentTarget = target;
@@ -115,6 +110,8 @@ public class AiWeapons : MonoBehaviour
     public void ActiveWeapon() {
         StartCoroutine(EquipWeaponAnimation());
     }
+
+    public void HolsterWeapon_FindAmmo() => StartCoroutine(HolsterWeaponAnimation());
 
     public void DeActiveWeapon() {
         SetTarget(null);
@@ -151,7 +148,6 @@ public class AiWeapons : MonoBehaviour
         }
         return count;
     }
-
     IEnumerator EquipWeaponAnimation() {
         weaponState = WeaponState.Activating;
 
@@ -217,7 +213,6 @@ public class AiWeapons : MonoBehaviour
             weapons[current] = null;
         }
     }
-
     // chen su kien tai day vao animation equip
     public void OnAnimationEvent(string eventName) {
         switch (eventName) {
@@ -297,22 +292,19 @@ public class AiWeapons : MonoBehaviour
         weapon.RefillAmmo(); // nap dan
         animator.ResetTrigger("Reload_Weapon");
     }
-
-    public void RefillAmmo(int clipCount) {
+    public void RefillAmmo_AiWeapon(int clipCount) {
         var weapon = currentWeapon;
         if(weapon) {
             weapon.clipCount += clipCount;
         }
     }
-
-    public bool IsLowAmmo() {
+    public bool IsLowAmmo_AiWeapon() {
         var weapon = currentWeapon;
         if(weapon) {
             return weapon.IsLowAmmo();
         }
         return false;
     }
-
     
     //todo
 }

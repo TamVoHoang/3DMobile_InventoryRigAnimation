@@ -12,7 +12,6 @@ public class AiFindTargetState : AiState
     }
     public void Update(AiAgent agent) {
         //? WANDER
-        //Debug.Log(agent.navMeshAgent.hasPath);
         if(!agent.navMeshAgent.hasPath) {
             Debug.Log("Dang generate min max AiFindWeapon State");
             WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();

@@ -33,25 +33,26 @@ public class RaycastWeapon : MonoBehaviour
 
     [Header("FIRE RATE")]
     private bool isFiring = false;
-    public float fireRate = 25f; // bullets per seconds
-    public float accumulateTime; // chi duoc ban khi accumulate >=0
+    public float fireRate = 25f;    // bullets per seconds
+    public float accumulateTime;    // chi duoc ban khi accumulate >=0
 
     [Header("AMOUNTCOUNT")]
     public int ammoCount = 30;
     public int clipSize = 30;
-    public int clipCount =2;// 2 lan thay dan
+    public int clipCount = 1;// 2 lan thay dan
 
     [Header("PHYSICAL BULLET")]
     public float bulletSpeed = 1000.0f;
-    [SerializeField] private float bulletDrop = 0.0f; // bao xa bullet se roi xuong
-    List<Bullet> Bullets = new List<Bullet>(); // list add vien dan KHI FIRE
-    private float maxLifeTime = 0.05f; //todo 5
-    [SerializeField] private float damage = 10.0f; // damage of sung
+    [SerializeField] private float bulletDrop = 0.0f;       // bao xa bullet se roi xuong
+    private List<Bullet> Bullets = new List<Bullet>();      //list add vien dan KHI FIRE
+    public int bulletCount => Bullets.Count;
+    private float maxLifeTime = 0.05f;                       //todo 5
+    [SerializeField] private float damage = 10.0f;          // damage of sung
     public float Damage { get => damage; private set => damage = value; }
     
     [Header("           RELOAD")]
     public GameObject magazine;
-    [SerializeField] LayerMask layerMask; //todo loai layerMash ma cay sung se ban trung
+    [SerializeField] LayerMask layerMask;                   //todo loai layerMash ma cay sung se ban trung
 
     public RuntimeAnimatorController runtimeAnimatorController;
     [SerializeField] private Vector3 targetOffset_AimWeaponIK;
@@ -60,7 +61,8 @@ public class RaycastWeapon : MonoBehaviour
         
     }
     private Vector3 GetPosition(Bullet bullet)  //simualateBullet goi
-                                                // TINH VI TRI VIEN DAN THEO time = 0 va time = time.deltaTime tu simulateBullet // s1= s0 + vt + 1/2gt*t
+                                                // TINH VI TRI VIEN DAN THEO time = 0 va time = time.deltaTime tu simulateBullet 
+                                                // s1= s0 + vt + 1/2gt*t
     {
         Vector3 gravity = Vector3.down * bulletDrop;
         return (bullet.initialPos) + (bullet.initialVelocity * bullet.time) + (0.5f * gravity * bullet.time * bullet.time);
@@ -82,8 +84,9 @@ public class RaycastWeapon : MonoBehaviour
 
     //? ActiveGun.cs || coll 68 Update() call this function
     public void UpdateWeapon(float deltaTime, Vector3 target) {
-        if (isFiring) UpdateFiring(deltaTime, target);
+        if (isFiring) UpdateFiring(target);
         accumulateTime += deltaTime;
+
         UpdateBullet(deltaTime);
     }
 
@@ -133,7 +136,7 @@ public class RaycastWeapon : MonoBehaviour
         clipCount --; // giam so luong bang dan
     }
 
-    public void UpdateFiring(float deltaTime, Vector3 target) // dang dc goi tu folder player (characterAimming class)
+    public void UpdateFiring(Vector3 target) // dang dc goi tu folder player (characterAimming class)
     {
         float fireInterval = 1.0f / fireRate; // 1 vien = 1/25s
         while (accumulateTime >= 0.0f) // time.deltaTime la hang so, neu fireRate >> thi vong lap while se chay nhiu lan
@@ -152,22 +155,23 @@ public class RaycastWeapon : MonoBehaviour
 
             Vector3 p1 = GetPosition(bullet);   //  toa do p1 sau khi time cua vien tang len. (chinh la time nhan tu time.deltaTime ben AimSatateMnaager goi qua)
             RaycastSegment(p0, p1, bullet);
-
-        });
+        }); 
     }
     private void DestroyBullets() => Bullets.RemoveAll(bullet => bullet.time >= maxLifeTime); //!updateBullet goi
     private void DesTroyBulletTracer() {
         foreach (var bulletTracer in Bullets)
         {
-            if(bulletTracer.time >= maxLifeTime) Destroy(bulletTracer.tracer);
+            if(bulletTracer.time >= maxLifeTime){
+
+                Destroy(bulletTracer.tracer);
+            } 
         }
     }
     public void UpdateBullet(float deltaTime) //updateWeapon() goi => (simulate + destroy)
     {
-        SimulateBullets(deltaTime);
-
-        DestroyBullets();       //destroy bullets trong list Bullets
-        DesTroyBulletTracer();  // destory bullet.Tracer
+            SimulateBullets(deltaTime);
+            DestroyBullets();       //destroy bullets trong list Bullets
+            DesTroyBulletTracer();  // destory bullet.Tracer
     }
     private void RaycastSegment(Vector3 start, Vector3 end, Bullet bullet) // updateBullet goi
                                                                    // chia theo tung doan nho p0 - p1 theo tiem moi frame

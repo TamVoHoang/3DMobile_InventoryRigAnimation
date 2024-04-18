@@ -1,24 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AiFindAmmoState : AiState
 {
     private GameObject pickup;
-    private GameObject[] pickups = new GameObject[3];
+    private GameObject[] pickups = new GameObject[10];
     public AiStateID GetId()
     {
         return AiStateID.FindAmmo;
     }
 
     public void Enter(AiAgent agent) {
-        agent.weapons.DeActiveWeapon(); //? cat sung bo chay tim mau
+        agent.weapons.HolsterWeapon_FindAmmo(); //cat sung tam thoi di tim ammo pickup
         pickup = null;
         agent.navMeshAgent.speed = agent.config.speed_FindWeapon;
         agent.navMeshAgent.stoppingDistance = agent.config.stoppingDis_FindWeapon;
     }
     public void Update(AiAgent agent) {
         Debug.Log("Update() AiFindHealth State");
+
         //? OPTION FIND PICKUPS
         if(!pickup) {
             pickup = FindPickup(agent);
@@ -35,12 +34,14 @@ public class AiFindAmmoState : AiState
         {
             Debug.Log("RandomPosition() AiFindWeapon State");
             WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
-
             agent.navMeshAgent.destination = worldBounds.RandomPosition();
         }
 
         //? dieu kien chuyen state
-        if(!agent.weapons.IsLowAmmo()) agent.stateMachine.ChangeState(AiStateID.FindTarget);
+        if(!agent.weapons.IsLowAmmo_AiWeapon())// clip > 0 && ammo = 0
+        { 
+            agent.stateMachine.ChangeState(AiStateID.FindTarget);
+        }
     }
 
     public void Exit(AiAgent agent) {
@@ -70,5 +71,6 @@ public class AiFindAmmoState : AiState
         Debug.Log("Dang collect min max AiFindHealth State");
         aiAgent.navMeshAgent.destination = pickup.transform.position;
     }
+
     //todo
 }
