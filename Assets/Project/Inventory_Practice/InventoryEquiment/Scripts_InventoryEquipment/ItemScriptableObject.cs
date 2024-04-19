@@ -15,6 +15,10 @@ public class ItemScriptableObject : ScriptableObject
     [Header("Gun")]
     public RaycastWeapon gunPrefabRaycast; // Gun Prefab with RaycastWeapon.cs
     public int clipAmount;
+
+    [Header("Healh")]
+    public int healthAmout;
+
     [Header("Sword")]
     public HandSwordWeapon handSwordPrefab; // HandSword Prefab with HandSwordWeapon.cs
 

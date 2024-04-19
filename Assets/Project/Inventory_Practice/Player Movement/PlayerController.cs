@@ -13,6 +13,7 @@ public class PlayerController : Singleton<PlayerController>
     [SerializeField] Inventory inventory_scroll;
     [SerializeField] UI_Inventory ui_Inventory; // dung de goi ham SetInventoy()
     private ActiveGun activeGun;
+    private Health playerHealth;
     
     protected override void Awake() {
         base.Awake();
@@ -22,6 +23,7 @@ public class PlayerController : Singleton<PlayerController>
         inventoryEquipment = new Inventory(UseItemEquipment, itemSlotAmount);   // inventoryEquipment - nhung thu !istackable
         //ui_Inventory.SetPlayerPos(this); // uiInventory lay vi tri player //todo-> tesing.cs chy ham nay
         activeGun = GetComponent<ActiveGun>();
+        playerHealth = GetComponent<PlayerHealth>();
     }
     private void Start() {
 
@@ -89,13 +91,20 @@ public class PlayerController : Singleton<PlayerController>
             case Item.ItemType.IMagPistol3D_01:
             {
                 Debug.Log("su dung IMagPistol3D_01");
-                var weapon = activeGun.GetActiveWeapon();
+                var weapon = activeGun.GetActiveWeapon(); // phai co sung tren tay thi moi su dung
                 if(activeGun && weapon) {
                     activeGun.RefillAmmo(item.itemScriptableObject.clipAmount);
                     inventory.RemoveItem(new Item {itemScriptableObject = item.itemScriptableObject, amount = 1});
                 }
-                
-                
+                break;
+            }
+            case Item.ItemType.IHealthPickup3D_01:
+            {
+                Debug.Log("su dung IHealthPickupPrefab3D_01");
+                if(playerHealth && playerHealth.IsLowHealth()) {
+                    playerHealth.Heal(item.itemScriptableObject.healthAmout);
+                    inventory.RemoveItem(new Item {itemScriptableObject = item.itemScriptableObject, amount = 1});
+                }
                 break;
             }
         }

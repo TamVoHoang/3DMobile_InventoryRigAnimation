@@ -42,6 +42,7 @@ public class ItemAssets : MonoBehaviour
     public Sprite ISword_Sprite3D_Green02; //? ISword green
 
     public Sprite IMagPistol3D_01; //? IMag pistol
+    public Sprite IHealthPickup3D_01; //? IHealthPickup
 
 
 
@@ -65,7 +66,8 @@ public class ItemAssets : MonoBehaviour
     public GameObject ISword_Prefab3D_Red01; //? IWeapon
     public GameObject ISword_Prefab3D_Green02; //? IWeapon
     
-    public GameObject IMagPistolPrefab3D_01; //? IWeapon
+    public GameObject IMagPistolPrefab3D_01;
+    public GameObject IHealthPickupPrefab3D_01;
 
 
     //todo

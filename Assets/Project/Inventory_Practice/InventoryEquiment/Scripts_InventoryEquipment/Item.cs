@@ -34,7 +34,8 @@ public class Item
         IHand, //todo IWeapon
         ISword_Red_01,
         ISword_Green_02,
-        IMagPistol3D_01
+        IMagPistol3D_01,
+        IHealthPickup3D_01
     }
 
     //public ItemType itemType;
@@ -90,35 +91,36 @@ public class Item
     public static Sprite GetSprite(ItemType itemType) {
         switch (itemType) {
         default:
-        case ItemType.Sword_01:         return ItemAssets.Instance.swordSprite_01;
-        case ItemType.Sword_02:         return ItemAssets.Instance.swordSprite_02;
-        case ItemType.Sword_broken:     return ItemAssets.Instance.swordSprite_broken;
-        case ItemType.Sword_iron:       return ItemAssets.Instance.swordSprite_iron;
-        case ItemType.Sword_gold:       return ItemAssets.Instance.swordSprite_gold;
+        case ItemType.Sword_01:             return ItemAssets.Instance.swordSprite_01;
+        case ItemType.Sword_02:             return ItemAssets.Instance.swordSprite_02;
+        case ItemType.Sword_broken:         return ItemAssets.Instance.swordSprite_broken;
+        case ItemType.Sword_iron:           return ItemAssets.Instance.swordSprite_iron;
+        case ItemType.Sword_gold:           return ItemAssets.Instance.swordSprite_gold;
 
 
-        case ItemType.Helmet_01:        return ItemAssets.Instance.helmetSprite_01;
-        case ItemType.Armor_01:         return ItemAssets.Instance.armorSprite_01;
-        case ItemType.Armor_02:         return ItemAssets.Instance.armorSprite_02;
+        case ItemType.Helmet_01:            return ItemAssets.Instance.helmetSprite_01;
+        case ItemType.Armor_01:             return ItemAssets.Instance.armorSprite_01;
+        case ItemType.Armor_02:             return ItemAssets.Instance.armorSprite_02;
 
 
-        case ItemType.HealthPotion:     return ItemAssets.Instance.healthPotionSprite;
-        case ItemType.ManaPotion:       return ItemAssets.Instance.manaPotionSprite;
-        case ItemType.Coin:             return ItemAssets.Instance.coinSprite;
-        case ItemType.Medkit:           return ItemAssets.Instance.medkitSprite;
+        case ItemType.HealthPotion:         return ItemAssets.Instance.healthPotionSprite;
+        case ItemType.ManaPotion:           return ItemAssets.Instance.manaPotionSprite;
+        case ItemType.Coin:                 return ItemAssets.Instance.coinSprite;
+        case ItemType.Medkit:               return ItemAssets.Instance.medkitSprite;
 
-        case ItemType.Iron:             return ItemAssets.Instance.iron;
-        case ItemType.Gold:             return ItemAssets.Instance.gold;
+        case ItemType.Iron:                 return ItemAssets.Instance.iron;
+        case ItemType.Gold:                 return ItemAssets.Instance.gold;
 
-        case ItemType.Sword3D_01:       return ItemAssets.Instance.swordSprite3D_01;
-        case ItemType.GunSMG3D_01:      return ItemAssets.Instance.gunSMGSprite3D_01;
-        case ItemType.GunPistol3D_01:   return ItemAssets.Instance.gunPistolSprite3D_01;
+        case ItemType.Sword3D_01:           return ItemAssets.Instance.swordSprite3D_01;
+        case ItemType.GunSMG3D_01:          return ItemAssets.Instance.gunSMGSprite3D_01;
+        case ItemType.GunPistol3D_01:       return ItemAssets.Instance.gunPistolSprite3D_01;
 
-        case ItemType.IHand:            return ItemAssets.Instance.IHandSprite3D; //todo IWeapon
-        case ItemType.ISword_Red_01:           return ItemAssets.Instance.ISword_Sprite3D_Red01; //todo IWeapon
-        case ItemType.ISword_Green_02:           return ItemAssets.Instance.ISword_Sprite3D_Green02; //todo IWeapon
+        case ItemType.IHand:                return ItemAssets.Instance.IHandSprite3D; //todo IWeapon
+        case ItemType.ISword_Red_01:        return ItemAssets.Instance.ISword_Sprite3D_Red01; //todo IWeapon
+        case ItemType.ISword_Green_02:      return ItemAssets.Instance.ISword_Sprite3D_Green02; //todo IWeapon
 
-        case ItemType.IMagPistol3D_01:  return ItemAssets.Instance.IMagPistol3D_01; //todo IWeapon
+        case ItemType.IMagPistol3D_01:      return ItemAssets.Instance.IMagPistol3D_01; //todo IWeapon
+        case ItemType.IHealthPickup3D_01:   return ItemAssets.Instance.IHealthPickup3D_01; //todo IWeapon
 
 
         
@@ -175,7 +177,7 @@ public class Item
             case ItemType.ISword_Red_01:    return ItemAssets.Instance.ISword_Prefab3D_Red01;   //todo IWeapon
             case ItemType.ISword_Green_02:  return ItemAssets.Instance.ISword_Prefab3D_Green02; //todo IWeapon
             case ItemType.IMagPistol3D_01:  return ItemAssets.Instance.IMagPistolPrefab3D_01;   //todo IWeapon
-
+            case ItemType.IHealthPickup3D_01: return ItemAssets.Instance.IHealthPickupPrefab3D_01; //todo IWeapon
 
 
         }
@@ -198,6 +200,7 @@ public class Item
         case ItemType.Gold:
 
         case ItemType.IMagPistol3D_01:
+        case ItemType.IHealthPickup3D_01:
             return true;
 
         case ItemType.Sword_01:

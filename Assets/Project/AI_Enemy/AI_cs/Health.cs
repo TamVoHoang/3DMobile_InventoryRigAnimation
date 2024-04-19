@@ -7,10 +7,9 @@ public class Health : MonoBehaviour
     [SerializeField] private float currentHealth;
     private AiUIHealthBar uiHealthBar;
     public bool IsDead {get => isDead;}
-    private float lowHealth = 100f;
+    protected float lowHealth = 100f;   // player.obj override loewHealth coll 19 PlayerHealth.cs
     public float MaxHealth{get => maxHealth;}
     public float CurrentHealth{get => currentHealth;}
-    public float LowHealth{get => lowHealth;}
     //private AiAgent aiAgent;//? ben ke thua se tu tao ra
     
 /*     //testing Layer at animator override

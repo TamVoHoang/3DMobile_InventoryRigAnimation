@@ -16,6 +16,7 @@ public class PlayerHealth : Health
     Slider sliderHealth;
     TMPro.TMP_Text healthText;
     protected override void OnStart() {
+        lowHealth = MaxHealth/2f; //? xet rieng lowHealth cho player
         aiRagdoll = GetComponent<AiRagdoll>();
         activeGun = GetComponent<ActiveGun>();
         characterAim = GetComponent<ChracterAim>();
@@ -41,7 +42,10 @@ public class PlayerHealth : Health
     }
 
     protected override void OnHeal(float amount) {
-        
+        // Heal(amount) coll 48 Health.cs - co virtual - ovverride tai this.cs
+        // co the dung de thay doi hieu ung tai day
+        // cap nhat thanh mau tai day
+        UpdateSliderHealth();
     }
 
     private void Update_Virtual() {
