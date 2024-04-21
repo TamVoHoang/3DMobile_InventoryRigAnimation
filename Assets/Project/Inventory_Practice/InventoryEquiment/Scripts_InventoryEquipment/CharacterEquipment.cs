@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterEquipment : MonoBehaviour,IItemHolder
@@ -38,6 +39,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
     private ActiveGun activeGun;
     private ActiveSword activeSword;
     private ActiveWeapon activeWeapon;
+    private PlayerHealth playerHealth;
 
 
     [SerializeField] private RaycastWeapon gunPrefabRifleTemp_Raycast; //! testing
@@ -50,6 +52,14 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
     public HandSwordWeapon GetPrefab_SwordTemp {get{return swordPrefabTemp_HandSword;}}
     public GameObject GetI_SwordPrefabTemp {get{return I_SwordPrefabTemp;}}
 
+    //TODO TEST LOAT BO VU KHI RA KHOI PLAYER KHI DEATH
+    public void RemoveItemOutWorld_CharacterEquipment(Item item) {
+        Item duplicateItem = new Item { itemScriptableObject = item.itemScriptableObject, amount = item.amount};
+            item.GetItemHolder().RemoveItemEquipment(item);
+            ItemWorld3D.DropItem(PlayerController.Instance.GetPosition(),duplicateItem);
+    }
+
+    //TODO TEST LOAT BO VU KHI RA KHOI PLAYER KHI DEATH
 
     private void Awake() {
         activeGun = GetComponent<ActiveGun>();
@@ -57,6 +67,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
         activeWeapon = GetComponent<ActiveWeapon>();
         activeArmorSpawnPoint = transform.Find("ActiveArmor");
         activeHelmetSpawnPoint = transform.Find("ActiveHelmet");
+        playerHealth = GetComponent<PlayerHealth>();
     }
 
     private void Update() {
@@ -65,6 +76,17 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
         //     swordPrefabTemp_HandSword.transform.SetParent(swordHolster_Point, false);
         //     swordPrefabTemp_HandSword.transform.SetParent(swordHolster_Point, true);
         // }
+
+        //todo khi player die thi goi ham de out item khoi nguoi
+        if(playerHealth.IsDead) {
+            if(weaponItem != null) RemoveItemOutWorld_CharacterEquipment(weaponItem);
+            if(weaponPistolItem != null) RemoveItemOutWorld_CharacterEquipment(weaponPistolItem);
+            if(weaponSwordItem != null) RemoveItemOutWorld_CharacterEquipment(weaponSwordItem);
+            if(helmetItem != null) RemoveItemOutWorld_CharacterEquipment(helmetItem);
+            if(armorItem != null) RemoveItemOutWorld_CharacterEquipment(armorItem);
+
+            
+        }
     }
 
 
@@ -284,6 +306,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
         this.helmetItem = helmetItem;
         if (helmetItem != null) {
             helmetItem.SetItemHolder(this);
+
         }
 
         OnEquipmentChanged?.Invoke(this, EventArgs.Empty);
@@ -379,5 +402,5 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
 
 #endregion interface IItemHolder
 
-    //todo 
+    //todo
 }
