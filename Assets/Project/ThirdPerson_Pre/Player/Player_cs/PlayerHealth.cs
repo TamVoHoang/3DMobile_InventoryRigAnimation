@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,6 +36,8 @@ public class PlayerHealth : Health
         characterAim.enabled = false;       //tat chatacterAim.cs
         playerMovement.enabled = false;     //tat khong cho player move
 
+        Debug.Log("Player is lying on the ground");
+        StartCoroutine(DelayTimeToRespawnPlayer(5f));
     }
     protected override void OnDamage(Vector3 direction) {
         Update_Virtual();                   // hieu ung man hinh khi get damage || animation get damage.
@@ -63,5 +66,20 @@ public class PlayerHealth : Health
         sliderHealth.maxValue = MaxHealth;
         sliderHealth.value = CurrentHealth;
         healthText.text = CurrentHealth.ToString();
+    }
+
+    // lam cho player song lai
+    private void RespawnPlayer() {
+        Debug.Log("Respawn player");
+        SetPlayerAlive();
+        UpdateSliderHealth();
+        aiRagdoll.DeactiveRag();
+        cameraManager.DeActiveDeathCam();
+        characterAim.enabled = true;
+        playerMovement.enabled = true;
+    }
+    IEnumerator DelayTimeToRespawnPlayer(float time) {
+        yield return new WaitForSeconds(time);
+        RespawnPlayer();
     }
 }

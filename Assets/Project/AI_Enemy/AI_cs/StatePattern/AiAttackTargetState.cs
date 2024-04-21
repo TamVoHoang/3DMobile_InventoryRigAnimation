@@ -20,13 +20,20 @@ public class AiAttackTargetState : AiState
     public void Update(AiAgent agent) {
         Debug.Log("Attack Update()");
         if(agent.playerTransform.GetComponent<PlayerHealth>().IsDead) {
-            // agent.weapons.SetTarget(null);  //! set null target player | quan trong co trong DeActive()
-            // agent.weapons.DeActiveWeapon();
-            agent.stateMachine.ChangeState(AiStateID.Idle);
+            //! set null target player | quan trong co trong DeActive() => co the xet ben update() IdleState.
+            /* agent.weapons.SetTarget(null);  
+            agent.weapons.DeActiveWeapon(); */
+
+            //? neu player die va ko respawn - co the dung tai day
+            //agent.stateMachine.ChangeState(AiStateID.Idle);
+
+            //? neu player die - song lai - thi dung dong nay
+            agent.stateMachine.ChangeState(AiStateID.FindTarget);
             return;
         }
 
-        //? khi player die thi chuyen qua idleState
+        //? ko co target la khi mat muc tieu trong vung sensor detect tai luc Update() AttackState - tai day
+        //? khi muc tieu dot ngot mat khoi vung sensor ai detet, no se chuyen trang thai tim muc tieu
         if(!agent.aiTargetingSystem.HasTarget) {
             agent.stateMachine.ChangeState(AiStateID.FindTarget); //!NEU CHO NHIEU AI ATTACK() THI DUNG DONG NAY => TIM AI KHAC TAN CONG
             return;

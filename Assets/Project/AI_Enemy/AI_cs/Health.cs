@@ -80,6 +80,12 @@ public class Health : MonoBehaviour
         OnDeath(direction);
     }
 
+    public float SetCurrentHealth() => currentHealth = maxHealth;
+    public void SetPlayerAlive() {
+        this.currentHealth = maxHealth;
+        this.isDead = false;
+    }
+
     protected virtual void OnStart() {
 
     }

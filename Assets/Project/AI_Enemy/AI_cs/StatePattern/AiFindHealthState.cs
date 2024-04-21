@@ -9,8 +9,8 @@ public class AiFindHealthState : AiState
     }
 
     public void Enter(AiAgent agent) {
-        //agent.weapons.DeActiveWeapon(); //? cat sung bo chay tim mau
-        agent.weapons.HolsterWeapon_FindAmmo(); //cat sung tam thoi di tim ammo pickup
+        //agent.weapons.DeActiveWeapon(); //! deactive() la cat sung + xoa muc tieu => se lam bullet simulate bi loi
+        agent.weapons.HolsterWeapon_FindAmmo(); //?cat sung tam thoi di tim ammo pickup
         pickup = null;
         agent.navMeshAgent.speed = agent.config.speed_FindWeapon;
         agent.navMeshAgent.stoppingDistance = agent.config.stoppingDis_FindWeapon;

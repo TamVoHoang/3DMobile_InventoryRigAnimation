@@ -6,4 +6,6 @@ public class CameraManager : MonoBehaviour
     public void ActiveDeathCam() {
         deathCam.Priority = 30;
     }
+
+    public void DeActiveDeathCam() => deathCam.Priority = 10;
 }

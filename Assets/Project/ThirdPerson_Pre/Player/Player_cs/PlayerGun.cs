@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class PlayerGun : Singleton<PlayerGun>
 {
     [SerializeField] private Image sprintingImage;
