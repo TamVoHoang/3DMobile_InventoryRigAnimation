@@ -33270,7 +33270,7 @@ Transform:
   m_GameObject: {fileID: 6652036800560184306}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.82, y: 1.66, z: -2.3899994}
+  m_LocalPosition: {x: 0.8200002, y: 1.66, z: -2.3899994}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -35666,6 +35666,7 @@ MonoBehaviour:
   isDead: 0
   maxHealth: 150
   currentHealth: 0
+  delayTimeToDestroy: 5
 --- !u!114 &4564245911227105680
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35805,10 +35806,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   distance: 20
-  angle: 45
+  angle: 60
   height: 1.8
   detectBottom: {x: 0, y: -0.1, z: 0}
-  meshColor: {r: 0.81879896, g: 1, b: 0.6556604, a: 0.13725491}
+  meshColor: {r: 0.81879896, g: 1, b: 0.6556604, a: 0.11764706}
   detectColor: {r: 0, g: 1, b: 0, a: 0.39215687}
   scanFrequency: 30
   layers:

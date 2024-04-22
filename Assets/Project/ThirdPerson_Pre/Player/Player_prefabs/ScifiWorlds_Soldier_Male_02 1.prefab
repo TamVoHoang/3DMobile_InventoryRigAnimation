@@ -52645,8 +52645,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
-  maxHealth: 100
+  maxHealth: 200
   currentHealth: 0
+  delayTimeToRespawn: 5
+  delayTimeToReadyGetDamage: 3
 --- !u!114 &5804979155748931068
 MonoBehaviour:
   m_ObjectHideFlags: 0

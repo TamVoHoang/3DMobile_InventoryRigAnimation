@@ -101,6 +101,7 @@ public class ActiveGun : Singleton<ActiveGun>
         ammoWidget.Refresh(weapon.ammoCount, weapon.clipCount);
     }
     #region HOLSTER AND SWITCHING GUN
+    public void HolsterGunsBeforeDeath() => rigAnimator.SetBool("holster_weapon", true);
     public void ToggleActiveWeapon()
     {
         isChangingGun = true; // dang thay sung

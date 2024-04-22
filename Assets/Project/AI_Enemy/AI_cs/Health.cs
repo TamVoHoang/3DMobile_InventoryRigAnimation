@@ -2,15 +2,19 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
+    
     [SerializeField] private bool isDead = false;
     [SerializeField] private float maxHealth;
     [SerializeField] private float currentHealth;
-    private AiUIHealthBar uiHealthBar;
+    //private AiUIHealthBar uiHealthBar; // thanh mau cua Ai agen dat tai day
+
+    protected bool isReadyToTakeDamage = false; //todo bien se true sau khoang time de - mau
+    protected float lowHealthLimit;   // player.obj override loewHealth coll 19 PlayerHealth.cs
+
     public bool IsDead {get => isDead;}
-    protected float lowHealth = 100f;   // player.obj override loewHealth coll 19 PlayerHealth.cs
     public float MaxHealth{get => maxHealth;}
     public float CurrentHealth{get => currentHealth;}
-    //private AiAgent aiAgent;//? ben ke thua se tu tao ra
+    public bool IsReadyToTakeDamage{get => isReadyToTakeDamage;}
     
 /*     //testing Layer at animator override
     [SerializeField] private AvatarMask baseMask;
@@ -27,8 +31,8 @@ public class Health : MonoBehaviour
     void Start() {
         //SetLayerBegin(); //set gia tri weaponMask(chi co phan tren cho weapon Layer[1])
         Debug.Log("Health.cs run");
-        uiHealthBar = GetComponentInChildren<AiUIHealthBar>();
         currentHealth = maxHealth;
+        //uiHealthBar = GetComponentInChildren<AiUIHealthBar>();
         //aiAgent = GetComponent<AiAgent>(); //? ke thua tu tao ra
         var rigidBodies = GetComponentsInChildren<Rigidbody>();
         foreach (var rigidbody in rigidBodies) {
@@ -40,18 +44,19 @@ public class Health : MonoBehaviour
                 hitBox.gameObject.layer = LayerMask.NameToLayer("Hitbox");
             }
         }
+        
         OnStart();
     }
 
     //?tang mau
-    public void Heal(float amount)
-    {
+    public void Heal(float amount) {
         currentHealth += amount;
         currentHealth = Mathf.Min(currentHealth, maxHealth);    // dam vao may chi nam trong khoang
 
-        if(uiHealthBar) {
+        //OK co the dung cho ai tai day
+        /* if(uiHealthBar) {
             uiHealthBar.SetHealthBarEnemyPercent((float)currentHealth / maxHealth);
-        }
+        } */
 
         OnHeal(amount);
 
@@ -59,20 +64,23 @@ public class Health : MonoBehaviour
 
     //? hitbox.cs call TakeDamage()
     public void TakeDamage(float amount, Vector3 direction) {
-        currentHealth -= amount;
-        if(uiHealthBar) {
-            uiHealthBar.SetHealthBarEnemyPercent((float)currentHealth / maxHealth);
-        }
+        if(currentHealth >= 0) currentHealth -= amount;
 
-        OnDamage(direction); // tai sao dat o day
+        //OK co the dung cho ai tai day
+        /* if(uiHealthBar) {
+            uiHealthBar.SetHealthBarEnemyPercent((float)currentHealth / maxHealth);
+        } */
+
+        OnDamage(direction); // tai sao dat o day => tao animation + hieu ung man hinh khi trung dan
 
         if (currentHealth <= 0) {
             isDead = true;
             Die(direction);
         }
     }
-    public bool IsLowHealth() => currentHealth < lowHealth;
+    public bool IsLowHealth() => currentHealth < lowHealthLimit;
     private void Die(Vector3 direction) {
+        //? giai thich ve cach gan c=gia tri cho doi duong ke thua interface
         /* AiState aiState = aiAgent.stateMachine.GetState(AiStateID.Death);
         AiDeathState aiDeathState = aiState as AiDeathState;
         (aiAgent.stateMachine.GetState(AiStateID.Death) as AiDeathState).direction = direction; */
@@ -81,13 +89,13 @@ public class Health : MonoBehaviour
     }
 
     public float SetCurrentHealth() => currentHealth = maxHealth;
-    public void SetPlayerAlive() {
+    public void ResetCurrentHealth() {
         this.currentHealth = maxHealth;
         this.isDead = false;
     }
 
     protected virtual void OnStart() {
-
+        
     }
     protected virtual void OnDeath(Vector3 direction) {
 

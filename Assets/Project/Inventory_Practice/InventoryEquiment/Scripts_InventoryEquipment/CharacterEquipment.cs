@@ -79,12 +79,17 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
 
         //todo khi player die thi goi ham de out item khoi nguoi
         if(playerHealth.IsDead) {
+            if(!activeGun.IsHolstered) {
+                activeGun.HolsterGunsBeforeDeath();
+            }
+            if(!activeWeapon.IsHolstered_Sword) {
+                activeWeapon.HolsterSwordsBeforeDeath();
+            }
             if(weaponItem != null) RemoveItemOutWorld_CharacterEquipment(weaponItem);
             if(weaponPistolItem != null) RemoveItemOutWorld_CharacterEquipment(weaponPistolItem);
             if(weaponSwordItem != null) RemoveItemOutWorld_CharacterEquipment(weaponSwordItem);
             if(helmetItem != null) RemoveItemOutWorld_CharacterEquipment(helmetItem);
             if(armorItem != null) RemoveItemOutWorld_CharacterEquipment(armorItem);
-
             
         }
     }
@@ -135,7 +140,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
         if(sword == null) {
             
             activeWeapon.SetDefaultWeapon(); // de su dung tay khong
-            if(!activeWeapon.IsHolstered_Sword){
+            if(!activeWeapon.IsHolstered_Sword && !playerHealth.IsDead){
                 activeWeapon.ToggleActiveSword(); //? xet isHoslter = true khi da ko con trang bi
             }
 
@@ -326,7 +331,6 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
 
     public void SetArmorItem(Item armorItem) {
         this.armorItem = armorItem;
-
         if (armorItem != null) {
             armorItem.SetItemHolder(this);
         }

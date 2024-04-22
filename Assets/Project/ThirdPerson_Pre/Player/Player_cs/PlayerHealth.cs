@@ -6,7 +6,8 @@ public class PlayerHealth : Health
 {
     private const string SLIDER_HEALTH =  "Slider Health";
     private const string HEALTH_TEXT =  "Health Text";
-
+    [SerializeField] private float delayTimeToRespawn = 5f;
+    [SerializeField] private float delayTimeToReadyGetDamage = 3f;
     private AiRagdoll aiRagdoll;
     private ActiveGun activeGun;
     private ChracterAim characterAim;
@@ -16,14 +17,20 @@ public class PlayerHealth : Health
 
     Slider sliderHealth;
     TMPro.TMP_Text healthText;
+
     protected override void OnStart() {
-        lowHealth = MaxHealth/2f; //? xet rieng lowHealth cho player
+        Debug.Log("OnStart() PlayerHealth.cs run");
+
+        lowHealthLimit = MaxHealth/2f; //? xet rieng lowHealth cho player
+        isReadyToTakeDamage = true;
+
         aiRagdoll = GetComponent<AiRagdoll>();
         activeGun = GetComponent<ActiveGun>();
         characterAim = GetComponent<ChracterAim>();
         playerMovement = GetComponent<PlayerGun>();
         animator = GetComponent<Animator>();
         cameraManager = FindObjectOfType<CameraManager>();
+        
         UpdateSliderHealth();               // tang giam slider health
     }
     protected override void OnDeath(Vector3 direction) {
@@ -37,7 +44,7 @@ public class PlayerHealth : Health
         playerMovement.enabled = false;     //tat khong cho player move
 
         Debug.Log("Player is lying on the ground");
-        StartCoroutine(DelayTimeToRespawnPlayer(5f));
+        StartCoroutine(RespawnPlayerCountine(delayTimeToRespawn));
     }
     protected override void OnDamage(Vector3 direction) {
         Update_Virtual();                   // hieu ung man hinh khi get damage || animation get damage.
@@ -53,7 +60,8 @@ public class PlayerHealth : Health
 
     private void Update_Virtual() {
         // nhung thay doi hieu ung khi get damage or increase health
-        animator.SetBool("GetDamage", true);
+        //animator.SetBool("GetDamage", true);
+        animator.SetTrigger("GetDamage");
     }
     
     // tang giam slider health cho player.
@@ -71,15 +79,22 @@ public class PlayerHealth : Health
     // lam cho player song lai
     private void RespawnPlayer() {
         Debug.Log("Respawn player");
-        SetPlayerAlive();
-        UpdateSliderHealth();
+        isReadyToTakeDamage = false; // ko bi tru mau du trung dan
         aiRagdoll.DeactiveRag();
         cameraManager.DeActiveDeathCam();
+        ResetCurrentHealth();
+        UpdateSliderHealth();
         characterAim.enabled = true;
         playerMovement.enabled = true;
+        StartCoroutine(ReadyGetDamageCountine(delayTimeToReadyGetDamage));
     }
-    IEnumerator DelayTimeToRespawnPlayer(float time) {
+    IEnumerator RespawnPlayerCountine(float time) {
         yield return new WaitForSeconds(time);
         RespawnPlayer();
+    }
+    IEnumerator ReadyGetDamageCountine(float time) {
+        //doi mau bat tu tai day
+        yield return new WaitForSeconds(time);
+        isReadyToTakeDamage = true; //bat dau bi tru mau
     }
 }

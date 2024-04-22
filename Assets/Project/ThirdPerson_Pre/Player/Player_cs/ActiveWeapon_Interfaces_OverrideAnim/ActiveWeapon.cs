@@ -113,7 +113,10 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
             Debug.Log("Destroy old sword");
         }
     }
-
+    public void HolsterSwordsBeforeDeath() {
+        playerAnimator.SetBool("holster_sword", true);
+        playerAnimator.SetBool("ReadyAttack", false);
+    } 
     public void ToggleActiveSword()
     {
         bool isHolstered = playerAnimator.GetBool("holster_sword"); //?false = dang equip
@@ -137,8 +140,6 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
         activeSwordIndex = activeIndex;
     }
     IEnumerator HolsterSword(int index) {
-        
-        
         var sword = GetSword(index); // kiem tra xem cai o equiped_Weapon dang co hay ko de chuan bi thay, neu varWeapon co thi ko thuc hien animation cat sung
         if (sword)
         {
@@ -150,8 +151,6 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
                 characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordHolster_Point, false);
                 characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordHolster_Point, true);
             }
-            
-
             Switch_DeafaultWeapon(defaultActiveWeapon);
             
             isHolstered_Sword = true;
