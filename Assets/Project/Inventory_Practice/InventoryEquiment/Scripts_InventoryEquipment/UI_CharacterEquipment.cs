@@ -24,6 +24,7 @@ public class UI_CharacterEquipment : MonoBehaviour
 
 
     private void Awake() {
+        
         itemContainer = transform.Find("itemContainer");
 
         weaponRifleSlot = transform.Find("weaponRifleSlot").GetComponent<UI_CharacterEquipmentSlot>();

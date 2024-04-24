@@ -1,15 +1,23 @@
 using UnityEngine;
+using UnityEngine.Animations.Rigging;
 
-public class ChracterAim : MonoBehaviour
+public class ChracterAim : Singleton<ChracterAim> // co the bo singleton tai day
 {
     [SerializeField] public float mouseSentivity = 1.2f;
     [SerializeField] public float xAixs, yAxis;
     [SerializeField] private Transform camFollowPos; // maincamera se move den day, vi trong main camera co virtul camera
     [SerializeField] private Vector2 yAxixLimit = new Vector2(20, 20);
+    [SerializeField] public RigBuilder rigBuilder;
     //RaycastWeapon weapon; // tai scrip nay trong folder player
     //public float aimDuration = 0.3f;
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
     void Start()
     {
+        rigBuilder = GetComponent<RigBuilder>();
         //Cursor.lockState = CursorLockMode.Locked;
         //weapon = GetComponentInChildren<RaycastWeapon>(); // class weaponManager nam o folder con gan trong cay sung
     }

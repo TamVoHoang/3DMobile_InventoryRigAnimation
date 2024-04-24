@@ -8,7 +8,6 @@ public class CrossHairTarget : MonoBehaviour
     private Camera mainCamera;
     private Ray ray;
     private RaycastHit hitInfo;
-
     private void Start() {
         mainCamera = Camera.main;    
     }

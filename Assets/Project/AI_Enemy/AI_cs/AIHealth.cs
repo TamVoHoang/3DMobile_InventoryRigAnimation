@@ -1,15 +1,19 @@
+using System.Collections;
 using UnityEngine;
 
 public class AiHealth : Health
 {
-    [SerializeField] private float delayTimeToDestroy = 5f; 
+    //[SerializeField] private float delayTimeToDestroy = 5f; 
     AiAgent aiAgent;
     AiUIHealthBar uiHealthBar; // thanh mau cua Ai agen dat tai day
+    //private bool isGetKilledPoint; // lay diem len bang
 
     protected override void OnStart() {
         Debug.Log("OnStart() AiHealth.cs run");
+        //isGetKilledPoint = false;
         aiAgent = GetComponent<AiAgent>();
 
+        SetCurrentHealth = MaxHealth; // gan currentHealth
         lowHealthLimit = 100f;
         isReadyToTakeDamage = true; // xet true de san sang bi take damage
         uiHealthBar = GetComponentInChildren<AiUIHealthBar>();
@@ -20,10 +24,15 @@ public class AiHealth : Health
         deathState.direction = direction;
         aiAgent.stateMachine.ChangeState(AiStateID.Death);
         //Destroy(this.gameObject, delayTimeToDestroy);
+
+        if(IsDead && isReadyToTakeDamage) {
+            isReadyToTakeDamage = !isReadyToTakeDamage;
+            PlayerDataLocal_Temp.Instance.killed += 1; //todo tang so luong kill enemy
+        }
+        
     }
     protected override void OnDamage(Vector3 direction) {
         Ai_UpdateHealthBar();
-
     }
     protected override void OnHeal(float amount) {
         Ai_UpdateHealthBar();
@@ -34,6 +43,5 @@ public class AiHealth : Health
             uiHealthBar.SetHealthBarEnemyPercent((float)CurrentHealth / MaxHealth);
         }
     }
-
 
 }

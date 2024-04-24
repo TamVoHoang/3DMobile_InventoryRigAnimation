@@ -8,11 +8,12 @@ public class Health : MonoBehaviour
     [SerializeField] private float currentHealth;
     //private AiUIHealthBar uiHealthBar; // thanh mau cua Ai agen dat tai day
 
-    protected bool isReadyToTakeDamage = false; //todo bien se true sau khoang time de - mau
+    protected bool isReadyToTakeDamage = false; //todo neu true - se bi tru mau, neu false - ko bi tru mau| player khi respawn se co 5s de xet TRUE
     protected float lowHealthLimit;   // player.obj override loewHealth coll 19 PlayerHealth.cs
 
     public bool IsDead {get => isDead;}
     public float MaxHealth{get => maxHealth;}
+    public float SetCurrentHealth {set => currentHealth = value;}
     public float CurrentHealth{get => currentHealth;}
     public bool IsReadyToTakeDamage{get => isReadyToTakeDamage;}
     
@@ -31,7 +32,7 @@ public class Health : MonoBehaviour
     void Start() {
         //SetLayerBegin(); //set gia tri weaponMask(chi co phan tren cho weapon Layer[1])
         Debug.Log("Health.cs run");
-        currentHealth = maxHealth;
+        //currentHealth = maxHealth; //! ok van co the dung xet tai day
         //uiHealthBar = GetComponentInChildren<AiUIHealthBar>();
         //aiAgent = GetComponent<AiAgent>(); //? ke thua tu tao ra
         var rigidBodies = GetComponentsInChildren<Rigidbody>();
@@ -59,12 +60,14 @@ public class Health : MonoBehaviour
         } */
 
         OnHeal(amount);
-
     }
 
     //? hitbox.cs call TakeDamage()
     public void TakeDamage(float amount, Vector3 direction) {
-        if(currentHealth >= 0) currentHealth -= amount;
+        if(currentHealth == 0) return;
+        if(currentHealth > 0 && isReadyToTakeDamage) {
+            currentHealth -= amount;
+        }
 
         //OK co the dung cho ai tai day
         /* if(uiHealthBar) {
@@ -88,7 +91,6 @@ public class Health : MonoBehaviour
         OnDeath(direction);
     }
 
-    public float SetCurrentHealth() => currentHealth = maxHealth;
     public void ResetCurrentHealth() {
         this.currentHealth = maxHealth;
         this.isDead = false;

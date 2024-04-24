@@ -2,10 +2,10 @@
 using UnityEngine.UI;
 using TMPro;
 
-public class UI_ItemDrag : MonoBehaviour {
+public class UI_ItemDrag : Singleton<UI_ItemDrag> {
     //! gameObject = pfUI_itemDrag se active khi keo pfUI_Item di chuyen tu slot nay sang slot khac
 
-    public static UI_ItemDrag Instance { get; private set; }
+    //public static UI_ItemDrag Instance { get; private set; } //todo dung ok
 
     private Canvas canvas;
     private CanvasGroup canvasGroup;
@@ -16,9 +16,10 @@ public class UI_ItemDrag : MonoBehaviour {
     private Item item;
     private TextMeshProUGUI amountText;
 
-    private void Awake() {
-        Instance = this;
-
+    protected override void Awake() {
+        //Instance = this; //todo dung ok
+        base.Awake();
+        
         rectTransform = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
         canvas = GetComponentInParent<Canvas>();

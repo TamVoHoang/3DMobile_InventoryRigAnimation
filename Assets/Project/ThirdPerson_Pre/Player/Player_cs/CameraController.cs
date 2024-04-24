@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
+    //gameObject = player dieu khien uu tien 2 camera
+    // camfollow and cam look around
     [SerializeField] private CinemachineVirtualCamera virtualAimCamera;
     [SerializeField] private CinemachineVirtualCamera virtualLookAroundCamera;
     private InputManager inputManager;

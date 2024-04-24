@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.AI;
-
 public class AiLocalmotion : MonoBehaviour
 {
     /* [SerializeField] private float maxTime = 1.0f;
@@ -11,8 +10,15 @@ public class AiLocalmotion : MonoBehaviour
     private NavMeshAgent agent;
     private Animator animator;
 
-    private void Start() {
+    [SerializeField] private Transform playerTransfom;
+    [SerializeField] private Transform headAimPlayer_SourceObjects;
 
+    private void Awake() {
+        playerTransfom = GameObject.FindGameObjectWithTag("Player").transform;
+        
+    }
+    private void Start() {
+        
         // if(playerTransform == null) {
         //     playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         // }
@@ -38,7 +44,10 @@ public class AiLocalmotion : MonoBehaviour
             }
             timer = maxTime;
         } */
-
+        
+        headAimPlayer_SourceObjects.position = playerTransfom.position;
+        headAimPlayer_SourceObjects.transform.rotation = playerTransfom.rotation;
+        
         if(agent.hasPath) {
             animator.SetFloat("Speed", agent.velocity.magnitude);
         } else {

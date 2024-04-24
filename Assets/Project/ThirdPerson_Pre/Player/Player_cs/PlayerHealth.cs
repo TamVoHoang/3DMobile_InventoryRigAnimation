@@ -7,13 +7,14 @@ public class PlayerHealth : Health
     private const string SLIDER_HEALTH =  "Slider Health";
     private const string HEALTH_TEXT =  "Health Text";
     [SerializeField] private float delayTimeToRespawn = 5f;
-    [SerializeField] private float delayTimeToReadyGetDamage = 3f;
+    [SerializeField] private float delayTimeToReadyGetDamage = 5f; // co 5s ko an dan sau khi respawn
     private AiRagdoll aiRagdoll;
     private ActiveGun activeGun;
     private ChracterAim characterAim;
     private Animator animator;
     private CameraManager cameraManager;
     private PlayerGun playerMovement;
+    //private bool isGetDiedPoint = false; // die bi tinh diem tru
 
     Slider sliderHealth;
     TMPro.TMP_Text healthText;
@@ -21,9 +22,11 @@ public class PlayerHealth : Health
     protected override void OnStart() {
         Debug.Log("OnStart() PlayerHealth.cs run");
 
-        lowHealthLimit = MaxHealth/2f; //? xet rieng lowHealth cho player
-        isReadyToTakeDamage = true;
-
+        //SetCurrentHealth = MaxHealth; // neu ko tinh luong duoc luu, thi xet mac dinh maxHealth
+        
+        lowHealthLimit = MaxHealth/2f;  //? xet rieng lowHealth cho player
+        isReadyToTakeDamage = true;     // true - san sang bi tru mau
+        //isGetDiedPoint = false;         // chau bi tru diem died
         aiRagdoll = GetComponent<AiRagdoll>();
         activeGun = GetComponent<ActiveGun>();
         characterAim = GetComponent<ChracterAim>();
@@ -34,6 +37,7 @@ public class PlayerHealth : Health
         UpdateSliderHealth();               // tang giam slider health
     }
     protected override void OnDeath(Vector3 direction) {
+
         aiRagdoll.ActiveRag();
         direction.y = 1;
         aiRagdoll.ApplyForceLying(direction);
@@ -43,12 +47,20 @@ public class PlayerHealth : Health
         characterAim.enabled = false;       //tat chatacterAim.cs
         playerMovement.enabled = false;     //tat khong cho player move
 
-        Debug.Log("Player is lying on the ground");
+        // died point +
+        if(IsDead && isReadyToTakeDamage) {
+            isReadyToTakeDamage = false;
+            PlayerDataLocal_Temp.Instance.died += 1; //todo tang so luong die
+        }
+
+        //chua nbi respawn song lai
         StartCoroutine(RespawnPlayerCountine(delayTimeToRespawn));
     }
     protected override void OnDamage(Vector3 direction) {
         Update_Virtual();                   // hieu ung man hinh khi get damage || animation get damage.
         UpdateSliderHealth();               // tang giam slider health
+
+        PlayerDataLocal_Temp.Instance.health = (int)CurrentHealth;
     }
 
     protected override void OnHeal(float amount) {
@@ -56,6 +68,7 @@ public class PlayerHealth : Health
         // co the dung de thay doi hieu ung tai day
         // cap nhat thanh mau tai day
         UpdateSliderHealth();
+        PlayerDataLocal_Temp.Instance.health = (int)CurrentHealth;
     }
 
     private void Update_Virtual() {
@@ -97,4 +110,5 @@ public class PlayerHealth : Health
         yield return new WaitForSeconds(time);
         isReadyToTakeDamage = true; //bat dau bi tru mau
     }
+
 }
