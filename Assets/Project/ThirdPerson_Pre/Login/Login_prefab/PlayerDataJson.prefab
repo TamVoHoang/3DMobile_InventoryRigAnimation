@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00c13f4a9c7c31a4a8e4f04683523fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialVector3Player_ToRegister: {x: 12, y: 0.5, z: 20}
 --- !u!114 &1326882225373170876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -63,3 +64,5 @@ MonoBehaviour:
   health: 0
   killed: 0
   died: 0
+  position_Temp: {x: 0, y: 0, z: 0}
+  rotation_Temp: {x: 0, y: 0, z: 0}

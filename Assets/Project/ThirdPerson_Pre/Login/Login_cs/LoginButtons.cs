@@ -8,7 +8,6 @@ public class LoginButtons : MonoBehaviour
 {
     public const string LAST_MAIL = "last_mail", PASS = "pass";
     [SerializeField] PlayFabLoginManager playFabLoginManager;
-    [SerializeField] PlayerDataJson playerDataJson;
     [SerializeField] TMP_InputField loginEmail;
     [SerializeField] TMP_InputField loginPassword;
     [SerializeField] private int minPassLength =1;
@@ -17,7 +16,6 @@ public class LoginButtons : MonoBehaviour
     void Start()
     {
         playFabLoginManager = FindObjectOfType<PlayFabLoginManager>();
-        playerDataJson = FindObjectOfType<PlayerDataJson>();
         if(SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
@@ -44,6 +42,7 @@ public class LoginButtons : MonoBehaviour
         //TestLoadingScene.Instance.Load_AccountDataOverview_Scene();// chuyen scen tai day qua overview
 
         StartCoroutine(DelayTimeLogin_ToLoad(0f)); //5
+
     }
 
     public void Load_MainMenuSence_OnMainMenuButton() => TestLoadingScene.Instance.Load_MainMenu_Scene();
@@ -60,4 +59,7 @@ public class LoginButtons : MonoBehaviour
         //TestLoadingScene.Instance.Load_AccountDataOverview_Scene();// chuyen scen tai day qua overview
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
     }
+
+    
+    //todo
 }

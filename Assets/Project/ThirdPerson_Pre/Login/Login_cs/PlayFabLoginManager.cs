@@ -6,7 +6,6 @@ using PlayFab.ClientModels;
 public class PlayFabLoginManager : MonoBehaviour
 {
     const string LAST_EMAIL_KEY = "LAST_EMAIL", LAST_PASSWORD_KEY = "LAST_PASSWORD";
-    [SerializeField] private PlayerJson playerJson;
     [SerializeField] PlayerDataJson playerDataJson;
 
 //todo Register
@@ -16,10 +15,10 @@ public class PlayFabLoginManager : MonoBehaviour
     [SerializeField] TMP_InputField registerUnsername;
     [SerializeField] TMP_InputField registerPassword;
     [SerializeField] TextMeshProUGUI ResultRegister_Text;
+    //private Vector3 initialVector3Player_ToRegister = new Vector3(12,0.5f,20); // vi tri mac dinh nguoi choi se spwan khi lan dau danng ky
 
     public void OnRegisterPressed() {
         Register(registerEmail.text, registerUnsername.text, registerPassword.text);
-
     }
     private void Register(string email,string username, string password) {
         PlayFabClientAPI.RegisterPlayFabUser(new RegisterPlayFabUserRequest() {
@@ -32,13 +31,17 @@ public class PlayFabLoginManager : MonoBehaviour
             Login(email, password);
             ResultRegister_Text.text = "Register Success";
 
+            string vector3ToString = JsonUtility.ToJson(playerDataJson.InitialVector3Player_ToRegister);
+
             PlayerJson playerJson_Register  = new PlayerJson() {
                 mail = email,
                 name = username,
                 level = 1,
                 health = 500,
                 killed = 0,
-                died = 0
+                died = 0,
+
+                position = vector3ToString //! dang kiem tra thu
             };
             playerDataJson.Save_PlayerJson_ToResiger(playerJson_Register); // save thong tin khoi tao tai khoan
         }, 

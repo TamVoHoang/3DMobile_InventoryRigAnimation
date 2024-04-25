@@ -6,6 +6,7 @@ public class PlayerGun : Singleton<PlayerGun>
     [SerializeField] private Image sprintingImage;
     private bool isSprinting = false;
     public bool IsSprinting { get => isSprinting; }
+
     #region Movement
     public float currentSpeed = 0;
     public float CurrentSpeed (float value) => currentSpeed = value;
@@ -54,15 +55,28 @@ public class PlayerGun : Singleton<PlayerGun>
 
     [HideInInspector] public Animator animator;
 
+    #region SAVE LOAD
+    private Vector3 playerTransform;
+    void Load_Vector3PlayerPosition_PDJ(Vector3 transform) => this.playerTransform = transform;
+    void Save_Vector3PlayerPostion_PDJ(Vector3 positionTemp) {
+        PlayerDataLocal_Temp.Instance.position_Temp = positionTemp;
+    }
+    #endregion SAVE LOAD
+
+
     protected override void Awake() {
         base.Awake();
 
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
+
+        Load_Vector3PlayerPosition_PDJ(PlayerDataLocal_Temp.Instance.position_Temp);
     }
 
     void Start() {
         SwitchState(Idle);
+        
+        transform.position = new Vector3(playerTransform.x, playerTransform.y, playerTransform.z);
     }
 
     public void Update() {
@@ -80,6 +94,9 @@ public class PlayerGun : Singleton<PlayerGun>
         // GetDirectionAndMove();
 
         currentState.UpdateState(this);
+
+        //PlayerDataLocal_Temp.Instance.position_Temp = this.transform.position;
+        Save_Vector3PlayerPostion_PDJ(this.transform.position);
     }
     private void FixedUpdate() {
         // Gravity();

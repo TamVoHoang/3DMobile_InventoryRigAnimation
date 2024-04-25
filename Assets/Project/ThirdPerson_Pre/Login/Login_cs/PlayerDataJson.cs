@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 using System.Collections;
 using System;
 
-
 public class PlayerJson {
     public string mail; // phai load duoc ve khi vao player infomation
     public string name;
@@ -16,17 +15,21 @@ public class PlayerJson {
     public int killed;
     public int died;
 
-    public PlayerJson(string mail, string name, int level,int health, int killed, int died) {
+    public string position, rotation;
+    
+
+    public PlayerJson(string mail, string name, int level,int health, int killed, int died,
+                        string position) {
         this.mail = mail;
         this.name = name;
         this.level = level;
         this.health = health;
         this.killed = killed;
         this.died = died;
-    }
-    public PlayerJson() {
 
+        this.position = position;
     }
+    public PlayerJson() {}
 }
 
 public class PlayerDataJson : Singleton<PlayerDataJson>
@@ -39,15 +42,22 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         public int health;
         public int killed;
         public int died;
+
+        public Vector3 Position;
     }
 
+    [SerializeField] private Vector3 initialVector3Player_ToRegister = new Vector3(12,0.5f,20);
+    public Vector3 InitialVector3Player_ToRegister => initialVector3Player_ToRegister;
     private PlayerJson playerJson;
-    public PlayerJson PlayerJson {get => playerJson;}
+    //public PlayerJson PlayerJson {get => playerJson;}
     private PlayerJson ReturnClassPlayerJson_ToSave() {
+        string vector3PlayerTransform_ToSaveRealtime = JsonUtility.ToJson(PlayerDataLocal_Temp.Instance.position_Temp);
+        
         return new PlayerJson(playerJson.mail, playerJson.name, playerJson.level,
                                 PlayerDataLocal_Temp.Instance.health,
                                 PlayerDataLocal_Temp.Instance.killed,
-                                PlayerDataLocal_Temp.Instance.died);
+                                PlayerDataLocal_Temp.Instance.died,
+                                vector3PlayerTransform_ToSaveRealtime);
     }
     protected override void Awake() {
         base.Awake();
@@ -97,7 +107,9 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
             switch (eachData.Key)
             {
                 case "Json":
-                    playerJson = JsonConvert.DeserializeObject<PlayerJson>((result.Data[eachData.Key].Value)); break;
+                    playerJson = JsonConvert.DeserializeObject<PlayerJson>((result.Data[eachData.Key].Value)); // OK
+                    
+                    break;
             }
         }
         StartCoroutine(SetPlayerDataLocalTemp_Countine(0f)); //load() - time delay - set playerDataLocal
@@ -107,13 +119,17 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
     //? set player data local coll 30 playerdatalocal.cs
     IEnumerator SetPlayerDataLocalTemp_Countine(float time) {
         yield return new WaitForSeconds(time);
-        Debug.Log("set player data Loacal");
+        Debug.Log("LOADED and SET playerDataLoacal from PlayerDataJson server");
+
+        Vector3 vector3ToSetLocal = JsonUtility.FromJson<Vector3>(playerJson.position);
+        
         OnPlayerDataLocalChanged?.Invoke(this, new PlayerData{mail = playerJson.mail,
                                                             userName = playerJson.name,
                                                             level = playerJson.level,
                                                             health = playerJson.health,
                                                             killed = playerJson.killed,
-                                                            died = playerJson.died});
+                                                            died = playerJson.died,
+                                                            Position = vector3ToSetLocal});
     }
 
 //todo login - 3s - load - 3s - set

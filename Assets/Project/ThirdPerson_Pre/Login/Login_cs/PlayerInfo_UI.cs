@@ -12,21 +12,25 @@ public class PlayerInfo_UI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI level;
     [SerializeField] private TextMeshProUGUI health;
     [SerializeField] private Slider healthSlider;
-
-    [SerializeField] private PlayerDataLocal_Temp playerDataLocal_Temp;
-    [SerializeField] private PlayerDataJson playerDataJson;
-
     PlayerHealth playerHealth;
 
+    [SerializeField] private PlayerDataLocal_Temp playerDataLocal_Temp;
+
     private void Awake() {
-        healthSlider = FindObjectOfType<Slider>();
         playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
-        playerDataJson = FindObjectOfType<PlayerDataJson>();
+        healthSlider = FindObjectOfType<Slider>();
         playerHealth = FindObjectOfType<PlayerHealth>();
     }
 
     private void Start() {
         StartCoroutine(ShowPlayerInfo_GameUI_Countine(0.5f));
+    }
+
+    IEnumerator ShowPlayerInfo_GameUI_Countine(float time) {
+        yield return new WaitForSeconds(time);
+        ShowPlayerInfo_GameUI(playerDataLocal_Temp.userName,
+                            playerDataLocal_Temp.level,
+                            playerDataLocal_Temp.health);
     }
 
     private void ShowPlayerInfo_GameUI(string userName, int level, int health) {
@@ -37,15 +41,10 @@ public class PlayerInfo_UI : MonoBehaviour
         healthSlider.value = health;
         playerHealth.SetCurrentHealth = health;
     }
-    IEnumerator ShowPlayerInfo_GameUI_Countine(float time) {
-        yield return new WaitForSeconds(time);
-        ShowPlayerInfo_GameUI(playerDataLocal_Temp.userName,
-                            playerDataLocal_Temp.level,
-                            playerDataLocal_Temp.health);
-    }
+    
 
+    //?BUTTONS IN MAIN GAME
     public void LoadMainMenuScene_BackButtonInGame() {
-        Debug.Log("co nhan back to main menu");
         Time.timeScale = 0f; //free
         SceneManager.LoadSceneAsync("MainMenu");
         playerDataLocal_Temp.BackButtonPress_SavePlayerDataJson();
