@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealth : Health
+public class PlayerHealth : Health, IDataPersistence
 {
     private const string SLIDER_HEALTH =  "Slider Health";
     private const string HEALTH_TEXT =  "Health Text";
@@ -14,6 +14,7 @@ public class PlayerHealth : Health
     private Animator animator;
     private CameraManager cameraManager;
     private PlayerGun playerMovement;
+    private int diedCount;
     //private bool isGetDiedPoint = false; // die bi tinh diem tru
 
     Slider sliderHealth;
@@ -34,6 +35,7 @@ public class PlayerHealth : Health
         animator = GetComponent<Animator>();
         cameraManager = FindObjectOfType<CameraManager>();
         
+        LoadData(PlayerDataJson.Instance.PlayerJson);//! load bang interface
         UpdateSliderHealth();               // tang giam slider health
     }
     protected override void OnDeath(Vector3 direction) {
@@ -50,7 +52,8 @@ public class PlayerHealth : Health
         // died point +
         if(IsDead && isReadyToTakeDamage) {
             isReadyToTakeDamage = false;
-            PlayerDataLocal_Temp.Instance.died += 1; //todo tang so luong die
+            ////PlayerDataLocal_Temp.Instance.died += 1; //todo tang so luong die
+            diedCount ++;
         }
 
         //chua nbi respawn song lai
@@ -60,7 +63,7 @@ public class PlayerHealth : Health
         Update_Virtual();                   // hieu ung man hinh khi get damage || animation get damage.
         UpdateSliderHealth();               // tang giam slider health
 
-        PlayerDataLocal_Temp.Instance.health = (int)CurrentHealth;
+        //PlayerDataLocal_Temp.Instance.health = (int)CurrentHealth;
     }
 
     protected override void OnHeal(float amount) {
@@ -68,7 +71,7 @@ public class PlayerHealth : Health
         // co the dung de thay doi hieu ung tai day
         // cap nhat thanh mau tai day
         UpdateSliderHealth();
-        PlayerDataLocal_Temp.Instance.health = (int)CurrentHealth;
+        //PlayerDataLocal_Temp.Instance.health = (int)CurrentHealth;
     }
 
     private void Update_Virtual() {
@@ -111,4 +114,15 @@ public class PlayerHealth : Health
         isReadyToTakeDamage = true; //bat dau bi tru mau
     }
 
+    public void LoadData(PlayerJson playerJsonData)
+    {
+        SetCurrentHealth = playerJsonData.health;
+        diedCount = playerJsonData.died;
+    }
+
+    public void SaveData(PlayerJson playerJsonData)
+    {
+        playerJsonData.health = (int)CurrentHealth;
+        playerJsonData.died = diedCount;
+    }
 }

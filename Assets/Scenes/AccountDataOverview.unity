@@ -4589,6 +4589,8 @@ MonoBehaviour:
   health: 0
   killed: 0
   died: 0
+  position_Temp: {x: 0, y: 0, z: 0}
+  rotation_Temp: {x: 0, y: 0, z: 0}
 --- !u!1 &3728314784477995385
 GameObject:
   m_ObjectHideFlags: 0
@@ -7727,7 +7729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &6689625669189119244
 GameObject:
   m_ObjectHideFlags: 0
@@ -8463,7 +8465,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerDataLocal_Temp: {fileID: 0}
   playerDataJson: {fileID: 0}
-  isShowedData: 0
   mail: {fileID: 1227168052963163283}
   userName: {fileID: 8044881770648675674}
   level: {fileID: 326550624991808080}
@@ -10518,6 +10519,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00c13f4a9c7c31a4a8e4f04683523fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialVector3Player_ToRegister: {x: 12, y: 0.5, z: 20}
 --- !u!222 &9107669888257512749
 CanvasRenderer:
   m_ObjectHideFlags: 0

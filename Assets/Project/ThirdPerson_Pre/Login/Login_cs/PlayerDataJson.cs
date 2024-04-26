@@ -6,18 +6,17 @@ using PlayFab.ClientModels;
 using Newtonsoft.Json;
 using System.Collections;
 using System;
+using System.Linq;
 
-public class PlayerJson {
-    public string mail; // phai load duoc ve khi vao player infomation
-    public string name;
-    public int level;
-    public int health;
-    public int killed;
-    public int died;
+[System.Serializable]
+public class PlayerJson // game data
+{
+    public string mail, name;
+    public int level, health, killed, died;
 
     public string position, rotation;
-    
 
+    public PlayerJson() {}
     public PlayerJson(string mail, string name, int level,int health, int killed, int died,
                         string position) {
         this.mail = mail;
@@ -29,7 +28,7 @@ public class PlayerJson {
 
         this.position = position;
     }
-    public PlayerJson() {}
+    //todo
 }
 
 public class PlayerDataJson : Singleton<PlayerDataJson>
@@ -46,25 +45,49 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         public Vector3 Position;
     }
 
-    [SerializeField] private Vector3 initialVector3Player_ToRegister = new Vector3(12,0.5f,20);
-    public Vector3 InitialVector3Player_ToRegister => initialVector3Player_ToRegister;
+    [SerializeField] private PlayerDataLocal_Temp playerDataLocal_Temp;
     private PlayerJson playerJson;
-    //public PlayerJson PlayerJson {get => playerJson;}
+    public PlayerJson PlayerJson => playerJson;
+    private List<IDataPersistence> dataPersistenceObjects; //! list nhung doi tuong chua IDataPersistence
+    private Vector3 initialVector3Player_ToRegister = new Vector3(12,0.5f,20);
+
+    protected override void Awake() {
+        base.Awake();
+        playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
+    }
+
+    private void Start() {
+        this.dataPersistenceObjects = FindAllDataPersistenceObjects(); //! tim object dang chua IData
+        Debug.Log(dataPersistenceObjects.Count);
+    }
+
+    private PlayerJson ReturnClassPlayerJson_ToSignUp(string mail, string name) {
+        string vector3ToString = JsonUtility.ToJson(initialVector3Player_ToRegister);
+        return new PlayerJson(mail, name, 1, 500, 0, 0, vector3ToString);
+    }
+
     private PlayerJson ReturnClassPlayerJson_ToSave() {
         string vector3PlayerTransform_ToSaveRealtime = JsonUtility.ToJson(PlayerDataLocal_Temp.Instance.position_Temp);
-        
         return new PlayerJson(playerJson.mail, playerJson.name, playerJson.level,
                                 PlayerDataLocal_Temp.Instance.health,
                                 PlayerDataLocal_Temp.Instance.killed,
                                 PlayerDataLocal_Temp.Instance.died,
                                 vector3PlayerTransform_ToSaveRealtime);
     }
-    protected override void Awake() {
-        base.Awake();
+
+    #region NEW SIGNUP // newgame
+    public void Save_PlayerDataJason_SignUp(string mail, string name) {
+        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string> {
+                {"Json", JsonConvert.SerializeObject(ReturnClassPlayerJson_ToSignUp(mail, name))},
+            }
+        },
+        result => { Debug.Log("Player DataJason Title updated");},
+        error => { Debug.LogError(error.GenerateErrorReport()); });
     }
 
-#region SAVE
-    //? Save doi tuong khoi tao ko tham so
+    // Save doi tuong khoi tao ko tham so coll 33 PlayFabManager.cs
     public void Save_PlayerJson_ToResiger(PlayerJson playerJson) {
         Debug.Log("Save_PlayerJson_ToResiger");
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
@@ -76,23 +99,29 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         result => { Debug.Log("Player DataJason Title updated");},
         error => { Debug.LogError(error.GenerateErrorReport()); });
     }
+    #endregion NEW SIGNUP //? newgame
 
-    //? save doi tuong duoc khoi tao co tham so
+    #region SAVE REALTIME // save an playerJson(variable)
+    // PASS data other cs in game to update it
+    
+    // SAVE data to handler saver
     public void Save_PlayerDataJason_RealTime() {
+
         Debug.Log("co SAVE jsonnnn");
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
         {
             Data = new Dictionary<string, string> {
-                {"Json", JsonConvert.SerializeObject(ReturnClassPlayerJson_ToSave())},
+                //{"Json", JsonConvert.SerializeObject(ReturnClassPlayerJson_ToSave())}, //! OK co the dung
+                {"Json", JsonConvert.SerializeObject(playerJson)},
             }
         },
         result => { Debug.Log("Player DataJason Title updated");},
         error => { Debug.LogError(error.GenerateErrorReport()); });
     }
-#endregion SAVE
+    #endregion SAVE REALTIME
 
 #region LOAD
-    //?LOAD DATA
+    // LOAD any saved data from data handler
     public void Load_PlayerDataJason_RealTime() {
         Debug.Log("co LOAD jsonnnn");
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(),
@@ -104,15 +133,19 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         Debug.Log("Received the following Player Data Json:");
 
         foreach (var eachData in result.Data) {
-            switch (eachData.Key)
-            {
+            switch (eachData.Key) {
                 case "Json":
                     playerJson = JsonConvert.DeserializeObject<PlayerJson>((result.Data[eachData.Key].Value)); // OK
-                    
                     break;
             }
         }
-        StartCoroutine(SetPlayerDataLocalTemp_Countine(0f)); //load() - time delay - set playerDataLocal
+        //StartCoroutine(SetPlayerDataLocalTemp_Countine(0f)); //load() - time delay - set playerDataLocal
+        
+        // PUSH the loaded data to all other cs
+        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
+        {
+            dataPersistenceObj.LoadData(playerJson);
+        }
     }
 #endregion LOAD
 
@@ -132,5 +165,11 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
                                                             Position = vector3ToSetLocal});
     }
 
-//todo login - 3s - load - 3s - set
+    private List<IDataPersistence> FindAllDataPersistenceObjects() {
+        IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>()
+            .OfType<IDataPersistence>();
+        
+        return new List<IDataPersistence>(dataPersistenceObjects);
+    }
+//todo
 }

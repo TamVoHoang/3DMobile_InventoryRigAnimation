@@ -15,7 +15,6 @@ public class PlayFabLoginManager : MonoBehaviour
     [SerializeField] TMP_InputField registerUnsername;
     [SerializeField] TMP_InputField registerPassword;
     [SerializeField] TextMeshProUGUI ResultRegister_Text;
-    //private Vector3 initialVector3Player_ToRegister = new Vector3(12,0.5f,20); // vi tri mac dinh nguoi choi se spwan khi lan dau danng ky
 
     public void OnRegisterPressed() {
         Register(registerEmail.text, registerUnsername.text, registerPassword.text);
@@ -31,8 +30,7 @@ public class PlayFabLoginManager : MonoBehaviour
             Login(email, password);
             ResultRegister_Text.text = "Register Success";
 
-            string vector3ToString = JsonUtility.ToJson(playerDataJson.InitialVector3Player_ToRegister);
-
+            /* string vector3ToString = JsonUtility.ToJson(playerDataJson.InitialVector3Player_ToRegister);
             PlayerJson playerJson_Register  = new PlayerJson() {
                 mail = email,
                 name = username,
@@ -43,7 +41,9 @@ public class PlayFabLoginManager : MonoBehaviour
 
                 position = vector3ToString //! dang kiem tra thu
             };
-            playerDataJson.Save_PlayerJson_ToResiger(playerJson_Register); // save thong tin khoi tao tai khoan
+            playerDataJson.Save_PlayerJson_ToResiger(playerJson_Register); // save thong tin khoi tao tai khoan */
+
+            playerDataJson.Save_PlayerDataJason_SignUp(email,username);
         }, 
         PlayFabFailure);
     }
@@ -76,7 +76,6 @@ public class PlayFabLoginManager : MonoBehaviour
 
             Debug.Log("Successfully Logged In User: " + PlayerPrefs.GetString("Username"));
             ResultLogin_Text.text = "Successfully Logged In User: " + PlayerPrefs.GetString("Username"); // hien thi ket qua khi login thanh cong
-
         },
         PlayFabFailure);
     }

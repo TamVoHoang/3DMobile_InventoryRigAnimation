@@ -1,15 +1,13 @@
 using UnityEngine;
 
-public class PlayerDataLocal_Temp :Singleton<PlayerDataLocal_Temp>
+public class PlayerDataLocal_Temp :Singleton<PlayerDataLocal_Temp>, IDataPersistence
 {
     //noi chua data player local_temp tu playerDatajonServer
     public string mail, userName;
-    public int level, health, killed, died;
-    
-    //public string userName;
-    // public int health;
-    // public int killed;
-    // public int died;
+    public int level;
+    public int health;
+    public int killed;
+    public int died;
 
     public Vector3 position_Temp, rotation_Temp;
 
@@ -28,8 +26,8 @@ public class PlayerDataLocal_Temp :Singleton<PlayerDataLocal_Temp>
                                                     e.Position);
     }
 
-    private void SetPlayerDataLocalTemp_FromPlayerDataJson(string mail,
-        string userName, int level, int health, int killed, int died, Vector3 Position) {
+    public void SetPlayerDataLocalTemp_FromPlayerDataJson(string mail,
+        string userName, int level, int health, int killed, int died, Vector3 position) {
         this.mail = mail;
         this.userName = userName;
         this.level = level;
@@ -37,7 +35,7 @@ public class PlayerDataLocal_Temp :Singleton<PlayerDataLocal_Temp>
         this.killed = killed;
         this.died = died;
 
-        this.position_Temp = Position;
+        this.position_Temp = position;
     }
 
     // Back mainMenu Button in Game Press
@@ -45,5 +43,22 @@ public class PlayerDataLocal_Temp :Singleton<PlayerDataLocal_Temp>
         playerDataJson.Save_PlayerDataJason_RealTime();
     }
 
-//todo
+    public void LoadData(PlayerJson playerJsonData)
+    {
+        this.mail = playerJsonData.mail;
+        this.userName = playerJsonData.name;
+        this.level = playerJsonData.level;
+        this.health = playerJsonData.health;
+        this.killed = playerJsonData.killed;
+        this.died = playerJsonData.died;
+
+        this.position_Temp = JsonUtility.FromJson<Vector3>(playerJsonData.position);
+    }
+
+    public void SaveData(PlayerJson playerJsonData)
+    {
+        
+    }
+
+    //todo
 }

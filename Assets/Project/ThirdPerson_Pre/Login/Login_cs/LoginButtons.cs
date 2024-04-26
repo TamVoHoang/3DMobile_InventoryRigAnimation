@@ -13,9 +13,11 @@ public class LoginButtons : MonoBehaviour
     [SerializeField] private int minPassLength =1;
     [SerializeField] private int maxPassLength =12;
     [SerializeField] Button LoginButton;
+    PlayerDataJson playerDataJson;
     void Start()
     {
         playFabLoginManager = FindObjectOfType<PlayFabLoginManager>();
+        playerDataJson = FindObjectOfType<PlayerDataJson>();
         if(SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
@@ -27,8 +29,7 @@ public class LoginButtons : MonoBehaviour
         HandlePassChanged();
     }
 
-    public void HandlePassChanged()
-    {
+    public void HandlePassChanged() {
         LoginButton.interactable = 
             loginPassword.text.Length >= minPassLength &&
             loginPassword.text.Length <= maxPassLength;
@@ -41,8 +42,7 @@ public class LoginButtons : MonoBehaviour
         //playFabLoginManager.OnLoginPressed();
         //TestLoadingScene.Instance.Load_AccountDataOverview_Scene();// chuyen scen tai day qua overview
 
-        StartCoroutine(DelayTimeLogin_ToLoad(0f)); //5
-
+        StartCoroutine(DelayTimeLogin_ToLoad(3f)); //sau 3s chuyen qua onverview
     }
 
     public void Load_MainMenuSence_OnMainMenuButton() => TestLoadingScene.Instance.Load_MainMenu_Scene();
@@ -54,12 +54,11 @@ public class LoginButtons : MonoBehaviour
     IEnumerator DelayTimeLogin_ToLoad(float time) {
         playFabLoginManager.OnLoginPressed();
         yield return new WaitForSeconds(time);
-        //// playerDataJson.Load_PlayerDataJason_RealTime();
-        //// yield return new WaitForSeconds(time);
-        //TestLoadingScene.Instance.Load_AccountDataOverview_Scene();// chuyen scen tai day qua overview
+        playerDataJson.Load_PlayerDataJason_RealTime();
+        
+        yield return new WaitForSeconds(time);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
     }
 
-    
     //todo
 }

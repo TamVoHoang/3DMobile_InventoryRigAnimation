@@ -1,7 +1,8 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerGun : Singleton<PlayerGun>
+public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
 {
     [SerializeField] private Image sprintingImage;
     private bool isSprinting = false;
@@ -56,27 +57,33 @@ public class PlayerGun : Singleton<PlayerGun>
     [HideInInspector] public Animator animator;
 
     #region SAVE LOAD
-    private Vector3 playerTransform;
-    void Load_Vector3PlayerPosition_PDJ(Vector3 transform) => this.playerTransform = transform;
-    void Save_Vector3PlayerPostion_PDJ(Vector3 positionTemp) {
-        PlayerDataLocal_Temp.Instance.position_Temp = positionTemp;
+    [SerializeField] private Vector3 playerTransform;
+    IEnumerator SetPlayerPositionCoutine(float time) {
+        characterController.enabled = false;
+        yield return new WaitForSeconds(time);
+        transform.position = new Vector3(playerTransform.x,
+                                        playerTransform.y, 
+                                        playerTransform.z);
+        
+        characterController.enabled = true;
     }
+
     #endregion SAVE LOAD
 
 
     protected override void Awake() {
         base.Awake();
-
+        //playerTransform = PlayerDataLocal_Temp.Instance.position_Temp; //! chay ok
+        LoadData(PlayerDataJson.Instance.PlayerJson); //! load thong qua ham interface
+        
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
-
-        Load_Vector3PlayerPosition_PDJ(PlayerDataLocal_Temp.Instance.position_Temp);
     }
 
     void Start() {
+        StartCoroutine(SetPlayerPositionCoutine(0.3f)); //! chay ok
+
         SwitchState(Idle);
-        
-        transform.position = new Vector3(playerTransform.x, playerTransform.y, playerTransform.z);
     }
 
     public void Update() {
@@ -94,9 +101,6 @@ public class PlayerGun : Singleton<PlayerGun>
         // GetDirectionAndMove();
 
         currentState.UpdateState(this);
-
-        //PlayerDataLocal_Temp.Instance.position_Temp = this.transform.position;
-        Save_Vector3PlayerPostion_PDJ(this.transform.position);
     }
     private void FixedUpdate() {
         // Gravity();
@@ -106,7 +110,8 @@ public class PlayerGun : Singleton<PlayerGun>
     private void LateUpdate() {
         Falling();
         Gravity();
-        GetDirectionAndMove(); 
+        GetDirectionAndMove();
+
     }
     public void SwitchState(MovementBaseState state) {
         currentState = state;
@@ -122,7 +127,6 @@ public class PlayerGun : Singleton<PlayerGun>
             else sprintingImage.color = new Color32(255, 255, 225, 100);
         }
     }
-
 
     void GetDirectionAndMove() {
         Vector3 airDir = Vector3.zero; // tao mot bien vector 3 (x,y,z) rong chua gia tri toa do nhap tu ban phim khi o tren khong
@@ -145,4 +149,16 @@ public class PlayerGun : Singleton<PlayerGun>
     void Falling() => animator.SetBool("Falling", !SetIsGrounded());
     public void JumpForce() => velocity.y += jumpForce;
     public void Jumped() => isJumped = true;
+
+    #region IDataPersistence
+    public void LoadData(PlayerJson playerJson) {
+        this.playerTransform = JsonUtility.FromJson<Vector3>(playerJson.position);
+    }
+
+    public void SaveData(PlayerJson playerJson) {
+        //playerJson.position = JsonUtility.ToJson(this.transform.position);
+    }
+    #endregion IDataPersistence
+
+    //todo
 }
