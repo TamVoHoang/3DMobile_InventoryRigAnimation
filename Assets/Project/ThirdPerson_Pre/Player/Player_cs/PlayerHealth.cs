@@ -35,7 +35,7 @@ public class PlayerHealth : Health, IDataPersistence
         animator = GetComponent<Animator>();
         cameraManager = FindObjectOfType<CameraManager>();
         
-        LoadData(PlayerDataJson.Instance.PlayerJson);//! load bang interface
+        // LoadData(PlayerDataJson.Instance.PlayerJson);//! load bang interface
         UpdateSliderHealth();               // tang giam slider health
     }
     protected override void OnDeath(Vector3 direction) {
@@ -114,14 +114,12 @@ public class PlayerHealth : Health, IDataPersistence
         isReadyToTakeDamage = true; //bat dau bi tru mau
     }
 
-    public void LoadData(PlayerJson playerJsonData)
-    {
+    public void LoadData(PlayerJson playerJsonData) {
         SetCurrentHealth = playerJsonData.health;
         diedCount = playerJsonData.died;
     }
 
-    public void SaveData(PlayerJson playerJsonData)
-    {
+    public void SaveData(PlayerJson playerJsonData) {
         playerJsonData.health = (int)CurrentHealth;
         playerJsonData.died = diedCount;
     }

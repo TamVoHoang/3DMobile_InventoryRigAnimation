@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using PlayFab.ClientModels;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,22 +15,20 @@ public class PlayerInfo_UI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI level;
     [SerializeField] private TextMeshProUGUI health;
     [SerializeField] private Slider healthSlider;
-    PlayerHealth playerHealth;
 
     [SerializeField] private PlayerDataLocal_Temp playerDataLocal_Temp;
-
-    private List<IDataPersistence> dataPersistenceObjects;
+    private List<IDataPersistence> dataPersistenceObjects_InGame;
+    
     private void Awake() {
         playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
         healthSlider = FindObjectOfType<Slider>();
-        playerHealth = FindObjectOfType<PlayerHealth>();
-         this.dataPersistenceObjects = FindAllDataPersistenceObjects(); //! tim object dang chua IData
+        this.dataPersistenceObjects_InGame = FindAllDataPersistenceObjects(); //! tim object dang chua IData
     }
 
     private void Start() {
         StartCoroutine(ShowPlayerInfo_GameUI_Countine(0.5f));
-
-        Debug.Log(dataPersistenceObjects.Count);
+        
+        PlayerDataJson.Instance.LoadData_ToObjectsContainIDataPer(dataPersistenceObjects_InGame);
     }
 
     IEnumerator ShowPlayerInfo_GameUI_Countine(float time) {
@@ -43,9 +42,7 @@ public class PlayerInfo_UI : MonoBehaviour
         this.userName.text =""+ userName;
         this.level.text ="Lv: "+ level.ToString();
         this.health.text =""+ health.ToString();
-
         healthSlider.value = health;
-        //playerHealth.SetCurrentHealth = health;
     }
 
     private List<IDataPersistence> FindAllDataPersistenceObjects() {
@@ -54,29 +51,13 @@ public class PlayerInfo_UI : MonoBehaviour
         
         return new List<IDataPersistence>(dataPersistenceObjects);
     }
-    
 
     //?BUTTONS IN MAIN GAME
     public void LoadMainMenuScene_BackButtonInGame() {
-        /* Time.timeScale = 0f; //free
-        SceneManager.LoadSceneAsync("MainMenu");
-        ////playerDataLocal_Temp.position_Temp = PlayerGun.Instance.transform.position;
-        ////PlayerGun.Instance.SaveData(PlayerDataJson.Instance.PlayerJson);
-        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
-        {
-            dataPersistenceObj.SaveData(PlayerDataJson.Instance.PlayerJson);
-        }
-        ////playerDataLocal_Temp.BackButtonPress_SavePlayerDataJson();
-        PlayerDataJson.Instance.Save_PlayerDataJason_RealTime(); */
-        StartCoroutine(DelayTimeSave_ToExitGame(0.2f));
+        StartCoroutine(DelayTimeSave_ToExitGame(0.1f));
     }
     IEnumerator DelayTimeSave_ToExitGame(float time) {
-        
-        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
-        {
-            dataPersistenceObj.SaveData(PlayerDataJson.Instance.PlayerJson);
-        }
-        PlayerDataJson.Instance.PlayerJson.position = JsonUtility.ToJson(PlayerGun.Instance.transform.position);
+        PlayerDataJson.Instance.SaveData_FromObjectsContainIDataPer(dataPersistenceObjects_InGame);
         PlayerDataJson.Instance.Save_PlayerDataJason_RealTime();
         yield return new WaitForSeconds(time);
         Time.timeScale = 0f; //free

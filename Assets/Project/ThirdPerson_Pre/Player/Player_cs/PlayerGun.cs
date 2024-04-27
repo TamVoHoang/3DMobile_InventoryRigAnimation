@@ -58,6 +58,8 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
 
     #region SAVE LOAD
     [SerializeField] private Vector3 playerTransform;
+    [SerializeField] private Vector3 playerTransform_TempSave;
+
     IEnumerator SetPlayerPositionCoutine(float time) {
         characterController.enabled = false;
         yield return new WaitForSeconds(time);
@@ -74,7 +76,7 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     protected override void Awake() {
         base.Awake();
         //playerTransform = PlayerDataLocal_Temp.Instance.position_Temp; //! chay ok
-        LoadData(PlayerDataJson.Instance.PlayerJson); //! load thong qua ham interface
+        //LoadData(PlayerDataJson.Instance.PlayerJson); //! load thong qua ham interface
         
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
@@ -101,6 +103,7 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
         // GetDirectionAndMove();
 
         currentState.UpdateState(this);
+        this.playerTransform_TempSave = transform.position;
     }
     private void FixedUpdate() {
         // Gravity();
@@ -156,7 +159,7 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     }
 
     public void SaveData(PlayerJson playerJson) {
-        //playerJson.position = JsonUtility.ToJson(this.transform.position);
+        playerJson.position = JsonUtility.ToJson(this.playerTransform_TempSave);
     }
     #endregion IDataPersistence
 

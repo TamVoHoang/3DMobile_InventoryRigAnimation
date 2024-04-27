@@ -8,6 +8,7 @@ public class PlayFabLoginManager : MonoBehaviour
     const string LAST_EMAIL_KEY = "LAST_EMAIL", LAST_PASSWORD_KEY = "LAST_PASSWORD";
     [SerializeField] PlayerDataJson playerDataJson;
 
+
 //todo Register
     #region Register
     [Header("Register UI: ")]
@@ -30,6 +31,7 @@ public class PlayFabLoginManager : MonoBehaviour
             Login(email, password);
             ResultRegister_Text.text = "Register Success";
 
+            //? khoi tao doi tuong PlayerJson ko tham so - save doi tuong nay
             /* string vector3ToString = JsonUtility.ToJson(playerDataJson.InitialVector3Player_ToRegister);
             PlayerJson playerJson_Register  = new PlayerJson() {
                 mail = email,
@@ -41,9 +43,11 @@ public class PlayFabLoginManager : MonoBehaviour
 
                 position = vector3ToString //! dang kiem tra thu
             };
-            playerDataJson.Save_PlayerJson_ToResiger(playerJson_Register); // save thong tin khoi tao tai khoan */
+            playerDataJson.Save_PlayerJson_ToResiger(playerJson_Register); */
 
-            playerDataJson.Save_PlayerDataJason_SignUp(email,username);
+            //? khoi tao doi tuong InventoryJson ko tham so - luu doi tuong nay
+
+            PlayerDataJson.Instance.Save_PlayerDataJason_SignUp(email,username);
         }, 
         PlayFabFailure);
     }
@@ -56,10 +60,10 @@ public class PlayFabLoginManager : MonoBehaviour
     [SerializeField] TMP_InputField loginPassword;
     [SerializeField] TextMeshProUGUI ResultLogin_Text;
     
-    public void OnLoginAutoPressed() => Login(PlayerPrefs.GetString(LAST_EMAIL_KEY), PlayerPrefs.GetString(LAST_PASSWORD_KEY));
-    public void OnLoginPressed() {
+    public void OnLoginAutoPressed() => 
+        Login(PlayerPrefs.GetString(LAST_EMAIL_KEY), PlayerPrefs.GetString(LAST_PASSWORD_KEY));
+    public void OnLoginPressed() =>
         Login(loginEmail.text, loginPassword.text);
-    }
 
     private void Login(string mail, string password) {
         PlayFabClientAPI.LoginWithEmailAddress(new LoginWithEmailAddressRequest() {

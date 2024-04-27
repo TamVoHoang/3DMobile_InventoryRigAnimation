@@ -9,12 +9,12 @@ using System;
 using System.Linq;
 
 [System.Serializable]
-public class PlayerJson // game data
+public class PlayerJson
 {
     public string mail, name;
     public int level, health, killed, died;
 
-    public string position, rotation;
+    public string position, rotation;// se duoc Json ep kieu dau duoi ve vector3
 
     public PlayerJson() {}
     public PlayerJson(string mail, string name, int level,int health, int killed, int died,
@@ -44,21 +44,18 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
 
         public Vector3 Position;
     }
-
-    [SerializeField] private PlayerDataLocal_Temp playerDataLocal_Temp;
+    PlayerDataLocal_Temp playerDataLocal_Temp;
+    
     private PlayerJson playerJson;
     public PlayerJson PlayerJson => playerJson;
-    private List<IDataPersistence> dataPersistenceObjects; //! list nhung doi tuong chua IDataPersistence
-    private Vector3 initialVector3Player_ToRegister = new Vector3(12,0.5f,20);
 
+    private Vector3 initialVector3Player_ToRegister = new Vector3(12,0.5f,20);
+    public Vector3 InitialVector3Player_ToRegister => initialVector3Player_ToRegister;
+    private List<IDataPersistence> dataPersistenceObjects; //! list chua IDataPersistence
     protected override void Awake() {
         base.Awake();
         playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
-    }
-
-    private void Start() {
-        this.dataPersistenceObjects = FindAllDataPersistenceObjects(); //! tim object dang chua IData
-        Debug.Log(dataPersistenceObjects.Count);
+        //this.dataPersistenceObjects = FindAllDataPersistenceObjects(); //! tao list objects: IDataPersistence
     }
 
     private PlayerJson ReturnClassPlayerJson_ToSignUp(string mail, string name) {
@@ -86,7 +83,6 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         result => { Debug.Log("Player DataJason Title updated");},
         error => { Debug.LogError(error.GenerateErrorReport()); });
     }
-
     // Save doi tuong khoi tao ko tham so coll 33 PlayFabManager.cs
     public void Save_PlayerJson_ToResiger(PlayerJson playerJson) {
         Debug.Log("Save_PlayerJson_ToResiger");
@@ -99,26 +95,31 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         result => { Debug.Log("Player DataJason Title updated");},
         error => { Debug.LogError(error.GenerateErrorReport()); });
     }
+
+    
     #endregion NEW SIGNUP //? newgame
 
-    #region SAVE REALTIME // save an playerJson(variable)
-    // PASS data other cs in game to update it
-    
+#region SAVE REALTIME // save an playerJson(variable)
     // SAVE data to handler saver
+    public void SaveData_FromObjectsContainIDataPer(List<IDataPersistence> dataPersistenceObjects){
+        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) {
+            dataPersistenceObj.SaveData(playerJson);
+        }
+    }
     public void Save_PlayerDataJason_RealTime() {
-
         Debug.Log("co SAVE jsonnnn");
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
         {
             Data = new Dictionary<string, string> {
-                //{"Json", JsonConvert.SerializeObject(ReturnClassPlayerJson_ToSave())}, //! OK co the dung
+                //{"Json", JsonConvert.SerializeObject(ReturnClassPlayerJson_ToSave())},
                 {"Json", JsonConvert.SerializeObject(playerJson)},
             }
+
         },
         result => { Debug.Log("Player DataJason Title updated");},
-        error => { Debug.LogError(error.GenerateErrorReport()); });
+        error => { Debug.LogError(error.GenerateErrorReport());});
     }
-    #endregion SAVE REALTIME
+#endregion SAVE REALTIME
 
 #region LOAD
     // LOAD any saved data from data handler
@@ -140,16 +141,18 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
             }
         }
         //StartCoroutine(SetPlayerDataLocalTemp_Countine(0f)); //load() - time delay - set playerDataLocal
-        
-        // PUSH the loaded data to all other cs
-        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects)
-        {
+    }
+
+    //! LOAD trong game voi list Interface| lay data ben trong playerJson load ben tren sau do load cho cac doi tuong : Idatapersistence trong list
+    public void LoadData_ToObjectsContainIDataPer(List<IDataPersistence> dataPersistenceObjects){
+        foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) {
             dataPersistenceObj.LoadData(playerJson);
         }
     }
+
 #endregion LOAD
 
-    //? set player data local coll 30 playerdatalocal.cs
+    //? set player datalocal_temp coll 30 playerdatalocal.cs
     IEnumerator SetPlayerDataLocalTemp_Countine(float time) {
         yield return new WaitForSeconds(time);
         Debug.Log("LOADED and SET playerDataLoacal from PlayerDataJson server");

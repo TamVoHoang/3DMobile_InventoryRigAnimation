@@ -18,7 +18,7 @@ public class PlayerDataLocal_Temp :Singleton<PlayerDataLocal_Temp>, IDataPersist
         playerDataJson = GetComponent<PlayerDataJson>();
     }
     private void Start() {
-        playerDataJson.OnPlayerDataLocalChanged += PlayerDataJson_OnPlayerDataLocalChanged;
+        //playerDataJson.OnPlayerDataLocalChanged += PlayerDataJson_OnPlayerDataLocalChanged;
     }
 
     private void PlayerDataJson_OnPlayerDataLocalChanged(object sender, PlayerDataJson.PlayerData e) {
@@ -40,7 +40,7 @@ public class PlayerDataLocal_Temp :Singleton<PlayerDataLocal_Temp>, IDataPersist
 
     // Back mainMenu Button in Game Press
     public void BackButtonPress_SavePlayerDataJson() {
-        playerDataJson.Save_PlayerDataJason_RealTime();
+        //playerDataJson.Save_PlayerDataJason_RealTime();
     }
 
     public void LoadData(PlayerJson playerJsonData)

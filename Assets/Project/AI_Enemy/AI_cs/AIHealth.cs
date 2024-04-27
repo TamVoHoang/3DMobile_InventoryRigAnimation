@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 public class AiHealth : Health
@@ -7,7 +6,6 @@ public class AiHealth : Health
     AiAgent aiAgent;
     AiUIHealthBar uiHealthBar; // thanh mau cua Ai agen dat tai day
     //private bool isGetKilledPoint; // lay diem len bang
-    private int killedCount;
     protected override void OnStart() {
         Debug.Log("OnStart() AiHealth.cs run");
         //isGetKilledPoint = false;

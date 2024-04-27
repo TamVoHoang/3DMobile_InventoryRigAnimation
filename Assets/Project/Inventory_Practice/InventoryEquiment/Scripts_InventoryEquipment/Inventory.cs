@@ -15,7 +15,7 @@ public class Inventory : IItemHolder
 
     public InventorySlot[] inventorySlotArray; // int [] n || n = new int [5]
 
-
+    // TODO HAM KHOI TAO CHO INVENTORY SIGNUP
     //todo HAM KHOI TAO CHO EQUIPMENT
     public Inventory(Action<Item> useItemEquipmentAction, int inventorySlotCount)
     {

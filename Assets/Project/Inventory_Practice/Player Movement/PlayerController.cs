@@ -1,45 +1,35 @@
-
 using CodeMonkey.Utils;
-using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine;
 
 public class PlayerController : Singleton<PlayerController>
 {
     [SerializeField] private int itemSlotAmount = 10;
-    //[SerializeField] private int itemSlotAmount_scroll = 10;
+    ////[SerializeField] private int itemSlotAmount_scroll = 10;
 
     [SerializeField] Inventory inventory; // se duoc Awake() goi de khoi tao new inventory
     [SerializeField] Inventory inventoryEquipment;
     [SerializeField] Inventory inventory_scroll;
-    [SerializeField] UI_Inventory ui_Inventory; // dung de goi ham SetInventoy()
+    
     private ActiveGun activeGun;
     private Health playerHealth;
     
     protected override void Awake() {
         base.Awake();
-
         inventory_scroll = new Inventory(UseItemScroll);                        // inventory ao, pickup
         inventory = new Inventory(UseItem);                                     // => khoi tao Inventory() => itemList (vat pham co the chong len nhau)
         inventoryEquipment = new Inventory(UseItemEquipment, itemSlotAmount);   // inventoryEquipment - nhung thu !istackable
-        //ui_Inventory.SetPlayerPos(this); // uiInventory lay vi tri player //todo-> tesing.cs chy ham nay
         activeGun = GetComponent<ActiveGun>();
         playerHealth = GetComponent<PlayerHealth>();
     }
     private void Start() {
-
-        //ui_Inventory.SetInventory(inventory); // bien inventory in doi tuong UI_Inventory duoi canvas da duoc gan gia tri
-        // ui_Inventory.SetInventoryEquip(inventoryEquip); //todo-> tesing.cs chy ham nay
-
         //? dung static itemWorld goi phuong thuc Spawnworld ra vat phan world
-        //ItemWorld.SpawnItemWorld(new Vector3(3,3), new Item {itemType = Item.ItemType.HealthPotion, amount =1});
-        // ItemWorld.SpawnItemWorld(new Vector3(-3,3), new Item {itemType = Item.ItemType.ManaPotion, amount =1});
-        // ItemWorld.SpawnItemWorld(new Vector3(0,-3), new Item {itemType = Item.ItemType.Sword, amount =1});
-        // ItemWorld.SpawnItemWorld(new Vector3(0,3), new Item {itemType = Item.ItemType.Medkit, amount =1});
+        /* ItemWorld.SpawnItemWorld(new Vector3(3,3), new Item {itemType = Item.ItemType.HealthPotion, amount =1});
+        ItemWorld.SpawnItemWorld(new Vector3(-3,3), new Item {itemType = Item.ItemType.ManaPotion, amount =1});
+        ItemWorld.SpawnItemWorld(new Vector3(0,-3), new Item {itemType = Item.ItemType.Sword, amount =1});
+        ItemWorld.SpawnItemWorld(new Vector3(0,3), new Item {itemType = Item.ItemType.Medkit, amount =1}); */
     }
 
-    private void Update() {
-        
-    }
     public Vector3 GetPosition() {
         return transform.position + new Vector3(0f, 0f, 0f);
     }
@@ -58,7 +48,6 @@ public class PlayerController : Singleton<PlayerController>
         Debug.Log("su dung item trong itemScroll");
         inventoryEquipment.AddItemEquipment(item);
         inventory_scroll.RemoveItem(item);
-        
     }
 
     private void UseItem(Item item) {
@@ -111,8 +100,7 @@ public class PlayerController : Singleton<PlayerController>
     }
 
     private void UseItemEquipment(Item item) {
-        switch (item.itemScriptableObject.itemType)
-        {
+        switch (item.itemScriptableObject.itemType) {
             case Item.ItemType.Coin:
             {
                 Debug.Log("su dung Coin");
@@ -129,7 +117,8 @@ public class PlayerController : Singleton<PlayerController>
 
         //itemWorld.GetItem().itemType != Item.ItemType.Sword_01
         if(itemWorld != null && itemWorld.GetItem().IsStackable() && 
-            itemWorld.GetItem().itemScriptableObject.itemType != Item.ItemType.Gold && itemWorld.GetItem().itemScriptableObject.itemType != Item.ItemType.Iron)
+            itemWorld.GetItem().itemScriptableObject.itemType != Item.ItemType.Gold && 
+            itemWorld.GetItem().itemScriptableObject.itemType != Item.ItemType.Iron)
         {
             // lay ve doi tuong item Item.cs ( game object = vat pham pfItemWord vua louch)
             inventory.AddItem(itemWorld.GetItem()); //todo add item vat pham vao trong itemsList => tang them 1 vat pham
@@ -142,7 +131,8 @@ public class PlayerController : Singleton<PlayerController>
 
         // && itemWorlEquip.GetItem().itemType == Item.ItemType.Sword_01
         if(itemWorlEquipment != null  && !itemWorld.GetItem().IsStackable() || 
-            itemWorld.GetItem().itemScriptableObject.itemType == Item.ItemType.Gold || itemWorld.GetItem().itemScriptableObject.itemType == Item.ItemType.Iron) // && itemWorld.GetItem().IsStackable()
+            itemWorld.GetItem().itemScriptableObject.itemType == Item.ItemType.Gold || 
+            itemWorld.GetItem().itemScriptableObject.itemType == Item.ItemType.Iron) // && itemWorld.GetItem().IsStackable()
         {
             inventoryEquipment.AddItemEquipment(itemWorlEquipment.GetItem());
             itemWorlEquipment.DestroySelf();
@@ -173,7 +163,6 @@ public class PlayerController : Singleton<PlayerController>
                 EquipOrAddToInventoryEquipmentList(itemWorld3DEquipment);
             }
             
-
         }
     }
     private void EquipOrAddToInventoryEquipmentList(ItemWorld3D itemWorld3DEquipment) {
@@ -184,7 +173,9 @@ public class PlayerController : Singleton<PlayerController>
 
         if((itemWorld3DType == Item.ItemType.GunSMG3D_01 && !characterEquipment.GetPrefab_RifleTemp) || 
             (itemWorld3DType == Item.ItemType.GunPistol3D_01 && !characterEquipment.GetPrefab_PistolTemp) || 
-            (itemWorld3DType == Item.ItemType.ISword_Red_01 ||itemWorld3DType == Item.ItemType.ISword_Green_02) && !characterEquipment.GetI_SwordPrefabTemp) {
+            (itemWorld3DType == Item.ItemType.ISword_Red_01 ||itemWorld3DType == Item.ItemType.ISword_Green_02) && 
+            !characterEquipment.GetI_SwordPrefabTemp) 
+        {
             characterEquipment.EquipItem(itemWorld3DEquipment.GetItem());
             itemWorld3DEquipment.DestroySelf();
         }
@@ -194,6 +185,7 @@ public class PlayerController : Singleton<PlayerController>
         }
     }
 
+    //? test thu neu tao i inventory pickup trung gian - inventoryPickup -> inventory Equipment - slot equipment
     private void OnTriggerExit(Collider other) {
         ItemWorld3D itemWorld3DEquipment = other.GetComponent<ItemWorld3D>();
         if(itemWorld3DEquipment != null) {

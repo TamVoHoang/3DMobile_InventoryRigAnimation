@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -15,25 +16,20 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     [SerializeField] private TextMeshProUGUI died;
 
     float delayTimeToLoad = 3f; // time de cho login Press coll 55 playfabloginManager.cs
-    
+
     private void Awake() {
         playerDataJson = FindObjectOfType<PlayerDataJson>();
         playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
     }
 
     private void Start() {
-        ////StartCoroutine(LoadDataJson_Countine(delayTimeToLoad));//loginPress PREVIOUS SCENE - 3s - load() - 0s - setlocal()
-        //ShowInUI_FromDataLoacal_Temp(); //! RUN OK
-        LoadData(playerDataJson.PlayerJson); //! test thu interface in ra
+        StartCoroutine(LoadData_ToShowPlayerInfo_Countine(1f));
     }
 
     //?  RAT OK CO THE DUNG HAM NAY KET HOP VOI NUT NHAN INFO DE IN DATA TU MAIN GAME TRO LAI SCENE NAY
     public void InfoButton() {
         Debug.Log("co nhan nut tai thong tin nguoi choi");
-        playerDataJson.Load_PlayerDataJason_RealTime();
-        ShowInUI_FromDataLoacal_Temp();
-        // StartCoroutine(LoadDataJson_Countine(0f)); // c the bi cham lan dau ko load duoc se lay gia tri cu
-        // StartCoroutine(ShowPlayerInfo_LoginScreen_Countine(0f));    //loginPress -              10s             - print()
+        LoadData(playerDataJson.PlayerJson);
     }
     private void ShowInUI_FromDataLoacal_Temp() {
         this.mail.text ="Mail: "+  playerDataLocal_Temp.mail;
@@ -53,6 +49,13 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     }
 
     #region IDataPersistence
+    IEnumerator LoadData_ToShowPlayerInfo_Countine(float time) {
+        yield return new WaitForSeconds(time);
+        playerDataJson.Load_PlayerDataJason_RealTime(); // de lay playerJson
+        yield return new WaitForSeconds(time);
+        LoadData(playerDataJson.PlayerJson); // lay data playerJson xet UI
+    }
+
     public void LoadData(PlayerJson playerJsonData) {
         Debug.Log("interface co chay vao day");
         this.mail.text ="Mail: "+  playerJsonData.mail;
@@ -63,11 +66,11 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
         this.died.text = "Died: " + playerJsonData.died.ToString();
     }
 
-    public void SaveData(PlayerJson playerJsonData)
-    {
-        
+    public void SaveData(PlayerJson playerJsonData) { 
+
     }
     #endregion IDataPersistence
+
     /* private void ShowPlayerInfo_LoginScreen(string mail, string userName, int level, int health, int killed, int died) {
         this.mail.text ="Mail: "+  mail;
         this.userName.text ="UserName: "+ userName;
@@ -80,7 +83,6 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
         // hien hieu ung loading...
         yield return new WaitForSeconds(time); // cho login PREVIOUS SCENE xong -> load()
         playerDataJson.Load_PlayerDataJason_RealTime();
-        StartCoroutine(ShowPlayerInfo_LoginScreen_Countine(2)); 
     } */
     /* IEnumerator ShowPlayerInfo_LoginScreen_Countine(float time) {
         yield return new WaitForSeconds(time);

@@ -130,26 +130,26 @@ public class Item
 
     //? so sanh loai item trong Enum va tra ve loai sprite image dang luu trong ItemAssets.cs
     public Sprite GetSprite() {
-        //return GetSprite(itemType);
+        ////return GetSprite(itemType);
         return GetSprite(itemScriptableObject.itemType);
     }
-    // public Sprite GetSprite() {
-    //     switch (itemType) {
-    //     default:
-    //     case ItemType.Sword_01:         return ItemAssets.Instance.swordSprite_01;
-    //     case ItemType.Sword_02:         return ItemAssets.Instance.swordSprite_02;
+    /* public Sprite GetSprite() {
+        switch (itemType) {
+        default:
+        case ItemType.Sword_01:         return ItemAssets.Instance.swordSprite_01;
+        case ItemType.Sword_02:         return ItemAssets.Instance.swordSprite_02;
 
-    //     case ItemType.Helmet_01:        return ItemAssets.Instance.helmetSprite_01;
-    //     case ItemType.Armor_01:         return ItemAssets.Instance.armorSprite_01;
-    //     case ItemType.Armor_02:         return ItemAssets.Instance.armorSprite_02;
+        case ItemType.Helmet_01:        return ItemAssets.Instance.helmetSprite_01;
+        case ItemType.Armor_01:         return ItemAssets.Instance.armorSprite_01;
+        case ItemType.Armor_02:         return ItemAssets.Instance.armorSprite_02;
 
 
-    //     case ItemType.HealthPotion:     return ItemAssets.Instance.healthPotionSprite;
-    //     case ItemType.ManaPotion:       return ItemAssets.Instance.manaPotionSprite;
-    //     case ItemType.Coin:             return ItemAssets.Instance.coinSprite;
-    //     case ItemType.Medkit:           return ItemAssets.Instance.medkitSprite;
-    //     }
-    // }
+        case ItemType.HealthPotion:     return ItemAssets.Instance.healthPotionSprite;
+        case ItemType.ManaPotion:       return ItemAssets.Instance.manaPotionSprite;
+        case ItemType.Coin:             return ItemAssets.Instance.coinSprite;
+        case ItemType.Medkit:           return ItemAssets.Instance.medkitSprite;
+        }
+    } */
 
     public GameObject GetPrefab() {
         return GetPrefab(itemScriptableObject.itemType);
@@ -229,23 +229,23 @@ public class Item
     public CharacterEquipment.EquipSlot GetEquipSlot() {
         return itemScriptableObject.equipSlot;
 
-        // switch (itemType) {
-        // default:
-        // //case ItemType.ArmorNone:
-        // case ItemType.Armor_01:
-        // case ItemType.Armor_02:
-        //     return CharacterEquipment.EquipSlot.Armor;
-        // //case ItemType.HelmetNone:
-        // case ItemType.Helmet_01:
-        //     return CharacterEquipment.EquipSlot.Helmet;
-        // //case ItemType.SwordNone:
-        // case ItemType.Sword_01:
-        // case ItemType.Sword_02:
-        // case ItemType.Sword_iron:
-        // case ItemType.Sword_broken:
-        // case ItemType.Sword_gold:
-        //     return CharacterEquipment.EquipSlot.Weapon;
-        // }
+        /* switch (itemType) {
+        default:
+        //case ItemType.ArmorNone:
+        case ItemType.Armor_01:
+        case ItemType.Armor_02:
+            return CharacterEquipment.EquipSlot.Armor;
+        //case ItemType.HelmetNone:
+        case ItemType.Helmet_01:
+            return CharacterEquipment.EquipSlot.Helmet;
+        //case ItemType.SwordNone:
+        case ItemType.Sword_01:
+        case ItemType.Sword_02:
+        case ItemType.Sword_iron:
+        case ItemType.Sword_broken:
+        case ItemType.Sword_gold:
+            return CharacterEquipment.EquipSlot.Weapon;
+        } */
     }
 
 }
