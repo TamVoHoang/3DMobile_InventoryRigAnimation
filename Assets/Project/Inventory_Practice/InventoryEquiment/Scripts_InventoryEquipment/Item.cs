@@ -37,7 +37,9 @@ public class Item
         IMagPistol3D_01,
         IHealthPickup3D_01
     }
-
+    public Item() {
+        
+    }
     //public ItemType itemType;
     public ItemScriptableObject itemScriptableObject;
     public int amount = 1;

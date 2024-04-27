@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3609093471956249910}
   - component: {fileID: 1157032168697209873}
   - component: {fileID: 1326882225373170876}
+  - component: {fileID: 8603189907703044227}
   m_Layer: 0
   m_Name: PlayerDataJson
   m_TagString: Untagged
@@ -65,3 +66,24 @@ MonoBehaviour:
   died: 0
   position_Temp: {x: 0, y: 0, z: 0}
   rotation_Temp: {x: 0, y: 0, z: 0}
+--- !u!114 &8603189907703044227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7083296546603954151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29871ed1ef4bb994daa4377487054263, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemJson:
+    itemJsonName: 
+    itemJsonAmount: 0
+  itemJson2:
+    itemJsonName: 
+    itemJsonAmount: 0
+  inventoryJson:
+    inventoryName: 
+    itemJsons: []

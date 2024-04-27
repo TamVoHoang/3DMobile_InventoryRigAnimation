@@ -1,6 +1,8 @@
 using CodeMonkey.Utils;
 using UnityEngine.InputSystem;
 using UnityEngine;
+using JetBrains.Annotations;
+using System.Collections.Generic;
 
 public class PlayerController : Singleton<PlayerController>
 {
@@ -13,6 +15,10 @@ public class PlayerController : Singleton<PlayerController>
     
     private ActiveGun activeGun;
     private Health playerHealth;
+
+    //TODO SAVE AND LOAD LIST<ITEM>
+    public List<Item> listItemsToSaveJson;
+    //TODO SAVE AND LOAD LIST<ITEM>
     
     protected override void Awake() {
         base.Awake();

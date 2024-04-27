@@ -2,6 +2,7 @@ using TMPro;
 using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
+using System.Collections;
 
 public class PlayFabLoginManager : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class PlayFabLoginManager : MonoBehaviour
 
     public void OnRegisterPressed() {
         Register(registerEmail.text, registerUnsername.text, registerPassword.text);
+
     }
     private void Register(string email,string username, string password) {
         PlayFabClientAPI.RegisterPlayFabUser(new RegisterPlayFabUserRequest() {
@@ -46,12 +48,17 @@ public class PlayFabLoginManager : MonoBehaviour
             playerDataJson.Save_PlayerJson_ToResiger(playerJson_Register); */
 
             //? khoi tao doi tuong InventoryJson ko tham so - luu doi tuong nay
-
             PlayerDataJson.Instance.Save_PlayerDataJason_SignUp(email,username);
+            StartCoroutine(Delaytime(4));
         }, 
         PlayFabFailure);
+
     }
     #endregion Register
+    IEnumerator Delaytime(float time) {
+        yield return new WaitForSeconds(time);
+        InventoryDataJson.Instance.Save_InventoryDataJason_RealTime(InventoryDataJson.Instance.inventoryJson);
+    }
 
 //todo Login
     #region Login

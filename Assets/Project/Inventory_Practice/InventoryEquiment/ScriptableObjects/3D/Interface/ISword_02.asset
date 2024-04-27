@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: ISword_02
   m_EditorClassIdentifier: 
   itemType: 20
-  itemName: ISword02_Green
+  itemName: ISword_Green02
   itemSprite: {fileID: 21300000, guid: 19f2dc7bbdd4441b1811a5304efe5d3f, type: 3}
   pfItem: {fileID: 2334020579491521255, guid: 1ce6f7e5a50dfe8458fdc240e5c8ddd9, type: 3}
   equipSlot: 5
   gunPrefabRaycast: {fileID: 0}
+  clipAmount: 0
+  healthAmout: 0
   handSwordPrefab: {fileID: 0}
   pfWeaponInterface: {fileID: 2334020579491521255, guid: 1ce6f7e5a50dfe8458fdc240e5c8ddd9, type: 3}
   animatorOverrideController: {fileID: 22100000, guid: 65e5f9230bcc644468b5e1cd3304e735, type: 2}
