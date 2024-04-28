@@ -78,12 +78,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29871ed1ef4bb994daa4377487054263, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemJson:
-    itemJsonName: 
-    itemJsonAmount: 0
-  itemJson2:
-    itemJsonName: 
-    itemJsonAmount: 0
+  item:
+    itemScriptableObject: {fileID: 0}
+    amount: 1
+    isSplited: 0
   inventoryJson:
     inventoryName: 
-    itemJsons: []
+    itemsListJson: []

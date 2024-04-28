@@ -171,8 +171,9 @@ public class UI_Inventory : MonoBehaviour
             itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, -y * itemSlotCellSize);
 
 
-            //? thay doi hinh anh hien thi cua tung o vat pham 
-            //Image image = itemSlotRectTransform.Find("image").GetComponent<Image>();
+            //? thay doi hinh anh hien thi cua tung o vat pham NEU > 0
+            ////Image image = itemSlotRectTransform.Find("image").GetComponent<Image>();
+            
             Image image = itemSlotRectTransform.GetChild(2).GetComponent<Image>();
             image.sprite = item.GetSprite();
 

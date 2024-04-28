@@ -40,7 +40,10 @@ public class Item
     public Item() {
         
     }
-    //public ItemType itemType;
+    
+    // todo them vao de khoi tao Json| KO DUNG DUOC do khi kiem tra Istackable(dung itemscriptableObject)
+    //public ItemType itemType; // test thu
+
     public ItemScriptableObject itemScriptableObject;
     public int amount = 1;
     private IItemHolder itemHolder;
@@ -63,69 +66,66 @@ public class Item
         }
     }
 
-    public void MoveToAnotherItemHolder(IItemHolder newItemHolder) {
+    /* public void MoveToAnotherItemHolder(IItemHolder newItemHolder) {
         RemoveFromItemHolder();
         // Add to new Item Holder
         newItemHolder.AddItemEquipment(this);
-    }
+    } */
 
 
     // todo duoc xet true khi tu container weapon -> weaponSlot
     // todo duoc xet false khi tu bi thay the boi 1 loai tuong tu keo tu container weapon len
-    [SerializeField ] private bool isEquiped;
+    //[SerializeField ] private bool isEquiped;
 
     //todo duoc Set col 22 UI_characterEquipmentSlot.cs + col 73 UI_characterEquipment.cs
-    public bool SetIsEquipedItem(bool isEquiped)
+    /* public bool SetIsEquipedItem(bool isEquiped)
     {
         return this.isEquiped = isEquiped;
     }
     public bool GetIsEquipedItem() //todo duoc Get kiem tra o dong col 254 UI_inventory.cs truoc khi remove or Drop
     {
         return isEquiped;
-    }
-
+    } */
 
     public override string ToString() {
-        //return itemType.ToString();
+        ////return itemType.ToString();
         return itemScriptableObject.name;
     }
 
     public static Sprite GetSprite(ItemType itemType) {
         switch (itemType) {
-        default:
-        case ItemType.Sword_01:             return ItemAssets.Instance.swordSprite_01;
-        case ItemType.Sword_02:             return ItemAssets.Instance.swordSprite_02;
-        case ItemType.Sword_broken:         return ItemAssets.Instance.swordSprite_broken;
-        case ItemType.Sword_iron:           return ItemAssets.Instance.swordSprite_iron;
-        case ItemType.Sword_gold:           return ItemAssets.Instance.swordSprite_gold;
+            default:
+            case ItemType.Sword_01:             return ItemAssets.Instance.swordSprite_01;
+            case ItemType.Sword_02:             return ItemAssets.Instance.swordSprite_02;
+            case ItemType.Sword_broken:         return ItemAssets.Instance.swordSprite_broken;
+            case ItemType.Sword_iron:           return ItemAssets.Instance.swordSprite_iron;
+            case ItemType.Sword_gold:           return ItemAssets.Instance.swordSprite_gold;
 
 
-        case ItemType.Helmet_01:            return ItemAssets.Instance.helmetSprite_01;
-        case ItemType.Armor_01:             return ItemAssets.Instance.armorSprite_01;
-        case ItemType.Armor_02:             return ItemAssets.Instance.armorSprite_02;
+            case ItemType.Helmet_01:            return ItemAssets.Instance.helmetSprite_01;
+            case ItemType.Armor_01:             return ItemAssets.Instance.armorSprite_01;
+            case ItemType.Armor_02:             return ItemAssets.Instance.armorSprite_02;
 
 
-        case ItemType.HealthPotion:         return ItemAssets.Instance.healthPotionSprite;
-        case ItemType.ManaPotion:           return ItemAssets.Instance.manaPotionSprite;
-        case ItemType.Coin:                 return ItemAssets.Instance.coinSprite;
-        case ItemType.Medkit:               return ItemAssets.Instance.medkitSprite;
+            case ItemType.HealthPotion:         return ItemAssets.Instance.healthPotionSprite;
+            case ItemType.ManaPotion:           return ItemAssets.Instance.manaPotionSprite;
+            case ItemType.Coin:                 return ItemAssets.Instance.coinSprite;
+            case ItemType.Medkit:               return ItemAssets.Instance.medkitSprite;
 
-        case ItemType.Iron:                 return ItemAssets.Instance.iron;
-        case ItemType.Gold:                 return ItemAssets.Instance.gold;
+            case ItemType.Iron:                 return ItemAssets.Instance.iron;
+            case ItemType.Gold:                 return ItemAssets.Instance.gold;
 
-        case ItemType.Sword3D_01:           return ItemAssets.Instance.swordSprite3D_01;
-        case ItemType.GunSMG3D_01:          return ItemAssets.Instance.gunSMGSprite3D_01;
-        case ItemType.GunPistol3D_01:       return ItemAssets.Instance.gunPistolSprite3D_01;
+            case ItemType.Sword3D_01:           return ItemAssets.Instance.swordSprite3D_01;
+            case ItemType.GunSMG3D_01:          return ItemAssets.Instance.gunSMGSprite3D_01;
+            case ItemType.GunPistol3D_01:       return ItemAssets.Instance.gunPistolSprite3D_01;
 
-        case ItemType.IHand:                return ItemAssets.Instance.IHandSprite3D; //todo IWeapon
-        case ItemType.ISword_Red_01:        return ItemAssets.Instance.ISword_Sprite3D_Red01; //todo IWeapon
-        case ItemType.ISword_Green_02:      return ItemAssets.Instance.ISword_Sprite3D_Green02; //todo IWeapon
+            case ItemType.IHand:                return ItemAssets.Instance.IHandSprite3D; //todo IWeapon
+            case ItemType.ISword_Red_01:        return ItemAssets.Instance.ISword_Sprite3D_Red01; //todo IWeapon
+            case ItemType.ISword_Green_02:      return ItemAssets.Instance.ISword_Sprite3D_Green02; //todo IWeapon
 
-        case ItemType.IMagPistol3D_01:      return ItemAssets.Instance.IMagPistol3D_01; //todo IWeapon
-        case ItemType.IHealthPickup3D_01:   return ItemAssets.Instance.IHealthPickup3D_01; //todo IWeapon
+            case ItemType.IMagPistol3D_01:      return ItemAssets.Instance.IMagPistol3D_01; //todo IWeapon
+            case ItemType.IHealthPickup3D_01:   return ItemAssets.Instance.IHealthPickup3D_01; //todo IWeapon
 
-
-        
 
         }
     }
@@ -157,8 +157,7 @@ public class Item
         return GetPrefab(itemScriptableObject.itemType);
     }
     public GameObject GetPrefab(ItemType itemType) {
-        switch (itemType)
-        {
+        switch (itemType) {
             default:
             case ItemType.Sword_01:         return ItemAssets.Instance.swordPrefab_01;
             case ItemType.Sword_02:         return ItemAssets.Instance.swordPrefab_02;
@@ -189,42 +188,42 @@ public class Item
     //todo loai vat pham nao co the duoc cong don
     public bool IsStackable() {
         //return true;
-        return IsStackable(itemScriptableObject.itemType);
+        return IsStackable(itemScriptableObject.itemType); // OK dung itemScriptable de kiem tra itemType
     }
     public bool IsStackable(ItemType itemType) {
         switch (itemType) {
-        default:
-        case ItemType.HealthPotion:
-        case ItemType.ManaPotion:
-        case ItemType.Medkit:
-        case ItemType.Coin:
-        case ItemType.Iron:
-        case ItemType.Gold:
+            default:
+            case ItemType.HealthPotion:
+            case ItemType.ManaPotion:
+            case ItemType.Medkit:
+            case ItemType.Coin:
+            case ItemType.Iron:
+            case ItemType.Gold:
 
-        case ItemType.IMagPistol3D_01:
-        case ItemType.IHealthPickup3D_01:
-            return true;
+            case ItemType.IMagPistol3D_01:
+            case ItemType.IHealthPickup3D_01:
+                return true;
 
-        case ItemType.Sword_01:
-        case ItemType.Sword_02:
-        case ItemType.Sword_broken:
-        case ItemType.Sword_iron:
-        case ItemType.Sword_gold:
+            case ItemType.Sword_01:
+            case ItemType.Sword_02:
+            case ItemType.Sword_broken:
+            case ItemType.Sword_iron:
+            case ItemType.Sword_gold:
 
-        case ItemType.Helmet_01:
-        case ItemType.Armor_01:
-        case ItemType.Armor_02:
-        
-        case ItemType.Sword3D_01:
-        case ItemType.GunSMG3D_01:
-        case ItemType.GunPistol3D_01:
+            case ItemType.Helmet_01:
+            case ItemType.Armor_01:
+            case ItemType.Armor_02:
+            
+            case ItemType.Sword3D_01:
+            case ItemType.GunSMG3D_01:
+            case ItemType.GunPistol3D_01:
 
-        case ItemType.IHand: //todo IWeapon
-        case ItemType.ISword_Red_01: //todo IWeapon
-        case ItemType.ISword_Green_02: //todo IWeapon
+            case ItemType.IHand: //todo IWeapon
+            case ItemType.ISword_Red_01: //todo IWeapon
+            case ItemType.ISword_Green_02: //todo IWeapon
 
 
-            return false;
+                return false;
         }
     }
 

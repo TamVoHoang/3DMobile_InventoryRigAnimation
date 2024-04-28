@@ -43,7 +43,7 @@ public class PlayerDataLocal_Temp :Singleton<PlayerDataLocal_Temp>, IDataPersist
         //playerDataJson.Save_PlayerDataJason_RealTime();
     }
 
-    public void LoadData(PlayerJson playerJsonData)
+    public void LoadPlayerData(PlayerJson playerJsonData)
     {
         this.mail = playerJsonData.mail;
         this.userName = playerJsonData.name;
@@ -55,7 +55,7 @@ public class PlayerDataLocal_Temp :Singleton<PlayerDataLocal_Temp>, IDataPersist
         this.position_Temp = JsonUtility.FromJson<Vector3>(playerJsonData.position);
     }
 
-    public void SaveData(PlayerJson playerJsonData)
+    public void SavePlayerData(PlayerJson playerJsonData)
     {
         
     }

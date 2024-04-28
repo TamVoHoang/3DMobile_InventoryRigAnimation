@@ -25,7 +25,7 @@ public class PlayerHealth : Health, IDataPersistence
 
         //SetCurrentHealth = MaxHealth; // neu ko tinh luong duoc luu, thi xet mac dinh maxHealth
         
-        lowHealthLimit = MaxHealth/2f;  //? xet rieng lowHealth cho player
+        lowHealthLimit = MaxHealth;  //? xet rieng lowHealth cho player
         isReadyToTakeDamage = true;     // true - san sang bi tru mau
         //isGetDiedPoint = false;         // chau bi tru diem died
         aiRagdoll = GetComponent<AiRagdoll>();
@@ -114,12 +114,12 @@ public class PlayerHealth : Health, IDataPersistence
         isReadyToTakeDamage = true; //bat dau bi tru mau
     }
 
-    public void LoadData(PlayerJson playerJsonData) {
+    public void LoadPlayerData(PlayerJson playerJsonData) {
         SetCurrentHealth = playerJsonData.health;
         diedCount = playerJsonData.died;
     }
 
-    public void SaveData(PlayerJson playerJsonData) {
+    public void SavePlayerData(PlayerJson playerJsonData) {
         playerJsonData.health = (int)CurrentHealth;
         playerJsonData.died = diedCount;
     }

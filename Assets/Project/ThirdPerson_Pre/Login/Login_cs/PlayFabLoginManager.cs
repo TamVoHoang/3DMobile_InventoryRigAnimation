@@ -57,7 +57,8 @@ public class PlayFabLoginManager : MonoBehaviour
     #endregion Register
     IEnumerator Delaytime(float time) {
         yield return new WaitForSeconds(time);
-        InventoryDataJson.Instance.Save_InventoryDataJason_RealTime(InventoryDataJson.Instance.inventoryJson);
+        //InventoryDataJson.Instance.Save_InventoryDataJason_RealTime(InventoryDataJson.Instance.InventoryJson);
+        InventoryDataJson.Instance.Save_InventoryDataJson_SignUp();
     }
 
 //todo Login

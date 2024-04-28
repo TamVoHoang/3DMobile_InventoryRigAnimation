@@ -44,7 +44,7 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
 
         public Vector3 Position;
     }
-    PlayerDataLocal_Temp playerDataLocal_Temp;
+    //PlayerDataLocal_Temp playerDataLocal_Temp;
     
     private PlayerJson playerJson;
     public PlayerJson PlayerJson => playerJson;
@@ -54,7 +54,7 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
     private List<IDataPersistence> dataPersistenceObjects; //! list chua IDataPersistence
     protected override void Awake() {
         base.Awake();
-        playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
+        //playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
         //this.dataPersistenceObjects = FindAllDataPersistenceObjects(); //! tao list objects: IDataPersistence
     }
 
@@ -103,7 +103,7 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
     // SAVE data to handler saver
     public void SaveData_FromObjectsContainIDataPer(List<IDataPersistence> dataPersistenceObjects){
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) {
-            dataPersistenceObj.SaveData(playerJson);
+            dataPersistenceObj.SavePlayerData(playerJson);
         }
     }
     public void Save_PlayerDataJason_RealTime() {
@@ -146,7 +146,7 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
     //! LOAD trong game voi list Interface| lay data ben trong playerJson load ben tren sau do load cho cac doi tuong : Idatapersistence trong list
     public void LoadData_ToObjectsContainIDataPer(List<IDataPersistence> dataPersistenceObjects){
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) {
-            dataPersistenceObj.LoadData(playerJson);
+            dataPersistenceObj.LoadPlayerData(playerJson);
         }
     }
 
@@ -174,5 +174,6 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         
         return new List<IDataPersistence>(dataPersistenceObjects);
     }
+
 //todo
 }

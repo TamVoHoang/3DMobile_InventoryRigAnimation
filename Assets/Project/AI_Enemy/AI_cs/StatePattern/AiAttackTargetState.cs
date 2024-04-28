@@ -18,6 +18,9 @@ public class AiAttackTargetState : AiState
     }
 
     public void Update(AiAgent agent) {
+        //? neu ai death - ko the chay xuong phan animation switching gun | sang bi loi tai day
+        if(agent.health.IsDead) return;
+        
         Debug.Log("Attack Update()");
         if(agent.playerTransform.GetComponent<PlayerHealth>().IsDead) {
             //! set null target player | quan trong co trong DeActive() => co the xet ben update() IdleState.
@@ -47,7 +50,6 @@ public class AiAttackTargetState : AiState
         UpdateFiring(agent);        //ban hay ko dua vai IsInsight() layerMask co Scan() duoc hay khong
         UpdateLowhHealth(agent);    // khi dang tan cong, neu heal < lowHealth thi di tim mau
         UpdateLowAmmo(agent);
-
         
     }
 

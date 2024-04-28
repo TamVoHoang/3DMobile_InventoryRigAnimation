@@ -42,7 +42,7 @@ public class LoginButtons : MonoBehaviour
         //playFabLoginManager.OnLoginPressed();
         //TestLoadingScene.Instance.Load_AccountDataOverview_Scene();// chuyen scen tai day qua overview
 
-        StartCoroutine(DelayTimeLogin_ToLoad(3f)); //sau 3s chuyen qua onverview
+        StartCoroutine(DelayTimeLogin_ToLoad(4f)); //sau 3s chuyen qua onverview
     }
 
     public void Load_MainMenuSence_OnMainMenuButton() => TestLoadingScene.Instance.Load_MainMenu_Scene();
@@ -55,6 +55,8 @@ public class LoginButtons : MonoBehaviour
         playFabLoginManager.OnLoginPressed();
         yield return new WaitForSeconds(time);
         playerDataJson.Load_PlayerDataJason_RealTime();
+        yield return new WaitForSeconds(time);
+        InventoryDataJson.Instance.Load_InventoryDataJason_RealTime();
         
         yield return new WaitForSeconds(time);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);

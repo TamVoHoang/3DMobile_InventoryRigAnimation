@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 
 public class Inventory : IItemHolder
@@ -28,9 +29,9 @@ public class Inventory : IItemHolder
 
         }
         //? tao moi item va add vao itemList kieu Item weapon
-        // AddItemEquipment(new Item {itemScriptableObject = new ItemScriptableObject() {
-        //         itemType = Item.ItemType.Sword_01 },
-        //         amount = 1});
+        /* AddItemEquipment(new Item {itemScriptableObject = new ItemScriptableObject() {
+                itemType = Item.ItemType.Sword_01 },
+                amount = 1}); */
     }
 
     //TODO HAM KHOI TOA CHO ITEM 
@@ -42,11 +43,11 @@ public class Inventory : IItemHolder
         itemList = new List<Item>();
 
         //? tao moi item va add vao itemList kieu Item item
-        // AddItem(new Item {itemScriptableObject = new ItemScriptableObject() {
-        //     itemType = Item.ItemType.GunSMG3D_01 },
-        //     amount = 1});
+        /* AddItem(new Item {itemScriptableObject = new ItemScriptableObject() {
+            itemType = Item.ItemType.GunSMG3D_01 },
+            amount = 1});
 
-        // PrinItemList();
+        PrinItemList(); */
     }
 
     //todo ham tra ve gia tri itemlist | RefreshIventoryItems() UI_Inventory.cs call
@@ -91,7 +92,8 @@ public class Inventory : IItemHolder
         }else {
             itemList.Add(item);
         }
-        OnItemListChanged?.Invoke(this, EventArgs.Empty);
+        if(item.amount > 0) // neu lon hon 0 thi update UI
+            OnItemListChanged?.Invoke(this, EventArgs.Empty);
     }
 
     //todo ADD ITEM VAO TRONG BANG EQUIPMENT || co the istack || co the split

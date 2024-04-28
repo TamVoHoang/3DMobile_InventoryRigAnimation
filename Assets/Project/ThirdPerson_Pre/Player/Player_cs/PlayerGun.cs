@@ -154,11 +154,11 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     public void Jumped() => isJumped = true;
 
     #region IDataPersistence
-    public void LoadData(PlayerJson playerJson) {
+    public void LoadPlayerData(PlayerJson playerJson) {
         this.playerTransform = JsonUtility.FromJson<Vector3>(playerJson.position);
     }
 
-    public void SaveData(PlayerJson playerJson) {
+    public void SavePlayerData(PlayerJson playerJson) {
         playerJson.position = JsonUtility.ToJson(this.playerTransform_TempSave);
     }
     #endregion IDataPersistence

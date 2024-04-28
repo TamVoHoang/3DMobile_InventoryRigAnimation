@@ -8,6 +8,8 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     
     [SerializeField] private PlayerDataLocal_Temp playerDataLocal_Temp;
     [SerializeField] private PlayerDataJson playerDataJson;
+    [SerializeField] private InventoryDataJson inventoryDataJson;
+
     [SerializeField] private TextMeshProUGUI mail;
     [SerializeField] private TextMeshProUGUI userName;
     [SerializeField] private TextMeshProUGUI level;
@@ -19,17 +21,18 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
 
     private void Awake() {
         playerDataJson = FindObjectOfType<PlayerDataJson>();
+        inventoryDataJson = FindObjectOfType<InventoryDataJson>();
         playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
     }
 
     private void Start() {
-        StartCoroutine(LoadData_ToShowPlayerInfo_Countine(1f));
+        StartCoroutine(LoadData_ToShowPlayerInfo_Countine(3f));
     }
 
     //?  RAT OK CO THE DUNG HAM NAY KET HOP VOI NUT NHAN INFO DE IN DATA TU MAIN GAME TRO LAI SCENE NAY
     public void InfoButton() {
         Debug.Log("co nhan nut tai thong tin nguoi choi");
-        LoadData(playerDataJson.PlayerJson);
+        LoadPlayerData(playerDataJson.PlayerJson);
     }
     private void ShowInUI_FromDataLoacal_Temp() {
         this.mail.text ="Mail: "+  playerDataLocal_Temp.mail;
@@ -52,11 +55,14 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     IEnumerator LoadData_ToShowPlayerInfo_Countine(float time) {
         yield return new WaitForSeconds(time);
         playerDataJson.Load_PlayerDataJason_RealTime(); // de lay playerJson
+        // yield return new WaitForSeconds(time);
+        // inventoryDataJson.Load_InventoryDataJason_RealTime(); // de lay inventoryJson
+        
         yield return new WaitForSeconds(time);
-        LoadData(playerDataJson.PlayerJson); // lay data playerJson xet UI
+        LoadPlayerData(playerDataJson.PlayerJson); // lay data playerJson xet UI
     }
 
-    public void LoadData(PlayerJson playerJsonData) {
+    public void LoadPlayerData(PlayerJson playerJsonData) {
         Debug.Log("interface co chay vao day");
         this.mail.text ="Mail: "+  playerJsonData.mail;
         this.userName.text ="UserName: "+ playerJsonData.name;
@@ -66,7 +72,7 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
         this.died.text = "Died: " + playerJsonData.died.ToString();
     }
 
-    public void SaveData(PlayerJson playerJsonData) { 
+    public void SavePlayerData(PlayerJson playerJsonData) { 
 
     }
     #endregion IDataPersistence

@@ -1,7 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using PlayFab.ClientModels;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,54 +8,75 @@ using UnityEngine.UI;
 //todo doi tuong chua canvas hien thi thong tin name, level, health, healthSlider
 public class PlayerInfo_UI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI userName;
-    [SerializeField] private TextMeshProUGUI level;
-    [SerializeField] private TextMeshProUGUI health;
-    [SerializeField] private Slider healthSlider;
+    [SerializeField] TextMeshProUGUI userName;
+    [SerializeField] TextMeshProUGUI level;
+    [SerializeField] TextMeshProUGUI health;
+    [SerializeField] Slider healthSlider;
+    [SerializeField] PlayerDataJson playerDataJson;
+    [SerializeField] LoadDataTo_IDataPersistence loadDataTo_IDataPersistence;
 
-    [SerializeField] private PlayerDataLocal_Temp playerDataLocal_Temp;
-    private List<IDataPersistence> dataPersistenceObjects_InGame;
+    // [SerializeField] private PlayerDataLocal_Temp playerDataLocal_Temp;
+    /* private List<IDataPersistence> dataPersistenceObjects_InGame;
+    private List<IData_InventoryPersistence> inventoryPersistenceObjects_InGame; */
+
     
     private void Awake() {
-        playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
-        healthSlider = FindObjectOfType<Slider>();
-        this.dataPersistenceObjects_InGame = FindAllDataPersistenceObjects(); //! tim object dang chua IData
-    }
+        playerDataJson = FindObjectOfType<PlayerDataJson>();
+        loadDataTo_IDataPersistence = FindObjectOfType<LoadDataTo_IDataPersistence>();
+        healthSlider = GetComponentInChildren<Slider>();
+
+        // playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
+/*         this.dataPersistenceObjects_InGame = FindAllDataPersistenceObjects(); //! tim object dang chua IData
+        this.inventoryPersistenceObjects_InGame = FindAllInventoryData_PersistenceObjects();
+ */    }
 
     private void Start() {
-        StartCoroutine(ShowPlayerInfo_GameUI_Countine(0.5f));
+        StartCoroutine(ShowPlayerInfo_GameUI_Countine(0.2f));
         
-        PlayerDataJson.Instance.LoadData_ToObjectsContainIDataPer(dataPersistenceObjects_InGame);
+        /* PlayerDataJson.Instance.LoadData_ToObjectsContainIDataPer(dataPersistenceObjects_InGame);
+        InventoryDataJson.Instance.LoadData_ToObjectsContainIInventoryPer(inventoryPersistenceObjects_InGame); */
     }
 
     IEnumerator ShowPlayerInfo_GameUI_Countine(float time) {
         yield return new WaitForSeconds(time);
-        ShowPlayerInfo_GameUI(playerDataLocal_Temp.userName,
-                            playerDataLocal_Temp.level,
-                            playerDataLocal_Temp.health);
+        LoadPlayerInfo_GameUI(playerDataJson.PlayerJson.name,
+                            playerDataJson.PlayerJson.level,
+                            playerDataJson.PlayerJson.health);
+        
     }
 
-    private void ShowPlayerInfo_GameUI(string userName, int level, int health) {
+    private void LoadPlayerInfo_GameUI(string userName, int level, int health) {
         this.userName.text =""+ userName;
         this.level.text ="Lv: "+ level.ToString();
         this.health.text =""+ health.ToString();
         healthSlider.value = health;
     }
 
-    private List<IDataPersistence> FindAllDataPersistenceObjects() {
+    /* private List<IDataPersistence> FindAllDataPersistenceObjects() {
         IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>()
             .OfType<IDataPersistence>();
         
         return new List<IDataPersistence>(dataPersistenceObjects);
     }
 
+    private List<IData_InventoryPersistence> FindAllInventoryData_PersistenceObjects() {
+        IEnumerable<IData_InventoryPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>()
+            .OfType<IData_InventoryPersistence>();
+        
+        return new List<IData_InventoryPersistence>(dataPersistenceObjects);
+    } */
+
     //?BUTTONS IN MAIN GAME
     public void LoadMainMenuScene_BackButtonInGame() {
         StartCoroutine(DelayTimeSave_ToExitGame(0.1f));
     }
     IEnumerator DelayTimeSave_ToExitGame(float time) {
-        PlayerDataJson.Instance.SaveData_FromObjectsContainIDataPer(dataPersistenceObjects_InGame);
+        /* PlayerDataJson.Instance.SaveData_FromObjectsContainIDataPer(dataPersistenceObjects_InGame);
+        InventoryDataJson.Instance.SaveInventoryData_FromObjectsContainIInventoryDataPer(inventoryPersistenceObjects_InGame);
+        
         PlayerDataJson.Instance.Save_PlayerDataJason_RealTime();
+        InventoryDataJson.Instance.Save_InventoryDataJason_RealTime(); */
+        loadDataTo_IDataPersistence.SaveData_BeforeOutOfGame();
         yield return new WaitForSeconds(time);
         Time.timeScale = 0f; //free
         SceneManager.LoadSceneAsync("MainMenu");
