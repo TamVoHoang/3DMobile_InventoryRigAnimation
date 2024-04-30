@@ -14,11 +14,11 @@ public class PlayerJson
     public string mail, name;
     public int level, health, killed, died;
 
-    public string position, rotation;// se duoc Json ep kieu dau duoi ve vector3
+    public Vector3 position, rotation;// se duoc Json ep kieu dau duoi ve vector3
 
     public PlayerJson() {}
     public PlayerJson(string mail, string name, int level,int health, int killed, int died,
-                        string position) {
+                        Vector3 position) {
         this.mail = mail;
         this.name = name;
         this.level = level;
@@ -33,7 +33,7 @@ public class PlayerJson
 
 public class PlayerDataJson : Singleton<PlayerDataJson>
 {
-    public event EventHandler<PlayerData> OnPlayerDataLocalChanged;
+    public event EventHandler<PlayerData> OnPlayerDataLocalChanged; // tao event de pass data sang PlayerDataLocal
     public class PlayerData : EventArgs {
         public string mail;
         public string userName;
@@ -59,25 +59,27 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
     }
 
     private PlayerJson ReturnClassPlayerJson_ToSignUp(string mail, string name) {
-        string vector3ToString = JsonUtility.ToJson(initialVector3Player_ToRegister);
-        return new PlayerJson(mail, name, 1, 500, 0, 0, vector3ToString);
+        //string vector3ToString = JsonUtility.ToJson(initialVector3Player_ToRegister); // OK
+        return new PlayerJson(mail, name, 1, 500, 0, 0, initialVector3Player_ToRegister); // vector3ToString
     }
 
-    private PlayerJson ReturnClassPlayerJson_ToSave() {
+    /* private PlayerJson ReturnClassPlayerJson_ToSave() {
         string vector3PlayerTransform_ToSaveRealtime = JsonUtility.ToJson(PlayerDataLocal_Temp.Instance.position_Temp);
         return new PlayerJson(playerJson.mail, playerJson.name, playerJson.level,
                                 PlayerDataLocal_Temp.Instance.health,
                                 PlayerDataLocal_Temp.Instance.killed,
                                 PlayerDataLocal_Temp.Instance.died,
                                 vector3PlayerTransform_ToSaveRealtime);
-    }
+    } */
 
     #region NEW SIGNUP // newgame
     public void Save_PlayerDataJason_SignUp(string mail, string name) {
+        string playerJsonString = JsonUtility.ToJson(ReturnClassPlayerJson_ToSignUp(mail, name));
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
         {
             Data = new Dictionary<string, string> {
-                {"Json", JsonConvert.SerializeObject(ReturnClassPlayerJson_ToSignUp(mail, name))},
+                //{"Json", JsonConvert.SerializeObject(ReturnClassPlayerJson_ToSignUp(mail, name))}, //OK
+                {"Json", JsonConvert.SerializeObject(playerJsonString)},
             }
         },
         result => { Debug.Log("Player DataJason Title updated");},
@@ -107,12 +109,12 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         }
     }
     public void Save_PlayerDataJason_RealTime() {
+        string playerJsonString = JsonUtility.ToJson(playerJson);
         Debug.Log("co SAVE jsonnnn");
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
         {
             Data = new Dictionary<string, string> {
-                //{"Json", JsonConvert.SerializeObject(ReturnClassPlayerJson_ToSave())},
-                {"Json", JsonConvert.SerializeObject(playerJson)},
+                {"Json", JsonConvert.SerializeObject(playerJsonString)},
             }
 
         },
@@ -136,7 +138,10 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         foreach (var eachData in result.Data) {
             switch (eachData.Key) {
                 case "Json":
-                    playerJson = JsonConvert.DeserializeObject<PlayerJson>((result.Data[eachData.Key].Value)); // OK
+                    //playerJson = JsonConvert.DeserializeObject<PlayerJson>((result.Data[eachData.Key].Value)); // OK
+                    
+                    var playerDataJsonString = JsonConvert.DeserializeObject<string>(result.Data[eachData.Key].Value);
+                    playerJson = JsonUtility.FromJson<PlayerJson>(playerDataJsonString);
                     break;
             }
         }
@@ -153,7 +158,7 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
 #endregion LOAD
 
     //? set player datalocal_temp coll 30 playerdatalocal.cs
-    IEnumerator SetPlayerDataLocalTemp_Countine(float time) {
+    /* IEnumerator SetPlayerDataLocalTemp_Countine(float time) {
         yield return new WaitForSeconds(time);
         Debug.Log("LOADED and SET playerDataLoacal from PlayerDataJson server");
 
@@ -166,7 +171,7 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
                                                             killed = playerJson.killed,
                                                             died = playerJson.died,
                                                             Position = vector3ToSetLocal});
-    }
+    } */
 
     private List<IDataPersistence> FindAllDataPersistenceObjects() {
         IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>()

@@ -75,15 +75,14 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
 
     protected override void Awake() {
         base.Awake();
-        //playerTransform = PlayerDataLocal_Temp.Instance.position_Temp; //! chay ok
-        //LoadData(PlayerDataJson.Instance.PlayerJson); //! load thong qua ham interface
         
         animator = GetComponent<Animator>();
         characterController = GetComponent<CharacterController>();
     }
 
     void Start() {
-        StartCoroutine(SetPlayerPositionCoutine(0.3f)); //! chay ok
+        // plai co delay time - cho load data from coll 28 LoadData_IDataPersistence.cs
+        StartCoroutine(SetPlayerPositionCoutine(0.3f));
 
         SwitchState(Idle);
     }
@@ -108,7 +107,7 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     private void FixedUpdate() {
         // Gravity();
         // Falling();
-        // GetDirectionAndMove(); // camera bi lac khi dung fixedUpdate
+        // GetDirectionAndMove(); //! camera bi lac khi dung fixedUpdate
     }
     private void LateUpdate() {
         Falling();
@@ -155,11 +154,13 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
 
     #region IDataPersistence
     public void LoadPlayerData(PlayerJson playerJson) {
-        this.playerTransform = JsonUtility.FromJson<Vector3>(playerJson.position);
+        //this.playerTransform = JsonUtility.FromJson<Vector3>(playerJson.position);
+        this.playerTransform = playerJson.position;
     }
 
     public void SavePlayerData(PlayerJson playerJson) {
-        playerJson.position = JsonUtility.ToJson(this.playerTransform_TempSave);
+        //playerJson.position = JsonUtility.ToJson(this.playerTransform_TempSave);
+        playerJson.position = this.playerTransform_TempSave;
     }
     #endregion IDataPersistence
 

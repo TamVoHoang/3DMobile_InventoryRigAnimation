@@ -49,13 +49,13 @@ public class PlayFabLoginManager : MonoBehaviour
 
             //? khoi tao doi tuong InventoryJson ko tham so - luu doi tuong nay
             PlayerDataJson.Instance.Save_PlayerDataJason_SignUp(email,username);
-            StartCoroutine(Delaytime(4));
+            StartCoroutine(SaveInventoryDataJson_ToSignUpContine(4));
         }, 
         PlayFabFailure);
 
     }
     #endregion Register
-    IEnumerator Delaytime(float time) {
+    IEnumerator SaveInventoryDataJson_ToSignUpContine(float time) {
         yield return new WaitForSeconds(time);
         //InventoryDataJson.Instance.Save_InventoryDataJason_RealTime(InventoryDataJson.Instance.InventoryJson);
         InventoryDataJson.Instance.Save_InventoryDataJson_SignUp();

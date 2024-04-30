@@ -15,10 +15,12 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
     
     private ActiveGun activeGun;
     private Health playerHealth;
+    private CharacterEquipment characterEquipment;
 
     //TODO SAVE AND LOAD LIST<ITEM>
     public List<Item> listItemsToSaveJson;
     [SerializeField] ItemScriptableObject SMG01_3D_01;
+
     //TODO SAVE AND LOAD LIST<ITEM>
     
     protected override void Awake() {
@@ -28,6 +30,8 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
         inventoryEquipment = new Inventory(UseItemEquipment, itemSlotAmount);   // inventoryEquipment - nhung thu !istackable
         activeGun = GetComponent<ActiveGun>();
         playerHealth = GetComponent<PlayerHealth>();
+        characterEquipment = GetComponent<CharacterEquipment>();
+
     }
     private void Start() {
         //? dung static itemWorld goi phuong thuc Spawnworld ra vat phan world
@@ -196,39 +200,33 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
     private void OnTriggerExit(Collider other) {
         ItemWorld3D itemWorld3DEquipment = other.GetComponent<ItemWorld3D>();
         if(itemWorld3DEquipment != null) {
-            Debug.Log("KO cham item3D");
-
             //? tra lai itemWorld3d tu scrollViewInventory
-            // foreach (var item in inventory_scroll.GetItemList()) {
-            //     Item duplicateItem = new Item { itemScriptableObject = item.itemScriptableObject, amount = item.amount };
-            //     inventory_scroll.RemoveItem(item);
-            //     ItemWorld3D.DropItem(GetPosition(),duplicateItem);
-            // }
-
             //? clear scrollViewInventory khi ??
-            //inventory_scroll.ClearInventory_Scroll(inventory_scroll.GetItemList()); 
+            /* foreach (var item in inventory_scroll.GetItemList()) {
+                Item duplicateItem = new Item { itemScriptableObject = item.itemScriptableObject, amount = item.amount };
+                inventory_scroll.RemoveItem(item);
+                ItemWorld3D.DropItem(GetPosition(),duplicateItem);
+            }
+            inventory_scroll.ClearInventory_Scroll(inventory_scroll.GetItemList());  */
         }
     }
 
+    #region Idata_InventoryPersistence
     public void Load_InventoryData(InventoryJson inventoryJson)
     {
-        
         foreach (var item in inventoryJson.itemsListJson)
         {
             if(item.IsStackable()) this.inventory.AddItem(item);
             if(!item.IsStackable()) this.inventoryEquipment.AddItemEquipment(item);
         }
-        
     }
 
-    public void Save_InventoryData(ref InventoryJson inventoryJson)
-    {
-        inventoryJson.itemsListJson.Clear();
-        foreach (var item in this.inventory.GetItemList())
-        {
+    public void Save_InventoryData(ref InventoryJson inventoryJson) {
+        inventoryJson.itemsListJson.Clear();    // xoa list itemsListJson REASON dang co gia tri khi khoi tao luc SignUp
+        //? save inventory item IsStackable().
+        foreach (var item in this.inventory.GetItemList()) {
             bool isUnique = true;
-            foreach (var uniqueItem in inventoryJson.itemsListJson)
-            {
+            foreach (var uniqueItem in inventoryJson.itemsListJson) {
                 if(ArePropertiesEqual(item, uniqueItem)) {
                     isUnique = false;
                     break;
@@ -237,14 +235,20 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
             if(isUnique) inventoryJson.itemsListJson.Add(item);
         }
 
+        //? save inventory equip !IsStackable() - dragdrop.
         foreach (var item in this.inventoryEquipment.GetItemList()) {
             inventoryJson.itemsListJson.Add(item);
         }
+
+        foreach (var item in characterEquipment.GetEquippedItemsList)
+        {
+            inventoryJson.itemsListJson.Add(item);
+        }
+
     }
+    #endregion Idata_InventoryPersistence
 
-
-    private bool ArePropertiesEqual(Item item1, Item item2)
-    {
+    private bool ArePropertiesEqual(Item item1, Item item2) {
         // Compare properties here, return true if they are equal, otherwise false
         return item1.itemScriptableObject.itemType == item2.itemScriptableObject.itemType &&
                 item1.amount == item2.amount &&

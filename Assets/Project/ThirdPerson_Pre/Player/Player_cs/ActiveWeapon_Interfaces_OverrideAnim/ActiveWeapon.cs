@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
         Primary = 0,
         Secondary = 1,
     }
+
     public Transform[] swordSlots; //? dung de bo chi so index vao de instatiate vu khi ra dung vi tri transform
     public Transform swordHolster_Point; //? vi tri sword se cat
     [SerializeField] ISword[] equipped_swords = new ISword[1];
@@ -22,24 +24,32 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
         }
         return equipped_swords[index];
     }
-    [SerializeField] private int activeSwordIndex = 1;
-    public int GetActiveSwordIndex { get { return activeSwordIndex; } }
-    [SerializeField] private bool isHolstered_Sword = false; // false = dang equip
+
     public bool IsHolstered_Sword { get { return isHolstered_Sword; } }
+    public int GetActiveSwordIndex { get { return activeSwordIndex; } }
+    [SerializeField] private int activeSwordIndex = 1;
+    [SerializeField] private bool isHolstered_Sword = false; // false = dang equip
     private CharacterEquipment characterEquipment;
 
     //todo override
-    [SerializeField] private Animator playerAnimator;
+    [SerializeField] Animator playerAnimator;
     [SerializeField] ItemScriptableObject default_IWeapon; //scriptable vu khi mac dinh tay khong
-    [SerializeField] private MonoBehaviour defaultActiveWeapon; // gameobject chua class chua scriptable ISword
-    [SerializeField] private MonoBehaviour currenActiveWeapon;
+    [SerializeField] MonoBehaviour defaultActiveWeapon; // gameobject chua class chua scriptable ISword
+    [SerializeField] MonoBehaviour currenActiveWeapon;
     private MonoBehaviour weaponTemp;
 
-    [SerializeField] private float timeBetweenAttacks = .5f;
     public AnimatorOverrideController overrideControllers;
+    [SerializeField] private float timeBetweenAttacks;
     private string weaponName;
     //private int weaponDamage;
     private bool isAttacking = false;
+
+    //todo swords raycast
+    [SerializeField] GameObject swordSpawnPoint_Raycast;
+    // [SerializeField] GameObject leftHand;
+    // [SerializeField] GameObject rightHand;
+    [SerializeField] float minSwordDisRaycast = 1f;
+
 
     protected override void Awake() {
         base.Awake();
@@ -50,16 +60,18 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
         characterEquipment = GetComponent<CharacterEquipment>();
         playerAnimator = GetComponent<Animator>();
         
-        //CurrenActiveWeapon = defaultWeapon.pfItem.GetComponent<MonoBehaviour>(); //todo gameobject cua phan chung
+        ////CurrenActiveWeapon = defaultWeapon.pfItem.GetComponent<MonoBehaviour>(); //todo gameobject cua phan chung
         defaultActiveWeapon = default_IWeapon.pfWeaponInterface.GetComponent<MonoBehaviour>();//todo gameObject cua phan interface
         currenActiveWeapon = defaultActiveWeapon; // dau tien vao la mac dinh khoi dong tay
+
+        AttackCoolDown();// testing thu
     }
     private void Update() {
         AttackCurrentWeapon();
-        
     }
-    public void SetDefaultWeapon() //? xet override aniton tro ve default weapon danh tya khong khi khong con trang bi chracterEquiment
-    {
+    
+    //? xet override aniton tro ve default weapon danh tya khong khi khong con trang bi chracterEquiment
+    public void SetDefaultWeapon() {
         overrideControllers = (defaultActiveWeapon as IWeapon).GetWeaponInfo().animatorOverrideController;
         playerAnimator.runtimeAnimatorController = overrideControllers;
     }
@@ -74,7 +86,9 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
         }
 
         currenActiveWeapon = newWeapon;
+        
         weaponName = (currenActiveWeapon as IWeapon).GetWeaponInfo().itemName;
+        timeBetweenAttacks = (currenActiveWeapon as IWeapon).GetWeaponInfo().coolDownTime;
         overrideControllers = (currenActiveWeapon as IWeapon).GetWeaponInfo().animatorOverrideController;
         playerAnimator.runtimeAnimatorController = overrideControllers;
 
@@ -86,20 +100,24 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     private void AttackCurrentWeapon() {
         if(InputManager.Instance.IsAttackButton && !isAttacking && currenActiveWeapon && ActiveGun.Instance.IsHolstered) {
             isAttacking = true;
-            StopAllCoroutines();
+            //StopAllCoroutines(); // dang test
             AttackCoolDown();
             (currenActiveWeapon as IWeapon).Attack();
             playerAnimator.SetTrigger("Attack");
         }
 
+        if(currenActiveWeapon != null && !isHolstered_Sword) {
+            CheckSwordRaycast(swordSpawnPoint_Raycast.transform, Vector3.up);
+        }
+
     }
-    IEnumerator TimeBetweenAttackRoutine()
-    {
+    IEnumerator TimeBetweenAttackRoutine() {
         yield return new WaitForSeconds(timeBetweenAttacks);
         isAttacking = false;
     }
-    private void AttackCoolDown() //? gia tri float coolDown quyet dinh khoang cach thuc hien hanh dong attack moi loai vu khi
-    {
+
+    //? gia tri float coolDown quyet dinh khoang cach thuc hien hanh dong attack moi loai vu khi
+    private void AttackCoolDown() {
         isAttacking = true;
         StopAllCoroutines();
         StartCoroutine(TimeBetweenAttackRoutine()); //isAttacking = false;
@@ -117,8 +135,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
         playerAnimator.SetBool("holster_sword", true);
         playerAnimator.SetBool("ReadyAttack", false);
     } 
-    public void ToggleActiveSword()
-    {
+    public void ToggleActiveSword() {
         bool isHolstered = playerAnimator.GetBool("holster_sword"); //?false = dang equip
         //dao nguoc bien trong script va gan cho bien torng aniamtior
         if (isHolstered) StartCoroutine(ActivateSword(activeSwordIndex));
@@ -178,11 +195,29 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
 
             isHolstered_Sword = false;
         }
-        
-        
     }
     
-    
-    
+    private void CheckSwordRaycast(Transform RHand, Vector3 aimDirection) {
+        RaycastHit hit;
+        int layerMask = LayerMask.GetMask("Character"); //! player and enemy have same LayerMask
 
+        if(Physics.Raycast(RHand.position, RHand.transform.TransformDirection(aimDirection), out hit, minSwordDisRaycast, layerMask)) {
+            Debug.DrawRay(RHand.position, RHand.transform.TransformDirection(aimDirection) * minSwordDisRaycast, Color.yellow);
+            if(hit.collider.gameObject.CompareTag("Player")) return;
+
+            var hitBox = hit.collider.GetComponent<HitBox>();
+            var hitEnemy = hitBox.GetComponent<Health>();
+
+            var damage = (currenActiveWeapon as IWeapon).GetWeaponInfo().damage;
+            if(hitBox && !hitEnemy.IsDead) {
+                hitBox.OnSwordRaycastHit(damage, hitBox.transform.position); //ray.direction
+            }
+        } else {
+            Debug.DrawRay(RHand.position, RHand.transform.TransformDirection(aimDirection) * minSwordDisRaycast, Color.red);
+
+        }
+    }
+
+    
+    //todo
 }

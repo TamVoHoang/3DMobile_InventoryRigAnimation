@@ -7956,6 +7956,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &2821054246524205130
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1314954339126624404}
+  m_Layer: 0
+  m_Name: SwordSpawnPoint_Raycast
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1314954339126624404
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2821054246524205130}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.2, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8235314536401745252}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2838918476116079184
 GameObject:
   m_ObjectHideFlags: 0
@@ -34968,13 +34999,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5816313143939681134}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.5490209, y: 0.39922118, z: -0.48732194, w: 0.54928666}
-  m_LocalPosition: {x: 0.1196, y: 0.0281, z: -0.0141}
+  m_LocalRotation: {x: -0.3685099, y: 0.25429383, z: -0.5941978, w: 0.66817975}
+  m_LocalPosition: {x: 0.08, y: 0.029, z: -0.032}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1314954339126624404}
   m_Father: {fileID: 7050784913765317906}
-  m_LocalEulerAnglesHint: {x: -12.359, y: 85.397, z: -94.569}
+  m_LocalEulerAnglesHint: {x: -10.968, y: 52.395, z: -88.701}
 --- !u!1 &5830521564694370301
 GameObject:
   m_ObjectHideFlags: 0
@@ -58035,6 +58067,7 @@ MonoBehaviour:
   isJumped: 0
   animator: {fileID: 0}
   playerTransform: {x: 0, y: 0, z: 0}
+  playerTransform_TempSave: {x: 0, y: 0, z: 0}
 --- !u!114 &5682557580671955923
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58135,7 +58168,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSlotAmount: 10
-  ui_Inventory: {fileID: 0}
+  listItemsToSaveJson: []
+  SMG01_3D_01: {fileID: 11400000, guid: 4fb26163f37333d40ac8ed923401eba7, type: 2}
 --- !u!114 &3887763429292769508
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -58143,15 +58177,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8953937322977381221}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0f9fa373eb433e4ab8cd9657456244d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   swordSlots:
   - {fileID: 8235314536401745252}
-  equipped_swords:
-  - {fileID: 0}
   activeSwordIndex: 1
   isHolstered_Sword: 0
   swordHolster_Point: {fileID: 2017147801208398356}
@@ -58196,7 +58228,6 @@ MonoBehaviour:
   activeHelmetSpawnPoint: {fileID: 8960483743172013824}
   gunPrefabRifleTemp_Raycast: {fileID: 0}
   gunPrefabPistolTemp_Raycast: {fileID: 0}
-  swordPrefabTemp_HandSword: {fileID: 0}
   I_SwordPrefabTemp: {fileID: 0}
 --- !u!114 &6056762645848201410
 MonoBehaviour:
@@ -58272,8 +58303,10 @@ MonoBehaviour:
   default_IWeapon: {fileID: 11400000, guid: b703b39930c50af4494e325a555444f7, type: 2}
   defaultActiveWeapon: {fileID: 0}
   currenActiveWeapon: {fileID: 0}
-  timeBetweenAttacks: 0.5
   overrideControllers: {fileID: 0}
+  timeBetweenAttacks: 0.5
+  swordSpawnPoint_Raycast: {fileID: 2821054246524205130}
+  minSwordDisRaycast: 1.5
 --- !u!114 &2227062812323236346
 MonoBehaviour:
   m_ObjectHideFlags: 0

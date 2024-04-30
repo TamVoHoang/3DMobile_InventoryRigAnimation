@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
 {
-    //todo game object = canvas hien thi thong sau khi nhan nut login dang nhap
+    //todo game object = overviewPlayerData show after pressing loginButtonPressed
     
     [SerializeField] private PlayerDataLocal_Temp playerDataLocal_Temp;
     [SerializeField] private PlayerDataJson playerDataJson;
@@ -16,8 +16,6 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     [SerializeField] private TextMeshProUGUI health;
     [SerializeField] private TextMeshProUGUI killed;
     [SerializeField] private TextMeshProUGUI died;
-
-    float delayTimeToLoad = 3f; // time de cho login Press coll 55 playfabloginManager.cs
 
     private void Awake() {
         playerDataJson = FindObjectOfType<PlayerDataJson>();
@@ -34,14 +32,6 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
         Debug.Log("co nhan nut tai thong tin nguoi choi");
         LoadPlayerData(playerDataJson.PlayerJson);
     }
-    private void ShowInUI_FromDataLoacal_Temp() {
-        this.mail.text ="Mail: "+  playerDataLocal_Temp.mail;
-        this.userName.text ="UserName: "+ playerDataLocal_Temp.userName;
-        this.level.text ="Level: "+ playerDataLocal_Temp.level.ToString();
-        this.health.text ="Health: "+ playerDataLocal_Temp.health.ToString();
-        this.killed.text = "Killed: " + playerDataLocal_Temp.killed.ToString();
-        this.died.text = "Died: " + playerDataLocal_Temp.died.ToString();
-    }
 
     //BUTTONS IN PLAYER INFO OVERVIEW
     public void LoadGame_Scene02_StartGameButton() {
@@ -55,8 +45,8 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     IEnumerator LoadData_ToShowPlayerInfo_Countine(float time) {
         yield return new WaitForSeconds(time);
         playerDataJson.Load_PlayerDataJason_RealTime(); // de lay playerJson
-        // yield return new WaitForSeconds(time);
-        // inventoryDataJson.Load_InventoryDataJason_RealTime(); // de lay inventoryJson
+        /* yield return new WaitForSeconds(time);
+        inventoryDataJson.Load_InventoryDataJason_RealTime(); */ // de lay inventoryJson
         
         yield return new WaitForSeconds(time);
         LoadPlayerData(playerDataJson.PlayerJson); // lay data playerJson xet UI
@@ -77,6 +67,14 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     }
     #endregion IDataPersistence
 
+    private void ShowInUI_FromDataLoacal_Temp() {
+        this.mail.text ="Mail: "+  playerDataLocal_Temp.mail;
+        this.userName.text ="UserName: "+ playerDataLocal_Temp.userName;
+        this.level.text ="Level: "+ playerDataLocal_Temp.level.ToString();
+        this.health.text ="Health: "+ playerDataLocal_Temp.health.ToString();
+        this.killed.text = "Killed: " + playerDataLocal_Temp.killed.ToString();
+        this.died.text = "Died: " + playerDataLocal_Temp.died.ToString();
+    }
     /* private void ShowPlayerInfo_LoginScreen(string mail, string userName, int level, int health, int killed, int died) {
         this.mail.text ="Mail: "+  mail;
         this.userName.text ="UserName: "+ userName;

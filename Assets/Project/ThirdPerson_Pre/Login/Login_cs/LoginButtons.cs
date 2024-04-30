@@ -18,8 +18,7 @@ public class LoginButtons : MonoBehaviour
     {
         playFabLoginManager = FindObjectOfType<PlayFabLoginManager>();
         playerDataJson = FindObjectOfType<PlayerDataJson>();
-        if(SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null)
-        {
+        if(SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
             return;
         }
@@ -29,18 +28,17 @@ public class LoginButtons : MonoBehaviour
         HandlePassChanged();
     }
 
+    //? add vao nut putton - value changed
     public void HandlePassChanged() {
         LoginButton.interactable = 
             loginPassword.text.Length >= minPassLength &&
             loginPassword.text.Length <= maxPassLength;
     }
 
+    //? khi nhan nut Loggin
     public void OnLoginButton_Pressed() {
         PlayerPrefs.SetString(LAST_MAIL, loginEmail.text);
         PlayerPrefs.SetString(PASS, loginPassword.text);
-
-        //playFabLoginManager.OnLoginPressed();
-        //TestLoadingScene.Instance.Load_AccountDataOverview_Scene();// chuyen scen tai day qua overview
 
         StartCoroutine(DelayTimeLogin_ToLoad(4f)); //sau 3s chuyen qua onverview
     }

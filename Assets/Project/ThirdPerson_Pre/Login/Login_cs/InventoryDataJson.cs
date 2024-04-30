@@ -2,20 +2,8 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using PlayFab;
 using PlayFab.ClientModels;
-using UnityEditor.Playables;
 using UnityEngine;
 
-/* [System.Serializable]
-public class ItemJson {
-    public string itemJsonName;
-    public int itemJsonAmount;
-    public Item.ItemType itemType;
-    public ItemJson(string name, int amount, Item.ItemType itemType) {
-        this.itemJsonName = name;
-        this.itemJsonAmount = amount;
-        this.itemType = itemType;
-    }
-} */
 
 [System.Serializable]
 public class InventoryJson
@@ -32,8 +20,7 @@ public class InventoryJson
 public class InventoryDataJson : Singleton<InventoryDataJson>
 {
     public Item item;
-    public InventoryJson inventoryJson;
-    public InventoryJson InventoryJson => inventoryJson;
+    public InventoryJson inventoryJson; //! phai de public - do IventoryJson dang [Serializable]
 
     [Header("Item.ScriptableObjects")]
     [SerializeField] ItemScriptableObject IHealthPickup_01;
@@ -45,50 +32,42 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
     [SerializeField] ItemScriptableObject ISword_02;
 
 
-    protected override void Awake()
-    {
+    protected override void Awake() {
         base.Awake();
     }
     private void Start() {
-        /* inventoryJson = new InventoryJson("itemInventory", inventoryJson.itemsListJson);
-        item_HealthPickup3D_01 = new Item {itemScriptableObject = new ItemScriptableObject() {
-                                itemType = Item.ItemType.IHealthPickup3D_01 },
-                                amount = 2};
+        //? co the khoi tao doi tuong item - add vao itemListJson tai day.
+        /* item = new Item {itemScriptableObject = ISword_01, amount = 1};
+        inventoryJson.itemsListJson.Add(item); */
+    }
 
-        item_IMagPistol3D_01 = new Item {itemScriptableObject = new ItemScriptableObject() {
-                                itemType = Item.ItemType.IMagPistol3D_01 },
-                                amount = 2};
-        
-        inventoryJson.itemsListJson.Add(item_HealthPickup3D_01);
-        inventoryJson.itemsListJson.Add(item_IMagPistol3D_01);
-
-        Debug.Log(inventoryJson.inventoryName + inventoryJson.itemsListJson);
-        Debug.Log(inventoryJson.itemsListJson.Count); */
-
-        // item = new Item {itemScriptableObject = new ItemScriptableObject() {
-        //                         itemType = Item.ItemType.IHealthPickup3D_01,
-        //                         healthAmout = 100 },
-        //                         amount = 2};
-        // inventoryJson.itemsListJson.Add(item);
-
-        // item = new Item {itemScriptableObject = new ItemScriptableObject() {
-        //                         itemType = Item.ItemType.IMagPistol3D_01,
-        //                         clipAmount = 1 },
-        //                         amount = 2};
-        // inventoryJson.itemsListJson.Add(item);
-
-        item = new Item {itemScriptableObject = Pistol01_3D_01, amount = 1};
-        inventoryJson.itemsListJson.Add(item);
-
-        item = new Item {itemScriptableObject = ISword_01, amount = 1};
+    private void CreateNewItemListJson_ToSignUp(ItemScriptableObject ItemS, int amount) {
+        item = new Item {itemScriptableObject = ItemS, amount = amount};
         inventoryJson.itemsListJson.Add(item);
     }
 
-    private InventoryJson ReturnClassInventoryJson_ToSingnUp() {
+    //? khoi to InvenJson de signup() - cho vu khi khi signup
+    private InventoryJson ReturnInventoryJson_ToSingnUp() {
+        CreateNewItemListJson_ToSignUp(Pistol01_3D_01,1);
+        CreateNewItemListJson_ToSignUp(IHealthPickup_01,3);
+        CreateNewItemListJson_ToSignUp(IMagPistol_01,3);
         return new InventoryJson("itemInventory", inventoryJson.itemsListJson);
     }
 
-    //SAVE
+    //? SAVE inventoryJson SIGNUP
+    public void Save_InventoryDataJson_SignUp() {
+        string inventoryJson_String = JsonUtility.ToJson(ReturnInventoryJson_ToSingnUp()); // inventoryJson = JsonUtility.FromJson<InventoryJson>(inventoryJson_String);
+        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
+        {
+            Data = new Dictionary<string, string> {
+                {"InventoryJson", JsonConvert.SerializeObject(inventoryJson_String)}, //JsonConvert.SerializeObject(ReturnClassInventoryJson_ToSingnUp())
+            }
+        },
+        result => { Debug.Log("Inventory DataJason Title updated");},
+        error => { Debug.LogError(error.GenerateErrorReport());});
+    }
+
+    //? gameObjects :IData_InventoryPersistence run Save_InventoryData()
     public void SaveInventoryData_FromObjectsContainIInventoryDataPer(List<IData_InventoryPersistence> dataPersistenceObjects){
         foreach (IData_InventoryPersistence dataPersistenceObj in dataPersistenceObjects) {
             dataPersistenceObj.Save_InventoryData(ref inventoryJson);
@@ -108,21 +87,7 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
         error => { Debug.LogError(error.GenerateErrorReport());});
     }
 
-
-    // SAVE inventoryJson SIGNUP
-    public void Save_InventoryDataJson_SignUp() {
-        string inventoryJson_String = JsonUtility.ToJson(ReturnClassInventoryJson_ToSingnUp()); // inventoryJson = JsonUtility.FromJson<InventoryJson>(inventoryJson_String);
-        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
-        {
-            Data = new Dictionary<string, string> {
-                {"InventoryJson", JsonConvert.SerializeObject(inventoryJson_String)}, //JsonConvert.SerializeObject(ReturnClassInventoryJson_ToSingnUp())
-            }
-        },
-        result => { Debug.Log("Inventory DataJason Title updated");},
-        error => { Debug.LogError(error.GenerateErrorReport());});
-    }
-
-    //LOAD
+    //? LOAD
     public void Load_InventoryDataJason_RealTime() {
         Debug.Log("co LOAD Inventory jsonnnn");
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(),
@@ -135,7 +100,7 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
         foreach (var eachData in result.Data) {
             switch (eachData.Key) {
                 case "InventoryJson":
-                    //inventoryJson = JsonConvert.DeserializeObject<InventoryJson>((result.Data[eachData.Key].Value)); //TODO OK
+                    ////inventoryJson = JsonConvert.DeserializeObject<InventoryJson>((result.Data[eachData.Key].Value)); //TODO OK
 
                     var inventoryString = JsonConvert.DeserializeObject<string>((result.Data[eachData.Key].Value));
                     inventoryJson = JsonUtility.FromJson<InventoryJson>(inventoryString);
@@ -150,10 +115,6 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
             dataPersistenceObj.Load_InventoryData(inventoryJson);
         }
     }
-
-
-
-
     
     //todo
 }

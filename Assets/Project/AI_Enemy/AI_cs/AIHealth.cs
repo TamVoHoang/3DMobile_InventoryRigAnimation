@@ -25,7 +25,6 @@ public class AiHealth : Health
 
         if(IsDead && isReadyToTakeDamage) {
             isReadyToTakeDamage = !isReadyToTakeDamage;
-            //PlayerDataLocal_Temp.Instance.killed += 1; //todo tang so luong kill enemy
             PlayerDataJson.Instance.PlayerJson.killed +=1;
         }
         

@@ -4,7 +4,7 @@ using UnityEngine;
 
 //! gameobject = doi tuong chi awake 1 lan trong scene
 // load data 1 lan khi vao scene game
-// neu doi tuong nay ko xuat hien 1 lan dauy nhat nho singleton dontDestroy
+// neu doi tuong nay ko xuat hien 1 lan duy nhat nho singleton dontDestroy
 // data se load lai khi player resume game, va data bi gan vo so lan
 
 public class LoadDataTo_IDataPersistence : Singleton<LoadDataTo_IDataPersistence>
@@ -42,6 +42,7 @@ public class LoadDataTo_IDataPersistence : Singleton<LoadDataTo_IDataPersistence
         return new List<IData_InventoryPersistence>(dataPersistenceObjects);
     }
 
+    //todo nut nhan BackButton - trong MainGame onclick envents
     public void SaveData_BeforeOutOfGame() {
         // cac ham ke thus Interface chay
         playerDataJson.SaveData_FromObjectsContainIDataPer(dataPersistenceObjects_InGame);

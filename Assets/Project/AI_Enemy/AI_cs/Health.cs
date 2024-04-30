@@ -73,7 +73,7 @@ public class Health : MonoBehaviour
         /* if(uiHealthBar) {
             uiHealthBar.SetHealthBarEnemyPercent((float)currentHealth / maxHealth);
         } */
-
+        Debug.Log("direction = " + direction);
         OnDamage(direction); // tai sao dat o day => tao animation + hieu ung man hinh khi trung dan
 
         if (currentHealth <= 0) {
@@ -87,7 +87,7 @@ public class Health : MonoBehaviour
         /* AiState aiState = aiAgent.stateMachine.GetState(AiStateID.Death);
         AiDeathState aiDeathState = aiState as AiDeathState;
         (aiAgent.stateMachine.GetState(AiStateID.Death) as AiDeathState).direction = direction; */
-        
+        Debug.Log("direction = " + direction);
         OnDeath(direction);
     }
 

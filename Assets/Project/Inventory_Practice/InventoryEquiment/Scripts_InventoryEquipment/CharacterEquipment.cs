@@ -37,19 +37,19 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
     private Item armorItem;
 
     private ActiveGun activeGun;
-    private ActiveSword activeSword;
+    //private ActiveSword_OldVersion activeSword_OldVersion;
     private ActiveWeapon activeWeapon;
     private PlayerHealth playerHealth;
 
 
     [SerializeField] private RaycastWeapon gunPrefabRifleTemp_Raycast; //! testing
     [SerializeField] private RaycastWeapon gunPrefabPistolTemp_Raycast; //! testing
-    [SerializeField] private HandSwordWeapon swordPrefabTemp_HandSword; //! testing
+    //[SerializeField] private HandSwordWeapon swordPrefabTemp_HandSword; //! testing
     [SerializeField] private GameObject I_SwordPrefabTemp; // game object cua cay kiem
 
     public RaycastWeapon GetPrefab_RifleTemp {get{return gunPrefabRifleTemp_Raycast;}}
     public RaycastWeapon GetPrefab_PistolTemp {get{return gunPrefabPistolTemp_Raycast;}}
-    public HandSwordWeapon GetPrefab_SwordTemp {get{return swordPrefabTemp_HandSword;}}
+    //public HandSwordWeapon GetPrefab_SwordTemp {get{return swordPrefabTemp_HandSword;}}
     public GameObject GetI_SwordPrefabTemp {get{return I_SwordPrefabTemp;}}
 
     //TODO TEST LOAT BO VU KHI RA KHOI PLAYER KHI DEATH
@@ -58,16 +58,20 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
             item.GetItemHolder().RemoveItemEquipment(item);
             ItemWorld3D.DropItem(PlayerController.Instance.GetPosition(),duplicateItem);
     }
+    private List<Item> equipedItemsList;
+    public List<Item> GetEquippedItemsList => equipedItemsList;
 
     //TODO TEST LOAT BO VU KHI RA KHOI PLAYER KHI DEATH
 
     private void Awake() {
         activeGun = GetComponent<ActiveGun>();
-        activeSword = GetComponent<ActiveSword>();
+        //activeSword_OldVersion = GetComponent<ActiveSword_OldVersion>();
         activeWeapon = GetComponent<ActiveWeapon>();
         activeArmorSpawnPoint = transform.Find("ActiveArmor");
         activeHelmetSpawnPoint = transform.Find("ActiveHelmet");
         playerHealth = GetComponent<PlayerHealth>();
+
+        equipedItemsList = new List<Item>();
     }
 
     private void Update() {
@@ -85,13 +89,18 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
             if(!activeWeapon.IsHolstered_Sword) {
                 activeWeapon.HolsterSwordsBeforeDeath();
             }
+
             if(weaponItem != null) RemoveItemOutWorld_CharacterEquipment(weaponItem);
             if(weaponPistolItem != null) RemoveItemOutWorld_CharacterEquipment(weaponPistolItem);
             if(weaponSwordItem != null) RemoveItemOutWorld_CharacterEquipment(weaponSwordItem);
             if(helmetItem != null) RemoveItemOutWorld_CharacterEquipment(helmetItem);
             if(armorItem != null) RemoveItemOutWorld_CharacterEquipment(armorItem);
             
+            /* foreach (var item in equipedItemsList) {
+                RemoveItemOutWorld_CharacterEquipment(item);
+            } */
         }
+        
     }
 
 
@@ -114,6 +123,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
     //todo set sword
     private void SetSword_WeaponItem(Item sword) {
         this.weaponSwordItem = sword;
+        
         if (sword != null) {
             sword.SetItemHolder(this);
         }
@@ -123,9 +133,9 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
         // todo set sword to activeSword
         /* if(sword == null) {
             Destroy(swordPrefabTemp_HandSword.gameObject);
-            if(!activeSword.IsHolstered_Sword &&
-                (int)swordPrefabTemp_HandSword.GetComponent<HandSwordWeapon>().swordSlot == activeSword.GetActiveSwordIndex){
-                activeSword.ToggleActiveSword();
+            if(!activeSword_OldVersion.IsHolstered_Sword &&
+                (int)swordPrefabTemp_HandSword.GetComponent<HandSwordWeapon>().swordSlot == activeSword_OldVersion.GetActiveSwordIndex){
+                activeSword_OldVersion.ToggleActiveSword();
             }
             return;
         }
@@ -133,7 +143,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
             int weaponSlotIndex = (int)weaponSwordItem.itemScriptableObject.handSwordPrefab.GetComponent<HandSwordWeapon>().swordSlot; //=1
             Debug.Log("weaponSlotIndex " + weaponSlotIndex);
             if(!activeGun.IsHolstered) activeGun.ToggleActiveWeapon(); //? neu co bat ki sung nao dang trang bi theo bien isHolstered thi toggle het
-            StartCoroutine(DelaytimeToSpawnSword(sword, weaponSlotIndex));
+            StartCoroutine(DelaytimeToSpawnSword_OldVersion(sword, weaponSlotIndex));
         } */
 
         // todo set sword to ActiveWeapon Interface
@@ -160,15 +170,16 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
                 activeWeapon.swordSlots[weaponSlotIndex].transform.rotation, activeWeapon.swordSlots[weaponSlotIndex].transform);
         activeWeapon.NewWeapon(I_SwordPrefabTemp.GetComponent<MonoBehaviour>()); // khi new weapon da set active luon
     }
-    IEnumerator DelaytimeToSpawnSword(Item sword, int weaponSlotIndex) {
+    /* IEnumerator DelaytimeToSpawnSword_OldVersion(Item sword, int weaponSlotIndex) {
         yield return new WaitForSeconds(1f);
-        swordPrefabTemp_HandSword = Instantiate(sword.itemScriptableObject.handSwordPrefab, activeSword.swordSlots[weaponSlotIndex].position,
-                activeSword.swordSlots[weaponSlotIndex].transform.rotation, activeSword.swordSlots[weaponSlotIndex]);
-            activeSword.EquipSword(swordPrefabTemp_HandSword);
-    }
+        swordPrefabTemp_HandSword = Instantiate(sword.itemScriptableObject.handSwordPrefab, activeSword_OldVersion.swordSlots[weaponSlotIndex].position,
+                activeSword_OldVersion.swordSlots[weaponSlotIndex].transform.rotation, activeSword_OldVersion.swordSlots[weaponSlotIndex]);
+            activeSword_OldVersion.EquipSword(swordPrefabTemp_HandSword);
+    } */
 
 #region Set GunPrefabRaycast
     private void SetBothWeaponItem(Item weaponItem, ref RaycastWeapon raycastWeaponTemp) {
+        
         if (weaponItem != null) {
             weaponItem.SetItemHolder(this); //! item se SetItemHolder() tai day, de biet class nao se goi ham trong Interface
         }
@@ -183,6 +194,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
 
         if(weaponItem == null) {
             Debug.Log("weaponItem == null");
+            
             Destroy(raycastWeaponTemp.gameObject);
 
             //? neu loai raycastWeaponTemp co weaponSlot tra ve kieu (int) == activeWeaponIndex
@@ -220,6 +232,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
 
     private void SetPistolWeaponItem(Item weaponPistolItem) {
         this.weaponPistolItem = weaponPistolItem;
+        
         Debug.Log("checking weaponItem on characterEquipment" + this.weaponPistolItem);
 
         //? neu muon gan gia tri cho bien gunPrefabPistolTemp_Raycast thong qua ham trung gian thi phai them ref
@@ -264,6 +277,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
     // col 42 UI_CharacterEquipment.cs goi -> gan loai weapon trong UI_weaponSlot vao this.weaponItem
     private void SetWeaponRifleItem(Item weaponItem) {
         this.weaponItem = weaponItem;
+        
         Debug.Log("checking weaponItem on characterEquipment" + this.weaponItem);
 
         //? neu muon gan gia tri cho bien gunPrefabRifleTemp_Raycast thong qua ham trung gian thi phai them ref
@@ -352,6 +366,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
     }
 
     public void EquipItem(Item item) {
+        equipedItemsList.Add(item);
         switch (item.GetEquipSlot()) {
         default:
         case EquipSlot.Armor:           SetArmorItem(item);             break;
@@ -383,6 +398,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
 
 #region interface IItemHolder
     public void RemoveItemEquipment(Item item) {
+        equipedItemsList.Remove(item);
         if (GetWeaponRifleItem() == item)       SetWeaponRifleItem(null);
         if (GetWeaponPistolItem() == item)      SetPistolWeaponItem(null);
         if (GetWeaponSwordItem() == item)       SetSword_WeaponItem(null);
@@ -393,6 +409,7 @@ public class CharacterEquipment : MonoBehaviour,IItemHolder
     }
 
     public void AddItemEquipment(Item item) {
+        
         EquipItem(item);
     }
 

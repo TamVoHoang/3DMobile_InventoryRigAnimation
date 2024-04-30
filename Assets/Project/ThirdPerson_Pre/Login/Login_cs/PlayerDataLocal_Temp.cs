@@ -52,7 +52,7 @@ public class PlayerDataLocal_Temp :Singleton<PlayerDataLocal_Temp>, IDataPersist
         this.killed = playerJsonData.killed;
         this.died = playerJsonData.died;
 
-        this.position_Temp = JsonUtility.FromJson<Vector3>(playerJsonData.position);
+        this.position_Temp = playerJsonData.position;
     }
 
     public void SavePlayerData(PlayerJson playerJsonData)
