@@ -15,6 +15,7 @@ public class LoadDataTo_IDataPersistence : Singleton<LoadDataTo_IDataPersistence
     private InventoryDataJson inventoryDataJson;
     protected override void Awake() {
         base.Awake();
+        
         playerDataJson = FindObjectOfType<PlayerDataJson>();
         inventoryDataJson = FindObjectOfType<InventoryDataJson>();
         

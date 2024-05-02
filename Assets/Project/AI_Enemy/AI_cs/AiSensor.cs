@@ -59,7 +59,8 @@ public class AiSensor : MonoBehaviour
         }
     }
     public bool IsInSight(GameObject obj) {
-        if(obj == this.gameObject) return false; //! ko cho this.gameObject nhin thay chinh no
+        if(obj == this.gameObject) return false; //! ko cho this.gameObject nhin thay chinh no va ko cung cho thay dong loai ai agent cua no
+        if(obj.CompareTag("Agent")) return false;
 
         Vector3 origin = transform.position;
         Vector3 dest = obj.transform.position;

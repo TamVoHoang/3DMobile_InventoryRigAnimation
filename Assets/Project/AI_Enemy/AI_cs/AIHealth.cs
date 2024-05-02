@@ -10,7 +10,7 @@ public class AiHealth : Health
         Debug.Log("OnStart() AiHealth.cs run");
         //isGetKilledPoint = false;
         aiAgent = GetComponent<AiAgent>();
-
+        
         SetCurrentHealth = MaxHealth; // gan currentHealth
         lowHealthLimit = 100f;
         isReadyToTakeDamage = true; // xet true de san sang bi take damage

@@ -21,14 +21,16 @@ public class PlayerInfo_UI : MonoBehaviour
 
     
     private void Awake() {
+        Time.timeScale =1;
+        
         playerDataJson = FindObjectOfType<PlayerDataJson>();
         loadDataTo_IDataPersistence = FindObjectOfType<LoadDataTo_IDataPersistence>();
         healthSlider = GetComponentInChildren<Slider>();
 
         // playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
-/*         this.dataPersistenceObjects_InGame = FindAllDataPersistenceObjects(); //! tim object dang chua IData
-        this.inventoryPersistenceObjects_InGame = FindAllInventoryData_PersistenceObjects();
- */    }
+        /* this.dataPersistenceObjects_InGame = FindAllDataPersistenceObjects(); //! tim object dang chua IData
+        this.inventoryPersistenceObjects_InGame = FindAllInventoryData_PersistenceObjects(); */
+    }
 
     private void Start() {
         StartCoroutine(ShowPlayerInfo_GameUI_Countine(0.2f));

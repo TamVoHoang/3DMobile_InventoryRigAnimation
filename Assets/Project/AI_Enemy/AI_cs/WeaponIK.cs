@@ -10,7 +10,6 @@ public class HumanBone
 }
 public class WeaponIK : MonoBehaviour
 {
-    Rigidbody rb;
     [SerializeField] private Transform targetTransform;// vi tri cua target
     [SerializeField] private Transform aimTransform;// vi tri ray cast
     [SerializeField] private Vector3 targetOffset;

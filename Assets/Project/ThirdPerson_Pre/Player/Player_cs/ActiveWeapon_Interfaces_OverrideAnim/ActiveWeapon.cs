@@ -100,13 +100,13 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     private void AttackCurrentWeapon() {
         if(InputManager.Instance.IsAttackButton && !isAttacking && currenActiveWeapon && ActiveGun.Instance.IsHolstered) {
             isAttacking = true;
-            //StopAllCoroutines(); // dang test
+            ////StopAllCoroutines(); // dang test
             AttackCoolDown();
             (currenActiveWeapon as IWeapon).Attack();
             playerAnimator.SetTrigger("Attack");
         }
 
-        if(currenActiveWeapon != null && !isHolstered_Sword) {
+        if(currenActiveWeapon != null && !isHolstered_Sword && InputManager.Instance.IsAttackButton) {
             CheckSwordRaycast(swordSpawnPoint_Raycast.transform, Vector3.up);
         }
 
@@ -203,6 +203,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
 
         if(Physics.Raycast(RHand.position, RHand.transform.TransformDirection(aimDirection), out hit, minSwordDisRaycast, layerMask)) {
             Debug.DrawRay(RHand.position, RHand.transform.TransformDirection(aimDirection) * minSwordDisRaycast, Color.yellow);
+
             if(hit.collider.gameObject.CompareTag("Player")) return;
 
             var hitBox = hit.collider.GetComponent<HitBox>();
@@ -217,7 +218,6 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
 
         }
     }
-
     
     //todo
 }

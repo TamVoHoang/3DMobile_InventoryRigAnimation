@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -20,8 +19,6 @@ public class AiAgent : MonoBehaviour
     public AiTargetingSystem aiTargetingSystem;
     public AiHealth health;
     
-
-
 
     void Start()
     {
@@ -46,7 +43,6 @@ public class AiAgent : MonoBehaviour
         stateMachine.RegisterState(new AiFindAmmoState());
 
 
-
         stateMachine.ChangeState(intialState); // AiStateID.intialState
         Debug.Log("so states trong AiStateID enum = " 
             + stateMachine.numStates_AiStateID);
@@ -63,14 +59,14 @@ public class AiAgent : MonoBehaviour
 
             stateMachine.Update();
     }
-    // public float GetDistance() {
-    //     return Vector3.Distance(playerTransform.position, this.transform.position);
-    // }
+    /* public float GetDistance() {
+        return Vector3.Distance(playerTransform.position, this.transform.position);
+    }
 
     public void DelayTimeCountine_Agent(float time) =>StartCoroutine(DelayTime(time));
     IEnumerator DelayTime(float time) {
         yield return new WaitForSeconds(time);
-    }
+    } */
 
-    
+    //todo
 }

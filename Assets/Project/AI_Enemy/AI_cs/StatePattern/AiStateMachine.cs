@@ -24,8 +24,8 @@ public class AiStateMachine
         Debug.Log("checking su kien dang ky tra ve int = " + state.GetId().ToString());
         states[index] = state;
 
-        //int[] a = new a[3]
-        //int a[0] = 1
+        /* int[] a = new a[3]
+        int a[0] = 1 */
     }
 
     public AiState GetState(AiStateID stateID) {
@@ -41,9 +41,9 @@ public class AiStateMachine
         GetState(newState)?.Exit(agent);
         currentState = newState;
         GetState(currentState)?.Enter(agent);
-        // if(GetState(currentState) != null) {
-        //     GetState(currentState).Enter(agent);
-        // }
+        /* if(GetState(currentState) != null) {
+            GetState(currentState).Enter(agent);
+        } */
     }
 
 

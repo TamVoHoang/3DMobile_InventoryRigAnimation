@@ -20,24 +20,24 @@ public class ISword : MonoBehaviour, IWeapon
     }
 
     //tao ra raycast de tan cong
-    private void CheckSword(Transform sword, Vector3 aimDirection) {
-        ray.origin = sword.position;
-        ray.direction = aimDirection;
-
+    private void CheckSwordRaycast(Transform RHand, Vector3 aimDirection) {
+        RaycastHit hit;
         int layerMask = LayerMask.GetMask("Character"); //! player and enemy have same LayerMask
 
-        if(Physics.Raycast(sword.position, sword.transform.TransformDirection(aimDirection), out hit, minSwordDisRaycast, layerMask)) {
-            Debug.Log("co sinh ra tia raycast yellow");
-            Debug.DrawRay(sword.position, sword.transform.TransformDirection(aimDirection) * minSwordDisRaycast, Color.yellow);
-            var enemyHit = hit.transform.GetComponent<AiHealth>();
-            var hitEnemy = hit.collider.GetComponent<AiHealth>();
+        if(Physics.Raycast(RHand.position, RHand.transform.TransformDirection(aimDirection), out hit, minSwordDisRaycast, layerMask)) {
+            Debug.DrawRay(RHand.position, RHand.transform.TransformDirection(aimDirection) * minSwordDisRaycast, Color.yellow);
 
-            if(enemyHit != null && hitEnemy != null) {
-                enemyHit.TakeDamage(100, ray.direction);
+            if(hit.collider.gameObject.CompareTag("Player")) return;
+
+            var hitBox = hit.collider.GetComponent<HitBox>();
+            var hitEnemy = hitBox.GetComponent<Health>();
+
+            var damage = GetWeaponInfo().damage;
+            if(hitBox && !hitEnemy.IsDead) {
+                hitBox.OnSwordRaycastHit(damage, hitBox.transform.position); //ray.direction
             }
         } else {
-            Debug.Log("co sinh ra tia raycast red");
-            Debug.DrawRay(sword.position, sword.transform.TransformDirection(aimDirection) * minSwordDisRaycast, Color.red);
+            Debug.DrawRay(RHand.position, RHand.transform.TransformDirection(aimDirection) * minSwordDisRaycast, Color.red);
 
         }
     }

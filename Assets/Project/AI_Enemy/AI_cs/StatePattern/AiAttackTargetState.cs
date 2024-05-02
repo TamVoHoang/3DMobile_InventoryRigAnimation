@@ -71,14 +71,14 @@ public class AiAttackTargetState : AiState
     }
 
     //? attack player based on ONLY distance between (player and aiagen)
-    private void CanAttackPlayer_Distance(AiAgent agent, float attackedDistance) {
+    /* private void CanAttackPlayer_Distance(AiAgent agent, float attackedDistance) {
         var distance = Vector3.Distance(agent.aiTargetingSystem.Target.transform.position, agent.transform.position);
         if(distance <= attackedDistance) {
             agent.weapons.SetFiring(true);
         } else {
             agent.weapons.SetFiring(false);
         }
-    }
+    } */
 
     private void ReloadWeapon(AiAgent agent) {
         var weapon = agent.weapons.currentWeapon;
