@@ -13216,6 +13216,7 @@ GameObject:
   - component: {fileID: 5799850446011490056}
   - component: {fileID: 2994544643425314430}
   - component: {fileID: 9116654429072081825}
+  - component: {fileID: 232938490737158953}
   m_Layer: 9
   m_Name: AI_Agent
   m_TagString: Agent
@@ -13532,6 +13533,7 @@ MonoBehaviour:
   occulusionLayers:
     serializedVersion: 2
     m_Bits: 1
+  speedTemp: 0
 --- !u!114 &9116654429072081825
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13548,6 +13550,19 @@ MonoBehaviour:
   distanceWeight: 2
   angleWeight: 1
   ageWeight: 1
+--- !u!114 &232938490737158953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4145539315362994681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a60be6671e38a4b459b50206280da982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IntialSpeed: 0
 --- !u!1 &4307323523724924093
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,6 +18,7 @@ public class AiSensor : MonoBehaviour
     [SerializeField] private LayerMask layers;
     [SerializeField] private LayerMask occulusionLayers;
 
+
     public List<GameObject> Objects {
         get {
             objects.RemoveAll(obj => !obj);

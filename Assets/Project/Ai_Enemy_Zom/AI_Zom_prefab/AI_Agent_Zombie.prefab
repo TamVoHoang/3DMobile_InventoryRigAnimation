@@ -33320,6 +33320,7 @@ GameObject:
   - component: {fileID: 3500232128718119247}
   - component: {fileID: 6536167599636326645}
   - component: {fileID: 7678758015204562175}
+  - component: {fileID: 2369870080809671435}
   m_Layer: 9
   m_Name: AI_Agent_Zombie
   m_TagString: Agent
@@ -33497,7 +33498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7592436af30d1a543ba59b65e1e24fda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intialState: 2
+  intialState: 4
   navMeshAgent: {fileID: 0}
   config: {fileID: 11400000, guid: d01a3be13b02b1e40963b9b4f76e6278, type: 2}
   ragdoll: {fileID: 0}
@@ -33651,6 +33652,19 @@ MonoBehaviour:
   distanceWeight: 2
   angleWeight: 1
   ageWeight: 1
+--- !u!114 &2369870080809671435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5740925118200123006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a60be6671e38a4b459b50206280da982, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IntialSpeed: 0
 --- !u!1 &5887535191021384562
 GameObject:
   m_ObjectHideFlags: 0

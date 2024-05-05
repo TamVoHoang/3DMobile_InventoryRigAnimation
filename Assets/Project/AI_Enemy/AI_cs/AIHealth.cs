@@ -6,6 +6,8 @@ public class AiHealth : Health
     AiAgent aiAgent;
     AiUIHealthBar uiHealthBar; // thanh mau cua Ai agen dat tai day
     //private bool isGetKilledPoint; // lay diem len bang
+    private int killedCount = 0;
+    public int GetKilledCount => killedCount;
     protected override void OnStart() {
         Debug.Log("OnStart() AiHealth.cs run");
         //isGetKilledPoint = false;
@@ -25,7 +27,9 @@ public class AiHealth : Health
 
         if(IsDead && isReadyToTakeDamage) {
             isReadyToTakeDamage = !isReadyToTakeDamage;
-            PlayerDataJson.Instance.PlayerJson.killed +=1;
+
+            GameManger.Instance.SetKilledCount(1); // tang gia tri LOCAL cho bien killedCountTemp o game mamanger
+            PlayerDataJson.Instance.PlayerJson.killed += 1; // tang gi tri giet duoc ai agent cho playerDataJson
         }
         
     }

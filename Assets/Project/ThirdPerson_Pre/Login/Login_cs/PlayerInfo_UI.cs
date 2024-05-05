@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-//todo gameobject = PlayerInfo_UI ben trong (UI_Canvas_InGame)
-//todo doi tuong chua canvas hien thi thong tin name, level, health, healthSlider
+//* gameobject = PlayerInfo_UI ben trong (UI_Canvas_InGame)
+//* doi tuong chua canvas hien thi thong tin name, level, health, healthSlider
+
 public class PlayerInfo_UI : MonoBehaviour
 {
     [SerializeField] TextMeshProUGUI userName;
@@ -21,7 +22,7 @@ public class PlayerInfo_UI : MonoBehaviour
 
     
     private void Awake() {
-        Time.timeScale =1;
+        Time.timeScale =1; //todo UnFree game when resume game
         
         playerDataJson = FindObjectOfType<PlayerDataJson>();
         loadDataTo_IDataPersistence = FindObjectOfType<LoadDataTo_IDataPersistence>();
@@ -80,7 +81,7 @@ public class PlayerInfo_UI : MonoBehaviour
         InventoryDataJson.Instance.Save_InventoryDataJason_RealTime(); */
         loadDataTo_IDataPersistence.SaveData_BeforeOutOfGame();
         yield return new WaitForSeconds(time);
-        Time.timeScale = 0f; //free
+        Time.timeScale = 0f; //todo free game
         SceneManager.LoadSceneAsync("MainMenu");
     }
 
