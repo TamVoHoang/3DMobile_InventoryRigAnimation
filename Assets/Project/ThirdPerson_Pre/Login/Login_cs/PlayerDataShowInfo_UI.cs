@@ -54,12 +54,20 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
 
     public void LoadPlayerData(PlayerJson playerJsonData) {
         Debug.Log("interface co chay vao day");
-        this.mail.text ="Mail: "+  playerJsonData.mail;
+        /* this.mail.text ="Mail: "+  playerJsonData.mail;
         this.userName.text ="UserName: "+ playerJsonData.name;
         this.level.text ="Level: "+ playerJsonData.level.ToString();
         this.health.text ="Health: "+ playerJsonData.health.ToString();
         this.killed.text = "Killed: " + playerJsonData.killed.ToString();
-        this.died.text = "Died: " + playerJsonData.died.ToString();
+        this.died.text = "Died: " + playerJsonData.died.ToString(); */
+        
+        this.mail.text = playerJsonData.mail;
+        this.userName.text = playerJsonData.name;
+        this.level.text = playerJsonData.level.ToString();
+        this.health.text = playerJsonData.health.ToString();
+        this.killed.text = playerJsonData.killed.ToString();
+        this.died.text = playerJsonData.died.ToString();
+
     }
 
     public void SavePlayerData(PlayerJson playerJsonData) { 
