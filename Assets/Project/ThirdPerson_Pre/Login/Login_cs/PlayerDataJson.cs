@@ -4,7 +4,6 @@ using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
 using Newtonsoft.Json;
-using System.Collections;
 using System;
 using System.Linq;
 
@@ -52,10 +51,21 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
     private Vector3 initialVector3Player_ToRegister = new Vector3(12,0.5f,20);
     public Vector3 InitialVector3Player_ToRegister => initialVector3Player_ToRegister;
     private List<IDataPersistence> dataPersistenceObjects; //! list chua IDataPersistence
+
+    // bien dung de enaable or disable AccountButton trong mainMenu Screen
+    private bool isLoadedSuccessInLogin = false;
+    public bool IsLoadedSuccessInLogin => isLoadedSuccessInLogin;
+
+    private bool isLoadedSuccessInGame = false;
+    public bool IsLoadedSuccessInGame => isLoadedSuccessInGame;
+
     protected override void Awake() {
         base.Awake();
-        //playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
-        //this.dataPersistenceObjects = FindAllDataPersistenceObjects(); //! tao list objects: IDataPersistence
+        ////playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
+        ///this.dataPersistenceObjects = FindAllDataPersistenceObjects(); //! tao list objects: IDataPersistence
+
+        isLoadedSuccessInLogin = false;
+        isLoadedSuccessInGame = false;
     }
 
     private PlayerJson ReturnClassPlayerJson_ToSignUp(string mail, string name) {
@@ -78,7 +88,7 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
         {
             Data = new Dictionary<string, string> {
-                //{"Json", JsonConvert.SerializeObject(ReturnClassPlayerJson_ToSignUp(mail, name))}, //OK
+                ////{"Json", JsonConvert.SerializeObject(ReturnClassPlayerJson_ToSignUp(mail, name))}, //OK
                 {"Json", JsonConvert.SerializeObject(playerJsonString)},
             }
         },
@@ -133,19 +143,19 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         );
     }
     void OnGetPlayerDataJson(GetUserDataResult result) {
-        Debug.Log("Received the following Player Data Json:");
-
         foreach (var eachData in result.Data) {
             switch (eachData.Key) {
                 case "Json":
-                    //playerJson = JsonConvert.DeserializeObject<PlayerJson>((result.Data[eachData.Key].Value)); // OK
+                    ////playerJson = JsonConvert.DeserializeObject<PlayerJson>((result.Data[eachData.Key].Value)); // OK
                     
                     var playerDataJsonString = JsonConvert.DeserializeObject<string>(result.Data[eachData.Key].Value);
                     playerJson = JsonUtility.FromJson<PlayerJson>(playerDataJsonString);
                     break;
             }
         }
-        //StartCoroutine(SetPlayerDataLocalTemp_Countine(0f)); //load() - time delay - set playerDataLocal
+        ////StartCoroutine(SetPlayerDataLocalTemp_Countine(0f)); //load() - time delay - set playerDataLocal
+        Debug.Log("Received the following Player Data Json:");
+        isLoadedSuccessInLogin = true;
     }
 
     //! LOAD trong game voi list Interface| lay data ben trong playerJson load ben tren sau do load cho cac doi tuong : Idatapersistence trong list
@@ -153,6 +163,9 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) {
             dataPersistenceObj.LoadPlayerData(playerJson);
         }
+
+        //? da load data tu playerJson vao mainGame
+        isLoadedSuccessInGame = true;
     }
 
 #endregion LOAD

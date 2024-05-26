@@ -11,7 +11,7 @@ public class AiChasePlayerState_zom : AiState_Zom
 
     public void Enter(AiAgent_zom agent) {
         agent.navMeshAgent.speed = 5;
-        agent.navMeshAgent.stoppingDistance = 0f;
+        agent.navMeshAgent.stoppingDistance = 2f;
     }
 
     public void Update(AiAgent_zom agent) {
@@ -44,7 +44,7 @@ public class AiChasePlayerState_zom : AiState_Zom
     public void Exit(AiAgent_zom agent) {
         Debug.Log("Exit() ChaseState");
         agent.navMeshAgent.speed = 0f;
-        agent.navMeshAgent.stoppingDistance = 0f;
+        agent.navMeshAgent.stoppingDistance = 2f;
     }
     
 }

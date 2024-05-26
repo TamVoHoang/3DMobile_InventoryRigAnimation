@@ -49,7 +49,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     // [SerializeField] GameObject leftHand;
     // [SerializeField] GameObject rightHand;
     [SerializeField] float minSwordDisRaycast = 1f;
-
+    bool isSwordTakeDamageEnemies;
 
     protected override void Awake() {
         base.Awake();
@@ -65,6 +65,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
         currenActiveWeapon = defaultActiveWeapon; // dau tien vao la mac dinh khoi dong tay
 
         AttackCoolDown();// testing thu
+        isSwordTakeDamageEnemies = false;
     }
     private void Update() {
         AttackCurrentWeapon();
@@ -106,6 +107,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
             playerAnimator.SetTrigger("Attack");
         }
 
+        //? neu co trang bi kiem thi tao raycast tu tay player
         if(currenActiveWeapon != null && !isHolstered_Sword && InputManager.Instance.IsAttackButton) {
             CheckSwordRaycast(swordSpawnPoint_Raycast.transform, Vector3.up);
         }
@@ -210,14 +212,21 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
             var hitEnemy = hitBox.GetComponent<Health>();
 
             var damage = (currenActiveWeapon as IWeapon).GetWeaponInfo().damage;
-            if(hitBox && !hitEnemy.IsDead) {
+            if(hitBox && !hitEnemy.IsDead && !isSwordTakeDamageEnemies) {
+                isSwordTakeDamageEnemies = true;
                 hitBox.OnSwordRaycastHit(damage, hitBox.transform.position); //ray.direction
+                StartCoroutine(PlayerEnemyTakeHealthCO(0.5f));
             }
         } else {
             Debug.DrawRay(RHand.position, RHand.transform.TransformDirection(aimDirection) * minSwordDisRaycast, Color.red);
 
         }
     }
+    IEnumerator PlayerEnemyTakeHealthCO(float time) {
+        yield return new WaitForSeconds(time);
+        isSwordTakeDamageEnemies = false;
+    }
+
     
     //todo
 }

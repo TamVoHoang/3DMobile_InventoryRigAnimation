@@ -28,7 +28,7 @@ public class AiAttackTargetState : AiState
             agent.weapons.DeActiveWeapon(); */
 
             //? neu player die va ko respawn - co the dung tai day
-            //agent.stateMachine.ChangeState(AiStateID.Idle);
+            ////agent.stateMachine.ChangeState(AiStateID.Idle);
 
             //? neu player die - song lai - thi dung dong nay
             agent.stateMachine.ChangeState(AiStateID.FindTarget);

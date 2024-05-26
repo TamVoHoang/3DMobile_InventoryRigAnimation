@@ -19,8 +19,8 @@ public class ISword : MonoBehaviour, IWeapon
         //CheckSword(this.gameObject.transform, transform.position); // transfom cua kiem, vector3 cua kiem - this.gameobject;
     }
 
-    //tao ra raycast de tan cong
-    private void CheckSwordRaycast(Transform RHand, Vector3 aimDirection) {
+    //? tao ra raycast tren cay kiem de take damage enemy
+    /* private void CheckSwordRaycast(Transform RHand, Vector3 aimDirection) {
         RaycastHit hit;
         int layerMask = LayerMask.GetMask("Character"); //! player and enemy have same LayerMask
 
@@ -40,7 +40,7 @@ public class ISword : MonoBehaviour, IWeapon
             Debug.DrawRay(RHand.position, RHand.transform.TransformDirection(aimDirection) * minSwordDisRaycast, Color.red);
 
         }
-    }
+    } */
     
 
 

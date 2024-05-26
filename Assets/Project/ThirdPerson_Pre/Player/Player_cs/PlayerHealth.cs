@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -78,8 +77,8 @@ public class PlayerHealth : Health, IDataPersistence
 
     private void Update_Virtual() {
         // nhung thay doi hieu ung khi get damage or increase health
-        //animator.SetBool("GetDamage", true);
-        animator.SetTrigger("GetDamage");
+        ////animator.SetBool("GetDamage", true);
+        //animator.SetTrigger("GetDamage");
     }
     
     // tang giam slider health cho player.

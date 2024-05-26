@@ -1,8 +1,10 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
-//* gameobject = gameManager object
+//* gameobject = gameManager object, kem theo cavas CountDown, timmer, result
 // count down before start game
 // count down time in every match
 // showing data when finish - killedCount - DeathCount
@@ -29,6 +31,11 @@ public class GameManger : Singleton<GameManger>
     [SerializeField] TextMeshProUGUI deathCount;
     private int killedCountTemp = 0;
     public void SetKilledCount(int killed) => killedCountTemp += killed;
+
+    [Header("Enemy Spawner")]
+    [SerializeField] AiAgent aiAgent;
+    [SerializeField] AiAgent_zom aiAgent_Zom;
+
     protected override void Awake() {
         base.Awake();
 
@@ -41,15 +48,19 @@ public class GameManger : Singleton<GameManger>
         results_UI.SetActive(false);
         timerPanel.SetActive(false);
         isReady = false;
+
+        EnemySpawner();
     }
+
     private void FixedUpdate() {
         CountDownTime();
         if(isReady) Timer();
+        
     }
 
     private void CountDownTime() {
         if(timeLeft <= -5) return;
-
+        
         timeLeft -= Time.deltaTime;
 
         if(timeLeft <= 0) UnFreeze();
@@ -95,6 +106,7 @@ public class GameManger : Singleton<GameManger>
             timerText.color = Color.red;
             results_UI.SetActive(true);// hien bang ket qua trong match
             ShowResultsInGame();
+            Freeze(); // stop game khi het gio
         }
 
         // timer run realTime
@@ -114,6 +126,25 @@ public class GameManger : Singleton<GameManger>
         killedCount.text = killedCountTemp.ToString("0");
     }
 
+    void EnemySpawner() {
+        StartCoroutine(AiSpawnerCountine());
+    }
 
+    IEnumerator AiSpawnerCountine() {
+        yield return new WaitForSeconds(10f);
+        WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
+        Instantiate(aiAgent_Zom, worldBounds.RandomPosition(), Quaternion.identity);
+    }
+
+    public void LoadMainMenuScene_BackButtonInResultPanel() {
+        StartCoroutine(DelayTimeSave_ToExitGame(0.2f));
+    }
+    IEnumerator DelayTimeSave_ToExitGame(float time) {
+        var loadDataTo_IDataPersistence = FindObjectOfType<LoadDataTo_IDataPersistence>();
+        loadDataTo_IDataPersistence.SaveData_BeforeOutOfGame();
+        yield return new WaitForSeconds(time);
+        Time.timeScale = 0f; //todo free game
+        SceneManager.LoadSceneAsync("MainMenu");
+    }
     //todo
 }

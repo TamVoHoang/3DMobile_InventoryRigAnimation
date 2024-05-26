@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class AiWeapons_zom : MonoBehaviour
@@ -8,13 +9,17 @@ public class AiWeapons_zom : MonoBehaviour
 
     [SerializeField] float minSwordDisRaycast = 0.5f;
 
+    bool isEnemyTakeDamagePlayer;
+
     private void Start() {
         animator = GetComponent<Animator>();
+        isEnemyTakeDamagePlayer = false; // dang false = chua take => cho tru mau player
     }
 
     private void Update() {
         // kiem tra de sinh ra tia raycast o tay va dau
         CheckHandRaycast(rightHand_SpawnRaycast.transform, Vector3.right);
+        CheckHandRaycast(leftHand_SpawnRaycast.transform, -Vector3.right);
     }
 
     public void StartAttacking() {
@@ -44,14 +49,23 @@ public class AiWeapons_zom : MonoBehaviour
 
             var hitBox = hit.collider.GetComponentInChildren<HitBox>();
             var hitPlayer = hit.collider.GetComponent<PlayerHealth>();
-            if(hitBox && !hitPlayer.IsDead) {
-                Debug.Log("co vao hitbox");
-                hitBox.OnSwordRaycastHit(10f, hitBox.transform.position); //ray.direction
+            if(hitBox && !hitPlayer.IsDead && !isEnemyTakeDamagePlayer) {
+                Debug.Log("co vao hitbox player");
+                isEnemyTakeDamagePlayer = true;
+                hitBox.OnSwordRaycastHit(10f, hitBox.transform.position); //! OK but lay mau player lien tuc
+
+                StartCoroutine(EnemyTakePlayerHealthCO(1f, hitBox)); // sau float time - set isEnemyTakeDamagePlayer = false - cho lay mau player
             }
         } else {
             Debug.DrawRay(RHand.position, RHand.transform.TransformDirection(aimDirection) * minSwordDisRaycast, Color.red);
 
         }
     }
+
+    IEnumerator EnemyTakePlayerHealthCO(float time, HitBox hitBox) {
+        yield return new WaitForSeconds(time);
+        isEnemyTakeDamagePlayer = false;
+    }
+
 
 }

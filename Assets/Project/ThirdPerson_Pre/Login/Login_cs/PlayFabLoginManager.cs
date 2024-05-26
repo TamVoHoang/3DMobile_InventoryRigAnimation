@@ -9,6 +9,7 @@ public class PlayFabLoginManager : MonoBehaviour
     const string LAST_EMAIL_KEY = "LAST_EMAIL", LAST_PASSWORD_KEY = "LAST_PASSWORD";
     [SerializeField] PlayerDataJson playerDataJson;
 
+    
 
 //todo Register
     #region Register
@@ -18,6 +19,7 @@ public class PlayFabLoginManager : MonoBehaviour
     [SerializeField] TMP_InputField registerPassword;
     [SerializeField] TextMeshProUGUI ResultRegister_Text;
 
+    
     public void OnRegisterPressed() {
         Register(registerEmail.text, registerUnsername.text, registerPassword.text);
 
@@ -88,6 +90,7 @@ public class PlayFabLoginManager : MonoBehaviour
 
             Debug.Log("Successfully Logged In User: " + PlayerPrefs.GetString("Username"));
             ResultLogin_Text.text = "Successfully Logged In User: " + PlayerPrefs.GetString("Username"); // hien thi ket qua khi login thanh cong
+
         },
         PlayFabFailure);
     }
@@ -122,6 +125,7 @@ public class PlayFabLoginManager : MonoBehaviour
         ResultRegister_Text.text = error.Error + " : " + error.GenerateErrorReport();
         ResultLogin_Text.text = error.Error + " : " + error.GenerateErrorReport();
         ResultRequest_Text.text = error.Error + " : " + error.GenerateErrorReport();
+
     }
 
     //todo

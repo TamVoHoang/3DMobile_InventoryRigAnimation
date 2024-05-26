@@ -8,7 +8,7 @@ public class AiAttackTargetState_zom : AiState_Zom
 
     public void Enter(AiAgent_zom agent) {
         agent.navMeshAgent.speed = 3f;
-        agent.navMeshAgent.stoppingDistance = 3f; //! phai xet bang 1
+        agent.navMeshAgent.stoppingDistance = 2f; //! phai xet bang 1
     }
     public void Update(AiAgent_zom agent) {
         if(agent.health.IsDead) return;
@@ -38,7 +38,7 @@ public class AiAttackTargetState_zom : AiState_Zom
 
     public void Exit(AiAgent_zom agent) {
         Debug.Log("Exit() AttackState");
-        agent.navMeshAgent.stoppingDistance = 0.0f;
+        agent.navMeshAgent.stoppingDistance = 2f;
     }
 
     private void UpdateFighting(AiAgent_zom agent) {

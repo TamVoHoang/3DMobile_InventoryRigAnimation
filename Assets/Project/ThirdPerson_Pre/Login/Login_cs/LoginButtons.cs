@@ -28,7 +28,7 @@ public class LoginButtons : MonoBehaviour
         HandlePassChanged();
     }
 
-    //? add vao nut putton - value changed
+    //? add vao nut InputField - value changed
     public void HandlePassChanged() {
         LoginButton.interactable = 
             loginPassword.text.Length >= minPassLength &&

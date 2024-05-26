@@ -5557,7 +5557,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Rgister
+  m_text: Register
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 38aecd77a18d544bfb836befe83883b7, type: 2}
   m_sharedMaterial: {fileID: 6434564289584660316, guid: 38aecd77a18d544bfb836befe83883b7, type: 2}
@@ -8833,6 +8833,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d66415328c3fc8349b581dbf8155018c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loginPassword: {fileID: 7964989541839368559}
+  minPassLength: 1
+  maxPassLength: 12
+  AccountButton: {fileID: 6353207484331792916}
+  ResumeButton: {fileID: 1597087138}
+  RegisterButton: {fileID: 8805490343125404493}
 --- !u!224 &7207532994358388277
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9584,7 +9590,19 @@ MonoBehaviour:
       m_Calls: []
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7186684962080904332}
+        m_TargetAssemblyTypeName: MainMenuButtons, Assembly-CSharp
+        m_MethodName: HandlePassChanged
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_OnTouchScreenKeyboardStatusChanged:
     m_PersistentCalls:
       m_Calls: []

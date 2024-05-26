@@ -10,6 +10,8 @@ public class AiLocalmotion : MonoBehaviour
 
     private void Awake() {
         playerTransfom = GameObject.FindGameObjectWithTag("Player").transform;
+
+        DontDestroyOnLoad(this); //! test ko destroy enemy khi plaeyr quay lai mainmenu
     }
     private void Start() {
         animator = GetComponent<Animator>();

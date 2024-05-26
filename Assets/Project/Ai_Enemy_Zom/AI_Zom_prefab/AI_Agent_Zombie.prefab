@@ -1340,6 +1340,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3617456500933169794}
   - {fileID: 1866439839048586785}
   m_Father: {fileID: 848138891858337718}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1708,11 +1709,11 @@ Transform:
   m_GameObject: {fileID: 1898788918030239207}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.17, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3888913021386817559}
+  m_Father: {fileID: 3932271639345595636}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1929856604009906340
 GameObject:
@@ -2075,7 +2076,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1866439839048586785}
+  m_Father: {fileID: 4986530879735254567}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2215576899326859267
 GameObject:
@@ -12967,7 +12968,6 @@ Transform:
   - {fileID: 7231721830205784004}
   - {fileID: 7459114317051604158}
   - {fileID: 342968405211921324}
-  - {fileID: 3617456500933169794}
   m_Father: {fileID: 4986530879735254567}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4447057955515718108
@@ -18177,7 +18177,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0, y: -1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.23371544, y: -0.007857092, z: -0.190989}
+  m_ConnectedAnchor: {x: -0.23371567, y: -0.007858396, z: -0.19098854}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: 0, z: -1}
   m_TwistLimitSpring:
@@ -33498,7 +33498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7592436af30d1a543ba59b65e1e24fda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intialState: 4
+  intialState: 2
   navMeshAgent: {fileID: 0}
   config: {fileID: 11400000, guid: d01a3be13b02b1e40963b9b4f76e6278, type: 2}
   ragdoll: {fileID: 0}
@@ -33522,7 +33522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rightHand_SpawnRaycast: {fileID: 1898788918030239207}
   leftHand_SpawnRaycast: {fileID: 2211443274514516240}
-  minSwordDisRaycast: 0.4
+  minSwordDisRaycast: 0.7
 --- !u!54 &2578859090234965434
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -34642,7 +34642,6 @@ Transform:
   - {fileID: 8198074646901781282}
   - {fileID: 8184394438016696399}
   - {fileID: 2935208415844637415}
-  - {fileID: 6843085318251021321}
   m_Father: {fileID: 3932271639345595636}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7476134951457222431
@@ -35226,6 +35225,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6843085318251021321}
   - {fileID: 3888913021386817559}
   m_Father: {fileID: 3956708610346853914}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -1,6 +1,8 @@
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
 {
@@ -17,10 +19,14 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     [SerializeField] private TextMeshProUGUI killed;
     [SerializeField] private TextMeshProUGUI died;
 
+    [SerializeField] Button StartGameButton;
+    bool isLoaded = false;
+
     private void Awake() {
         playerDataJson = FindObjectOfType<PlayerDataJson>();
         inventoryDataJson = FindObjectOfType<InventoryDataJson>();
         playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
+        isLoaded = false;
     }
 
     private void Start() {
@@ -31,14 +37,23 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     public void InfoButton() {
         Debug.Log("co nhan nut tai thong tin nguoi choi");
         LoadPlayerData(playerDataJson.PlayerJson);
+        isLoaded = true;
     }
 
     //BUTTONS IN PLAYER INFO OVERVIEW
     public void LoadGame_Scene02_StartGameButton() {
-        TestLoadingScene.Instance.LoadGame_Scene02();
+        if(isLoaded) {
+            isLoaded = false;
+            TestLoadingScene.Instance.LoadGame_Scene02();
+        }
+        
     }
     public void Load_MainMenuSence_OnMainMenuButton() {
-        TestLoadingScene.Instance.Load_MainMenu_Scene();
+        if(isLoaded) {
+            isLoaded = false;
+            TestLoadingScene.Instance.Load_MainMenu_Scene();
+        }
+        
     }
 
     #region IDataPersistence
@@ -50,6 +65,7 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
         
         yield return new WaitForSeconds(time);
         LoadPlayerData(playerDataJson.PlayerJson); // lay data playerJson xet UI
+        isLoaded = true;
     }
 
     public void LoadPlayerData(PlayerJson playerJsonData) {
