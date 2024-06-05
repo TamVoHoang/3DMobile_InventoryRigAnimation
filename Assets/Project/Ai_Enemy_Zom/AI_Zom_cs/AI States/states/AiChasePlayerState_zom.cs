@@ -1,6 +1,5 @@
 using UnityEngine.AI;
 using UnityEngine;
-using Unity.VisualScripting;
 
 public class AiChasePlayerState_zom : AiState_Zom
 {
@@ -9,13 +8,13 @@ public class AiChasePlayerState_zom : AiState_Zom
         return AiStateID_Zom.ChasePlayer;
     }
 
-    public void Enter(AiAgent_zom agent) {
-        agent.navMeshAgent.speed = 5;
-        agent.navMeshAgent.stoppingDistance = 2f;
+    public void Enter(AiAgent_zom agent_Zom) {
+        agent_Zom.navMeshAgent.speed = agent_Zom.configZombie.speed_Chase;  //4
+        agent_Zom.navMeshAgent.stoppingDistance = agent_Zom.configZombie.stoppingDis_Chase; //2
     }
 
     public void Update(AiAgent_zom agent) {
-        Debug.Log("co vao chase");
+        Debug.Log("zombie dang vao chase");
         if(!agent.enabled) return;
         
         timer -= Time.deltaTime;
@@ -25,19 +24,18 @@ public class AiChasePlayerState_zom : AiState_Zom
         if(timer < 0.0f) {
             Vector3 direction = agent.playerTransform.position - agent.navMeshAgent.destination;
             direction.y = 0;
-            if(direction.sqrMagnitude > agent.config.maxDistance * agent.config.maxDistance) {
+            if(direction.sqrMagnitude > agent.configZombie.maxDistance * agent.configZombie.maxDistance) {
                 if(agent.navMeshAgent.pathStatus != NavMeshPathStatus.PathPartial) {
                     agent.navMeshAgent.destination = agent.playerTransform.position;
                 }
             }
-            timer = agent.config.maxTime;
+            timer = agent.configZombie.maxTime;
 
             //? dang chase neu khoang cach bo xa qu lon thi agen chuyen qua idle or Attack
             var distance = Vector3.Distance(agent.transform.position, agent.playerTransform.position);
-            if(distance < 3) agent.stateMachine_zom.ChangeState(AiStateID_Zom.AttackTarget);        //todo ATTACK
-            if(distance > 7) agent.stateMachine_zom.ChangeState(AiStateID_Zom.FindTarget); 
-
-            
+            //if(distance < 6) agent.stateMachine_zom.ChangeState(AiStateID_Zom.FindTarget); //? OK
+            if(distance < 4) agent.stateMachine_zom.ChangeState(AiStateID_Zom.AttackTarget); // chase -> attack
+            else if(distance > 9) agent.stateMachine_zom.ChangeState(AiStateID_Zom.FindTarget); //! chase -> random find
         }
 
     }

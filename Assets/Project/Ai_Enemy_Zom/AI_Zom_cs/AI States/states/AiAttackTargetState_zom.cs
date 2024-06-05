@@ -7,10 +7,11 @@ public class AiAttackTargetState_zom : AiState_Zom
     }
 
     public void Enter(AiAgent_zom agent) {
-        agent.navMeshAgent.speed = 3f;
-        agent.navMeshAgent.stoppingDistance = 2f; //! phai xet bang 1
+        agent.navMeshAgent.speed = agent.configZombie.speed_Attack; //3f
+        agent.navMeshAgent.stoppingDistance = agent.configZombie.stoppingDis_Attack; //! phai xet bang 1
     }
     public void Update(AiAgent_zom agent) {
+        Debug.Log("zombie dang vao Attack");
         if(agent.health.IsDead) return;
 
         if(agent.playerTransform.GetComponent<PlayerHealth>().IsDead) {
@@ -23,8 +24,8 @@ public class AiAttackTargetState_zom : AiState_Zom
             return;
         }
 
-        var distance = Vector3.Distance(agent.transform.position, agent.playerTransform.position);
-        if(!agent.aiTargetingSystem.HasTarget && distance <= 3f) {
+        //var distance = Vector3.Distance(agent.transform.position, agent.playerTransform.position);
+        if(!agent.aiTargetingSystem.HasTarget) {
             agent.stateMachine_zom.ChangeState(AiStateID_Zom.FindTarget); //!NEU CHO NHIEU AI ATTACK() THI DUNG DONG NAY => TIM AI KHAC TAN CONG
             return;
         }

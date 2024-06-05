@@ -6,7 +6,7 @@ public class AiAgent_zom : MonoBehaviour
     public AiStateMachine_zom stateMachine_zom;
     public AiStateID_Zom intialState;
     public NavMeshAgent navMeshAgent;
-    public AiAgentConfig config;
+    public AiAgentConfig configZombie;
 
     public AiRagdoll ragdoll;
     public AiUIHealthBar aiUIHealthBar;

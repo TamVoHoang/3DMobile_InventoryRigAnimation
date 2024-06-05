@@ -12,6 +12,7 @@ public class AiFindTargetState : AiState
         agent.navMeshAgent.stoppingDistance = agent.config.stoppingDis_FindWeapon; //khi find thi stopDis = 0. dam bao trigger
     }
     public void Update(AiAgent agent) {
+        Debug.Log("ai dang Find");
         //? WANDER
         if(!agent.navMeshAgent.hasPath) {
             Debug.Log("Dang generate min max AiFindWeapon State");

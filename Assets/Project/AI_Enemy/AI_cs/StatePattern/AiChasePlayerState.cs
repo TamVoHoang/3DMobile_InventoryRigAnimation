@@ -14,6 +14,7 @@ public class AiChasePlayerState : AiState
     }
 
     public void Update(AiAgent agent) {
+        Debug.Log("ai dang Chase");
         if(!agent.enabled) return;
 
         timer -= Time.deltaTime;

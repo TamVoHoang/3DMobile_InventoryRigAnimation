@@ -18,10 +18,11 @@ public class AiAttackTargetState : AiState
     }
 
     public void Update(AiAgent agent) {
+        Debug.Log("ai dang Attack");
+        
         //? neu ai death - ko the chay xuong phan animation switching gun | sang bi loi tai day
         if(agent.health.IsDead) return;
         
-        Debug.Log("Attack Update()");
         if(agent.playerTransform.GetComponent<PlayerHealth>().IsDead) {
             //! set null target player | quan trong co trong DeActive() => co the xet ben update() IdleState.
             /* agent.weapons.SetTarget(null);  

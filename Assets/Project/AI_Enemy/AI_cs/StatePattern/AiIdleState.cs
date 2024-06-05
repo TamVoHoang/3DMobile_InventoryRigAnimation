@@ -11,7 +11,7 @@ public class AiIdleState : AiState
     }
 
     public void Update(AiAgent agent) {
-        Debug.Log("co vao Idle");
+        Debug.Log("ai dang Idle");
         if(agent.playerTransform.GetComponent<PlayerHealth>().IsDead) {
             /* agent.weapons.SetTarget(null);  //! set null target player | quan trong co trong DeActive()
             agent.weapons.DeActiveWeapon(); */

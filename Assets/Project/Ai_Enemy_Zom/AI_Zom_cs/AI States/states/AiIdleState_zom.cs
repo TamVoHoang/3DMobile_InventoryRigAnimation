@@ -10,13 +10,13 @@ public class AiIdleState_zom : AiState_Zom
     }
 
     public void Update(AiAgent_zom agent) {
-        Debug.Log("zombie Idle");
+        Debug.Log("zombie dang Idle");
         if(agent.playerTransform.GetComponent<PlayerHealth>().IsDead) {
             return;
         }
 
         Vector3 playerDirection = agent.playerTransform.position - agent.transform.position;
-        if(playerDirection.magnitude > agent.config.maxSightDistance) {
+        if(playerDirection.magnitude > agent.configZombie.maxSightDistance) {
             return;
         }
 
@@ -26,7 +26,8 @@ public class AiIdleState_zom : AiState_Zom
 
         if(dotProduct > 0.0f) {
             Debug.Log("chase player");
-            agent.stateMachine_zom.ChangeState(AiStateID_Zom.ChasePlayer);
+            //agent.stateMachine_zom.ChangeState(AiStateID_Zom.ChasePlayer);
+            agent.stateMachine_zom.ChangeState(AiStateID_Zom.FindTarget);
         }
     }
     public void Exit(AiAgent_zom agent) {
