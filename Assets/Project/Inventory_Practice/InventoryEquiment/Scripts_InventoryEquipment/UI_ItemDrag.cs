@@ -72,7 +72,7 @@ public class UI_ItemDrag : Singleton<UI_ItemDrag> {
         gameObject.SetActive(true);
 
         SetItem(item);
-        //SetSprite(item.GetSprite());
+        ////SetSprite(item.GetSprite());
         SetSprite(item.itemScriptableObject.itemSprite);
         SetAmountText(item.amount);
         UpdatePosition();

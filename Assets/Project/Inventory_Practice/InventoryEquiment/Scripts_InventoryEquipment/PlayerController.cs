@@ -11,7 +11,7 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
 
     [SerializeField] Inventory inventory; // se duoc Awake() goi de khoi tao new inventory
     [SerializeField] Inventory inventoryEquipment;
-    [SerializeField] Inventory inventory_scroll;
+    [SerializeField] Inventory inventory_scroll;    // dung de chua nhung thu chuan bi pickup - notUse
     
     private ActiveGun activeGun;
     private Health playerHealth;
@@ -25,9 +25,11 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
     
     protected override void Awake() {
         base.Awake();
+        
         inventory_scroll = new Inventory(UseItemScroll);                        // inventory ao, pickup
         inventory = new Inventory(UseItem);                                     // => khoi tao Inventory() => itemList (vat pham co the chong len nhau)
         inventoryEquipment = new Inventory(UseItemEquipment, itemSlotAmount);   // inventoryEquipment - nhung thu !istackable
+        
         activeGun = GetComponent<ActiveGun>();
         playerHealth = GetComponent<PlayerHealth>();
         characterEquipment = GetComponent<CharacterEquipment>();

@@ -26,15 +26,16 @@ public class UI_CharacterEquipmentSlot : MonoBehaviour, IDropHandler
     }
 
     //todo remove item ben trong o slot ma this.gameobject dang chua
-    // public void OnPointerClick(PointerEventData eventData)
-    // {
-    //     if (eventData.clickCount == 2) {
-    //         Debug.Log("Double click detected!");
-    //     }
-    //     Debug.Log("co nhan chuot phai tai equiptSlot");
-    //     OnItemPointerRightClicked?.Invoke(this, new OnItemPointerClick {item = null});
+
+    /* public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.clickCount == 2) {
+            Debug.Log("Double click detected!");
+        }
+        Debug.Log("co nhan chuot phai tai equiptSlot");
+        OnItemPointerRightClicked?.Invoke(this, new OnItemPointerClick {item = null});
         
-    // }
+    } */
 
 
 }

@@ -1,6 +1,5 @@
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,6 +35,7 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     //?  RAT OK CO THE DUNG HAM NAY KET HOP VOI NUT NHAN INFO DE IN DATA TU MAIN GAME TRO LAI SCENE NAY
     public void InfoButton() {
         Debug.Log("co nhan nut tai thong tin nguoi choi");
+        inventoryDataJson.Load_InventoryDataJason_RealTime(); //!testing
         LoadPlayerData(playerDataJson.PlayerJson);
         isLoaded = true;
     }

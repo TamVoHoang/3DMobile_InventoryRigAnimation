@@ -5,18 +5,18 @@ using System;
 using CodeMonkey.Utils;
 
 
+//todo Gameobject = duoi tuong nam duoi Canvas Inventory
 public class UI_Inventory : MonoBehaviour
 {
     [SerializeField] private Transform pfUI_Item;
     
-    //todo Gameobject = duoi tuong nam duoi Canvas Inventory
     [SerializeField] private Inventory inventory; // se duoc gan vao khi SetInventory is called
     [SerializeField] private Inventory inventoryEquipment;
     [SerializeField] private Inventory inventory_scroll; //!tesitng pickup
     
-    //? 2 transform container and templet
-    [SerializeField] private Transform itemSlotContainer; // parent folder
-    [SerializeField] private Transform itemSlotContainer1; // parent folder
+    //? 3 transform container and templet
+    [SerializeField] private Transform itemSlotContainer; // parent folder - noi chua cac item Slot - notEquippedItems
+    [SerializeField] private Transform itemSlotContainer1; // parent folder - noi chua cac item Slot - equippedItems - drag drop
     [SerializeField] private Transform itemSlotContainerPickup_scroll; //!tesitng pickup
 
     [SerializeField] private Transform itemSlotTemplate; // vi tri cua item se hien len (o vat pham) nam torng bang vat pham
@@ -33,11 +33,11 @@ public class UI_Inventory : MonoBehaviour
     
     private void Awake() {
         //! ITEMSLOTCONTAINER PHAI GOI DAU TIEN NEU KO SE KO CO CHO DE ITEMSLOTTEMPLET INSTANTIATE COL 85 AND 147
-        // itemSlotContainer = transform.Find("itemSlotContainer");
-        // itemSlotContainer1 = transform.Find("itemSlotContainer1");
+        /* itemSlotContainer = transform.Find("itemSlotContainer");
+        itemSlotContainer1 = transform.Find("itemSlotContainer1");
 
-        // itemSlotTemplate = itemSlotContainer.Find("itemSlotTemplate");
-        // itemSlotTemplate1 = itemSlotContainer1.Find("itemSlotTemplate1");
+        itemSlotTemplate = itemSlotContainer.Find("itemSlotTemplate");
+        itemSlotTemplate1 = itemSlotContainer1.Find("itemSlotTemplate1"); */
 
         itemSlotTemplate.gameObject.SetActive(false);
         itemSlotTemplate1.gameObject.SetActive(false);
@@ -49,17 +49,21 @@ public class UI_Inventory : MonoBehaviour
     }
 
     //? gan inventory khi player Awake() -> this.inventory
+    // inventory show before deciding pickup or not _ not Using at now
     public void SetInventoryScroll(Inventory inventory_scroll) {
         this.inventory_scroll = inventory_scroll;
         inventory_scroll.OnItemListChanged += Inventory_OnItemListChanged;
         RefreshInventoryItemPickup_scroll();
     }
+
+    // inventory hold items isStackable - not equip on player
     public void SetInventory(Inventory inventory) {
         this.inventory = inventory;
         inventory.OnItemListChanged += Inventory_OnItemListChanged;
         RefreshIventoryItems();
     }
 
+    // inventory hold equipped items - equip on Player - drag drop
     public void SetInventoryEquipment(Inventory inventoryEquipment) {
         this.inventoryEquipment = inventoryEquipment;
         inventoryEquipment.OnItemListChanged += Inventory_OnItemListChanged;
@@ -207,7 +211,7 @@ public class UI_Inventory : MonoBehaviour
         //? toa do itemSlot ben trong bang vat pham
         int x = 0;
         int y = 0;
-        //itemSlotCellSize = 80f;
+        ////itemSlotCellSize = 80f;
         foreach (Inventory.InventorySlot inventorySlot in inventoryEquipment.GetInventorySlotArray()) // cu moi vat pham ben trong listItems trong Item.cs
         {
             Item item = inventorySlot.GetItem(); //? kiem tra item tai tung slot trong foreach
@@ -223,7 +227,7 @@ public class UI_Inventory : MonoBehaviour
 
             //? equip chen ngang khi co tin hieu mouse click
             if (!inventorySlot.IsEmpty()) {
-                // Not Empty, has Item
+                // Not Empty, has Item => thi hien thi item do thong qua UI_Item
                 Transform uiItemTransform = Instantiate(pfUI_Item, itemSlotContainer1);
                 uiItemTransform.GetComponent<RectTransform>().anchoredPosition = itemSlotRectTransform.anchoredPosition;
                 UI_Item uiItem = uiItemTransform.GetComponent<UI_Item>();
@@ -255,12 +259,12 @@ public class UI_Inventory : MonoBehaviour
             UI_ItemSlot uiItemSlot = itemSlotRectTransform.GetComponent<UI_ItemSlot>();
 
             uiItemSlot.SetOnDropAction(() => {
-                Debug.Log("Start run OnDropAction");
+                Debug.Log("Start run OnDropAction khi da drop xuong duoc slot");
                 // Dropped on this UI Item Slot
                 Item draggedItem = UI_ItemDrag.Instance.GetItem();
                 //todo neu KO dung ScrollView thi chay doan nay
-                // draggedItem.RemoveFromItemHolder();
-                // inventoryEquipment.AddItemEquipment(draggedItem, tmpInventorySlot);
+                /* draggedItem.RemoveFromItemHolder();
+                inventoryEquipment.AddItemEquipment(draggedItem, tmpInventorySlot); */
 
                 //todo neu dung ScrollView thi chay doan nay
                 Debug.Log(draggedItem);
@@ -271,7 +275,6 @@ public class UI_Inventory : MonoBehaviour
                     inventoryEquipment.AddItemEquipment(draggedItem, tmpInventorySlot);
                 }
                 });
-
 
             // offset x, y vi tri o vat pham tren bang vat pham
             x++;

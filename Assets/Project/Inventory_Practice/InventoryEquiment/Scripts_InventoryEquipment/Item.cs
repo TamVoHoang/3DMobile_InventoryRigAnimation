@@ -57,6 +57,7 @@ public class Item
         return itemHolder;
     }
 
+    // Remove item tu slot nay sang slot khac
     public void RemoveFromItemHolder() {
         if(itemHolder == null) Debug.Log("itemHolder == null");
         if (itemHolder != null) {
@@ -135,6 +136,7 @@ public class Item
         ////return GetSprite(itemType);
         return GetSprite(itemScriptableObject.itemType);
     }
+
     /* public Sprite GetSprite() {
         switch (itemType) {
         default:

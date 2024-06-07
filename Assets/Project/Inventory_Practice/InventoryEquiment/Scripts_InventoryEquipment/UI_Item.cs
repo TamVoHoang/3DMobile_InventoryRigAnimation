@@ -27,22 +27,22 @@ public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IE
     }
     private void Update() {
         //todo dung khi col 162 UI_inventory su dung click de Use || nen o day phai dung MouseMidleDunc
-        //SpitItem();
-        //RemoveAndDrop();
+        /* SpitItem();
+        RemoveAndDrop(); */
     }
 
     public void OnBeginDrag(PointerEventData eventData) {
-        canvasGroup.alpha = .5f;
+        canvasGroup.alpha = .5f; // lam mo hinh anh
         canvasGroup.blocksRaycasts = false;
         UI_ItemDrag.Instance.Show(item);
     }
 
     public void OnDrag(PointerEventData eventData) {
-        //rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        ////rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
 
     public void OnEndDrag(PointerEventData eventData) {
-        canvasGroup.alpha = 1f;
+        canvasGroup.alpha = 1f; // lam hinh anh sang tro lai
         canvasGroup.blocksRaycasts = true; // todo true o day de con co the drag sau khi trigger
         UI_ItemDrag.Instance.Hide();
 
@@ -50,6 +50,7 @@ public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IE
         if(EventSystem.current.IsPointerOverGameObject()){
             return;
         }
+        
         DropItemOutWorld();
     }
 
@@ -104,8 +105,8 @@ public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IE
 
     public void SetItem(Item item) {
         this.item = item;
-        SetSprite(item.GetSprite()); // lay sprite ben ngoai ItemAsset
-        //SetSprite(item.itemScriptableObject.itemSprite); // lay sprite ben trong ItemScriptableObject
+        //SetSprite(item.GetSprite()); //! lay sprite ben ngoai ItemAsset - co the dung ok
+        SetSprite(item.itemScriptableObject.itemSprite); // lay sprite ben trong ItemScriptableObject
 
         SetAmountText(item.amount);
     }

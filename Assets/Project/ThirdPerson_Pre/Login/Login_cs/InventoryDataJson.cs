@@ -48,9 +48,9 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
 
     //? khoi to InvenJson de signup() - cho vu khi khi signup
     private InventoryJson ReturnInventoryJson_ToSingnUp() {
-        CreateNewItemListJson_ToSignUp(Pistol01_3D_01,1);
-        CreateNewItemListJson_ToSignUp(IHealthPickup_01,3);
-        CreateNewItemListJson_ToSignUp(IMagPistol_01,3);
+        CreateNewItemListJson_ToSignUp(Pistol01_3D_01, 1);
+        CreateNewItemListJson_ToSignUp(IHealthPickup_01, 3);
+        CreateNewItemListJson_ToSignUp(IMagPistol_01, 3);
         return new InventoryJson("itemInventory", inventoryJson.itemsListJson);
     }
 
@@ -67,7 +67,7 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
         error => { Debug.LogError(error.GenerateErrorReport());});
     }
 
-    //? gameObjects :IData_InventoryPersistence run Save_InventoryData()
+    //? gameObjects :IData_InventoryPersistence run Save_InventoryData() | backButton torng game call
     public void SaveInventoryData_FromObjectsContainIInventoryDataPer(List<IData_InventoryPersistence> dataPersistenceObjects){
         foreach (IData_InventoryPersistence dataPersistenceObj in dataPersistenceObjects) {
             dataPersistenceObj.Save_InventoryData(ref inventoryJson);

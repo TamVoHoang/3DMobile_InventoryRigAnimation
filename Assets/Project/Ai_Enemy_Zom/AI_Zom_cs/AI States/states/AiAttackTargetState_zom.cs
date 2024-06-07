@@ -39,7 +39,7 @@ public class AiAttackTargetState_zom : AiState_Zom
 
     public void Exit(AiAgent_zom agent) {
         Debug.Log("Exit() AttackState");
-        agent.navMeshAgent.stoppingDistance = 2f;
+        agent.navMeshAgent.stoppingDistance = 1f;
     }
 
     private void UpdateFighting(AiAgent_zom agent) {

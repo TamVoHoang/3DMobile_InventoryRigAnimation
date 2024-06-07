@@ -6,8 +6,11 @@ public class Testing : MonoBehaviour
     [SerializeField] private PlayerController playerController;
     [SerializeField] private UI_Inventory uiInventory;
 
-    [SerializeField] private UI_CharacterEquipment uICharacterEquipment;
-    [SerializeField] private CharacterEquipment characterEquipment; // keo the player.go vao day
+    // Equip Items from ui_inventory to ui_CharacterEquipment
+    [SerializeField] private UI_CharacterEquipment uICharacterEquipment;    // UI hien thi items duoc keo vao trang bi cho Player
+    [SerializeField] private CharacterEquipment characterEquipment; // keo the player.go vao day (do player.GameObject chua characterEqipment.cs)
+    
+    // Drafting
     [SerializeField] private UI_CraftingSystem uICraftingSystem;
     [SerializeField] private List<RecipeScriptableObject> recipeScriptableObjectList;
 
@@ -18,10 +21,14 @@ public class Testing : MonoBehaviour
 
     void Start()
     {
-        uiInventory.SetPlayerPos(playerController);
+        uiInventory.SetPlayerPos(playerController); // set vi tri player de drop items
+
+        // Truyen tham so la loai new Inventory tu PlayerControler.cs => SetInventory(new inventory)
+        // Gan luon dia chi ham Inventory_OnItemListChanged() cho su kien ma new Inventory se goi
+        // moi khi new inventory can thay doi data => se hien thi su thay doi sang cho uiInventory
+        uiInventory.SetInventoryScroll(playerController.GetInventory_scroll());
         uiInventory.SetInventory(playerController.GetInventory());
         uiInventory.SetInventoryEquipment(playerController.GetInventoryEquipment());
-        uiInventory.SetInventoryScroll(playerController.GetInventory_scroll());
 
         //todo => characterEquipment.OnEquipmentChanged += CharacterEquipment_OnEquipmentChnaged;
         uICharacterEquipment.SetCharacterEquipment(characterEquipment);
