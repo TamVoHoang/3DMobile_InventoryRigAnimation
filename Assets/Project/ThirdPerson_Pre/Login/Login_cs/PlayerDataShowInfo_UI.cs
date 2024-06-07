@@ -7,7 +7,7 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
 {
     //todo game object = overviewPlayerData show after pressing loginButtonPressed
     
-    [SerializeField] private PlayerDataLocal_Temp playerDataLocal_Temp;
+    //[SerializeField] private PlayerDataLocal_Temp playerDataLocal_Temp;
     [SerializeField] private PlayerDataJson playerDataJson;
     [SerializeField] private InventoryDataJson inventoryDataJson;
 
@@ -24,7 +24,8 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     private void Awake() {
         playerDataJson = FindObjectOfType<PlayerDataJson>();
         inventoryDataJson = FindObjectOfType<InventoryDataJson>();
-        playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
+
+        //playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
         isLoaded = false;
     }
 
@@ -35,7 +36,6 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     //?  RAT OK CO THE DUNG HAM NAY KET HOP VOI NUT NHAN INFO DE IN DATA TU MAIN GAME TRO LAI SCENE NAY
     public void InfoButton() {
         Debug.Log("co nhan nut tai thong tin nguoi choi");
-        inventoryDataJson.Load_InventoryDataJason_RealTime(); //!testing
         LoadPlayerData(playerDataJson.PlayerJson);
         isLoaded = true;
     }
@@ -59,11 +59,10 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     #region IDataPersistence
     IEnumerator LoadData_ToShowPlayerInfo_Countine(float time) {
         yield return new WaitForSeconds(time);
-        playerDataJson.Load_PlayerDataJason_RealTime(); // de lay playerJson
-        /* yield return new WaitForSeconds(time);
-        inventoryDataJson.Load_InventoryDataJason_RealTime(); */ // de lay inventoryJson
+        playerDataJson.Load_PlayerDataJason_RealTime();         // de lay playerJson
+        inventoryDataJson.Load_InventoryDataJason_RealTime();   // lay inventoryJson = chi goi xuong chu ko dung inventoryJson thuc hien tiep
         
-        yield return new WaitForSeconds(time);
+        yield return new WaitForSeconds(1f);
         LoadPlayerData(playerDataJson.PlayerJson); // lay data playerJson xet UI
         isLoaded = true;
     }
@@ -91,14 +90,15 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     }
     #endregion IDataPersistence
 
-    private void ShowInUI_FromDataLoacal_Temp() {
+    /* private void ShowInUI_FromDataLoacal_Temp() {
         this.mail.text ="Mail: "+  playerDataLocal_Temp.mail;
         this.userName.text ="UserName: "+ playerDataLocal_Temp.userName;
         this.level.text ="Level: "+ playerDataLocal_Temp.level.ToString();
         this.health.text ="Health: "+ playerDataLocal_Temp.health.ToString();
         this.killed.text = "Killed: " + playerDataLocal_Temp.killed.ToString();
         this.died.text = "Died: " + playerDataLocal_Temp.died.ToString();
-    }
+    } */
+
     /* private void ShowPlayerInfo_LoginScreen(string mail, string userName, int level, int health, int killed, int died) {
         this.mail.text ="Mail: "+  mail;
         this.userName.text ="UserName: "+ userName;

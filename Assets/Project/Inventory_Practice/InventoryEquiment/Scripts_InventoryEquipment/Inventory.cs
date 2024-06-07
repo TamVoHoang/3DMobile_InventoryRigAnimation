@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-using Unity.VisualScripting;
 
 
 public class Inventory : IItemHolder
@@ -34,7 +33,7 @@ public class Inventory : IItemHolder
                 amount = 1}); */
     }
 
-    //TODO HAM KHOI TOA CHO ITEM 
+    //TODO HAM KHOI TOA CHO INVENTORY ITEMS + INVENTORY TEMP TRUOC KHI QUYET DINH CO ADD VAO KHONG
     //?player Awake() - khoi toa Inventoy() -> khoi toa itemList() kieu Item - KHI TEST 1
     public Inventory(Action<Item> useItemAction)
     {
