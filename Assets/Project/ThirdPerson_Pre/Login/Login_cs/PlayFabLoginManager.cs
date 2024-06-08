@@ -4,14 +4,16 @@ using PlayFab;
 using PlayFab.ClientModels;
 using System.Collections;
 
+//? game object = PlayFabLoginManger
+//? input field -> register - save playerJson local to "Json"
+//? save InventoryJson local to "InventoryJson"
+
 public class PlayFabLoginManager : MonoBehaviour
 {
     const string LAST_EMAIL_KEY = "LAST_EMAIL", LAST_PASSWORD_KEY = "LAST_PASSWORD";
     [SerializeField] PlayerDataJson playerDataJson;
 
-    
-
-//todo Register
+    //todo Register
     #region Register
     [Header("Register UI: ")]
     [SerializeField] TMP_InputField registerEmail;
@@ -19,11 +21,11 @@ public class PlayFabLoginManager : MonoBehaviour
     [SerializeField] TMP_InputField registerPassword;
     [SerializeField] TextMeshProUGUI ResultRegister_Text;
 
-    
+    // Register Button in Register_Screen call this function - sau khi da nhap mail va pass
     public void OnRegisterPressed() {
         Register(registerEmail.text, registerUnsername.text, registerPassword.text);
-
     }
+    
     private void Register(string email,string username, string password) {
         PlayFabClientAPI.RegisterPlayFabUser(new RegisterPlayFabUserRequest() {
             Email = email,
@@ -35,33 +37,21 @@ public class PlayFabLoginManager : MonoBehaviour
             Login(email, password);
             ResultRegister_Text.text = "Register Success";
 
-            //? khoi tao doi tuong PlayerJson ko tham so - save doi tuong nay
-            /* string vector3ToString = JsonUtility.ToJson(playerDataJson.InitialVector3Player_ToRegister);
-            PlayerJson playerJson_Register  = new PlayerJson() {
-                mail = email,
-                name = username,
-                level = 1,
-                health = 500,
-                killed = 0,
-                died = 0,
-
-                position = vector3ToString //! dang kiem tra thu
-            };
-            playerDataJson.Save_PlayerJson_ToResiger(playerJson_Register); */
-
-            //? khoi tao doi tuong InventoryJson ko tham so - luu doi tuong nay
+            //? email user name - gan vao PlayerJson - save len "Json" PlayFab
             PlayerDataJson.Instance.Save_PlayerDataJason_SignUp(email,username);
-            StartCoroutine(SaveInventoryDataJson_ToSignUpContine(4));
+            
+            //? khoi tao new inventory - gan vao InventoryJson - save len "InventoryJson" PlayFab
+            StartCoroutine(SaveInventoryDataJson_ToSignUpContine(4)); //! neu luu ngay lap tuc inventoryJson se bi loi
         }, 
         PlayFabFailure);
-
     }
-    #endregion Register
+
     IEnumerator SaveInventoryDataJson_ToSignUpContine(float time) {
         yield return new WaitForSeconds(time);
-        //InventoryDataJson.Instance.Save_InventoryDataJason_RealTime(InventoryDataJson.Instance.InventoryJson);
         InventoryDataJson.Instance.Save_InventoryDataJson_SignUp();
     }
+
+    #endregion Register
 
 //todo Login
     #region Login
@@ -70,16 +60,18 @@ public class PlayFabLoginManager : MonoBehaviour
     [SerializeField] TMP_InputField loginPassword;
     [SerializeField] TextMeshProUGUI ResultLogin_Text;
     
+    
     public void OnLoginAutoPressed() => 
         Login(PlayerPrefs.GetString(LAST_EMAIL_KEY), PlayerPrefs.GetString(LAST_PASSWORD_KEY));
-    public void OnLoginPressed() =>
-        Login(loginEmail.text, loginPassword.text);
+    
+    // Login Button in Login Scene call coll 47_LoginButton.cs
+    public void OnLoginPressed() => Login(loginEmail.text, loginPassword.text);
 
     private void Login(string mail, string password) {
         PlayFabClientAPI.LoginWithEmailAddress(new LoginWithEmailAddressRequest() {
-            Email = mail,
-            Password = password,
-            InfoRequestParameters = new GetPlayerCombinedInfoRequestParams() {
+                Email = mail,
+                Password = password,
+                InfoRequestParameters = new GetPlayerCombinedInfoRequestParams() {
                 GetPlayerProfile = true
             }
         },

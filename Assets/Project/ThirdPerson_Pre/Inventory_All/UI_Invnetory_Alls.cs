@@ -55,13 +55,13 @@ public class UI_Invnetory_Alls : MonoBehaviour
             itemSlotRectTransform.gameObject.SetActive(true); // hien cac o chua
             
             //? xet vi tri cho o vat pham UI
-            itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, -0.5f * y * itemSlotCellSize);
+            itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, -0.6f * y * itemSlotCellSize);
 
             //? equip chen ngang khi co tin hieu mouse click
             if (!inventorySlot.IsEmpty()) {
                 // Not Empty, has Item
                 Transform uiItemTransform = Instantiate(pfUI_Item_Alls, itemSlotContainer1_Alls);
-                uiItemTransform.GetComponent<RectTransform>().anchoredPosition = itemSlotRectTransform.anchoredPosition + new Vector2(-100f, 0); //! move to left + new Vector2(-55f, 0)
+                uiItemTransform.GetComponent<RectTransform>().anchoredPosition = itemSlotRectTransform.anchoredPosition + new Vector2(-160f, 0); //! move to left + new Vector2(-160f, 0)
                 UI_Item_Alls uiItem_Alls = uiItemTransform.GetComponent<UI_Item_Alls>();
                 uiItem_Alls.SetItem(item);
                 

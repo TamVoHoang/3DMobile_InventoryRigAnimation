@@ -14,9 +14,9 @@ public class Testing : MonoBehaviour
     [SerializeField] private UI_CraftingSystem uICraftingSystem;
     [SerializeField] private List<RecipeScriptableObject> recipeScriptableObjectList;
 
-    [SerializeField] private GameObject UI_CraftingSystem_Go;
+    /* [SerializeField] private GameObject UI_CraftingSystem_Go;
     [SerializeField] private GameObject UI_Inventory_Go;
-    [SerializeField] private GameObject UI_CharacterEquipment_Go;
+    [SerializeField] private GameObject UI_CharacterEquipment_Go; */
 
 
     void Start()

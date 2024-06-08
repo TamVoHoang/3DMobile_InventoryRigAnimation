@@ -24,6 +24,7 @@ public class GameManger : Singleton<GameManger>
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private float remainingTime;
     private bool isReady = false;
+    public bool IsReady => isReady;
 
     [Header ("Results")]
     [SerializeField] private GameObject results_UI;
@@ -78,7 +79,7 @@ public class GameManger : Singleton<GameManger>
 
         inputManager.enabled = false;
         foreach (var item in aiSetSpeedArr) {
-            item.IntialSpeed = item.GetComponent<NavMeshAgent>().speed;
+            item.IntialSpeed = item.GetComponent<NavMeshAgent>().speed; // toc do duoc set thuc su
             item.GetComponent<NavMeshAgent>().speed = 0;
         }
         countDownFlag = true;
@@ -90,6 +91,7 @@ public class GameManger : Singleton<GameManger>
 
         isReady = true;
         inputManager.enabled = true;
+        
         foreach (var item in aiSetSpeedArr) {
             item.GetComponent<NavMeshAgent>().speed = item.IntialSpeed;
         }

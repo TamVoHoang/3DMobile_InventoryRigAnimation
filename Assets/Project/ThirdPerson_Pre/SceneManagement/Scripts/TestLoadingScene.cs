@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//? game object = SceneManager_PF - dondestroy from MainMenu Scene
+
 public class TestLoadingScene : Singleton<TestLoadingScene>
 {
     protected override void Awake() {
@@ -20,7 +22,6 @@ public class TestLoadingScene : Singleton<TestLoadingScene>
         SceneManager.LoadSceneAsync("ThirdPerson");
     }
 
-    // nhan nut resume game
     public void ResumeGame() {
         SceneManager.LoadSceneAsync("ThirdPerson");
     }

@@ -7,6 +7,8 @@ public class PlayerController_Alls : MonoBehaviour, IData_InventoryPersistence
     Inventory inventory_Alls;
 
     [SerializeField] InventoryDataJson inventoryDataJson; // dung bien nay de goi
+
+    [SerializeField] Transform spawnedPointItems;
     private void Awake() {
         inventory_Alls = new Inventory(UseItemsAlls, itemSlotAmount);
 
@@ -25,7 +27,7 @@ public class PlayerController_Alls : MonoBehaviour, IData_InventoryPersistence
     // ham de khi click vao Slot trong UI_Inventory_Alls
     void UseItemsAlls(Item item) {
         // click vao item trong InventoryAll -> show thong tin items
-
+        
     }
 
     #region IInventoryPersistence

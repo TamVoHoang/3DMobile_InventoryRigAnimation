@@ -88,6 +88,9 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     }
 
     public void Update() {
+        // neu dem chua xong count down thi return
+        if(!GameManger.Instance.IsReady) return;
+
         SetInputSprintClock(); //? khoa gia tri isPrint  trong 1 lan nhan
 
         GetIsGrounded = SetIsGrounded();
@@ -105,15 +108,18 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
         this.playerTransform_TempSave = transform.position;
     }
     private void FixedUpdate() {
-        // Gravity();
-        // Falling();
-        // GetDirectionAndMove(); //! camera bi lac khi dung fixedUpdate
+        //! camera bi lac khi dung fixedUpdate
+        /* Gravity();
+        Falling();
+        GetDirectionAndMove(); */ 
     }
     private void LateUpdate() {
-        Falling();
-        Gravity();
-        GetDirectionAndMove();
+        // neu dem chua xong count down thi return
+        if(!GameManger.Instance.IsReady) return;
 
+        Falling();
+        Gravity(); 
+        GetDirectionAndMove();
     }
     public void SwitchState(MovementBaseState state) {
         currentState = state;
@@ -154,12 +160,10 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
 
     #region IDataPersistence
     public void LoadPlayerData(PlayerJson playerJson) {
-        //this.playerTransform = JsonUtility.FromJson<Vector3>(playerJson.position);
         this.playerTransform = playerJson.position;
     }
 
     public void SavePlayerData(PlayerJson playerJson) {
-        //playerJson.position = JsonUtility.ToJson(this.playerTransform_TempSave);
         playerJson.position = this.playerTransform_TempSave;
     }
     #endregion IDataPersistence

@@ -959,19 +959,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1244942045}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7186684962080904332}
-        m_TargetAssemblyTypeName: MainMenuButtons, Assembly-CSharp
-        m_MethodName: QuitGame_OnQuitButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1244942045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1129,19 +1117,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1597087139}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7186684962080904332}
-        m_TargetAssemblyTypeName: MainMenuButtons, Assembly-CSharp
-        m_MethodName: ResumeGame_ResumeButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1597087139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3328,19 +3304,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2101980940481891915}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1615388398}
-        m_TargetAssemblyTypeName: TestLoadingScene, Assembly-CSharp
-        m_MethodName: Load_Login_Scene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!224 &1558728432475742467
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6451,7 +6415,7 @@ GameObject:
   - component: {fileID: 2101980940481891915}
   - component: {fileID: 1547960764878695757}
   m_Layer: 5
-  m_Name: Login Button
+  m_Name: LoadLoginScreen Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6960,19 +6924,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4818740722882649266}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7186684962080904332}
-        m_TargetAssemblyTypeName: MainMenuButtons, Assembly-CSharp
-        m_MethodName: Load_Login_Scene
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!224 &5445173429665051736
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7864,19 +7816,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7886730682512056658}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7186684962080904332}
-        m_TargetAssemblyTypeName: MainMenuButtons, Assembly-CSharp
-        m_MethodName: Load_AccountDataOverviewScene_AccountButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &6402659101939300139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8836,9 +8776,13 @@ MonoBehaviour:
   loginPassword: {fileID: 7964989541839368559}
   minPassLength: 1
   maxPassLength: 12
-  AccountButton: {fileID: 6353207484331792916}
+  LoginButton: {fileID: 5440993860721975180}
   ResumeButton: {fileID: 1597087138}
+  AccountButton: {fileID: 6353207484331792916}
+  QuitButton: {fileID: 1244942044}
+  playFabLoginManager: {fileID: 1010047007}
   RegisterButton: {fileID: 8805490343125404493}
+  LoadLoginScreen: {fileID: 1547960764878695757}
 --- !u!224 &7207532994358388277
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10832,19 +10776,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6462221721313410562}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1010047007}
-        m_TargetAssemblyTypeName: PlayFabLoginManager, Assembly-CSharp
-        m_MethodName: OnRegisterPressed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!224 &8840387007540347410
 RectTransform:
   m_ObjectHideFlags: 0

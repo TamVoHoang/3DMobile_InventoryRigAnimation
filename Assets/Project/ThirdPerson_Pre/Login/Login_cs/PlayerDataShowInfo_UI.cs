@@ -3,14 +3,17 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+//todo game object = canvas playerInfo in AccountPlayerOverview scene 
+//todo after pressing loginButtonPressed in login Scene
+
 public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
 {
-    //todo game object = overviewPlayerData show after pressing loginButtonPressed
     
     //[SerializeField] private PlayerDataLocal_Temp playerDataLocal_Temp;
     [SerializeField] private PlayerDataJson playerDataJson;
     [SerializeField] private InventoryDataJson inventoryDataJson;
 
+    [Header("Showing Data from playerJson")]
     [SerializeField] private TextMeshProUGUI mail;
     [SerializeField] private TextMeshProUGUI userName;
     [SerializeField] private TextMeshProUGUI level;
@@ -18,15 +21,25 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     [SerializeField] private TextMeshProUGUI killed;
     [SerializeField] private TextMeshProUGUI died;
 
+    [Header("Buttons")]
+    [SerializeField] Button InfoButton;
     [SerializeField] Button StartGameButton;
+    [SerializeField] Button BackMainMenuButton;
+
+    // others
     bool isLoaded = false;
 
     private void Awake() {
+        isLoaded = false;
+
         playerDataJson = FindObjectOfType<PlayerDataJson>();
         inventoryDataJson = FindObjectOfType<InventoryDataJson>();
 
+        StartGameButton.onClick.AddListener(StartGameButton_OnClicked);
+        BackMainMenuButton.onClick.AddListener(BackMainMenuButton_OnClicked);
+        InfoButton.onClick.AddListener(InfoButton_OnClicked);
+
         //playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
-        isLoaded = false;
     }
 
     private void Start() {
@@ -34,26 +47,25 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     }
 
     //?  RAT OK CO THE DUNG HAM NAY KET HOP VOI NUT NHAN INFO DE IN DATA TU MAIN GAME TRO LAI SCENE NAY
-    public void InfoButton() {
+    void InfoButton_OnClicked() {
         Debug.Log("co nhan nut tai thong tin nguoi choi");
         LoadPlayerData(playerDataJson.PlayerJson);
         isLoaded = true;
     }
 
     //BUTTONS IN PLAYER INFO OVERVIEW
-    public void LoadGame_Scene02_StartGameButton() {
+    void StartGameButton_OnClicked() {
         if(isLoaded) {
             isLoaded = false;
             TestLoadingScene.Instance.LoadGame_Scene02();
         }
         
     }
-    public void Load_MainMenuSence_OnMainMenuButton() {
+    void BackMainMenuButton_OnClicked() {
         if(isLoaded) {
             isLoaded = false;
             TestLoadingScene.Instance.Load_MainMenu_Scene();
         }
-        
     }
 
     #region IDataPersistence
@@ -68,7 +80,6 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     }
 
     public void LoadPlayerData(PlayerJson playerJsonData) {
-        Debug.Log("interface co chay vao day");
         /* this.mail.text ="Mail: "+  playerJsonData.mail;
         this.userName.text ="UserName: "+ playerJsonData.name;
         this.level.text ="Level: "+ playerJsonData.level.ToString();
@@ -82,7 +93,6 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
         this.health.text = playerJsonData.health.ToString();
         this.killed.text = playerJsonData.killed.ToString();
         this.died.text = playerJsonData.died.ToString();
-
     }
 
     public void SavePlayerData(PlayerJson playerJsonData) { 

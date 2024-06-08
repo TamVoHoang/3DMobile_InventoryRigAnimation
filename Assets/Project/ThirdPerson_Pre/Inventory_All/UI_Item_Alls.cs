@@ -112,12 +112,15 @@ public class UI_Item_Alls : MonoBehaviour, IPointerDownHandler, IBeginDragHandle
 
     public void SetItem(Item item) {
         this.item = item;
-        //SetSprite(item.GetSprite()); //! lay sprite ben ngoai ItemAsset - co the dung ok
+        ////SetSprite(item.GetSprite()); //! lay sprite ben ngoai ItemAsset - co the dung ok
         SetSprite(item.itemScriptableObject.itemSprite); // lay sprite ben trong ItemScriptableObject
 
         SetAmountText(item.amount);
         SetNameText(item.itemScriptableObject.itemName);
-        SetPowerText((int)item.itemScriptableObject.damage);
+
+        // chi hien thi power neu !isStackable
+        if(!item.IsStackable())
+            SetPowerText((int)item.itemScriptableObject.damage);
     }
 
     public Item TryGetType() {

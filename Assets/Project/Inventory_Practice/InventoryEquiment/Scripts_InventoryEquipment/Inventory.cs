@@ -99,10 +99,10 @@ public class Inventory : IItemHolder
     public void AddItemEquipment(Item item) //? ad interface ok
     {
         //! doan code dung nhung chi add vao ma khong stackable
-        // itemList.Add(item);
-        // item.SetItemHolder(this);
-        // GetEmptyInventorySlot().SetItem(item);
-        // OnItemListChanged?.Invoke(this, EventArgs.Empty);
+        /* itemList.Add(item);
+        item.SetItemHolder(this);
+        GetEmptyInventorySlot().SetItem(item);
+        OnItemListChanged?.Invoke(this, EventArgs.Empty); */
 
         //! KHI PLAYER CHAM ITEMWORLD ADD VAO VA CO XET DIEU KIEU STACKABLE
         if(item.IsStackable()) {

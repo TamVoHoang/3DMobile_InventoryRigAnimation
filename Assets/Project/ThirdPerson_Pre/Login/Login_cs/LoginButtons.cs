@@ -1,8 +1,11 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
+//? game Object = canvas trong Login Scene
 
 public class LoginButtons : MonoBehaviour
 {
@@ -12,12 +15,27 @@ public class LoginButtons : MonoBehaviour
     [SerializeField] TMP_InputField loginPassword;
     [SerializeField] private int minPassLength =1;
     [SerializeField] private int maxPassLength =12;
-    [SerializeField] Button LoginButton;
+
+    // Buttons
+    [Header("Login Screen")]
     PlayerDataJson playerDataJson;
+    [SerializeField] Button LoginButton; // login in Login Screen
+    [SerializeField] Button BackMainMenuButton; // in login screen
+
+    [Header("Reset Password Screen")]
+    [SerializeField] Button RequestResetButton; // in reset password screen
+
+    private void Awake() {
+        LoginButton.onClick.AddListener(LoginButton_OnClick);
+        BackMainMenuButton.onClick.AddListener(BackMainMenuButton_OnClicked);
+
+        RequestResetButton.onClick.AddListener(SendResetPassWord_OnClick);
+    }
     void Start()
     {
         playFabLoginManager = FindObjectOfType<PlayFabLoginManager>();
         playerDataJson = FindObjectOfType<PlayerDataJson>();
+
         if(SystemInfo.graphicsDeviceType == UnityEngine.Rendering.GraphicsDeviceType.Null) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
             return;
@@ -35,30 +53,31 @@ public class LoginButtons : MonoBehaviour
             loginPassword.text.Length <= maxPassLength;
     }
 
-    //? khi nhan nut Loggin
-    public void OnLoginButton_Pressed() {
+    //? khi nhan nut Loggin - load data 
+    void LoginButton_OnClick() {
         PlayerPrefs.SetString(LAST_MAIL, loginEmail.text);
         PlayerPrefs.SetString(PASS, loginPassword.text);
 
-        StartCoroutine(DelayTimeLogin_ToLoad(4f)); //sau 3s chuyen qua onverview
+        StartCoroutine(DelayTimeLogin_ToLoad_CO(4f)); //sau 3s chuyen qua onverview
     }
 
-    public void Load_MainMenuSence_OnMainMenuButton() => TestLoadingScene.Instance.Load_MainMenu_Scene();
-
-    public void SendResetPassWord() {
-        playFabLoginManager.OnSendResetPressed();
-    }
-
-    IEnumerator DelayTimeLogin_ToLoad(float time) {
+    IEnumerator DelayTimeLogin_ToLoad_CO(float time) {
         playFabLoginManager.OnLoginPressed();
+
+        //load "Json" playfab -> PlayerJson -> doi tuong tronng PlayerDataJson.cs
         yield return new WaitForSeconds(time);
         playerDataJson.Load_PlayerDataJason_RealTime();
+
+        // load "InvneotryJson" -> InventoryJosn -> doi tuong trong IventoryDataJson.cs
         yield return new WaitForSeconds(time);
         InventoryDataJson.Instance.Load_InventoryDataJason_RealTime();
         
+        // load next scene - player information overview (playerInfo + inventoryInfo)
         yield return new WaitForSeconds(time);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
     }
 
+    void BackMainMenuButton_OnClicked() => TestLoadingScene.Instance.Load_MainMenu_Scene();
+    void SendResetPassWord_OnClick() => playFabLoginManager.OnSendResetPressed();
     //todo
 }

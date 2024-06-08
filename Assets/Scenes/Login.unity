@@ -4459,7 +4459,7 @@ GameObject:
   - component: {fileID: 6843219100449429467}
   - component: {fileID: 7009964701094131463}
   m_Layer: 5
-  m_Name: MainMenu_Screen
+  m_Name: MainMenu_Screen_NotUse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4860,19 +4860,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7669117113262029712}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7186684962080904332}
-        m_TargetAssemblyTypeName: LoginButtons, Assembly-CSharp
-        m_MethodName: SendResetPassWord
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!222 &2314450832499503929
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4943,11 +4931,11 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1337438672511415432}
-  - {fileID: 561257810326255074}
-  - {fileID: 4108267575319751519}
-  - {fileID: 1014721202220164304}
-  - {fileID: 2222371568846607989}
   - {fileID: 7421515541580473790}
+  - {fileID: 561257810326255074}
+  - {fileID: 1014721202220164304}
+  - {fileID: 4108267575319751519}
+  - {fileID: 2222371568846607989}
   m_Father: {fileID: 7284733545646918351}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -7395,7 +7383,7 @@ GameObject:
   - component: {fileID: 7362984402438902564}
   - component: {fileID: 2844892052323549633}
   m_Layer: 5
-  m_Name: Register_Screen
+  m_Name: Register_Screen_NotUse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7982,6 +7970,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8603189907703044227, guid: 0640e528c988c4f4ab9494a28295340c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8330,19 +8322,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7946983847803974319}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7186684962080904332}
-        m_TargetAssemblyTypeName: LoginButtons, Assembly-CSharp
-        m_MethodName: OnLoginButton_Pressed
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!222 &5919063993979568202
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8372,7 +8352,7 @@ GameObject:
   - component: {fileID: 2697649419921326557}
   - component: {fileID: 6402659101939300139}
   m_Layer: 5
-  m_Name: MainMenu Button
+  m_Name: BackMainMenu Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8798,19 +8778,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2697649419921326557}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7186684962080904332}
-        m_TargetAssemblyTypeName: LoginButtons, Assembly-CSharp
-        m_MethodName: Load_MainMenuSence_OnMainMenuButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &6405093854026722051
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9665,6 +9633,8 @@ MonoBehaviour:
   minPassLength: 3
   maxPassLength: 10
   LoginButton: {fileID: 5888085973821699302}
+  BackMainMenuButton: {fileID: 6402659101939300139}
+  RequestResetButton: {fileID: 2312688993449520333}
 --- !u!224 &7207532994358388277
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9980,7 +9950,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7eaf2058532605a4f9d51d78d5282783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerDataLocal_Temp: {fileID: 0}
   playerDataJson: {fileID: 0}
   inventoryDataJson: {fileID: 0}
   mail: {fileID: 1227168052963163283}
@@ -10489,10 +10458,10 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8940623666288210076}
+  - {fileID: 3632284325790495097}
   - {fileID: 4805577805199213125}
   - {fileID: 1699938020357213487}
   - {fileID: 2510503348889040681}
-  - {fileID: 3632284325790495097}
   m_Father: {fileID: 7164314140609564722}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

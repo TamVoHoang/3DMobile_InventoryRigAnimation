@@ -12,19 +12,16 @@ public class PlayerJson
 {
     public string mail, name;
     public int level, health, killed, died;
-
     public Vector3 position, rotation;// se duoc Json ep kieu dau duoi ve vector3
 
     public PlayerJson() {}
-    public PlayerJson(string mail, string name, int level,int health, int killed, int died,
-                        Vector3 position) {
+    public PlayerJson(string mail, string name, int level,int health, int killed, int died, Vector3 position) {
         this.mail = mail;
         this.name = name;
         this.level = level;
         this.health = health;
         this.killed = killed;
         this.died = died;
-
         this.position = position;
     }
     //todo
@@ -52,7 +49,7 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
     public Vector3 InitialVector3Player_ToRegister => initialVector3Player_ToRegister;
     private List<IDataPersistence> dataPersistenceObjects; //! list chua IDataPersistence
 
-    // bien dung de enaable or disable AccountButton trong mainMenu Screen
+    // dieu kien dung de enable or disable AccountButton trong mainMenu Screen
     private bool isLoadedSuccessInLogin = false;
     public bool IsLoadedSuccessInLogin => isLoadedSuccessInLogin;
 
@@ -61,28 +58,21 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
 
     protected override void Awake() {
         base.Awake();
-        ////playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
-        ///this.dataPersistenceObjects = FindAllDataPersistenceObjects(); //! tao list objects: IDataPersistence
+        /* playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
+        this.dataPersistenceObjects = FindAllDataPersistenceObjects(); //! tao list objects: IDataPersistence */
 
         isLoadedSuccessInLogin = false;
         isLoadedSuccessInGame = false;
     }
 
+    //? Tao doi tuong lop playerJson local - gan gia tri -> save "Json" PlayFab.
     private PlayerJson ReturnClassPlayerJson_ToSignUp(string mail, string name) {
-        //string vector3ToString = JsonUtility.ToJson(initialVector3Player_ToRegister); // OK
+        ////string vector3ToString = JsonUtility.ToJson(initialVector3Player_ToRegister); // chi chuyen vector3 sang string luu theo hang doc
         return new PlayerJson(mail, name, 1, 500, 0, 0, initialVector3Player_ToRegister); // vector3ToString
     }
 
-    /* private PlayerJson ReturnClassPlayerJson_ToSave() {
-        string vector3PlayerTransform_ToSaveRealtime = JsonUtility.ToJson(PlayerDataLocal_Temp.Instance.position_Temp);
-        return new PlayerJson(playerJson.mail, playerJson.name, playerJson.level,
-                                PlayerDataLocal_Temp.Instance.health,
-                                PlayerDataLocal_Temp.Instance.killed,
-                                PlayerDataLocal_Temp.Instance.died,
-                                vector3PlayerTransform_ToSaveRealtime);
-    } */
-
-    #region NEW SIGNUP // newgame
+    //? SAVE KHI SIGN UP
+    // save PlayJson local to "Json" PlayFab -> khi nhan nut Register trong Register Screen
     public void Save_PlayerDataJason_SignUp(string mail, string name) {
         string playerJsonString = JsonUtility.ToJson(ReturnClassPlayerJson_ToSignUp(mail, name));
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
@@ -95,7 +85,8 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         result => { Debug.Log("Player DataJason Title updated");},
         error => { Debug.LogError(error.GenerateErrorReport()); });
     }
-    // Save doi tuong khoi tao ko tham so coll 33 PlayFabManager.cs
+
+/*     // Save doi tuong khoi tao ko tham so coll 33 PlayFabManager.cs
     public void Save_PlayerJson_ToResiger(PlayerJson playerJson) {
         Debug.Log("Save_PlayerJson_ToResiger");
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
@@ -107,17 +98,18 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         result => { Debug.Log("Player DataJason Title updated");},
         error => { Debug.LogError(error.GenerateErrorReport()); });
     }
+ */
 
-    
-    #endregion NEW SIGNUP //? newgame
-
-#region SAVE REALTIME // save an playerJson(variable)
-    // SAVE data to handler saver
+    //? SAVE data event in game - back button
+    // doi tuong ke thua IDataPersistence -> run ham ke thua rieng le -> gan gia tri cho playerJson
     public void SaveData_FromObjectsContainIDataPer(List<IDataPersistence> dataPersistenceObjects){
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) {
             dataPersistenceObj.SavePlayerData(playerJson);
         }
     }
+
+    //? SAVE PLAYER DATA REALTIME
+    // save thong tin nguoi choi trong game - thong qua IDataPersistence
     public void Save_PlayerDataJason_RealTime() {
         string playerJsonString = JsonUtility.ToJson(playerJson);
         Debug.Log("co SAVE jsonnnn");
@@ -131,12 +123,11 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         result => { Debug.Log("Player DataJason Title updated");},
         error => { Debug.LogError(error.GenerateErrorReport());});
     }
-#endregion SAVE REALTIME
 
-#region LOAD
-    // LOAD any saved data from data handler
+    //? LOAD any saved data from data handler
+    // login in loginScreen, ShowPlayerInfo in over player data scene
     public void Load_PlayerDataJason_RealTime() {
-        Debug.Log("co LOAD jsonnnn");
+        Debug.Log("Load Json Playfab to playerJson Local");
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(),
             OnGetPlayerDataJson,
             error => Debug.LogError(error.GenerateErrorReport())
@@ -147,17 +138,17 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
             switch (eachData.Key) {
                 case "Json":
                     ////playerJson = JsonConvert.DeserializeObject<PlayerJson>((result.Data[eachData.Key].Value)); // OK
-                    
                     var playerDataJsonString = JsonConvert.DeserializeObject<string>(result.Data[eachData.Key].Value);
                     playerJson = JsonUtility.FromJson<PlayerJson>(playerDataJsonString);
                     break;
             }
         }
         ////StartCoroutine(SetPlayerDataLocalTemp_Countine(0f)); //load() - time delay - set playerDataLocal
-        Debug.Log("Received the following Player Data Json:");
+        Debug.Log("Received the following playerDataJson:");
         isLoadedSuccessInLogin = true;
     }
 
+    //? LOAD playerJson local to object chua class ke thua IDataPersistence
     //! LOAD trong game voi list Interface| lay data ben trong playerJson load ben tren sau do load cho cac doi tuong : Idatapersistence trong list
     public void LoadData_ToObjectsContainIDataPer(List<IDataPersistence> dataPersistenceObjects){
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) {
@@ -168,7 +159,6 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         isLoadedSuccessInGame = true;
     }
 
-#endregion LOAD
 
     //? set player datalocal_temp coll 30 playerdatalocal.cs
     /* IEnumerator SetPlayerDataLocalTemp_Countine(float time) {

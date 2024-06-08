@@ -75,6 +75,7 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
     }
 
     public void Save_InventoryDataJson_RealTime() {
+        Debug.Log("Save inventory Local to Inventoryjson_PlayFab");
         string inventoryJson_String = JsonUtility.ToJson(inventoryJson); // inventoryJson = JsonUtility.FromJson<InventoryJson>(inventoryJson_String);
         
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
@@ -89,7 +90,7 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
 
     //? LOAD
     public void Load_InventoryDataJason_RealTime() {
-        Debug.Log("co LOAD Inventory jsonnnn");
+        Debug.Log("Load Inventory Playfab to inventoryjson Local");
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(),
             OnGetinventoryDataJson,
             error => Debug.LogError(error.GenerateErrorReport())
