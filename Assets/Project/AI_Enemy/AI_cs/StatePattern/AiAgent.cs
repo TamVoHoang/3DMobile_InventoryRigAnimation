@@ -50,14 +50,14 @@ public class AiAgent : MonoBehaviour
 
     void Update()
     {
-            // Debug.Log(aiStateMachine.aiAgent.name);
-            // Debug.Log(aiStateMachine.states.Length);
-            // Debug.Log(aiStateMachine.states);
-            
-            // Debug.Log(aiStateMachine.states[0]);
-            // Debug.Log(System.Enum.GetValues(typeof(AiStateID)).Length);
+        // Debug.Log(aiStateMachine.aiAgent.name);
+        // Debug.Log(aiStateMachine.states.Length);
+        // Debug.Log(aiStateMachine.states);
+        
+        // Debug.Log(aiStateMachine.states[0]);
+        // Debug.Log(System.Enum.GetValues(typeof(AiStateID)).Length);
 
-            stateMachine.Update();
+        stateMachine.Update();
     }
     /* public float GetDistance() {
         return Vector3.Distance(playerTransform.position, this.transform.position);

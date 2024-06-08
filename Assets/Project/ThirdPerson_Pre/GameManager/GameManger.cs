@@ -36,7 +36,7 @@ public class GameManger : Singleton<GameManger>
     [Header("Enemy Spawner")]
     [SerializeField] AiAgent aiAgent;
     [SerializeField] AiAgent_zom aiAgent_Zom;
-
+    [SerializeField] GameObject[] aiSpawned;
     protected override void Awake() {
         base.Awake();
 
@@ -91,7 +91,7 @@ public class GameManger : Singleton<GameManger>
 
         isReady = true;
         inputManager.enabled = true;
-        
+
         foreach (var item in aiSetSpeedArr) {
             item.GetComponent<NavMeshAgent>().speed = item.IntialSpeed;
         }
@@ -133,9 +133,15 @@ public class GameManger : Singleton<GameManger>
     }
 
     IEnumerator AiSpawnerCountine() {
-        yield return new WaitForSeconds(10f);
-        WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
-        Instantiate(aiAgent_Zom, worldBounds.RandomPosition(), Quaternion.identity);
+        while (true)
+        {
+            yield return new WaitForSeconds(20f);
+            WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
+            //Instantiate(aiAgent_Zom, worldBounds.RandomPosition(), Quaternion.identity);
+
+            // spawn random trong mang chua 3 loai AI
+            Instantiate(aiSpawned[Random.Range(0, aiSpawned.Length)], worldBounds.RandomPosition(), Quaternion.identity); 
+        }
     }
 
     public void LoadMainMenuScene_BackButtonInResultPanel() {

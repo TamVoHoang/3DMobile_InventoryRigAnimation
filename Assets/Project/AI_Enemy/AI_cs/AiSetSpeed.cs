@@ -8,5 +8,9 @@ public class AiSetSpeed : MonoBehaviour
 
     public float IntialSpeed;
 
+    private void Awake() {
+        DontDestroyOnLoad(this);
+    }
+
 
 }
