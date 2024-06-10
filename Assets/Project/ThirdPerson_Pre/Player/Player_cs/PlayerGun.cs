@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
@@ -90,6 +91,7 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     public void Update() {
         // neu dem chua xong count down thi return
         if(!GameManger.Instance.IsReady) return;
+        //if(SceneManager.GetActiveScene().name == "AccountDataOverview") return;
 
         SetInputSprintClock(); //? khoa gia tri isPrint  trong 1 lan nhan
 
@@ -116,6 +118,7 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     private void LateUpdate() {
         // neu dem chua xong count down thi return
         if(!GameManger.Instance.IsReady) return;
+        //if(SceneManager.GetActiveScene().name == "AccountDataOverview") return;
 
         Falling();
         Gravity(); 

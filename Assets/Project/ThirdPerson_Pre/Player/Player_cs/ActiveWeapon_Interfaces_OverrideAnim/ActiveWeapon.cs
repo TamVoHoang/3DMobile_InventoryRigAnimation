@@ -49,7 +49,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     // [SerializeField] GameObject leftHand;
     // [SerializeField] GameObject rightHand;
     [SerializeField] float minSwordDisRaycast = 1f;
-    bool isSwordTakeDamageEnemies;
+    [SerializeField] bool isSwordTakeDamageEnemies;
 
     protected override void Awake() {
         base.Awake();
@@ -105,9 +105,12 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
             AttackCoolDown();
             (currenActiveWeapon as IWeapon).Attack();
             playerAnimator.SetTrigger("Attack");
+
+            // neu thuc hien duoc hanh dong chem kiem thi xet false -> de co the lay damage ai
+            isSwordTakeDamageEnemies = false;
         }
 
-        //? neu co trang bi kiem thi tao raycast tu tay player
+        //? neu co trang bi kiem + nhan giu nut tan cong => rayscast duoc ta co the take damage
         if(currenActiveWeapon != null && !isHolstered_Sword && InputManager.Instance.IsAttackButton) {
             CheckSwordRaycast(swordSpawnPoint_Raycast.transform, Vector3.up);
         }
@@ -200,6 +203,8 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     }
     
     private void CheckSwordRaycast(Transform RHand, Vector3 aimDirection) {
+        Debug.Log($"CheckSwordRaycast methid is running");
+
         RaycastHit hit;
         int layerMask = LayerMask.GetMask("Character"); //! player and enemy have same LayerMask
 
@@ -212,14 +217,15 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
             var hitEnemy = hitBox.GetComponent<Health>();
 
             var damage = (currenActiveWeapon as IWeapon).GetWeaponInfo().damage;
-            if(hitBox && !hitEnemy.IsDead && !isSwordTakeDamageEnemies) {
-                isSwordTakeDamageEnemies = true;
+
+            if(hitBox && !hitEnemy.IsDead && !isSwordTakeDamageEnemies) //isSwordTakeDamageEnemies
+            {
+                isSwordTakeDamageEnemies = true; // isSwordTakeDamageEnemies
                 hitBox.OnSwordRaycastHit(damage, hitBox.transform.position); //ray.direction
-                StartCoroutine(PlayerEnemyTakeHealthCO(0.5f));
+                //StartCoroutine(PlayerEnemyTakeHealthCO(0.7f));
             }
         } else {
             Debug.DrawRay(RHand.position, RHand.transform.TransformDirection(aimDirection) * minSwordDisRaycast, Color.red);
-
         }
     }
     IEnumerator PlayerEnemyTakeHealthCO(float time) {

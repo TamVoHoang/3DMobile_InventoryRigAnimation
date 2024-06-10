@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerActiveOthers : MonoBehaviour
@@ -34,9 +31,9 @@ public class PlayerActiveOthers : MonoBehaviour
         _characterAim.GetComponent<ChracterAim>().enabled = true;
         _cc.GetComponent<PlayerGun>().enabled = true;
 
-        //iconPlayer.SetActive(true);
-        //camera_miniMap.SetActive(true);
-        //miniMapUIPlayer.SetActive(true);
+        /* iconPlayer.SetActive(true);
+        camera_miniMap.SetActive(true);
+        miniMapUIPlayer.SetActive(true); */
 
     }
     public void deActivePlayer()
@@ -47,9 +44,11 @@ public class PlayerActiveOthers : MonoBehaviour
         _characterAim.GetComponent<ChracterAim>().enabled = false;
         _cc.GetComponent<PlayerGun>().enabled = false;
 
-        //iconPlayer.SetActive(false);
-        //camera_miniMap.SetActive(false);
-        //miniMapUIPlayer.SetActive(false);
+        /* iconPlayer.SetActive(false);
+        camera_miniMap.SetActive(false);
+        miniMapUIPlayer.SetActive(false); */
 
     }
+
+    //todo
 }
