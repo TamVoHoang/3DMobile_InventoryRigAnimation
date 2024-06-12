@@ -1,5 +1,6 @@
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CameraController : MonoBehaviour
 {
@@ -7,13 +8,20 @@ public class CameraController : MonoBehaviour
     // camfollow and cam look around
     [SerializeField] private CinemachineVirtualCamera virtualAimCamera;
     [SerializeField] private CinemachineVirtualCamera virtualLookAroundCamera;
+    [SerializeField] private CinemachineVirtualCamera lookAtPlayerCam;
+
     private InputManager inputManager;
 
     private void Awake() {
         inputManager = GetComponent<InputManager>();
     }
     private void Update() {
-        PriorityCamera();
+        if(SceneManager.GetActiveScene().name == "Testing_SpawnPlayer") lookAtPlayerCam.Priority = 50;
+        else {
+            lookAtPlayerCam.Priority = -1;
+            PriorityCamera();
+        }
+        
     }
 
     private void PriorityCamera() {

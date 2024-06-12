@@ -30,6 +30,7 @@ public class AiAttackTargetState_zom : AiState_Zom
             return;
         }
 
+        if(agent.playerTransform.GetComponent<PlayerHealth>().IsDead) return; //! THEM VAO TEST THU
         agent.navMeshAgent.destination = agent.aiTargetingSystem.TargetPosition; // khi tan cong, ai chay ve huong muc tieu
         UpdateFighting(agent);
         

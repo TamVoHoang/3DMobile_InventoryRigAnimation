@@ -77,7 +77,9 @@ public class LoginButtons : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
     }
 
-    void BackMainMenuButton_OnClicked() => TestLoadingScene.Instance.Load_MainMenu_Scene();
+    //void BackMainMenuButton_OnClicked() => TestLoadingScene.Instance.Load_MainMenu_Scene();
+    void BackMainMenuButton_OnClicked() => TestLoadingScene.Instance.LoadScene(TestLoadingScene.MainMenu_Scene);
+    
     void SendResetPassWord_OnClick() => playFabLoginManager.OnSendResetPressed();
     //todo
 }

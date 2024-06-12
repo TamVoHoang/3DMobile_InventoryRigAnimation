@@ -89,9 +89,16 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     }
 
     public void Update() {
+        if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.MainMenuScene)) return;
+        if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.DataOverviewScene)) return;
+        if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.SpawnerScene)) {
+            //characterController.enabled = false;
+            return;
+        }
+        
+
         // neu dem chua xong count down thi return
         if(!GameManger.Instance.IsReady) return;
-        //if(SceneManager.GetActiveScene().name == "AccountDataOverview") return;
 
         SetInputSprintClock(); //? khoa gia tri isPrint  trong 1 lan nhan
 
@@ -116,9 +123,14 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
         GetDirectionAndMove(); */ 
     }
     private void LateUpdate() {
+        if(SceneManager.GetActiveScene().name == "MainMenu") return;
+        if(SceneManager.GetActiveScene().name == "AccountDataOverview") return;
+        if(SceneManager.GetActiveScene().name == "Testing_SpawnPlayer") return;
+
+        //if(!CheckSpawnerScene.IsInGameScene()) return; // neu ko la scene game thi ko chay
+
         // neu dem chua xong count down thi return
         if(!GameManger.Instance.IsReady) return;
-        //if(SceneManager.GetActiveScene().name == "AccountDataOverview") return;
 
         Falling();
         Gravity(); 
@@ -164,6 +176,7 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     #region IDataPersistence
     public void LoadPlayerData(PlayerJson playerJson) {
         this.playerTransform = playerJson.position;
+
     }
 
     public void SavePlayerData(PlayerJson playerJson) {
@@ -172,4 +185,6 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     #endregion IDataPersistence
 
     //todo
+
+    
 }

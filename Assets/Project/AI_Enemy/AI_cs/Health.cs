@@ -64,7 +64,8 @@ public class Health : MonoBehaviour
 
     //? hitbox.cs call TakeDamage()
     public void TakeDamage(float amount, Vector3 direction) {
-        if(currentHealth == 0) return;
+
+        if(currentHealth <= 0) return;
         if(currentHealth > 0 && isReadyToTakeDamage) {
             currentHealth -= amount;
         }
@@ -73,6 +74,7 @@ public class Health : MonoBehaviour
         /* if(uiHealthBar) {
             uiHealthBar.SetHealthBarEnemyPercent((float)currentHealth / maxHealth);
         } */
+        
         Debug.Log("direction = " + direction);
         OnDamage(direction); // tai sao dat o day => tao animation + hieu ung man hinh khi trung dan
 

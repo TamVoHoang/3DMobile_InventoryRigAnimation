@@ -6841,7 +6841,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_TargetDisplay: 0
 --- !u!1 &4299202393713673075
 GameObject:
@@ -9958,7 +9958,10 @@ MonoBehaviour:
   health: {fileID: 3042660315284839280}
   killed: {fileID: 8417906175250689934}
   died: {fileID: 3657685617337434932}
+  InfoButton: {fileID: 0}
   StartGameButton: {fileID: 0}
+  EquipButton: {fileID: 0}
+  BackMainMenuButton: {fileID: 0}
 --- !u!222 &7596161318753462361
 CanvasRenderer:
   m_ObjectHideFlags: 0

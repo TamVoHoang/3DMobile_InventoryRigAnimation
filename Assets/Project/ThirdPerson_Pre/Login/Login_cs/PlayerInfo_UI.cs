@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-//* gameobject = PlayerInfo_UI ben trong (UI_Canvas_InGame)
+//* gameobject = PlayerInfo_UI ben trong (Player)
 //* doi tuong chua canvas hien thi thong tin name, level, health, healthSlider
 
 public class PlayerInfo_UI : MonoBehaviour
@@ -31,6 +31,7 @@ public class PlayerInfo_UI : MonoBehaviour
         // playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
         /* this.dataPersistenceObjects_InGame = FindAllDataPersistenceObjects(); //! tim object dang chua IData
         this.inventoryPersistenceObjects_InGame = FindAllInventoryData_PersistenceObjects(); */
+
     }
 
     private void Start() {

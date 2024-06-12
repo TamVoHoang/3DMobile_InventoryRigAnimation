@@ -37,6 +37,8 @@ public class GameManger : Singleton<GameManger>
     [SerializeField] AiAgent aiAgent;
     [SerializeField] AiAgent_zom aiAgent_Zom;
     [SerializeField] GameObject[] aiSpawned;
+    bool isSpawned = false;
+
     protected override void Awake() {
         base.Awake();
 
@@ -50,10 +52,15 @@ public class GameManger : Singleton<GameManger>
         timerPanel.SetActive(false);
         isReady = false;
 
-        EnemySpawner();
+        //EnemySpawner();
     }
 
     private void FixedUpdate() {
+        if(SceneManager.GetActiveScene().name == "MainMenu") return;
+        if(SceneManager.GetActiveScene().name == "AccountDataOverview") return;
+        if(SceneManager.GetActiveScene().name == "Testing_SpawnPlayer") return;
+
+
         CountDownTime();
         if(isReady) Timer();
         
@@ -96,6 +103,8 @@ public class GameManger : Singleton<GameManger>
             item.GetComponent<NavMeshAgent>().speed = item.IntialSpeed;
         }
         countDownFlag = false;
+
+        EnemySpawner();
     }
 
     private void Timer() {
@@ -129,10 +138,16 @@ public class GameManger : Singleton<GameManger>
     }
 
     void EnemySpawner() {
+        /* if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.MainMenuScene)) return;
+        if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.DataOverviewScene)) return;
+        if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.SpawnerScene)) return; */
+
         StartCoroutine(AiSpawnerCountine());
     }
+    
 
     IEnumerator AiSpawnerCountine() {
+        
         while (true)
         {
             yield return new WaitForSeconds(20f);

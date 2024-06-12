@@ -179,7 +179,10 @@ public class UI_Inventory : MonoBehaviour
             ////Image image = itemSlotRectTransform.Find("image").GetComponent<Image>();
             
             Image image = itemSlotRectTransform.GetChild(2).GetComponent<Image>();
-            image.sprite = item.GetSprite();
+            //image.sprite = item.GetSprite();
+
+            //! testing not using sprite from ItemAsset in scene - using Sprite in ScriptableObject
+            image.sprite = item.itemScriptableObject.itemSprite;
 
             //? hien amount cua item tren bang UIsau khi add them vao > 1
             TextMeshProUGUI uiText = itemSlotRectTransform.Find("amountText").GetComponent<TextMeshProUGUI>();

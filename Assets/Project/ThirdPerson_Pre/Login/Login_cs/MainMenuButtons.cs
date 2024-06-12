@@ -28,7 +28,9 @@ public class MainMenuButtons : MonoBehaviour
         QuitButton.onClick.AddListener(QuitButton_OnClicked);
 
         RegisterButton.onClick.AddListener(RegisterButton_OnClicked); // registerScreen
-        LoadLoginScreen.onClick.AddListener(TestLoadingScene.Instance.Load_Login_Scene); // sau khi dang ki chuyen scene de Login
+
+        //LoadLoginScreen.onClick.AddListener(TestLoadingScene.Instance.Load_Login_Scene); // sau khi dang ki chuyen scene de Login
+        LoadLoginScreen.onClick.AddListener(LoginScreenButton_Onclicked);
     }
 
     private void Start() {
@@ -56,9 +58,14 @@ public class MainMenuButtons : MonoBehaviour
     }
 
     //? Button OnCliked in Canvas MainMenu scene
-    void LoginButton_OnClicked() => TestLoadingScene.Instance.Load_Login_Scene();
+    //void LoginButton_OnClicked() => TestLoadingScene.Instance.Load_Login_Scene();
+    void LoginButton_OnClicked() => TestLoadingScene.Instance.LoadScene(TestLoadingScene.Login_Scene);
+
     void ResumeButton_OnClicked() => TestLoadingScene.Instance.ResumeGame();
-    void AccountButton_OnClicked() => TestLoadingScene.Instance.Load_AccountDataOverview_Scene();
+
+    //void AccountButton_OnClicked() => TestLoadingScene.Instance.Load_AccountDataOverview_Scene();
+    void AccountButton_OnClicked() => TestLoadingScene.Instance.LoadScene(TestLoadingScene.Account_OverviewScene);
+    
     void QuitButton_OnClicked() => Application.Quit();
 
     //? Button OnClicked in Register Screen 
@@ -68,6 +75,10 @@ public class MainMenuButtons : MonoBehaviour
         // if sucessed -> khoi tao new PlayerJson(email, username) AND new InventoryJson
         // Save_PlayerDataJason_SignUp()_PlayerDataJson.cs -> chuyen new PlayerJson -> string -> luu len playfab "Json'
         // Save_InventoryDataJson_SignUp()_PlayerInventory.cs -> chuyen new InventoryJson -> stirng -> save Playfab "InventoryJson"
+    }
+
+    void LoginScreenButton_Onclicked() {
+        TestLoadingScene.Instance.LoadScene(TestLoadingScene.Login_Scene);
     }
 
     //todo

@@ -41,6 +41,13 @@ public class AiAgent_zom : MonoBehaviour
     }
 
     private void Update() {
-        stateMachine_zom.Update();
+
+        if (!CheckSpawnerScene.CheckScene(CheckSpawnerScene.MainMenuScene) && 
+            !CheckSpawnerScene.CheckScene(CheckSpawnerScene.DataOverviewScene) && 
+            !CheckSpawnerScene.CheckScene(CheckSpawnerScene.SpawnerScene)) 
+        {
+            stateMachine_zom.Update();        
+        }
+        
     }
 }

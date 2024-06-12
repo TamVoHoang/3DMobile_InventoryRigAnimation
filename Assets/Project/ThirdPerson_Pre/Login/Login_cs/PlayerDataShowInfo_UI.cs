@@ -24,6 +24,9 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     [Header("Buttons")]
     [SerializeField] Button InfoButton;
     [SerializeField] Button StartGameButton;
+
+    [SerializeField] Button EquipButton;
+
     [SerializeField] Button BackMainMenuButton;
 
     // others
@@ -38,6 +41,8 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
         StartGameButton.onClick.AddListener(StartGameButton_OnClicked);
         BackMainMenuButton.onClick.AddListener(BackMainMenuButton_OnClicked);
         InfoButton.onClick.AddListener(InfoButton_OnClicked);
+
+        EquipButton.onClick.AddListener(EquipButton_OnClicked);
 
         //playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
     }
@@ -54,17 +59,30 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     }
 
     //BUTTONS IN PLAYER INFO OVERVIEW
+    void EquipButton_OnClicked() {
+        if(isLoaded) {
+            isLoaded = false;
+            TestLoadingScene.Instance.LoadScene(TestLoadingScene.Spawner_Scene);
+
+            //TestLoadingScene.Instance.LoadScene(TestLoadingScene.TestingThirdPerson_Scene);
+            //TestLoadingScene.Instance.LoadScene(TestLoadingScene.ThirdPerson_Scene);
+
+            //TestLoadingScene.Instance.Load_Testing_SpawnPlayer();
+        }
+    }
+
     void StartGameButton_OnClicked() {
         if(isLoaded) {
             isLoaded = false;
-            TestLoadingScene.Instance.LoadGame_Scene02();
+            //TestLoadingScene.Instance.LoadGame_Scene02();
+            TestLoadingScene.Instance.LoadScene(TestLoadingScene.ThirdPerson_Scene);
         }
-        
     }
     void BackMainMenuButton_OnClicked() {
         if(isLoaded) {
             isLoaded = false;
-            TestLoadingScene.Instance.Load_MainMenu_Scene();
+            //TestLoadingScene.Instance.Load_MainMenu_Scene();
+            TestLoadingScene.Instance.LoadScene(TestLoadingScene.MainMenu_Scene);
         }
     }
 

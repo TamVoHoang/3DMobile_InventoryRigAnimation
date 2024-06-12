@@ -12,7 +12,7 @@ public class PlayerHealth : Health, IDataPersistence
     private ActiveGun activeGun;
     private ChracterAim characterAim;
     private Animator animator;
-    private CameraManager cameraManager;
+    [SerializeField] private CameraManager cameraManager;
     private PlayerGun playerMovement;
     private int diedCount;
     public int GetDiedCount => diedCount;
@@ -36,19 +36,20 @@ public class PlayerHealth : Health, IDataPersistence
         animator = GetComponent<Animator>();
         cameraManager = FindObjectOfType<CameraManager>();
         
-        // LoadData(PlayerDataJson.Instance.PlayerJson);//! load bang interface
+        //// LoadData(PlayerDataJson.Instance.PlayerJson);//! load bang interface
         UpdateSliderHealth();               // tang giam slider health
     }
     protected override void OnDeath(Vector3 direction) {
-
+        Debug.Log(direction);
         aiRagdoll.ActiveRag();
         direction.y = 1;
         aiRagdoll.ApplyForceLying(direction);
         activeGun.DropWeapon();
 
-        cameraManager.ActiveDeathCam();     //show cam nhin player va enemy
+        cameraManager.ActiveDeathCam();     //! show cam nhin player va enemy DANG BI LOI KHI SPAWN PLAYER TU SCENE KHAC QUA
         characterAim.enabled = false;       //tat chatacterAim.cs
         playerMovement.enabled = false;     //tat khong cho player move
+        Debug.Log("Player die");
 
         // died point +
         if(IsDead && isReadyToTakeDamage) {
@@ -72,7 +73,7 @@ public class PlayerHealth : Health, IDataPersistence
         // co the dung de thay doi hieu ung tai day
         // cap nhat thanh mau tai day
         UpdateSliderHealth();
-        //PlayerDataLocal_Temp.Instance.health = (int)CurrentHealth;
+        ////PlayerDataLocal_Temp.Instance.health = (int)CurrentHealth;
     }
 
     private void Update_Virtual() {
@@ -98,7 +99,7 @@ public class PlayerHealth : Health, IDataPersistence
         Debug.Log("Respawn player");
         isReadyToTakeDamage = false; // ko bi tru mau du trung dan
         aiRagdoll.DeactiveRag();
-        cameraManager.DeActiveDeathCam();
+        cameraManager.DeActiveDeathCam(); //! DANG BI LOI KHI SPAWN PLAYER TU SCENE KHAC QUA
         ResetCurrentHealth();
         UpdateSliderHealth();
         characterAim.enabled = true;
@@ -117,7 +118,7 @@ public class PlayerHealth : Health, IDataPersistence
 
     public void LoadPlayerData(PlayerJson playerJsonData) {
         SetCurrentHealth = playerJsonData.health;
-        //diedCount = playerJsonData.died; //? OK
+        ////diedCount = playerJsonData.died; //? OK
     }
 
     public void SavePlayerData(PlayerJson playerJsonData) {

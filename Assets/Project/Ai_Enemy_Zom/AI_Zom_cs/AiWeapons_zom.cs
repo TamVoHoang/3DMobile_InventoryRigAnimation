@@ -8,9 +8,12 @@ public class AiWeapons_zom : MonoBehaviour
     [SerializeField] GameObject leftHand_SpawnRaycast;
 
     [SerializeField] float minSwordDisRaycast = 0.5f;
+    PlayerHealth playerHealth;
 
     bool isEnemyTakeDamagePlayer;
-
+    private void Awake() {
+        playerHealth = FindObjectOfType<PlayerHealth>();
+    }
     private void Start() {
         animator = GetComponent<Animator>();
         isEnemyTakeDamagePlayer = false; // dang false = chua take => cho tru mau player
@@ -18,6 +21,7 @@ public class AiWeapons_zom : MonoBehaviour
 
     private void Update() {
         // kiem tra de sinh ra tia raycast o tay va dau
+
         CheckHandRaycast(rightHand_SpawnRaycast.transform, Vector3.right);
         CheckHandRaycast(leftHand_SpawnRaycast.transform, -Vector3.right);
     }
@@ -36,6 +40,8 @@ public class AiWeapons_zom : MonoBehaviour
     }
 
     private void CheckHandRaycast(Transform RHand, Vector3 aimDirection) {
+        Debug.Log("co vao day truoc khi loi");
+        
         RaycastHit hit;
         int layerMask = LayerMask.GetMask("Character"); //! player and enemy have same LayerMask
 
@@ -45,24 +51,25 @@ public class AiWeapons_zom : MonoBehaviour
             if(hit.collider.gameObject.CompareTag("Agent")) {
                 Debug.Log("RaycastCommand tu va cham voi agent");
                 return; 
-            } 
+            }
 
             var hitBox = hit.collider.GetComponentInChildren<HitBox>();
             var hitPlayer = hit.collider.GetComponent<PlayerHealth>();
-            if(hitBox && !hitPlayer.IsDead && !isEnemyTakeDamagePlayer) {
+            if(hitBox && !hitPlayer.IsDead && !isEnemyTakeDamagePlayer)
+            {
                 Debug.Log("co vao hitbox player");
                 isEnemyTakeDamagePlayer = true;
-                hitBox.OnSwordRaycastHit(10f, hitBox.transform.position); //! OK but lay mau player lien tuc
+                hitBox.OnSwordRaycastHit(100f, hitBox.transform.position); //! OK but lay mau player lien tuc
 
-                StartCoroutine(EnemyTakePlayerHealthCO(1f, hitBox)); // sau float time - set isEnemyTakeDamagePlayer = false - cho lay mau player
+                StartCoroutine(EnemyTakePlayerHealthCO(0.5f)); // sau float time - set isEnemyTakeDamagePlayer = false - cho lay mau player
             }
         } else {
             Debug.DrawRay(RHand.position, RHand.transform.TransformDirection(aimDirection) * minSwordDisRaycast, Color.red);
-
         }
     }
 
-    IEnumerator EnemyTakePlayerHealthCO(float time, HitBox hitBox) {
+    IEnumerator EnemyTakePlayerHealthCO(float time) {
+
         yield return new WaitForSeconds(time);
         isEnemyTakeDamagePlayer = false;
     }
