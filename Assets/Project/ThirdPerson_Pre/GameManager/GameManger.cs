@@ -3,11 +3,13 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 //* gameobject = gameManager object, kem theo cavas CountDown, timmer, result
 // count down before start game
 // count down time in every match
 // showing data when finish - killedCount - DeathCount
+// spawn enemy
 
 public class GameManger : Singleton<GameManger>
 {
@@ -27,6 +29,7 @@ public class GameManger : Singleton<GameManger>
     public bool IsReady => isReady;
 
     [Header ("Results")]
+    [SerializeField] Button BackButtonInResultPanel;
     [SerializeField] private GameObject results_UI;
     [SerializeField] TextMeshProUGUI killedCount;
     [SerializeField] TextMeshProUGUI deathCount;
@@ -44,22 +47,36 @@ public class GameManger : Singleton<GameManger>
 
         inputManager = FindObjectOfType<InputManager>();
         aiSetSpeedArr = FindObjectsOfType<AiSetSpeed>();
+
+        BackButtonInResultPanel.onClick.AddListener(BackButtonInResultPanel_OnClick);
+
+        isSpawned = false;
     }
+
+    void BackButtonInResultPanel_OnClick() {
+        Time.timeScale = 0; //todo DUNG GAME KHI QUAY VE MAIN MENU
+        TestLoadingScene.Instance.LoadScene(TestLoadingScene.MainMenu_Scene);
+    } 
 
     private void Start() {
         CountDownStart_Panel.SetActive(true);
         results_UI.SetActive(false);
         timerPanel.SetActive(false);
         isReady = false;
-
-        //EnemySpawner();
     }
+    private void Update() {
+        // spawm enemy theo delay time
+        // neu ko phai la scen game (thirdPerson || testing_ThirdPerson) return
+        if(!CheckSpawnerScene.IsInGameScene()) return;
 
+    }
     private void FixedUpdate() {
-        if(SceneManager.GetActiveScene().name == "MainMenu") return;
+        /* if(SceneManager.GetActiveScene().name == "MainMenu") return;
         if(SceneManager.GetActiveScene().name == "AccountDataOverview") return;
-        if(SceneManager.GetActiveScene().name == "Testing_SpawnPlayer") return;
+        if(SceneManager.GetActiveScene().name == "Testing_SpawnPlayer") return; */
 
+        //? neu KO PHAI la scene thirdperson || testing thirdPerson => return
+        if(!CheckSpawnerScene.IsInGameScene()) return; 
 
         CountDownTime();
         if(isReady) Timer();
@@ -104,7 +121,7 @@ public class GameManger : Singleton<GameManger>
         }
         countDownFlag = false;
 
-        EnemySpawner();
+        EnemySpawner(); // khi time count down xong thi spawn (spawn theo countine) -> khi freeze scale = 0 van chay
     }
 
     private void Timer() {
@@ -135,19 +152,15 @@ public class GameManger : Singleton<GameManger>
         deathCount.text = didedCountTemp.ToString("0");
 
         killedCount.text = killedCountTemp.ToString("0");
+
+        LoadMainMenuScene_BackButtonInResultPanel(); // khi het gio bao ket qua => auto save
     }
 
     void EnemySpawner() {
-        /* if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.MainMenuScene)) return;
-        if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.DataOverviewScene)) return;
-        if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.SpawnerScene)) return; */
-
         StartCoroutine(AiSpawnerCountine());
     }
     
-
     IEnumerator AiSpawnerCountine() {
-        
         while (true)
         {
             yield return new WaitForSeconds(20f);
@@ -155,10 +168,14 @@ public class GameManger : Singleton<GameManger>
             //Instantiate(aiAgent_Zom, worldBounds.RandomPosition(), Quaternion.identity);
 
             // spawn random trong mang chua 3 loai AI
-            Instantiate(aiSpawned[Random.Range(0, aiSpawned.Length)], worldBounds.RandomPosition(), Quaternion.identity); 
+            if(worldBounds != null) {
+                Instantiate(aiSpawned[Random.Range(0, aiSpawned.Length)], worldBounds.RandomPosition(), Quaternion.identity); 
+            }
         }
     }
 
+
+    //? se luu khi het gio + bang ket qua hien len
     public void LoadMainMenuScene_BackButtonInResultPanel() {
         StartCoroutine(DelayTimeSave_ToExitGame(0.2f));
     }
@@ -167,7 +184,8 @@ public class GameManger : Singleton<GameManger>
         loadDataTo_IDataPersistence.SaveData_BeforeOutOfGame();
         yield return new WaitForSeconds(time);
         Time.timeScale = 0f; //todo free game
-        SceneManager.LoadSceneAsync("MainMenu");
+        //SceneManager.LoadSceneAsync("MainMenu");
     }
+
     //todo
 }

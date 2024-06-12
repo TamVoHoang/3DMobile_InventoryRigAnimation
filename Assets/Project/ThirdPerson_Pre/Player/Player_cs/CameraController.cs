@@ -1,23 +1,29 @@
 using Cinemachine;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
+//todo gameObject = player dieu khien uu tien 2 camera
+//todo camfollow and cam look around
 public class CameraController : MonoBehaviour
 {
-    //gameObject = player dieu khien uu tien 2 camera
-    // camfollow and cam look around
     [SerializeField] private CinemachineVirtualCamera virtualAimCamera;
     [SerializeField] private CinemachineVirtualCamera virtualLookAroundCamera;
     [SerializeField] private CinemachineVirtualCamera lookAtPlayerCam;
 
     private InputManager inputManager;
 
+    CrossHairTarget crossHairTarget;
+
     private void Awake() {
         inputManager = GetComponent<InputManager>();
+        crossHairTarget = FindObjectOfType<CrossHairTarget>();
     }
     private void Update() {
-        if(SceneManager.GetActiveScene().name == "Testing_SpawnPlayer") lookAtPlayerCam.Priority = 50;
+        if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.SpawnerScene)) {
+            crossHairTarget.SetAimLookAt(new Vector3 (0, 0, -20));
+            lookAtPlayerCam.Priority = 50;
+        } 
         else {
+            crossHairTarget.SetAimLookAt(new Vector3 (0, 0, 20));
             lookAtPlayerCam.Priority = -1;
             PriorityCamera();
         }

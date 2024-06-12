@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Collections;
+using System.Collections;
 public class PlayerController : Singleton<PlayerController>, IData_InventoryPersistence
 {
     [SerializeField] private int itemSlotAmount = 10;
@@ -22,6 +23,8 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
     [SerializeField] ItemScriptableObject SMG01_3D_01;
 
     //TODO SAVE AND LOAD LIST<ITEM>
+
+    bool isPicked = false;
     
     protected override void Awake() {
         base.Awake();
@@ -34,6 +37,7 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
         playerHealth = GetComponent<PlayerHealth>();
         characterEquipment = GetComponent<CharacterEquipment>();
 
+        isPicked = false;
     }
     private void Start() {
         //? dung static itemWorld goi phuong thuc Spawnworld ra vat phan world
@@ -173,11 +177,23 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
                 itemWorld3DEquipment.DestroySelf();
             }
             else {
-                EquipOrAddToInventoryEquipmentList(itemWorld3DEquipment);
+                //EquipOrAddToInventoryEquipmentList(itemWorld3DEquipment); //! KHI PICKIP DO VAT GAN LIEN TUC BO OVER ANIMATION => 1 TAY 2 VU KHI
+                PickupDelayTime(itemWorld3DEquipment);
             }
-            
         }
     }
+    void PickupDelayTime(ItemWorld3D itemWorld3DEquipment) {
+        if(!isPicked) {
+            isPicked = true;
+            PickupDelay_Countine(0.5f, itemWorld3DEquipment);
+        }
+    }
+    IEnumerator PickupDelay_Countine(float delayTiem, ItemWorld3D itemWorld3DEquipment) {
+        EquipOrAddToInventoryEquipmentList(itemWorld3DEquipment);
+        yield return new WaitForSeconds(delayTiem);
+        isPicked = false; // cho phep lay tiep
+    }
+
     private void EquipOrAddToInventoryEquipmentList(ItemWorld3D itemWorld3DEquipment) {
         // todo neu cham && tren tay ko co PREFAB loai vua cham => equip -- else ko lam gi het
         // todo neu cham && loai vua cham khac loai tren tay => add vao balo

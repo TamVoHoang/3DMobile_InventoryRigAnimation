@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-//? game object = UI canvas in testing_third person
+//? game object = UI_canvas_Ingame in testing_third person
 // nut back button -> save data
 public class UICanvas_GameScene : MonoBehaviour
 {
@@ -15,6 +15,8 @@ public class UICanvas_GameScene : MonoBehaviour
 
     private void BackButtonToMainMenu_OnClick()
     {
+        if(PlayerDataJson.Instance.PlayerJson == null || InventoryDataJson.Instance.inventoryJson == null) return; //! TESTING
+
         StartCoroutine(DelayTimeSave_ToExitGame(0.1f));
     }
 
@@ -23,5 +25,6 @@ public class UICanvas_GameScene : MonoBehaviour
         yield return new WaitForSeconds(time);
         Time.timeScale = 0f; //todo free game
         SceneManager.LoadSceneAsync("MainMenu");
+        Time.timeScale = 0; //todo DUNG GAME KHI QUAY VE MAN HINH MAIN MENE
     }
 }

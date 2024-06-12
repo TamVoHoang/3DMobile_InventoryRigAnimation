@@ -23,6 +23,7 @@ public class UICanvasControllerInput : MonoBehaviour
 
     public void VirtualLookInput(Vector2 virtualLookDirection)
     {
+        Debug.Log("co dang set virtual look input");
         inputs.SetLook(Vector2.ClampMagnitude(virtualLookDirection, 1));
 
     }

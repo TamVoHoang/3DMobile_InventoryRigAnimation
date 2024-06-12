@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 //! gameobject = doi tuong chi awake 1 lan trong scene
@@ -25,6 +26,8 @@ public class LoadDataTo_IDataPersistence : Singleton<LoadDataTo_IDataPersistence
     }
     private void Start() {
         //? goi cac phuong thuc dang ke thua interface IPlayerData va IInventoryData chay
+        if(playerDataJson == null || inventoryDataJson == null) return; //! TESTING
+
         playerDataJson.LoadData_ToObjectsContainIDataPer(dataPersistenceObjects_InGame);
         inventoryDataJson.LoadData_ToObjectsContainIInventoryPer(inventoryPersistenceObjects_InGame);
     }
@@ -45,6 +48,8 @@ public class LoadDataTo_IDataPersistence : Singleton<LoadDataTo_IDataPersistence
 
     //todo nut nhan BackButton - trong MainGame onclick envents
     public void SaveData_BeforeOutOfGame() {
+        if(playerDataJson== null || inventoryDataJson == null) return; //! TESTING
+
         // cac ham ke thus Interface chay
         playerDataJson.SaveData_FromObjectsContainIDataPer(dataPersistenceObjects_InGame);
         inventoryDataJson.SaveInventoryData_FromObjectsContainIInventoryDataPer(inventoryPersistenceObjects_InGame);

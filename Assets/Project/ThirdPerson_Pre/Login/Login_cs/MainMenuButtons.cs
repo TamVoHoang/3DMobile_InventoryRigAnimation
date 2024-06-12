@@ -61,7 +61,10 @@ public class MainMenuButtons : MonoBehaviour
     //void LoginButton_OnClicked() => TestLoadingScene.Instance.Load_Login_Scene();
     void LoginButton_OnClicked() => TestLoadingScene.Instance.LoadScene(TestLoadingScene.Login_Scene);
 
-    void ResumeButton_OnClicked() => TestLoadingScene.Instance.ResumeGame();
+    void ResumeButton_OnClicked() {
+        Time.timeScale = 1; //todo UnFree game when resume game
+        TestLoadingScene.Instance.ResumeGame();
+    }
 
     //void AccountButton_OnClicked() => TestLoadingScene.Instance.Load_AccountDataOverview_Scene();
     void AccountButton_OnClicked() => TestLoadingScene.Instance.LoadScene(TestLoadingScene.Account_OverviewScene);

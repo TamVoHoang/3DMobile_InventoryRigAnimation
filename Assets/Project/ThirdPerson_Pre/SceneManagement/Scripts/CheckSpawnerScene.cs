@@ -8,8 +8,8 @@ public static class CheckSpawnerScene
     public const string SpawnerScene = "Testing_SpawnPlayer";
 
     // Game scenes
-    public const string GameScene = "ThirdPerson";
-    public const string GameScene_Testing_ThirdPerson = "Testing_ThirdPerson";
+    public const string ThirdPerson = "ThirdPerson";
+    public const string Testing_ThirdPerson = "Testing_ThirdPerson";
 
 
     public static bool CheckScene(string sceneName) {
@@ -19,7 +19,7 @@ public static class CheckSpawnerScene
 
     // true neu la scene game
     public static bool IsInGameScene() {
-        if(CheckScene(GameScene) || CheckScene(GameScene_Testing_ThirdPerson) || CheckScene(SpawnerScene)) return true;
+        if(CheckScene(ThirdPerson) || CheckScene(Testing_ThirdPerson)) return true;
         else return false;
     }
 

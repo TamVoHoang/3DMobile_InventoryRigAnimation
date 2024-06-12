@@ -14,11 +14,12 @@ public class CameraLookAround : MonoBehaviour
     [SerializeField] MultiAimConstraint weaponPoseLayer; // khong cho weapon holder nhin theo co ntro
     [SerializeField] private float aimDuration = 0.3f;
 
+
     private void Awake() {
         camFollowAround = GameObject.Find("CamFollowAround").transform;
     }
     private void Update() {
-        /* if(InputManager.Instance.GetLook.normalized != Vector2.zero) {
+        if(InputManager.Instance.GetLook.normalized != Vector2.zero) {
             bodyAimLayer.weight = 0;
             weaponPoseLayer.weight = 0f;
 
@@ -30,12 +31,12 @@ public class CameraLookAround : MonoBehaviour
         {
             weaponPoseLayer.weight += Time.deltaTime / aimDuration;
             if(bodyAimLayer.weight < 0.5f) bodyAimLayer.weight += Time.deltaTime / aimDuration;
-        } */
+        }
 
     }
     
     private void LateUpdate() {
-        //CameraRotation();
+        CameraRotation();
     }
 
     private void CameraRotation() {

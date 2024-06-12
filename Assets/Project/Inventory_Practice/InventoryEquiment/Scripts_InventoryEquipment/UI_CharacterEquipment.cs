@@ -163,6 +163,7 @@ public class UI_CharacterEquipment : MonoBehaviour
             weaponSlot.transform.Find("emptyImage").gameObject.SetActive(true);
         }
     }
+    
     IEnumerator DelayTimeCountine(float time, Item item) {
         yield return new WaitForSeconds(time);
         if(!ActiveGun.Instance.IsHolstered && 

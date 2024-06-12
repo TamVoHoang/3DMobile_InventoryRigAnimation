@@ -24,7 +24,7 @@ public class InputManager : Singleton<InputManager>
     public void SetMove(Vector2 move) => this.move = move;
     public void SetAim(Vector2 aim) => this.aim = aim;
     public void SetLook(Vector2 look) => this.look = look;
-    //public void SetIsAttackButton(bool isAttackButton) => this.isAttackButton = isAttackButton;
+    ////public void SetIsAttackButton(bool isAttackButton) => this.isAttackButton = isAttackButton;
     public void SetIsAttackButton(bool isAttackButton) {
         this.isAttackButton = isAttackButton;
     }
@@ -55,7 +55,7 @@ public class InputManager : Singleton<InputManager>
 
     private void OnEnable() {
         playerControls.Player.Move.Enable();
-        //playerControls.Player.Look.Enable();
+        //playerControls.Player.Look.Enable(); // look around bang onScreen
         playerControls.Player.Aim.Enable();
         playerControls.Player.Attack.Enable();
         //playerControls.Player.Jump.Enable();
@@ -84,13 +84,14 @@ public class InputManager : Singleton<InputManager>
         if(SceneManager.GetActiveScene().name == "MainMenu") return;
         if(SceneManager.GetActiveScene().name == "AccountDataOverview") return;
         if(SceneManager.GetActiveScene().name == "Testing_SpawnPlayer") return;
+
         //? neu dung OnScreenControl (joyStick + WASD) thi DUNG dong nay
         //? neu chi dung UICanvasControllerInput (joyStick) thi KO DUNG dong nay (vi bi xung dot khi Set)
         move = playerControls.Player.Move.ReadValue<Vector2>();
         Magnitude();
 
         aim = playerControls.Player.Aim.ReadValue<Vector2>();
-        //look = playerControls.Player.Look.ReadValue<Vector2>();
+        //look = playerControls.Player.Look.ReadValue<Vector2>(); // look around bang onScreen
     }
     private void Magnitude() //? dam bao khi hz && vz = 1 => move.x && move.y = 1
     {

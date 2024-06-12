@@ -621,7 +621,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -200, y: 1020}
+  m_AnchoredPosition: {x: -200, y: 1147}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &496051932411346444
@@ -676,10 +676,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   containerRect: {fileID: 6368907800285175108}
   handleRect: {fileID: 436127115744768856}
-  joystickRange: 60
+  joystickRange: 100
   magnitudeMultiplier: 1
   invertXOutputValue: 0
-  invertYOutputValue: 1
+  invertYOutputValue: 0
   joystickOutputEvent:
     m_PersistentCalls:
       m_Calls:
