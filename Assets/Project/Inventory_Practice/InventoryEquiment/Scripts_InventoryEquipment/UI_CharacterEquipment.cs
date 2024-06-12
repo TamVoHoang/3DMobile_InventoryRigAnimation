@@ -22,6 +22,7 @@ public class UI_CharacterEquipment : MonoBehaviour
 
     private Item itemTemp;
 
+    bool isClicked = false;
 
     private void Awake() {
         
@@ -48,6 +49,8 @@ public class UI_CharacterEquipment : MonoBehaviour
         //? - run SetWeaponItem(e.item) -> dem ITEM chuyen qua CharacterEquipment.cs (player) - event OnEquipmentChanged col 38 45 50
         //? - characterEquipment.OnEquipmentChanged duco gan dia chi ham ben testing Awake()
         //? - run += CharacterEquipment_OnEquipmentChnaged() => update hinh anh Item len WeaponSLot
+
+        isClicked = false;
     }
 
 
@@ -155,17 +158,27 @@ public class UI_CharacterEquipment : MonoBehaviour
                 // Use item
                 Debug.Log("click vao weaponPistolItem tren weaponSlot");
                 
-                if(!ActiveWeapon.Instance.IsHolstered_Sword) ActiveWeapon.Instance.ToggleActiveSword(); // cat kiem xong -delay-lay sung
+                // co the su dung tai day thi ko dung 168 => dat tai day co the chua cat kiem xong thi tay da trang bi sung
+                //if(!ActiveWeapon.Instance.IsHolstered_Sword) ActiveWeapon.Instance.ToggleActiveSword(); // cat kiem xong -delay-lay sung
                 
-                StartCoroutine(DelayTimeCountine(0.5f, item)); // click vao sung, cat kiem - delay 0.5s - setActiveWeapon(sung)
+                if(!isClicked) {
+                    isClicked = true;
+                    StartCoroutine(DelayTimeCountine(0.8f, item)); // click vao sung, cat kiem - delay 0.5s - setActiveWeapon(sung)
+                }
+                
             };
         } else {
             weaponSlot.transform.Find("emptyImage").gameObject.SetActive(true);
         }
     }
-    
+
+    // click len o sung -> cat kime -> trang bi sung
     IEnumerator DelayTimeCountine(float time, Item item) {
+        //? move tu 158 xuong 168 => de cat kiem hoan toan thi trnag bi sung
+        if(!ActiveWeapon.Instance.IsHolstered_Sword) ActiveWeapon.Instance.ToggleActiveSword(); //! cat kiem xong -delay-lay sung
+
         yield return new WaitForSeconds(time);
+
         if(!ActiveGun.Instance.IsHolstered && 
             (int)item.itemScriptableObject.gunPrefabRaycast.GetComponent<RaycastWeapon>().weaponSlot == ActiveGun.Instance.GetActiveWeaponIndex) {
             ActiveGun.Instance.ToggleActiveWeapon();
@@ -173,6 +186,8 @@ public class UI_CharacterEquipment : MonoBehaviour
         else {
             ActiveGun.Instance.SetActiveWeapon(item.itemScriptableObject.gunPrefabRaycast.GetComponent<RaycastWeapon>().weaponSlot);
         }
+
+        isClicked = false;
     }
 
 
@@ -188,11 +203,9 @@ public class UI_CharacterEquipment : MonoBehaviour
         Item weaponPistolItem = characterEquipment.GetWeaponPistolItem(); //lay loai weapon ben characterEquipment.cs dang co tren nguoi
         UpdateVisualBothGun(weaponPistolItem, weaponPistolSlot); //! testing
 
-
         //todo hien thi rifle gun len UI weaponSlot Equipment
         Item weaponRifleItem = characterEquipment.GetWeaponRifleItem(); //lay loai weapon ben characterEquipment.cs dang co tren nguoi
         UpdateVisualBothGun(weaponRifleItem, weaponRifleSlot); //! testing
-
 
         //todo hien thi armor len UI armorSlot Equipment
         Item armorItem = characterEquipment.GetArmorItem(); //lay loai armor ben characterEquipment.cs
@@ -245,19 +258,41 @@ public class UI_CharacterEquipment : MonoBehaviour
             uiItemTransform.GetComponent<RectTransform>().GetComponent<Button_UI>().ClickFunc = () => {
                 // Use item
                 Debug.Log("click vao weaponSwordItem tren weaponSlot");
-                if(!ActiveGun.Instance.IsHolstered) ActiveGun.Instance.ToggleActiveWeapon(); // cat sung
-                
+
+                //? cat sung neu co -> trang bi sword => DUNG OK
+                /* if(!ActiveGun.Instance.IsHolstered) ActiveGun.Instance.ToggleActiveWeapon();
                 // !ActiveSword_OldVersion.Instance.IsHolstered_Sword && 
                 if((int)weaponSwordItem.itemScriptableObject.pfWeaponInterface.GetComponent<ISword>().swordSlot == ActiveWeapon.Instance.GetActiveSwordIndex) {
                     ActiveWeapon.Instance.ToggleActiveSword();
                 } else {
                     ActiveWeapon.Instance.SetActiveSword(weaponSwordItem.itemScriptableObject.pfWeaponInterface.GetComponent<ISword>().swordSlot);
+                } */
+
+                if(!isClicked) {
+                    isClicked = true;
+                    StartCoroutine(EquipSword_Countine(0.7f, weaponSwordItem));
                 }
+                
             };
         }
         else {
             weaponSwordSlot.transform.Find("emptyImage").gameObject.SetActive(true);
         }
+    }
+
+    // click len o sword -> cat sung -> trang bi kiem
+    IEnumerator EquipSword_Countine(float time, Item weaponSwordItem) {
+        if(!ActiveGun.Instance.IsHolstered) ActiveGun.Instance.ToggleActiveWeapon();
+
+        yield return new WaitForSeconds(time);
+
+        if((int)weaponSwordItem.itemScriptableObject.pfWeaponInterface.GetComponent<ISword>().swordSlot == ActiveWeapon.Instance.GetActiveSwordIndex) {
+            ActiveWeapon.Instance.ToggleActiveSword();
+        } else {
+            ActiveWeapon.Instance.SetActiveSword(weaponSwordItem.itemScriptableObject.pfWeaponInterface.GetComponent<ISword>().swordSlot);
+        }
+
+        isClicked = false;
     }
 
 

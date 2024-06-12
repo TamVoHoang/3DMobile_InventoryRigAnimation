@@ -24,7 +24,7 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
 
     //TODO SAVE AND LOAD LIST<ITEM>
 
-    bool isPicked = false;
+    [SerializeField] bool isPicked = false;
     
     protected override void Awake() {
         base.Awake();
@@ -178,19 +178,21 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
             }
             else {
                 //EquipOrAddToInventoryEquipmentList(itemWorld3DEquipment); //! KHI PICKIP DO VAT GAN LIEN TUC BO OVER ANIMATION => 1 TAY 2 VU KHI
-                PickupDelayTime(itemWorld3DEquipment);
+                
+                if(!isPicked) {
+                    isPicked = true;
+                    StartCoroutine(PickupDelay_Countine(0.7f, itemWorld3DEquipment));
+                } else {
+                    inventoryEquipment.AddItemEquipment(itemWorld3DEquipment.GetItem()); // trong thoi gian cho isPickup set false -> add thang vao kho
+                }
+                
             }
         }
     }
-    void PickupDelayTime(ItemWorld3D itemWorld3DEquipment) {
-        if(!isPicked) {
-            isPicked = true;
-            PickupDelay_Countine(0.5f, itemWorld3DEquipment);
-        }
-    }
-    IEnumerator PickupDelay_Countine(float delayTiem, ItemWorld3D itemWorld3DEquipment) {
+
+    IEnumerator PickupDelay_Countine(float delayTime, ItemWorld3D itemWorld3DEquipment) {
         EquipOrAddToInventoryEquipmentList(itemWorld3DEquipment);
-        yield return new WaitForSeconds(delayTiem);
+        yield return new WaitForSeconds(delayTime);
         isPicked = false; // cho phep lay tiep
     }
 

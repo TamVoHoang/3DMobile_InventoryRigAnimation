@@ -17,7 +17,8 @@ public class CameraController : MonoBehaviour
         inputManager = GetComponent<InputManager>();
         crossHairTarget = FindObjectOfType<CrossHairTarget>();
     }
-    private void Update() {
+
+    private void LateUpdate() {
         if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.SpawnerScene)) {
             crossHairTarget.SetAimLookAt(new Vector3 (0, 0, -20));
             lookAtPlayerCam.Priority = 50;
@@ -27,7 +28,6 @@ public class CameraController : MonoBehaviour
             lookAtPlayerCam.Priority = -1;
             PriorityCamera();
         }
-        
     }
 
     private void PriorityCamera() {

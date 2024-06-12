@@ -139,7 +139,8 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     public void HolsterSwordsBeforeDeath() {
         playerAnimator.SetBool("holster_sword", true);
         playerAnimator.SetBool("ReadyAttack", false);
-    } 
+    }
+
     public void ToggleActiveSword() {
         bool isHolstered = playerAnimator.GetBool("holster_sword"); //?false = dang equip
         //dao nguoc bien trong script va gan cho bien torng aniamtior
@@ -166,14 +167,20 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
         if (sword)
         {
             Debug.Log(" SetBool holster True sword animation");
-            playerAnimator.SetBool("holster_sword", true); // thuc hien animation holster
-            playerAnimator.SetBool("ReadyAttack", false);
-            yield return new WaitForSeconds(0.5f);
+
+            /* playerAnimator.SetBool("holster_sword", true); // thuc hien animation holster
+            playerAnimator.SetBool("ReadyAttack", false); */
+
+            yield return new WaitForSeconds(0.0f);
             if(characterEquipment.GetI_SwordPrefabTemp != null) {
                 characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordHolster_Point, false);
                 characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordHolster_Point, true);
             }
-            Switch_DeafaultWeapon(defaultActiveWeapon);
+
+            playerAnimator.SetBool("holster_sword", true); // thuc hien animation holster
+            playerAnimator.SetBool("ReadyAttack", false);
+
+            Switch_DeafaultWeapon(defaultActiveWeapon); // chuyen tu the cam kiem -> dung binh thuong
             
             isHolstered_Sword = true;
         }
@@ -191,10 +198,11 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
         {
             Debug.Log("SetBool holster True sword animation");
             playerAnimator.SetBool("holster_sword", false);
-            playerAnimator.SetBool("ReadyAttack", true);
-            yield return new WaitForSeconds(.5f); //! cho cat sung xong se sin hra cay kiem
+            //playerAnimator.SetBool("ReadyAttack", true); //! ok
+            yield return new WaitForSeconds(0.3f); //! cho cat sung xong se sin hra cay kiem
             characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordSlots[index], false);
             characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordSlots[index], true);
+            playerAnimator.SetBool("ReadyAttack", true);
 
             Switch_DeafaultWeapon(weaponTemp); //? tro ve vu khi tep la vu khi luc dau khi no xet o NewWeapon()
 
