@@ -57,12 +57,16 @@ public class AiAgent : MonoBehaviour
         // Debug.Log(aiStateMachine.states[0]);
         // Debug.Log(System.Enum.GetValues(typeof(AiStateID)).Length);
 
-        if (!CheckSpawnerScene.CheckScene(CheckSpawnerScene.MainMenuScene) && 
+        //? dong nay chay ok 
+        /* if (!CheckSpawnerScene.CheckScene(CheckSpawnerScene.MainMenuScene) && 
             !CheckSpawnerScene.CheckScene(CheckSpawnerScene.DataOverviewScene) && 
             !CheckSpawnerScene.CheckScene(CheckSpawnerScene.SpawnerScene)) 
         {
             stateMachine.Update();        
-        }
+        } */
+
+        if(CheckSpawnerScene.IsInMenuScene()) return;
+        stateMachine.Update();  
     }
 
     /* public float GetDistance() {

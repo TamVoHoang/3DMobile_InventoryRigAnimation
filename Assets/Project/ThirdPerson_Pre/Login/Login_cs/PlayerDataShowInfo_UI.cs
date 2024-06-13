@@ -38,11 +38,11 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
         playerDataJson = FindObjectOfType<PlayerDataJson>();
         inventoryDataJson = FindObjectOfType<InventoryDataJson>();
 
-        StartGameButton.onClick.AddListener(StartGameButton_OnClicked);
+        StartGameButton.onClick.AddListener(StartGameButton_OnClicked);         // nut start At Overview Scene -> di thang vao scene game ThirdPerson
         BackMainMenuButton.onClick.AddListener(BackMainMenuButton_OnClicked);
         InfoButton.onClick.AddListener(InfoButton_OnClicked);
 
-        EquipButton.onClick.AddListener(EquipButton_OnClicked);
+        EquipButton.onClick.AddListener(EquipButton_OnClicked); // button at Overdata Scene -> di den scen spawner player
 
         //playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
     }
@@ -62,7 +62,8 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     void EquipButton_OnClicked() {
         if(isLoaded) {
             isLoaded = false;
-            TestLoadingScene.Instance.LoadScene(TestLoadingScene.Spawner_Scene);
+            //TestLoadingScene.Instance.LoadScene(TestLoadingScene.Spawner_Scene);
+            TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_SpawnPlayer);
 
             //TestLoadingScene.Instance.LoadScene(TestLoadingScene.TestingThirdPerson_Scene);
             //TestLoadingScene.Instance.LoadScene(TestLoadingScene.ThirdPerson_Scene);
@@ -74,15 +75,15 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     void StartGameButton_OnClicked() {
         if(isLoaded) {
             isLoaded = false;
-            //TestLoadingScene.Instance.LoadGame_Scene02();
-            TestLoadingScene.Instance.LoadScene(TestLoadingScene.ThirdPerson_Scene);
+            //TestLoadingScene.Instance.LoadScene(TestLoadingScene.ThirdPerson_Scene);
+            TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.ThirdPerson);
         }
     }
     void BackMainMenuButton_OnClicked() {
         if(isLoaded) {
             isLoaded = false;
-            //TestLoadingScene.Instance.Load_MainMenu_Scene();
-            TestLoadingScene.Instance.LoadScene(TestLoadingScene.MainMenu_Scene);
+            //TestLoadingScene.Instance.LoadScene(TestLoadingScene.MainMenu_Scene);
+            TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
         }
     }
 

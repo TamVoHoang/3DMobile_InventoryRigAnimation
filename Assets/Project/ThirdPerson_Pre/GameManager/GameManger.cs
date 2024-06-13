@@ -55,7 +55,8 @@ public class GameManger : Singleton<GameManger>
 
     void BackButtonInResultPanel_OnClick() {
         Time.timeScale = 0; //todo DUNG GAME KHI QUAY VE MAIN MENU
-        TestLoadingScene.Instance.LoadScene(TestLoadingScene.MainMenu_Scene);
+        //TestLoadingScene.Instance.LoadScene(TestLoadingScene.MainMenu_Scene);
+        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
     } 
 
     private void Start() {
@@ -67,17 +68,17 @@ public class GameManger : Singleton<GameManger>
     private void Update() {
         // spawm enemy theo delay time
         // neu ko phai la scen game (thirdPerson || testing_ThirdPerson) return
-        if(!CheckSpawnerScene.IsInGameScene()) return;
 
     }
+
     private void FixedUpdate() {
         /* if(SceneManager.GetActiveScene().name == "MainMenu") return;
         if(SceneManager.GetActiveScene().name == "AccountDataOverview") return;
         if(SceneManager.GetActiveScene().name == "Testing_SpawnPlayer") return; */
 
         //? neu KO PHAI la scene thirdperson || testing thirdPerson => return
-        if(!CheckSpawnerScene.IsInGameScene()) return; 
-
+        //if(!CheckSpawnerScene.IsInGameScene()) return;
+        if(CheckSpawnerScene.IsInMenuScene()) return;
         CountDownTime();
         if(isReady) Timer();
         

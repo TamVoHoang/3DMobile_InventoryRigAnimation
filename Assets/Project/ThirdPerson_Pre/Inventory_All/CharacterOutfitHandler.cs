@@ -20,7 +20,7 @@ public class CharacterOutfitHandler : MonoBehaviour
     List<GameObject> skinPrefabs = new List<GameObject>();
     
     // button change skin
-    [SerializeField] Button ChangeSkinsButton;
+    //[SerializeField] Button ChangeSkinsButton;
 
     struct NetworkOutFit
     {
@@ -77,7 +77,7 @@ public class CharacterOutfitHandler : MonoBehaviour
         ReplaceBodyPart();
     }
 
-    // nhan nut lui skins
+    // nhan nut - skins
     public void OnCycleSkinPrevious() {
         NetworkOutFit newOutFit = networkOutFit; // kieu byte vi tri torng list
 

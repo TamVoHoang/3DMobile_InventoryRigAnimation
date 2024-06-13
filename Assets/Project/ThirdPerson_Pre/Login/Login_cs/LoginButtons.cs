@@ -19,7 +19,7 @@ public class LoginButtons : MonoBehaviour
     // Buttons
     [Header("Login Screen")]
     PlayerDataJson playerDataJson;
-    [SerializeField] Button LoginButton; // login in Login Screen
+    [SerializeField] Button LoginButton; // loginButotn AT Login Screen (Login Scene)
     [SerializeField] Button BackMainMenuButton; // in login screen
 
     [Header("Reset Password Screen")]
@@ -78,7 +78,10 @@ public class LoginButtons : MonoBehaviour
     }
 
     //void BackMainMenuButton_OnClicked() => TestLoadingScene.Instance.Load_MainMenu_Scene();
-    void BackMainMenuButton_OnClicked() => TestLoadingScene.Instance.LoadScene(TestLoadingScene.MainMenu_Scene);
+    void BackMainMenuButton_OnClicked() {
+        //TestLoadingScene.Instance.LoadScene(TestLoadingScene.MainMenu_Scene);
+        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
+    }
     
     void SendResetPassWord_OnClick() => playFabLoginManager.OnSendResetPressed();
     //todo

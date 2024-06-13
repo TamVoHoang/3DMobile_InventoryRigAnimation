@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class AiHealth : Health
 {
-    //[SerializeField] private float delayTimeToDestroy = 5f; 
+    [SerializeField] private float delayTimeToDestroyAfterDeath = 5f; 
     AiAgent aiAgent;
     AiUIHealthBar uiHealthBar; // thanh mau cua Ai agen dat tai day
     //private bool isGetKilledPoint; // lay diem len bang
@@ -23,7 +23,7 @@ public class AiHealth : Health
         AiDeathState deathState = aiAgent.stateMachine.GetState(AiStateID.Death) as AiDeathState; //cha as con
         deathState.direction = direction;
         aiAgent.stateMachine.ChangeState(AiStateID.Death);
-        //Destroy(this.gameObject, delayTimeToDestroy);
+        Destroy(this.gameObject, delayTimeToDestroyAfterDeath);
 
         if(IsDead && isReadyToTakeDamage) {
             isReadyToTakeDamage = !isReadyToTakeDamage;

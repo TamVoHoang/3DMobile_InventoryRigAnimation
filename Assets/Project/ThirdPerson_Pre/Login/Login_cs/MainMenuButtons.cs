@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 //? gameobject = canvas MainMenu ben trong scene MainMenu
@@ -11,16 +12,18 @@ public class MainMenuButtons : MonoBehaviour
 
     // Button in MainMenu scene
     [Header("MainMneu Screen")]
-    [SerializeField] Button LoginButton; // load Login Scene
+    [SerializeField] Button LoginButton; // load Login Scene - button at MainScreen (MainMenu Scene)
     [SerializeField] Button ResumeButton;
-    [SerializeField] Button AccountButton; // chi enable khi da load sau khi da thuc hien login (co cai de account de vao xem)
+
+    // chi enable khi da load sau khi da thuc hien login thuc su bang tia khoan vua sang ky (co cai de account de vao xem)
+    [SerializeField] Button AccountButton; 
     [SerializeField] Button QuitButton;
 
     // Button in Register Screen
     [Header("Register Screen")]
     [SerializeField] PlayFabLoginManager playFabLoginManager;
     [SerializeField] Button RegisterButton; // nut dang ky sau khi nhap mail va pass
-    [SerializeField] Button LoadLoginScreen; // button move to Login screen
+    [SerializeField] Button LoadLoginScreen; // load Login_Scene - button at ResgisterScreen (mainMenuScene)
     private void Awake() {
         LoginButton.onClick.AddListener(LoginButton_OnClicked);
         ResumeButton.onClick.AddListener(ResumeButton_OnClicked);
@@ -29,7 +32,7 @@ public class MainMenuButtons : MonoBehaviour
 
         RegisterButton.onClick.AddListener(RegisterButton_OnClicked); // registerScreen
 
-        //LoadLoginScreen.onClick.AddListener(TestLoadingScene.Instance.Load_Login_Scene); // sau khi dang ki chuyen scene de Login
+        ////LoadLoginScreen.onClick.AddListener(TestLoadingScene.Instance.Load_Login_Scene); // sau khi dang ki chuyen scene de Login
         LoadLoginScreen.onClick.AddListener(LoginScreenButton_Onclicked);
     }
 
@@ -59,30 +62,39 @@ public class MainMenuButtons : MonoBehaviour
 
     //? Button OnCliked in Canvas MainMenu scene
     //void LoginButton_OnClicked() => TestLoadingScene.Instance.Load_Login_Scene();
-    void LoginButton_OnClicked() => TestLoadingScene.Instance.LoadScene(TestLoadingScene.Login_Scene);
+    void LoginButton_OnClicked() {
+        //TestLoadingScene.Instance.LoadScene(TestLoadingScene.Login_Scene);
+        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Login);
+    }
 
     void ResumeButton_OnClicked() {
         Time.timeScale = 1; //todo UnFree game when resume game
-        TestLoadingScene.Instance.ResumeGame();
+        TestLoadingScene.Instance.ResumeGame(); // can phai duoc xet gia tri currentSceneIndex ngay khi back to main menu
+
     }
 
     //void AccountButton_OnClicked() => TestLoadingScene.Instance.Load_AccountDataOverview_Scene();
-    void AccountButton_OnClicked() => TestLoadingScene.Instance.LoadScene(TestLoadingScene.Account_OverviewScene);
+    void AccountButton_OnClicked() {
+        //TestLoadingScene.Instance.LoadScene(TestLoadingScene.AccountOverview_Scene); // den scene dang ky
+        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.AccountDataOverview);
+    }
     
     void QuitButton_OnClicked() => Application.Quit();
 
     //? Button OnClicked in Register Screen 
     void RegisterButton_OnClicked() {
         playFabLoginManager.OnRegisterPressed();
-        // Register()_PlayfabLoginManager.cs cl 25
-        // if sucessed -> khoi tao new PlayerJson(email, username) AND new InventoryJson
-        // Save_PlayerDataJason_SignUp()_PlayerDataJson.cs -> chuyen new PlayerJson -> string -> luu len playfab "Json'
-        // Save_InventoryDataJson_SignUp()_PlayerInventory.cs -> chuyen new InventoryJson -> stirng -> save Playfab "InventoryJson"
+        /* Register()_PlayfabLoginManager.cs cl 25
+        if sucessed -> khoi tao new PlayerJson(email, username) AND new InventoryJson
+        Save_PlayerDataJason_SignUp()_PlayerDataJson.cs -> chuyen new PlayerJson -> string -> luu len playfab "Json'
+        Save_InventoryDataJson_SignUp()_PlayerInventory.cs -> chuyen new InventoryJson -> stirng -> save Playfab "InventoryJson" */
     }
 
     void LoginScreenButton_Onclicked() {
-        TestLoadingScene.Instance.LoadScene(TestLoadingScene.Login_Scene);
+        //TestLoadingScene.Instance.LoadScene(TestLoadingScene.Login_Scene); // di den login_Scene
+        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Login); // truyen vao tham so kieu enume
     }
 
+    
     //todo
 }

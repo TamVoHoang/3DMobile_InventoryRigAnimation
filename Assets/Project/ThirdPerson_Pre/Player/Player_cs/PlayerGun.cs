@@ -89,14 +89,14 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     }
 
     public void Update() {
-        if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.MainMenuScene)) return;
+        /* if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.MainMenuScene)) return;
         if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.DataOverviewScene)) return;
-        if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.SpawnerScene)) {
-            //characterController.enabled = false;
-            return;
-        }
+        if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.SpawnerScene)) return; */
         
+        //! testing thu ham true khi dang la 1 trong nhung scene menu
+        if(CheckSpawnerScene.IsInMenuScene()) return;
 
+        
         // neu dem chua xong count down thi return
         if(!GameManger.Instance.IsReady) return;
 

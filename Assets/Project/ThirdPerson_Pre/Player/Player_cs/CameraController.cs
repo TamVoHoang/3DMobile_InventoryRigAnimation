@@ -38,6 +38,7 @@ public class CameraController : MonoBehaviour
             virtualAimCamera.Priority = 20;
             virtualLookAroundCamera.Priority = 1;
         }
+        
     }
 
     //todo
