@@ -53,13 +53,14 @@ public class PlayFabLoginManager : MonoBehaviour
 
     #endregion Register
 
-//todo Login
+    //todo Login
     #region Login
     [Header("Login UI: ")]
     [SerializeField] TMP_InputField loginEmail;
     [SerializeField] TMP_InputField loginPassword;
     [SerializeField] TextMeshProUGUI ResultLogin_Text;
     
+
     
     public void OnLoginAutoPressed() => 
         Login(PlayerPrefs.GetString(LAST_EMAIL_KEY), PlayerPrefs.GetString(LAST_PASSWORD_KEY));
@@ -76,6 +77,9 @@ public class PlayFabLoginManager : MonoBehaviour
             }
         },
         successResult => {
+            // xet loggedPayfabID -> sent qua cho leader board hien thi mau text
+            PlayerDataJson.Instance.loggedPayfabID = successResult.PlayFabId; //! vua them vao
+
             PlayerPrefs.SetString(LAST_EMAIL_KEY, mail);
             PlayerPrefs.SetString(LAST_PASSWORD_KEY, password);
             PlayerPrefs.SetString("Username", successResult.InfoResultPayload.PlayerProfile.DisplayName);
@@ -84,12 +88,13 @@ public class PlayFabLoginManager : MonoBehaviour
             ResultLogin_Text.text = "Successfully Logged In User: " + PlayerPrefs.GetString("Username"); // hien thi ket qua khi login thanh cong
 
         },
+
         PlayFabFailure);
     }
 
     #endregion Login
 
-//todo Forgot password
+    //todo Forgot password
 [Header("Forgot password UI: ")]
     #region Forgot password
     [SerializeField] TMP_InputField resetEmailInput;

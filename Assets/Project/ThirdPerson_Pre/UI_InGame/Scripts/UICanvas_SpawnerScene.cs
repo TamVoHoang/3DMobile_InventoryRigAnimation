@@ -9,9 +9,9 @@ public class UICanvas_SpawnerScene : MonoBehaviour
 {
     [SerializeField] Button BackToMainMenuBtton;
     [SerializeField] Button StartGame;
-    [SerializeField] Button JoinGameButton_1; // nut join khi da xem trang bi
-    [SerializeField] Button JoinGameButton_2; // nut join khi da xem trang bi
-    [SerializeField] Button JoinGameButton_3; // nut join khi da xem trang bi
+    [SerializeField] Button JoinGameButton_1; // nut chon map trong UI canvas in game - level select
+    [SerializeField] Button JoinGameButton_2;
+    [SerializeField] Button JoinGameButton_3;
 
 
     [SerializeField] Button ChangeNextSkinsButton;

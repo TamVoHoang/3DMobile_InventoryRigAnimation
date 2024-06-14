@@ -50,6 +50,9 @@ public class LoadDataTo_IDataPersistence : Singleton<LoadDataTo_IDataPersistence
     public void SaveData_BeforeOutOfGame() {
         if(playerDataJson== null || inventoryDataJson == null) return; //! TESTING
 
+        // send leader board killed Count
+        playerDataJson.SendLeaderBoard(playerDataJson.PlayerJson.killed);
+
         // cac ham ke thus Interface chay
         playerDataJson.SaveData_FromObjectsContainIDataPer(dataPersistenceObjects_InGame);
         inventoryDataJson.SaveInventoryData_FromObjectsContainIInventoryDataPer(inventoryPersistenceObjects_InGame);

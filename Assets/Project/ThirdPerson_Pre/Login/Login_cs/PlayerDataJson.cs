@@ -54,7 +54,9 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
     public bool IsLoadedSuccessInLogin => isLoadedSuccessInLogin;
 
     private bool isLoadedSuccessInGame = false;
-    public bool IsLoadedSuccessInGame => isLoadedSuccessInGame;
+    public bool IsLoadedSuccessInGame => isLoadedSuccessInGame; // coll 59 MainMenu.cs -> khi da co LoadData thi enable nut Account
+
+    public string loggedPayfabID;
 
     protected override void Awake() {
         base.Awake();
@@ -183,5 +185,44 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         return new List<IDataPersistence>(dataPersistenceObjects);
     }
 
-//todo
+    #region  LEADERBOARD
+    // send khi quay thoat khoi game scene, SaveData_BeforeOutOfGame() col 50 LoadDatato_IDataPersistence.cs
+    public void SendLeaderBoard(int _killedCount) {
+        var request = new UpdatePlayerStatisticsRequest {
+            Statistics = new List<StatisticUpdate> {
+                new StatisticUpdate {
+                    StatisticName = "KilledCount",
+                    Value = _killedCount
+                }
+            }
+        };
+        PlayFabClientAPI.UpdatePlayerStatistics(request, OnLeaderBoardUpdate, OnError);
+    }
+
+    private void OnLeaderBoardUpdate(UpdatePlayerStatisticsResult result) => Debug.Log("Sent leader board");
+    
+    // get nut nhan trong data overview scene
+    public void GetLeaderBoard() {
+        var request = new GetLeaderboardRequest {
+            StatisticName = "KilledCount",
+            StartPosition = 0,
+            MaxResultsCount = 10
+        };
+        PlayFabClientAPI.GetLeaderboard(request, OnLeaderBoardGet, OnError);
+    }
+
+    private void OnLeaderBoardGet(GetLeaderboardResult result) {
+
+
+        foreach (var item in result.Leaderboard) {
+            Debug.Log($"{item.Position} {item.DisplayName} {item.StatValue}");
+        }
+    }
+
+
+
+    private void OnError(PlayFabError error) => Debug.Log(error.GenerateErrorReport());
+    #endregion LEADERBOARD
+
+    //todo
 }

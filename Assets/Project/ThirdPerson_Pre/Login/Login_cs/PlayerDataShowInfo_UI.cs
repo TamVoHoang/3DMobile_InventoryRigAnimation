@@ -1,5 +1,9 @@
+using System;
 using System.Collections;
+using PlayFab;
+using PlayFab.ClientModels;
 using TMPro;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,15 +27,21 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
 
     [Header("Buttons")]
     [SerializeField] Button InfoButton;
-    [SerializeField] Button StartGameButton;
+    [SerializeField] Button RankingButton;
+    [SerializeField] Button GetRankingAroundPlayer_Button;
 
     [SerializeField] Button EquipButton;
 
+    [SerializeField] Button StartGameButton;
     [SerializeField] Button BackMainMenuButton;
 
     // others
     bool isLoaded = false;
 
+    // leader board
+    [Header("Leader Board")]
+    [SerializeField] GameObject rowPrefab;
+    [SerializeField] Transform rowParent;
     private void Awake() {
         isLoaded = false;
 
@@ -40,16 +50,25 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
 
         StartGameButton.onClick.AddListener(StartGameButton_OnClicked);         // nut start At Overview Scene -> di thang vao scene game ThirdPerson
         BackMainMenuButton.onClick.AddListener(BackMainMenuButton_OnClicked);
+        
         InfoButton.onClick.AddListener(InfoButton_OnClicked);
 
         EquipButton.onClick.AddListener(EquipButton_OnClicked); // button at Overdata Scene -> di den scen spawner player
+        
 
         //playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
     }
 
     private void Start() {
-        StartCoroutine(LoadData_ToShowPlayerInfo_Countine(3f));
+        StartCoroutine(LoadData_ToShowPlayerInfo_Countine(2f)); //! bat len khi chay auto Load data
+
+        // de awake bi null ko run duoc action
+        RankingButton.onClick.AddListener(RankingButton_OnCliked);
+
+        GetRankingAroundPlayer_Button.onClick.AddListener(GetRankingAroundPlayer_Button_OnClicked);
     }
+
+    
 
     //?  RAT OK CO THE DUNG HAM NAY KET HOP VOI NUT NHAN INFO DE IN DATA TU MAIN GAME TRO LAI SCENE NAY
     void InfoButton_OnClicked() {
@@ -58,34 +77,94 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
         isLoaded = true;
     }
 
+    void RankingButton_OnCliked(){
+        GetLeaderBoard();
+    }
+
+    private void GetRankingAroundPlayer_Button_OnClicked()
+    {
+        GetLeaderBoardAroundPlayer();
+    }
+
     //BUTTONS IN PLAYER INFO OVERVIEW
     void EquipButton_OnClicked() {
-        if(isLoaded) {
-            isLoaded = false;
-            //TestLoadingScene.Instance.LoadScene(TestLoadingScene.Spawner_Scene);
-            TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_SpawnPlayer);
-
-            //TestLoadingScene.Instance.LoadScene(TestLoadingScene.TestingThirdPerson_Scene);
-            //TestLoadingScene.Instance.LoadScene(TestLoadingScene.ThirdPerson_Scene);
-
-            //TestLoadingScene.Instance.Load_Testing_SpawnPlayer();
-        }
+        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_SpawnPlayer);
     }
 
     void StartGameButton_OnClicked() {
-        if(isLoaded) {
-            isLoaded = false;
-            //TestLoadingScene.Instance.LoadScene(TestLoadingScene.ThirdPerson_Scene);
-            TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.ThirdPerson);
-        }
+        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.ThirdPerson);
     }
     void BackMainMenuButton_OnClicked() {
-        if(isLoaded) {
-            isLoaded = false;
-            //TestLoadingScene.Instance.LoadScene(TestLoadingScene.MainMenu_Scene);
-            TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
+        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
+    }
+
+    //? GET LEADER BOARD KILLED COUNT
+    public void GetLeaderBoard() {
+        var request = new GetLeaderboardRequest {
+            StatisticName = "KilledCount",
+            StartPosition = 0,
+            MaxResultsCount = 10
+        };
+        PlayFabClientAPI.GetLeaderboard(request, OnLeaderBoardGet, OnError);
+    }
+
+    private void OnLeaderBoardGet(GetLeaderboardResult result) {
+        foreach (Transform item in rowParent) {
+            Destroy(item.gameObject);
+        }
+        StartCoroutine(ShowingLeaderBoard(result));
+    }
+
+    IEnumerator ShowingLeaderBoard(GetLeaderboardResult result) {
+        yield return new WaitForSeconds(0.5f);
+        foreach (var item in result.Leaderboard) {
+            GameObject newRow = Instantiate(rowPrefab, rowParent); // 1 row prefab - 3 texts (pos, name, killedCount)
+            TextMeshProUGUI[] childs = newRow.GetComponentsInChildren<TextMeshProUGUI>(); // tao mang kieu Text chua text child
+            Debug.Log(childs.Length);
+
+            childs[0].GetComponent<TextMeshProUGUI>().text = (item.Position + 1).ToString();
+            childs[1].GetComponent<TextMeshProUGUI>().text = item.DisplayName;
+            childs[2].GetComponent<TextMeshProUGUI>().text = item.StatValue.ToString();
+
+            Debug.Log($"{item.Position} {item.DisplayName} {item.StatValue}");
         }
     }
+
+    //? GET LEADER AROUND PLAYER
+    void GetLeaderBoardAroundPlayer() {
+        var request = new GetLeaderboardAroundPlayerRequest {
+            StatisticName = "KilledCount",
+            MaxResultsCount = 9
+        };
+        PlayFabClientAPI.GetLeaderboardAroundPlayer(request, OnLeaderBoardAroundPlayerGet, OnError);
+    }
+
+    private void OnLeaderBoardAroundPlayerGet(GetLeaderboardAroundPlayerResult result) {
+        foreach (Transform item in rowParent) {
+            Destroy(item.gameObject);
+        }
+
+        foreach (var item in result.Leaderboard) {
+            GameObject newRow = Instantiate(rowPrefab, rowParent); // 1 row prefab - 3 texts (pos, name, killedCount)
+            TextMeshProUGUI[] childs = newRow.GetComponentsInChildren<TextMeshProUGUI>(); // tao mang kieu Text chua text child
+            Debug.Log(childs.Length);
+
+            childs[0].GetComponent<TextMeshProUGUI>().text = (item.Position + 1).ToString();
+            childs[1].GetComponent<TextMeshProUGUI>().text = item.DisplayName;
+            childs[2].GetComponent<TextMeshProUGUI>().text = item.StatValue.ToString();
+
+            if(item.PlayFabId == playerDataJson.loggedPayfabID) {
+                childs[0].color = Color.cyan;
+                childs[1].color = Color.cyan;
+                childs[2].color = Color.cyan;
+            }
+
+            Debug.Log($"{item.Position} {item.DisplayName} {item.StatValue}");
+        }
+    }
+
+
+    private void OnError(PlayFabError error) => Debug.Log(error.GenerateErrorReport());
 
     #region IDataPersistence
     IEnumerator LoadData_ToShowPlayerInfo_Countine(float time) {
@@ -117,6 +196,7 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     public void SavePlayerData(PlayerJson playerJsonData) { 
 
     }
+
     #endregion IDataPersistence
 
     /* private void ShowInUI_FromDataLoacal_Temp() {
