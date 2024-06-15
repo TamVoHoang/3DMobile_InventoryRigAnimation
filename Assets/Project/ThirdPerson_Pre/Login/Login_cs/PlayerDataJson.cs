@@ -50,7 +50,7 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
     private List<IDataPersistence> dataPersistenceObjects; //! list chua IDataPersistence
 
     // dieu kien dung de enable or disable AccountButton trong mainMenu Screen
-    private bool isLoadedSuccessInLogin = false;
+    [SerializeField] private bool isLoadedSuccessInLogin = false;
     public bool IsLoadedSuccessInLogin => isLoadedSuccessInLogin;
 
     private bool isLoadedSuccessInGame = false;
@@ -154,7 +154,7 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
     //! LOAD trong game voi list Interface| lay data ben trong playerJson load ben tren sau do load cho cac doi tuong : Idatapersistence trong list
     public void LoadData_ToObjectsContainIDataPer(List<IDataPersistence> dataPersistenceObjects){
         foreach (IDataPersistence dataPersistenceObj in dataPersistenceObjects) {
-            dataPersistenceObj.LoadPlayerData(playerJson);
+            dataPersistenceObj.UpdateUIVisual(playerJson);
         }
 
         //? da load data tu playerJson vao mainGame

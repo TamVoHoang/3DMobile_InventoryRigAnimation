@@ -116,7 +116,7 @@ public class PlayerHealth : Health, IDataPersistence
         isReadyToTakeDamage = true; //bat dau bi tru mau
     }
 
-    public void LoadPlayerData(PlayerJson playerJsonData) {
+    public void UpdateUIVisual(PlayerJson playerJsonData) {
         SetCurrentHealth = playerJsonData.health;
         ////diedCount = playerJsonData.died; //? OK
     }

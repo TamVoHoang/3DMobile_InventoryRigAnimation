@@ -43,7 +43,7 @@ public class PlayerDataLocal_Temp :Singleton<PlayerDataLocal_Temp>, IDataPersist
         //playerDataJson.Save_PlayerDataJason_RealTime();
     }
 
-    public void LoadPlayerData(PlayerJson playerJsonData)
+    public void UpdateUIVisual(PlayerJson playerJsonData)
     {
         this.mail = playerJsonData.mail;
         this.userName = playerJsonData.name;

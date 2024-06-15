@@ -174,7 +174,7 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     public void Jumped() => isJumped = true;
 
     #region IDataPersistence
-    public void LoadPlayerData(PlayerJson playerJson) {
+    public void UpdateUIVisual(PlayerJson playerJson) {
         this.playerTransform = playerJson.position;
 
     }

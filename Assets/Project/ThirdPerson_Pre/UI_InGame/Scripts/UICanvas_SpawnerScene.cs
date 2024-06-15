@@ -13,10 +13,11 @@ public class UICanvas_SpawnerScene : MonoBehaviour
     [SerializeField] Button JoinGameButton_2;
     [SerializeField] Button JoinGameButton_3;
 
-
+    
     [SerializeField] Button ChangeNextSkinsButton;
     [SerializeField] Button ChangePreviousSkinsButton;
 
+    [SerializeField] GameObject SelectMapPanel;
     [SerializeField] int mapSelectIndex;
     [SerializeField] Transform mapSelectTranform;   // gameobject = content in scroll view| transform chua cac button select map
     [SerializeField] GameObject[] maps;
@@ -26,14 +27,13 @@ public class UICanvas_SpawnerScene : MonoBehaviour
         JoinGameButton_2.onClick.AddListener(JoinGameButton_2_OnClick);
         JoinGameButton_3.onClick.AddListener(JoinGameButton_3_OnClick);
 
-
         BackToMainMenuBtton.onClick.AddListener(BackToMainMenuBtton_OnClick);
         ChangeNextSkinsButton.onClick.AddListener(ChangeNextSkinsButton_OnClick);
         ChangePreviousSkinsButton.onClick.AddListener(ChangePreviousSkinsButton_OnClick);
 
+        SelectMapPanel.SetActive(false);
         mapSelectIndex = 0;
         maps = new GameObject[mapSelectTranform.childCount];
-
         
     }
 

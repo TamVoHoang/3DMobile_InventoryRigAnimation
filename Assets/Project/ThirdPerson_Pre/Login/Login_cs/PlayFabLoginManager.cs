@@ -60,8 +60,6 @@ public class PlayFabLoginManager : MonoBehaviour
     [SerializeField] TMP_InputField loginPassword;
     [SerializeField] TextMeshProUGUI ResultLogin_Text;
     
-
-    
     public void OnLoginAutoPressed() => 
         Login(PlayerPrefs.GetString(LAST_EMAIL_KEY), PlayerPrefs.GetString(LAST_PASSWORD_KEY));
     
@@ -73,7 +71,7 @@ public class PlayFabLoginManager : MonoBehaviour
                 Email = mail,
                 Password = password,
                 InfoRequestParameters = new GetPlayerCombinedInfoRequestParams() {
-                GetPlayerProfile = true
+                GetPlayerProfile = true,
             }
         },
         successResult => {

@@ -62,7 +62,7 @@ public class LoginButtons : MonoBehaviour
     }
 
     IEnumerator DelayTimeLogin_ToLoad_CO(float time) {
-        playFabLoginManager.OnLoginPressed();
+        playFabLoginManager.OnLoginPressed(); // lay mail and pass loginPlayfab
 
         //load "Json" playfab -> PlayerJson -> doi tuong tronng PlayerDataJson.cs
         yield return new WaitForSeconds(time);
@@ -79,7 +79,6 @@ public class LoginButtons : MonoBehaviour
 
     //void BackMainMenuButton_OnClicked() => TestLoadingScene.Instance.Load_MainMenu_Scene();
     void BackMainMenuButton_OnClicked() {
-        //TestLoadingScene.Instance.LoadScene(TestLoadingScene.MainMenu_Scene);
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
     }
     

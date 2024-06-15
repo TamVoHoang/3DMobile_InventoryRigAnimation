@@ -52,19 +52,17 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
         BackMainMenuButton.onClick.AddListener(BackMainMenuButton_OnClicked);
         
         InfoButton.onClick.AddListener(InfoButton_OnClicked);
-
         EquipButton.onClick.AddListener(EquipButton_OnClicked); // button at Overdata Scene -> di den scen spawner player
         
-
-        //playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
+        ////playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
     }
 
     private void Start() {
-        StartCoroutine(LoadData_ToShowPlayerInfo_Countine(2f)); //! bat len khi chay auto Load data
+        //? khi vao scene nay -> se auton load data
+        StartCoroutine(LoadData_ToShowPlayerInfo_Countine(2f));
 
         // de awake bi null ko run duoc action
         RankingButton.onClick.AddListener(RankingButton_OnCliked);
-
         GetRankingAroundPlayer_Button.onClick.AddListener(GetRankingAroundPlayer_Button_OnClicked);
     }
 
@@ -73,7 +71,7 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     //?  RAT OK CO THE DUNG HAM NAY KET HOP VOI NUT NHAN INFO DE IN DATA TU MAIN GAME TRO LAI SCENE NAY
     void InfoButton_OnClicked() {
         Debug.Log("co nhan nut tai thong tin nguoi choi");
-        LoadPlayerData(playerDataJson.PlayerJson);
+        UpdateUIVisual(playerDataJson.PlayerJson);
         isLoaded = true;
     }
 
@@ -173,11 +171,11 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
         inventoryDataJson.Load_InventoryDataJason_RealTime();   // lay inventoryJson = chi goi xuong chu ko dung inventoryJson thuc hien tiep
         
         yield return new WaitForSeconds(1f);
-        LoadPlayerData(playerDataJson.PlayerJson); // lay data playerJson xet UI
+        UpdateUIVisual(playerDataJson.PlayerJson); // lay data playerJson xet UI
         isLoaded = true;
     }
 
-    public void LoadPlayerData(PlayerJson playerJsonData) {
+    public void UpdateUIVisual(PlayerJson playerJsonData) {
         /* this.mail.text ="Mail: "+  playerJsonData.mail;
         this.userName.text ="UserName: "+ playerJsonData.name;
         this.level.text ="Level: "+ playerJsonData.level.ToString();

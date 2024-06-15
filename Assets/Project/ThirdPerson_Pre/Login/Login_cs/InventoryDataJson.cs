@@ -19,8 +19,8 @@ public class InventoryJson
 
 public class InventoryDataJson : Singleton<InventoryDataJson>
 {
-    public Item item;
     public InventoryJson inventoryJson; //! phai de public - do IventoryJson dang [Serializable]
+    //public Item item;
 
     [Header("Item.ScriptableObjects")]
     [SerializeField] ItemScriptableObject IHealthPickup_01;
@@ -42,7 +42,7 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
     }
 
     private void CreateNewItemListJson_ToSignUp(ItemScriptableObject ItemS, int amount) {
-        item = new Item {itemScriptableObject = ItemS, amount = amount};
+        var item = new Item {itemScriptableObject = ItemS, amount = amount};
         inventoryJson.itemsListJson.Add(item);
     }
 
@@ -76,12 +76,15 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
 
     public void Save_InventoryDataJson_RealTime() {
         Debug.Log("Save inventory Local to Inventoryjson_PlayFab");
-        string inventoryJson_String = JsonUtility.ToJson(inventoryJson); // inventoryJson = JsonUtility.FromJson<InventoryJson>(inventoryJson_String);
-        
+
+        //? cach dang dung dung nhat
+        string inventoryJson_String = JsonUtility.ToJson(inventoryJson); //inventoryJson = JsonUtility.FromJson<InventoryJson>(inventoryJson_String);
         PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
         {
             Data = new Dictionary<string, string> {
-                {"InventoryJson", JsonConvert.SerializeObject(inventoryJson_String)}, //JsonConvert.SerializeObject(inventoryJson)
+                
+                //? cach dang dung dung nhat
+                {"InventoryJson", JsonConvert.SerializeObject(inventoryJson_String)},// {"InventoryJson", JsonConvert.SerializeObject(inventoryJson)},//TODO OK cach 1 _ testing
             }
         },
         result => { Debug.Log("Inventory DataJason Title updated");},
@@ -90,6 +93,8 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
 
     //? LOAD
     public void Load_InventoryDataJason_RealTime() {
+        inventoryJson.itemsListJson.Clear(); // test thu xoa het truoc khi nhan cai load moi
+
         Debug.Log("Load Inventory Playfab to inventoryjson Local");
         PlayFabClientAPI.GetUserData(new GetUserDataRequest(),
             OnGetinventoryDataJson,
@@ -101,8 +106,7 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
         foreach (var eachData in result.Data) {
             switch (eachData.Key) {
                 case "InventoryJson":
-                    ////inventoryJson = JsonConvert.DeserializeObject<InventoryJson>((result.Data[eachData.Key].Value)); //TODO OK
-
+                    //? cach dang dung dung nhat
                     var inventoryString = JsonConvert.DeserializeObject<string>((result.Data[eachData.Key].Value));
                     inventoryJson = JsonUtility.FromJson<InventoryJson>(inventoryString);
                     break;

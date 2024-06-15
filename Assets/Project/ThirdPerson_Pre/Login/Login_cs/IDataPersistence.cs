@@ -1,5 +1,5 @@
 public interface IDataPersistence
 {
-    void LoadPlayerData(PlayerJson playerJsonData);
+    void UpdateUIVisual(PlayerJson playerJsonData);
     void SavePlayerData(PlayerJson playerJsonData);
 }
