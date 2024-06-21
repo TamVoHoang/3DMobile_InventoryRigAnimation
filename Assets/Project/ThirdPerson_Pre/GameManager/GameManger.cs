@@ -37,8 +37,8 @@ public class GameManger : Singleton<GameManger>
     public void SetKilledCount(int killed) => killedCountTemp += killed;
 
     [Header("Enemy Spawner")]
-    [SerializeField] AiAgent aiAgent;
-    [SerializeField] AiAgent_zom aiAgent_Zom;
+    // [SerializeField] AiAgent aiAgent;
+    // [SerializeField] AiAgent_zom aiAgent_Zom;
     [SerializeField] GameObject[] aiSpawned;
     bool isSpawned = false;
 
@@ -55,7 +55,7 @@ public class GameManger : Singleton<GameManger>
 
     void BackButtonInResultPanel_OnClick() {
         Time.timeScale = 0; //todo DUNG GAME KHI QUAY VE MAIN MENU
-        //TestLoadingScene.Instance.LoadScene(TestLoadingScene.MainMenu_Scene);
+        results_UI.SetActive(false);
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
     } 
 

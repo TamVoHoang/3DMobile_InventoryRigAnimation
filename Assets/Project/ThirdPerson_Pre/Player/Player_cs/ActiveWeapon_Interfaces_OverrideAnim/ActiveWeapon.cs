@@ -90,6 +90,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
         
         weaponName = (currenActiveWeapon as IWeapon).GetWeaponInfo().itemName;
         timeBetweenAttacks = (currenActiveWeapon as IWeapon).GetWeaponInfo().coolDownTime;
+
         overrideControllers = (currenActiveWeapon as IWeapon).GetWeaponInfo().animatorOverrideController;
         playerAnimator.runtimeAnimatorController = overrideControllers;
 
@@ -177,8 +178,8 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
                 characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordHolster_Point, true);
             }
 
-            playerAnimator.SetBool("holster_sword", true); // thuc hien animation holster
-            playerAnimator.SetBool("ReadyAttack", false);
+            playerAnimator.SetBool("holster_sword", true);  // thuc hien animation holster
+            playerAnimator.SetBool("ReadyAttack", false);   // chuyen trang thai cam kiem
 
             Switch_DeafaultWeapon(defaultActiveWeapon); // chuyen tu the cam kiem -> dung binh thuong
             
@@ -198,7 +199,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
         {
             Debug.Log("SetBool holster True sword animation");
             playerAnimator.SetBool("holster_sword", false);
-            //playerAnimator.SetBool("ReadyAttack", true); //! ok
+            ////playerAnimator.SetBool("ReadyAttack", true); //! ok
             yield return new WaitForSeconds(0.3f); //! cho cat sung xong se sin hra cay kiem
             characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordSlots[index], false);
             characterEquipment.GetI_SwordPrefabTemp.transform.SetParent(swordSlots[index], true);
@@ -230,7 +231,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
             {
                 isSwordTakeDamageEnemies = true; // isSwordTakeDamageEnemies
                 hitBox.OnSwordRaycastHit(damage, hitBox.transform.position); //ray.direction
-                //StartCoroutine(PlayerEnemyTakeHealthCO(0.7f));
+                ////StartCoroutine(PlayerEnemyTakeHealthCO(0.7f));
             }
         } else {
             Debug.DrawRay(RHand.position, RHand.transform.TransformDirection(aimDirection) * minSwordDisRaycast, Color.red);

@@ -3,13 +3,21 @@ using UnityEngine.Animations.Rigging;
 
 public class ChracterAim : Singleton<ChracterAim> // co the bo singleton tai day
 {
-    [SerializeField] public float mouseSentivity = 1.2f;
+    [SerializeField] float currentMouseSensitivity = 1.2f;
+
     [SerializeField] public float xAixs, yAxis;
     [SerializeField] private Transform camFollowPos; // maincamera se move den day, vi trong main camera co virtul camera
     [SerializeField] private Vector2 yAxixLimit = new Vector2(20, 20);
     [SerializeField] public RigBuilder rigBuilder;
     //RaycastWeapon weapon; // tai scrip nay trong folder player
     //public float aimDuration = 0.3f;
+
+    public float MouseSensitivity {get { return currentMouseSensitivity; } set { currentMouseSensitivity = value; } }
+    float maxSensitivity = 2;
+    float minSensitivity = 0.5f;
+    public float MaxSensitivity { get { return maxSensitivity;}}
+    public float MinSensitivity { get { return minSensitivity;}}
+
     protected override void Awake()
     {
         base.Awake();
@@ -29,8 +37,8 @@ public class ChracterAim : Singleton<ChracterAim> // co the bo singleton tai day
 
         //?using virtual UI to aim player. gia tri lay tu khi SetAIm trong UICanvasControllerInput.cs coll 33
         
-        xAixs += InputManager.Instance.GetAim.x * mouseSentivity;
-        yAxis -= InputManager.Instance.GetAim.y * mouseSentivity;
+        xAixs += InputManager.Instance.GetAim.x * currentMouseSensitivity;
+        yAxis -= InputManager.Instance.GetAim.y * currentMouseSensitivity;
         yAxis = Mathf.Clamp(yAxis, -yAxixLimit.x, yAxixLimit.y);
     }
 

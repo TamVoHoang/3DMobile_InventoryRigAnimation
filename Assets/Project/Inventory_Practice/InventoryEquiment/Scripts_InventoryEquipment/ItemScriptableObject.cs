@@ -14,18 +14,18 @@ public class ItemScriptableObject : ScriptableObject
 
     [Header("Gun")]
     public RaycastWeapon gunPrefabRaycast; // Gun Prefab with RaycastWeapon.cs
-    public int clipAmount;
-
-    [Header("Healh")]
-    public int healthAmout;
-
-    //[Header("Sword")]
-    //public HandSwordWeapon handSwordPrefab; // HandSword Prefab with HandSwordWeapon.cs
+    
+    /* [Header("Sword")]
+    public HandSwordWeapon handSwordPrefab; // HandSword Prefab with HandSwordWeapon.cs */
 
     [Header("Weapon Interfaces")]
     public float damage;
     public float coolDownTime;
     public GameObject pfWeaponInterface; //! gameobject chua class handInterface.cs : IWeapon
     public AnimatorOverrideController animatorOverrideController;
+
+    [Header("Healh and Ammo Pickup")]
+    public int clipAmount;
+    public int healthAmout;
     
 }

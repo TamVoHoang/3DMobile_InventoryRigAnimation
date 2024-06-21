@@ -3,7 +3,6 @@ using System.Collections;
 using PlayFab;
 using PlayFab.ClientModels;
 using TMPro;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,6 +30,7 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     [SerializeField] Button GetRankingAroundPlayer_Button;
 
     [SerializeField] Button EquipButton;
+    [SerializeField] Button SettingButton;
 
     [SerializeField] Button StartGameButton;
     [SerializeField] Button BackMainMenuButton;
@@ -53,7 +53,8 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
         
         InfoButton.onClick.AddListener(InfoButton_OnClicked);
         EquipButton.onClick.AddListener(EquipButton_OnClicked); // button at Overdata Scene -> di den scen spawner player
-        
+        SettingButton.onClick.AddListener(SettingButton_OnClicked); //button hien thi screen dieu chinh am thanh
+
         ////playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
     }
 
@@ -79,8 +80,7 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
         GetLeaderBoard();
     }
 
-    private void GetRankingAroundPlayer_Button_OnClicked()
-    {
+    private void GetRankingAroundPlayer_Button_OnClicked() {
         GetLeaderBoardAroundPlayer();
     }
 
@@ -88,6 +88,11 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     void EquipButton_OnClicked() {
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_SpawnPlayer);
     }
+
+    private void SettingButton_OnClicked() {
+        
+    }
+
 
     void StartGameButton_OnClicked() {
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.ThirdPerson);
