@@ -39,7 +39,7 @@ public class MainMenuButtons : MonoBehaviour
         ////LoadLoginScreen.onClick.AddListener(TestLoadingScene.Instance.Load_Login_Scene); // sau khi dang ki chuyen scene de Login
         LoadLoginScreen.onClick.AddListener(LoginScreenButton_Onclicked);
 
-        playFabLoginManager = GetComponent<PlayFabLoginManager>();
+        playFabLoginManager = FindObjectOfType<PlayFabLoginManager>();
     }
 
     private void Start() {
