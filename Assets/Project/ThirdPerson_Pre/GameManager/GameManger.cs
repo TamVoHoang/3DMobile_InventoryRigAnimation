@@ -25,6 +25,7 @@ public class GameManger : Singleton<GameManger>
     [SerializeField] private GameObject timerPanel;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private float remainingTime;
+    public float RemainingTime {get { return remainingTime; } }
     private bool isReady = false;
     public bool IsReady => isReady;
 
@@ -80,6 +81,7 @@ public class GameManger : Singleton<GameManger>
         //? neu KO PHAI la scene thirdperson || testing thirdPerson => return
         //if(!CheckSpawnerScene.IsInGameScene()) return;
         if(CheckSpawnerScene.IsInMenuScene()) return;
+        
         CountDownTime();
         if(isReady) Timer();
         
@@ -137,6 +139,7 @@ public class GameManger : Singleton<GameManger>
             results_UI.SetActive(true);// hien bang ket qua trong match
             ShowResultsInGame();
             Freeze(); // stop game khi het gio
+            Time.timeScale = 0;
         }
 
         // timer run realTime

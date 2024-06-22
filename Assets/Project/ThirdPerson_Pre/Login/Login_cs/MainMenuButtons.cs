@@ -24,6 +24,10 @@ public class MainMenuButtons : MonoBehaviour
     [SerializeField] PlayFabLoginManager playFabLoginManager;
     [SerializeField] Button RegisterButton; // nut dang ky sau khi nhap mail va pass
     [SerializeField] Button LoadLoginScreen; // load Login_Scene - button at ResgisterScreen (mainMenuScene)
+
+    [Header("Sound")]
+    PlaySoundOnMenuScenes playSoundOnMainMenu;
+
     private void Awake() {
         LoginButton.onClick.AddListener(LoginButton_OnClicked);
         ResumeButton.onClick.AddListener(ResumeButton_OnClicked);
@@ -34,6 +38,8 @@ public class MainMenuButtons : MonoBehaviour
 
         ////LoadLoginScreen.onClick.AddListener(TestLoadingScene.Instance.Load_Login_Scene); // sau khi dang ki chuyen scene de Login
         LoadLoginScreen.onClick.AddListener(LoginScreenButton_Onclicked);
+
+        playFabLoginManager = GetComponent<PlayFabLoginManager>();
     }
 
     private void Start() {
@@ -63,8 +69,9 @@ public class MainMenuButtons : MonoBehaviour
     //? Button OnCliked in Canvas MainMenu scene
     //void LoginButton_OnClicked() => TestLoadingScene.Instance.Load_Login_Scene();
     void LoginButton_OnClicked() {
-        //TestLoadingScene.Instance.LoadScene(TestLoadingScene.Login_Scene);
+        ////TestLoadingScene.Instance.LoadScene(TestLoadingScene.Login_Scene);
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Login);
+
     }
 
     void ResumeButton_OnClicked() {
@@ -91,8 +98,9 @@ public class MainMenuButtons : MonoBehaviour
     }
 
     void LoginScreenButton_Onclicked() {
-        //TestLoadingScene.Instance.LoadScene(TestLoadingScene.Login_Scene); // di den login_Scene
+        ////TestLoadingScene.Instance.LoadScene(TestLoadingScene.Login_Scene); // di den login_Scene
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Login); // truyen vao tham so kieu enume
+
     }
 
     
