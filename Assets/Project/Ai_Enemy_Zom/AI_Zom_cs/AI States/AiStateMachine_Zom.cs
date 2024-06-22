@@ -30,6 +30,7 @@ public class AiStateMachine_zom
     public void Update() {
         GetState(currentState)?.Update(agent_zom);
     }
+
     public void ChangeState(AiStateID_Zom newState) {
         GetState(newState)?.Exit(agent_zom);
         currentState = newState;
@@ -38,4 +39,8 @@ public class AiStateMachine_zom
             GetState(currentState).Enter(agent);
         } */
     }
+
+
+    
+    //todo
 }

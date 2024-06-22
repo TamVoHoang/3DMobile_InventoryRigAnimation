@@ -33498,7 +33498,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7592436af30d1a543ba59b65e1e24fda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intialState: 2
+  intialState: 4
   navMeshAgent: {fileID: 0}
   configZombie: {fileID: 11400000, guid: 88da53ec4e794c14fbd1f90a39a41441, type: 2}
   ragdoll: {fileID: 0}
@@ -33508,6 +33508,8 @@ MonoBehaviour:
   aiSensor: {fileID: 0}
   aiTargetingSystem: {fileID: 0}
   health: {fileID: 0}
+  min: {x: 0, y: 0, z: 0}
+  max: {x: 0, y: 0, z: 0}
 --- !u!114 &1761254993289495296
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -18,10 +18,20 @@ public class AiAgent : MonoBehaviour
     public AiSensor aiSensor;
     public AiTargetingSystem aiTargetingSystem;
     public AiHealth health;
-    
+
+    //vector min max -> enemy se spawn random tren 2 diem nay 
+    [SerializeField] Vector3 min, max;
+    public Vector3 Min{get{return min;}}
+    public Vector3 Max{get{return max;}}
+
+    private void Awake() {
+        min = this.transform.position + new Vector3(-25f, 0, -25);
+        max = this.transform.position + new Vector3(25f, 0, 25);
+    }
 
     void Start()
     {
+        
         ragdoll = GetComponent<AiRagdoll>();
         aiUIHealthBar = GetComponentInChildren<AiUIHealthBar>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -46,6 +56,7 @@ public class AiAgent : MonoBehaviour
         stateMachine.ChangeState(intialState); // AiStateID.intialState
         Debug.Log("so states trong AiStateID enum = " 
             + stateMachine.numStates_AiStateID);
+
     }
 
     void Update()

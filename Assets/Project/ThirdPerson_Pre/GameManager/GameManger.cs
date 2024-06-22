@@ -33,13 +33,14 @@ public class GameManger : Singleton<GameManger>
     [SerializeField] private GameObject results_UI;
     [SerializeField] TextMeshProUGUI killedCount;
     [SerializeField] TextMeshProUGUI deathCount;
-    private int killedCountTemp = 0;
+    private int killedCountTemp = 0; // bien luu tam trong 1 lan choi
     public void SetKilledCount(int killed) => killedCountTemp += killed;
 
     [Header("Enemy Spawner")]
-    // [SerializeField] AiAgent aiAgent;
-    // [SerializeField] AiAgent_zom aiAgent_Zom;
+    /* [SerializeField] AiAgent aiAgent;
+    [SerializeField] AiAgent_zom aiAgent_Zom; */
     [SerializeField] GameObject[] aiSpawned;
+    [SerializeField] GameObject[] itemsPickup_AiGunner;
     bool isSpawned = false;
 
     protected override void Awake() {
@@ -164,17 +165,27 @@ public class GameManger : Singleton<GameManger>
     IEnumerator AiSpawnerCountine() {
         while (true)
         {
-            yield return new WaitForSeconds(20f);
+            int randomTime = Random.Range(10, 20);
+            yield return new WaitForSeconds(randomTime);
             WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
-            //Instantiate(aiAgent_Zom, worldBounds.RandomPosition(), Quaternion.identity);
+            ////Instantiate(aiAgent_Zom, worldBounds.RandomPosition(), Quaternion.identity);
 
-            // spawn random trong mang chua 3 loai AI
+            //? spawn random trong mang chua 3 loai AI
             if(worldBounds != null) {
-                Instantiate(aiSpawned[Random.Range(0, aiSpawned.Length)], worldBounds.RandomPosition(), Quaternion.identity); 
+                //radom vi tri ai theo wordbound object
+                /* Instantiate(aiSpawned[Random.Range(0, aiSpawned.Length)], worldBounds.RandomPosition(), Quaternion.identity); */
+
+                int randomNum = Random.Range(0, aiSpawned.Length);
+                Instantiate(aiSpawned[randomNum], worldBounds.RandomPosition_AroundPlayer(), Quaternion.identity);
+
+                // if gunner ai (ai can trang bi sung) => spawn ai + gun
+                if(randomNum == 0) {
+                    for (int i = 0; i < itemsPickup_AiGunner.Length; i++)
+                        Instantiate(itemsPickup_AiGunner[i], worldBounds.RandomPosition_AroundPlayer(), Quaternion.identity);
+                }
             }
         }
     }
-
 
     //? se luu khi het gio + bang ket qua hien len
     public void LoadMainMenuScene_BackButtonInResultPanel() {
@@ -185,7 +196,7 @@ public class GameManger : Singleton<GameManger>
         loadDataTo_IDataPersistence.SaveData_BeforeOutOfGame();
         yield return new WaitForSeconds(time);
         Time.timeScale = 0f; //todo free game
-        //SceneManager.LoadSceneAsync("MainMenu");
+        ////SceneManager.LoadSceneAsync("MainMenu");
     }
 
     //todo

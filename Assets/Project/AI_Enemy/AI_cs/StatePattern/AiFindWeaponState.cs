@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class AiFindWeaponState : AiState
@@ -42,21 +43,18 @@ public class AiFindWeaponState : AiState
             Debug.Log("RandomPosition() AiFindWeapon State");
             WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
 
-            /* Vector3 min = worldBounds.min.position;
-            Vector3 max = worldBounds.max.position;
-            Vector3 randomPostion = new Vector3 (
-                Random.Range(min.x, max.x),
-                Random.Range(min.y, max.y),
-                Random.Range(min.z, max.z)
-            ); */
+            // random theo transform worldBound.cs object _ Old version
+            /* agent.navMeshAgent.destination = worldBounds.RandomPosition(); */
 
-            agent.navMeshAgent.destination = worldBounds.RandomPosition();
+            // random theo vector min max co san tren aiagen duoc khai bao mac dinh
+            agent.navMeshAgent.destination = worldBounds.RandomPosition_AroundAi(agent.Min, agent.Max);
         }
         if(agent.weapons.Count() == 2) agent.stateMachine.ChangeState(AiStateID.FindTarget);
 
+        // tim thay 1 sung la tan cong | ko can tim 2 sung ( nhung phai la sung smg)
+        /* if(agent.weapons.Count() == 1) agent.stateMachine.ChangeState(AiStateID.AttackPlayer); */
 
-        ////if(agent.weapons.Count() == 1) agent.stateMachine.ChangeState(AiStateID.AttackPlayer);
-        //? OPTION: tim du 2 sung va tan cong || tim kieu ep toa do ngay lap tuc
+        //? OPTION: tim du 2 sung va tan cong || tim kieu ep toa do Player vao ngay lap tuc ngay lap tuc => ko tim theo random quet sensor
         /* if(agent.weapons.Count() == 2) agent.stateMachine.ChangeState(AiStateID.AttackPlayer);
         else {
             WeaponPickup pickup = FindClosestWeapon(agent);

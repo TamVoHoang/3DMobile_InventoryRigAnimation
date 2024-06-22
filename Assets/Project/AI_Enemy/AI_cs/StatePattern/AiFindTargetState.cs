@@ -17,7 +17,12 @@ public class AiFindTargetState : AiState
         if(!agent.navMeshAgent.hasPath) {
             Debug.Log("Dang generate min max AiFindWeapon State");
             WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
-            agent.navMeshAgent.destination = worldBounds.RandomPosition();
+
+            // random theo transform worldBound object _ Old version
+            /* agent.navMeshAgent.destination = worldBounds.RandomPosition(); */
+
+            // random theo vector min max co san tren aiagen duoc khai bao mac dinh
+            agent.navMeshAgent.destination = worldBounds.RandomPosition_AroundAi(agent.Min, agent.Max);
         }
         if(agent.aiTargetingSystem.HasTarget) {
             agent.stateMachine.ChangeState(AiStateID.AttackTarget); //? khi sensor detect thay hasTarget | thay cham vang

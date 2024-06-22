@@ -35,7 +35,11 @@ public class AiFindHealthState : AiState
             Debug.Log("RandomPosition() AiFindWeapon State");
             WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
 
-            agent.navMeshAgent.destination = worldBounds.RandomPosition();
+            // random theo transform worldBound object _ Old version
+            /* agent.navMeshAgent.destination = worldBounds.RandomPosition(); */
+
+            // random theo vector min max co san tren aiagen duoc khai bao mac dinh
+            agent.navMeshAgent.destination = worldBounds.RandomPosition_AroundAi(agent.Min, agent.Max);
         }
 
         if(!agent.health.IsLowHealth()) agent.stateMachine.ChangeState(AiStateID.FindTarget);

@@ -13382,6 +13382,7 @@ MonoBehaviour:
   isDead: 0
   maxHealth: 150
   currentHealth: 0
+  delayTimeToDestroyAfterDeath: 5
 --- !u!114 &2374514659935133206
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13394,7 +13395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e565d363a2f579d4cb7b06da306ec3bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  intialState: 2
+  intialState: 3
   navMeshAgent: {fileID: 0}
   config: {fileID: 11400000, guid: d01a3be13b02b1e40963b9b4f76e6278, type: 2}
   ragdoll: {fileID: 0}
@@ -13404,6 +13405,8 @@ MonoBehaviour:
   aiSensor: {fileID: 0}
   aiTargetingSystem: {fileID: 0}
   health: {fileID: 0}
+  min: {x: 0, y: 0, z: 0}
+  max: {x: 0, y: 0, z: 0}
 --- !u!114 &7640079788500547781
 MonoBehaviour:
   m_ObjectHideFlags: 0

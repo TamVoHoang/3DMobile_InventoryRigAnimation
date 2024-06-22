@@ -17,7 +17,21 @@ public class AiAgent_zom : MonoBehaviour
     public AiSensor aiSensor;
     public AiTargetingSystem aiTargetingSystem;
     public AiHealth_zom health;
+
+    //vector min max -> enemy se spawn random tren 2 diem nay 
+    [SerializeField] Vector3 min, max;
+    public Vector3 Min{get{return min;}}
+    public Vector3 Max{get{return max;}}
+    public float timer;
+
+    private void Awake() {
+        min = this.transform.position + new Vector3(-15f, 0, -15);
+        max = this.transform.position + new Vector3(15f, 0, 15);
+        timer = 0f;
+    }
+
     private void Start() {
+
         ragdoll = GetComponent<AiRagdoll>();
         aiUIHealthBar = GetComponentInChildren<AiUIHealthBar>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -51,6 +65,8 @@ public class AiAgent_zom : MonoBehaviour
 
         if(CheckSpawnerScene.IsInMenuScene()) return;
         stateMachine_zom.Update();
-        
     }
+    
+    public void DesTroyOnSelfe() => Destroy(this.gameObject);
+    
 }
