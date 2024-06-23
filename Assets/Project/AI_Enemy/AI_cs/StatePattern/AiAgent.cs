@@ -24,6 +24,7 @@ public class AiAgent : MonoBehaviour
     public Vector3 Min{get{return min;}}
     public Vector3 Max{get{return max;}}
 
+
     private void Awake() {
         min = this.transform.position + new Vector3(-25f, 0, -25);
         max = this.transform.position + new Vector3(25f, 0, 25);
@@ -31,7 +32,6 @@ public class AiAgent : MonoBehaviour
 
     void Start()
     {
-        
         ragdoll = GetComponent<AiRagdoll>();
         aiUIHealthBar = GetComponentInChildren<AiUIHealthBar>();
         navMeshAgent = GetComponent<NavMeshAgent>();
@@ -88,6 +88,7 @@ public class AiAgent : MonoBehaviour
     IEnumerator DelayTime(float time) {
         yield return new WaitForSeconds(time);
     } */
+
 
     //todo
 }

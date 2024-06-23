@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Rendering;
 
 public class AiAgent_zom : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class AiAgent_zom : MonoBehaviour
     public Vector3 Min{get{return min;}}
     public Vector3 Max{get{return max;}}
     public float timer;
+
+    AudioSource audioSource;
+    [SerializeField] AudioClip audioClip;
 
     private void Awake() {
         min = this.transform.position + new Vector3(-15f, 0, -15);
@@ -52,6 +56,8 @@ public class AiAgent_zom : MonoBehaviour
         stateMachine_zom.ChangeState(intialState); // AiStateID.intialState
         Debug.Log("so states trong AiStateID enum = " 
             + stateMachine_zom.numStates_AiStateID_zom);
+
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void Update() {
@@ -69,4 +75,8 @@ public class AiAgent_zom : MonoBehaviour
     
     public void DesTroyOnSelfe() => Destroy(this.gameObject);
     
+    // sound
+    public void PlaySound() {
+        audioSource.PlayOneShot(audioClip, 1);
+    }
 }

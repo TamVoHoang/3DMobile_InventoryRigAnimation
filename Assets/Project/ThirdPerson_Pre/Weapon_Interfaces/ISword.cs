@@ -16,7 +16,9 @@ public class ISword : MonoBehaviour, IWeapon
     }
     public void Attack() {
         Debug.Log("Attack() ISword.cs called by ActiveWeapon.cs through IWeapon.cs");
-        //CheckSword(this.gameObject.transform, transform.position); // transfom cua kiem, vector3 cua kiem - this.gameobject;
+        ////CheckSword(this.gameObject.transform, transform.position); // transfom cua kiem, vector3 cua kiem - this.gameobject;
+
+
     }
 
     //? tao ra raycast tren cay kiem de take damage enemy

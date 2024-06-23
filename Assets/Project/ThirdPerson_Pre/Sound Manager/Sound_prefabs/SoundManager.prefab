@@ -45,8 +45,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90830af5f75fd5841ab62349c45a17e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundLists:
-  - {fileID: 8300000, guid: a29ae62b133771d419bbe45a45c668c6, type: 3}
+  soundList:
+  - name: FootStep
+    sounds: []
+  - name: Jump
+    sounds: []
+  - name: Land
+    sounds: []
+  - name: ISword_Green02
+    sounds: []
+  - name: ISword_Red01
+    sounds: []
+  - name: PistolGun
+    sounds: []
+  - name: MSGGun
+    sounds: []
 --- !u!82 &6757262007202812776
 AudioSource:
   m_ObjectHideFlags: 0

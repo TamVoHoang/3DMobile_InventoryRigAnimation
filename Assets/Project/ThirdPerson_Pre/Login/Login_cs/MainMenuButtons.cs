@@ -25,9 +25,6 @@ public class MainMenuButtons : MonoBehaviour
     [SerializeField] Button RegisterButton; // nut dang ky sau khi nhap mail va pass
     [SerializeField] Button LoadLoginScreen; // load Login_Scene - button at ResgisterScreen (mainMenuScene)
 
-    [Header("Sound")]
-    PlaySoundOnMenuScenes playSoundOnMainMenu;
-
     private void Awake() {
         LoginButton.onClick.AddListener(LoginButton_OnClicked);
         ResumeButton.onClick.AddListener(ResumeButton_OnClicked);

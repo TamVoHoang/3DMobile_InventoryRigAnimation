@@ -64,6 +64,9 @@ public class ActiveGun : Singleton<ActiveGun>
         if(weapon) {
             if(InputManager.Instance.IsAttackButton && !weapon.IsFiring & canFire) {
                 weapon.StartFiring();
+
+                // sound
+                SoundManager.Instance.PlaySound(SoundType.PistolGun, 1);
             }
                 
             if((!InputManager.Instance.IsAttackButton && weapon.IsFiring) || !canFire) {

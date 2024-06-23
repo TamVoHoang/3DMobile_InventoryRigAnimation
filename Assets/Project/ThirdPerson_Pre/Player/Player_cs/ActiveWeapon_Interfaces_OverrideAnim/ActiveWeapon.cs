@@ -102,6 +102,9 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     private void AttackCurrentWeapon() {
         if(InputManager.Instance.IsAttackButton && !isAttacking && currenActiveWeapon && ActiveGun.Instance.IsHolstered) {
             isAttacking = true;
+
+            // sound
+            SoundManager.Instance.PlaySound(SoundType.ISword_Green02, 1);
             ////StopAllCoroutines(); // dang test
             AttackCoolDown();
             (currenActiveWeapon as IWeapon).Attack();

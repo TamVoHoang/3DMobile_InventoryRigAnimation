@@ -12,6 +12,9 @@ public class AiAttackTargetState_zom : AiState_Zom
     }
     public void Update(AiAgent_zom agent) {
         Debug.Log("zombie dang vao Attack");
+
+        agent.PlaySound();
+
         if(agent.health.IsDead) return;
 
         if(agent.playerTransform.GetComponent<PlayerHealth>().IsDead) {
