@@ -15,7 +15,6 @@ public class Item
         Sword_iron,
         Sword_gold,
 
-
         Helmet_01,
         Armor_01,
         Armor_02,
@@ -42,12 +41,13 @@ public class Item
     }
     
     // todo them vao de khoi tao Json| KO DUNG DUOC do khi kiem tra Istackable(dung itemscriptableObject)
-    //public ItemType itemType; // test thu
-
-    public ItemScriptableObject itemScriptableObject;
+    //public string guid;
+    public ItemType itemType; // dung doi tuong nay de luu playfab - khi load ve se dung dao nguoc lai item
     public int amount = 1;
+    public ItemScriptableObject itemScriptableObject; // GUID
+
     private IItemHolder itemHolder;
-    public bool isSplited; //! them vao
+    public bool isSplited; //! them vao truong hop double click chia doi amout - khi crafting
 
     public void SetItemHolder(IItemHolder itemHolder) {
         this.itemHolder = itemHolder;
@@ -102,11 +102,9 @@ public class Item
             case ItemType.Sword_iron:           return ItemAssets.Instance.swordSprite_iron;
             case ItemType.Sword_gold:           return ItemAssets.Instance.swordSprite_gold;
 
-
             case ItemType.Helmet_01:            return ItemAssets.Instance.helmetSprite_01;
             case ItemType.Armor_01:             return ItemAssets.Instance.armorSprite_01;
             case ItemType.Armor_02:             return ItemAssets.Instance.armorSprite_02;
-
 
             case ItemType.HealthPotion:         return ItemAssets.Instance.healthPotionSprite;
             case ItemType.ManaPotion:           return ItemAssets.Instance.manaPotionSprite;
@@ -126,7 +124,6 @@ public class Item
 
             case ItemType.IMagPistol3D_01:      return ItemAssets.Instance.IMagPistol3D_01; //todo IWeapon
             case ItemType.IHealthPickup3D_01:   return ItemAssets.Instance.IHealthPickup3D_01; //todo IWeapon
-
 
         }
     }
@@ -176,18 +173,38 @@ public class Item
             case ItemType.GunSMG3D_01:      return ItemAssets.Instance.gunSMGPrefab3D_01;
             case ItemType.GunPistol3D_01:   return ItemAssets.Instance.gunPistolPrefab3D_01;
 
-            case ItemType.IHand:            return ItemAssets.Instance.IHandPrefab;             //todo IWeapon
-            case ItemType.ISword_Red_01:    return ItemAssets.Instance.ISword_Prefab3D_Red01;   //todo IWeapon
-            case ItemType.ISword_Green_02:  return ItemAssets.Instance.ISword_Prefab3D_Green02; //todo IWeapon
-            case ItemType.IMagPistol3D_01:  return ItemAssets.Instance.IMagPistolPrefab3D_01;   //todo IWeapon
-            case ItemType.IHealthPickup3D_01: return ItemAssets.Instance.IHealthPickupPrefab3D_01; //todo IWeapon
+            case ItemType.IHand:            return ItemAssets.Instance.IHandPrefab;                 //todo IWeapon
+            case ItemType.ISword_Red_01:    return ItemAssets.Instance.ISword_Prefab3D_Red01;       //todo IWeapon
+            case ItemType.ISword_Green_02:  return ItemAssets.Instance.ISword_Prefab3D_Green02;     //todo IWeapon
+            case ItemType.IMagPistol3D_01:  return ItemAssets.Instance.IMagPistolPrefab3D_01;       //todo IWeapon
+            case ItemType.IHealthPickup3D_01: return ItemAssets.Instance.IHealthPickupPrefab3D_01;  //todo IWeapon
 
 
         }
     }
 
+    public ItemScriptableObject GetScriptableObject() {
+        return GetScriptableObject(itemType);
+    }
+
+    public ItemScriptableObject GetScriptableObject(ItemType itemType) {
+        switch (itemType) {
+            default:
+            case ItemType.GunSMG3D_01:          return ItemAssets.Instance.SO_SMG01_3D_01;
+            case ItemType.GunPistol3D_01:       return ItemAssets.Instance.SO_Pistol01_3D_01;
+
+            case ItemType.ISword_Red_01:        return ItemAssets.Instance.SO_ISword_01;        //todo IWeapon
+            case ItemType.ISword_Green_02:      return ItemAssets.Instance.SO_ISword_02;        //todo IWeapon
+
+            case ItemType.IMagPistol3D_01:      return ItemAssets.Instance.SO_IMagPistol_01;    //todo IWeapon
+            case ItemType.IHealthPickup3D_01:   return ItemAssets.Instance.SO_IHealthPickup_01; //todo IWeapon
+        }
+    }
 
     //todo loai vat pham nao co the duoc cong don
+    public bool IsStackable_() {
+        return IsStackable(itemType);
+    }
     public bool IsStackable() {
         //return true;
         return IsStackable(itemScriptableObject.itemType); // OK dung itemScriptable de kiem tra itemType

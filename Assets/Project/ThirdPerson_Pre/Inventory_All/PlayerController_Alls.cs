@@ -39,6 +39,7 @@ public class PlayerController_Alls : MonoBehaviour, IData_InventoryPersistence
             // if(item.IsStackable()) this.inventory_Alls.AddItem(item);
             // if(!item.IsStackable()) this.inventory_Alls.AddItemEquipment(item);
 
+            item.itemScriptableObject = item.GetScriptableObject();
             this.inventory_Alls.AddItemEquipment(item);
         }
     }

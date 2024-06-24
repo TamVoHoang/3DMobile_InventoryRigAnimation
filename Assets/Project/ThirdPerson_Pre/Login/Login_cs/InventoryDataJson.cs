@@ -22,7 +22,7 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
     public InventoryJson inventoryJson; //! phai de public - do IventoryJson dang [Serializable]
     //public Item item;
 
-    [Header("Item.ScriptableObjects")]
+    [Header("       Item.ScriptableObjects")]
     [SerializeField] ItemScriptableObject IHealthPickup_01;
     [SerializeField] ItemScriptableObject IMagPistol_01;
 
@@ -42,7 +42,7 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
     }
 
     private void CreateNewItemListJson_ToSignUp(ItemScriptableObject ItemS, int amount) {
-        var item = new Item {itemScriptableObject = ItemS, amount = amount};
+        var item = new Item {itemType = ItemS.itemType, amount = amount};
         inventoryJson.itemsListJson.Add(item);
     }
 
@@ -51,7 +51,7 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
         CreateNewItemListJson_ToSignUp(Pistol01_3D_01, 1);
         CreateNewItemListJson_ToSignUp(IHealthPickup_01, 3);
         CreateNewItemListJson_ToSignUp(IMagPistol_01, 3);
-        return new InventoryJson("itemInventory", inventoryJson.itemsListJson);
+        return new InventoryJson("ItemInventory", inventoryJson.itemsListJson);
     }
 
     //? SAVE inventoryJson SIGNUP

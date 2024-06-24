@@ -42,6 +42,10 @@ public class GameManger : Singleton<GameManger>
     [SerializeField] AiAgent_zom aiAgent_Zom; */
     [SerializeField] GameObject[] aiSpawned;
     [SerializeField] GameObject[] itemsPickup_AiGunner;
+    [SerializeField] int minTimeToSpawnEnemy = 10;
+    [SerializeField] int maxTimeToSpawnEnemy = 20;
+
+
     bool isSpawned = false;
 
     protected override void Awake() {
@@ -168,7 +172,7 @@ public class GameManger : Singleton<GameManger>
     IEnumerator AiSpawnerCountine() {
         while (true)
         {
-            int randomTime = Random.Range(10, 20);
+            int randomTime = Random.Range(minTimeToSpawnEnemy, maxTimeToSpawnEnemy);
             yield return new WaitForSeconds(randomTime);
             WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
             ////Instantiate(aiAgent_Zom, worldBounds.RandomPosition(), Quaternion.identity);

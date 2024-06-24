@@ -236,9 +236,17 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
     {
         foreach (var item in inventoryJson.itemsListJson)
         {
+            // set SO in item
+            item.itemScriptableObject = item.GetScriptableObject(); // using itemType -> get SO from ItemAsset.cs
+
             if(item.IsStackable()) this.inventory.AddItem(item);
             if(!item.IsStackable()) this.inventoryEquipment.AddItemEquipment(item);
         }
+    }
+
+    // ham chuyen doi item trong inventory -> thanh item (chi co itemType va amount) nhu khi sign up
+    Item Check(Item _item) {
+        return new Item {itemType = _item.itemScriptableObject.itemType, amount = _item.amount};
     }
 
     public void Save_InventoryData(ref InventoryJson inventoryJson) {
@@ -252,27 +260,28 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
                     break;
                 }
             }
-            if(isUnique) inventoryJson.itemsListJson.Add(item);
+
+            // chi lau item type va amount de luu vao itemsListJson
+            if(isUnique) inventoryJson.itemsListJson.Add(Check(item));
         }
 
         //? save inventory equip !IsStackable() - dragdrop.
         foreach (var item in this.inventoryEquipment.GetItemList()) {
-            inventoryJson.itemsListJson.Add(item);
+            inventoryJson.itemsListJson.Add(Check(item));
         }
 
         foreach (var item in characterEquipment.GetEquippedItemsList)
         {
-            inventoryJson.itemsListJson.Add(item);
+            inventoryJson.itemsListJson.Add(Check(item));
         }
-
     }
     #endregion Idata_InventoryPersistence
 
     private bool ArePropertiesEqual(Item item1, Item item2) {
         // Compare properties here, return true if they are equal, otherwise false
-        return item1.itemScriptableObject.itemType == item2.itemScriptableObject.itemType &&
+        return item1.itemType == item2.itemType &&
                 item1.amount == item2.amount &&
-                item1.IsStackable() && item2.IsStackable();
+                item1.IsStackable(item1.itemType) && item2.IsStackable(item2.itemType);
     }
 
     //todo

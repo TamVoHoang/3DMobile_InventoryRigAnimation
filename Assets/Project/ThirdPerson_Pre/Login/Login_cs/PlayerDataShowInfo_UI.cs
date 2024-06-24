@@ -95,7 +95,7 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
 
 
     void StartGameButton_OnClicked() {
-        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.ThirdPerson);
+        //TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.ThirdPerson);
     }
     void BackMainMenuButton_OnClicked() {
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
