@@ -33,7 +33,8 @@ public class ItemWorld3D : MonoBehaviour
 
     }
     private void Start() {
-        
+        // khi xuat hien tren map, se destroy sau khoang thoi gian nhat dinh
+        Destroy(this.gameObject, 15);
     }
 
     //todo thay doi thuoc tinh cua loai vat pham duoc SpawnItemWorld(Vector3 pos, Item item)

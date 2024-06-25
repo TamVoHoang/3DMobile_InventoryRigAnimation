@@ -38,7 +38,7 @@ public class UICanvas_GameScene : MonoBehaviour
 
     private void BackButtonToMainMenu_OnClicked()
     {
-        ////if(!TryGetComponent<LoadDataTo_IDataPersistence>(out LoadDataTo_IDataPersistence loadDataTo_IDataPersistence)) return;
+        /* if(!TryGetComponent<LoadDataTo_IDataPersistence>(out LoadDataTo_IDataPersistence loadDataTo_IDataPersistence)) return; */
         StartCoroutine(DelayTimeSave_ToExitGame(0.3f));
     }
 
@@ -64,8 +64,8 @@ public class UICanvas_GameScene : MonoBehaviour
         LoadDataTo_IDataPersistence.Instance.SaveData_BeforeOutOfGame();
         
         yield return new WaitForSeconds(time);
-        //Time.timeScale = 0f; //todo free game
-        //SceneManager.LoadSceneAsync("MainMenu"); // kieu nao cung phai quay ve main menu
+        /* Time.timeScale = 0f; //todo free game
+        SceneManager.LoadSceneAsync("MainMenu"); // kieu nao cung phai quay ve main menu */
 
         TestLoadingScene.Instance.SetCurrentScene(); // set currentSceneIndex in TestLoadingScene.cs
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu); // quay ve MainMenu Scene

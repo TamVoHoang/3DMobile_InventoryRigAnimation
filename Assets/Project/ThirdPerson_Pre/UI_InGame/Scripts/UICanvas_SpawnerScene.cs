@@ -7,20 +7,25 @@ using UnityEngine.UI;
 
 public class UICanvas_SpawnerScene : MonoBehaviour
 {
+    [Header("   Buttons")]
     [SerializeField] Button BackToMainMenuBtton;
     [SerializeField] Button StartGame;
     [SerializeField] Button JoinGameButton_1; // nut chon map trong UI canvas in game - level select
     [SerializeField] Button JoinGameButton_2;
     [SerializeField] Button JoinGameButton_3;
 
-    
+    [Header("   Buttons Change Skins")]
     [SerializeField] Button ChangeNextSkinsButton;
     [SerializeField] Button ChangePreviousSkinsButton;
 
+    [Header("   Level Map Selection")]
     [SerializeField] GameObject SelectMapPanel;
-    [SerializeField] int mapSelectIndex;
-    [SerializeField] Transform mapSelectTranform;   // gameobject = content in scroll view| transform chua cac button select map
     [SerializeField] GameObject[] maps;
+    
+    [SerializeField] Transform mapSelectTranform;   // gameobject = content in scroll view| transform chua cac button select map
+    [SerializeField] int mapSelectIndex;
+
+
     private void Awake() {
         StartGame.onClick.AddListener(OnGameStart);
         JoinGameButton_1.onClick.AddListener(JoinGameButton_1_OnClick);

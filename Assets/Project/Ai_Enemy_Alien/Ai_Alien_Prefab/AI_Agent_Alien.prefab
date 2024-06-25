@@ -4142,7 +4142,6 @@ MonoBehaviour:
   min: {x: 0, y: 0, z: 0}
   max: {x: 0, y: 0, z: 0}
   timer: 0
-  audioClip: {fileID: 8300000, guid: 386878de661a6974a8cf99bb35804e13, type: 3}
 --- !u!114 &5275904354016416252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4158,6 +4157,7 @@ MonoBehaviour:
   rightHand_SpawnRaycast: {fileID: 508516330595948180}
   leftHand_SpawnRaycast: {fileID: 8267896631789430230}
   minSwordDisRaycast: 0.8
+  audioClip: {fileID: 8300000, guid: 386878de661a6974a8cf99bb35804e13, type: 3}
 --- !u!54 &4144904618536862170
 Rigidbody:
   m_ObjectHideFlags: 0

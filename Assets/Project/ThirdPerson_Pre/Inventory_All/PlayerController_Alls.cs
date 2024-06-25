@@ -1,4 +1,3 @@
-using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 
 public class PlayerController_Alls : MonoBehaviour, IData_InventoryPersistence
@@ -36,8 +35,8 @@ public class PlayerController_Alls : MonoBehaviour, IData_InventoryPersistence
         //manul load data from inventoryJson -> this is loaded
         foreach (var item in inventoryJson.itemsListJson)
         {
-            // if(item.IsStackable()) this.inventory_Alls.AddItem(item);
-            // if(!item.IsStackable()) this.inventory_Alls.AddItemEquipment(item);
+            /* if(item.IsStackable()) this.inventory_Alls.AddItem(item);
+            if(!item.IsStackable()) this.inventory_Alls.AddItemEquipment(item); */
 
             item.itemScriptableObject = item.GetScriptableObject();
             this.inventory_Alls.AddItemEquipment(item);

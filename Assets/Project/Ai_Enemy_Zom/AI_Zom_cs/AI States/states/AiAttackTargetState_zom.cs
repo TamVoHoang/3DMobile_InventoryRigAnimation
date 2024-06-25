@@ -13,14 +13,12 @@ public class AiAttackTargetState_zom : AiState_Zom
     public void Update(AiAgent_zom agent) {
         Debug.Log("zombie dang vao Attack");
 
-        agent.PlaySound();
-
         if(agent.health.IsDead) return;
 
         if(agent.playerTransform.GetComponent<PlayerHealth>().IsDead) {
 
             //? neu player die va ko respawn - co the dung tai day
-            //agent.stateMachine.ChangeState(AiStateID.Idle);
+            /* agent.stateMachine_zom.ChangeState(AiStateID_Zom.Idle); */
 
             //? neu player die - song lai - thi dung dong nay
             agent.stateMachine_zom.ChangeState(AiStateID_Zom.FindTarget);// move den vi tri player

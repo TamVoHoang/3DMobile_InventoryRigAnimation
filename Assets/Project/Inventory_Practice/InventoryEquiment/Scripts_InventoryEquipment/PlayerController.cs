@@ -160,30 +160,33 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
     private void OnTriggerEnter(Collider other) {
         //! pickup kieu ItemWorld3D chi lay vu khi vao ban cam ung
         ItemWorld3D itemWorld3DEquipment = other.GetComponent<ItemWorld3D>();
-        if(itemWorld3DEquipment != null) {
-            Debug.Log("co cham item3D");
-            
+        if(itemWorld3DEquipment != null ) {
+            Debug.Log("touched item3D");
+
+            // check luong item dang co trong inventoryEquipement (loai inventory chua equiped Items)
+            int equipedItemAmount = inventoryEquipment.GetItemList().Count;
+
             //? add itemWorld3D vao trong scrollViewInventory pickup
-            //inventory_scroll.AddItem(itemWorld3DEquipment.GetItem());
-
+            /* inventory_scroll.AddItem(itemWorld3DEquipment.GetItem()); */
             //? add thang truc tiep vao trong weaponEquipment_UI
-            //inventoryEquipment.AddItemEquipment(itemWorld3DEquipment.GetItem());
-
+            /* inventoryEquipment.AddItemEquipment(itemWorld3DEquipment.GetItem()); */
             //? xoa itemworld3d sau khi bo vao inventory
-            //itemWorld3DEquipment.DestroySelf();
+            /* itemWorld3DEquipment.DestroySelf(); */
 
             if(itemWorld3DEquipment.GetItem().IsStackable()) {
                 inventory.AddItem(itemWorld3DEquipment.GetItem());
                 itemWorld3DEquipment.DestroySelf();
             }
-            else {
-                //EquipOrAddToInventoryEquipmentList(itemWorld3DEquipment); //! KHI PICKIP DO VAT GAN LIEN TUC BO OVER ANIMATION => 1 TAY 2 VU KHI
-                
+            else if(!itemWorld3DEquipment.GetItem().IsStackable() && equipedItemAmount < itemSlotAmount) {
+                // khi pickup va trang bi ngay lap tuc len player - se bi over animation - khi khoang cach item qua gan
+                // trong khi animation equip item 1 -> co the se lai animation equip item 2
+                // => 1 tay 2 loai vu khi => su dung delay time eqiped item
                 if(!isPicked) {
                     isPicked = true;
                     StartCoroutine(PickupDelay_Countine(0.7f, itemWorld3DEquipment));
                 } else {
-                    inventoryEquipment.AddItemEquipment(itemWorld3DEquipment.GetItem()); // trong thoi gian cho isPickup set false -> add thang vao kho
+                    // trong thoi gian cho isPickup set false (dang thuc hien equip aniamtion) -> item add thang vao kho
+                    inventoryEquipment.AddItemEquipment(itemWorld3DEquipment.GetItem()); 
                 }
                 
             }
@@ -248,7 +251,6 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
     Item Check(Item _item) {
         return new Item {itemType = _item.itemScriptableObject.itemType, amount = _item.amount};
     }
-
     public void Save_InventoryData(ref InventoryJson inventoryJson) {
         inventoryJson.itemsListJson.Clear();    // xoa list itemsListJson REASON dang co gia tri khi khoi tao luc SignUp
         //? save inventory item IsStackable().

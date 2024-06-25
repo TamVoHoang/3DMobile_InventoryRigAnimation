@@ -11,11 +11,17 @@ public class AiWeapons_zom : MonoBehaviour
     PlayerHealth playerHealth;
 
     bool isEnemyTakeDamagePlayer;
+
+    //play sound when trigger Attack in Animator
+    AudioSource audioSource;
+    [SerializeField] AudioClip audioClip;
+
     private void Awake() {
         playerHealth = FindObjectOfType<PlayerHealth>();
     }
     private void Start() {
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
         isEnemyTakeDamagePlayer = false; // dang false = chua take => cho tru mau player
     }
 
@@ -74,5 +80,9 @@ public class AiWeapons_zom : MonoBehaviour
         isEnemyTakeDamagePlayer = false;
     }
 
-
+    // sound
+    public void PlaySound() {
+        audioSource.PlayOneShot(audioClip, 1);
+    }
+    //todo
 }

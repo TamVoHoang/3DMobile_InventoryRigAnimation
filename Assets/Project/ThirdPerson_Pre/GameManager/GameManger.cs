@@ -13,7 +13,7 @@ using UnityEngine.UI;
 
 public class GameManger : Singleton<GameManger>
 {
-    [Header ("Timer To Start")]
+    [Header ("  Timer To Start")]
     [SerializeField] private float timeLeft = 3f;
     [SerializeField] private GameObject CountDownStart_Panel;
     [SerializeField] private TextMeshProUGUI timeLeftText;
@@ -21,7 +21,7 @@ public class GameManger : Singleton<GameManger>
     private AiSetSpeed[] aiSetSpeedArr; // class chung tat ca ca loai ai agent luu tam intial speed
     private bool countDownFlag = false;
     
-    [Header ("Timer")]
+    [Header ("  Timer")]
     [SerializeField] private GameObject timerPanel;
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private float remainingTime;
@@ -29,7 +29,7 @@ public class GameManger : Singleton<GameManger>
     private bool isReady = false;
     public bool IsReady => isReady;
 
-    [Header ("Results")]
+    [Header ("  Results")]
     [SerializeField] Button BackButtonInResultPanel;
     [SerializeField] private GameObject results_UI;
     [SerializeField] TextMeshProUGUI killedCount;
@@ -37,16 +37,20 @@ public class GameManger : Singleton<GameManger>
     private int killedCountTemp = 0; // bien luu tam trong 1 lan choi
     public void SetKilledCount(int killed) => killedCountTemp += killed;
 
-    [Header("Enemy Spawner")]
+    [Header("   Enemy Spawner")]
     /* [SerializeField] AiAgent aiAgent;
     [SerializeField] AiAgent_zom aiAgent_Zom; */
-    [SerializeField] GameObject[] aiSpawned;
-    [SerializeField] GameObject[] itemsPickup_AiGunner;
+
     [SerializeField] int minTimeToSpawnEnemy = 10;
     [SerializeField] int maxTimeToSpawnEnemy = 20;
+    [SerializeField] GameObject[] spawnedAI;
+    [SerializeField] GameObject[] itemsPickup_AiGunner;
+    
+    [Header("   Player Items Spawner")]
+    [SerializeField] int minTimeToSpawnPlayerItems = 10;
+    [SerializeField] int maxTimeToSpawnPlayerItems = 20;
+    [SerializeField] GameObject[] itemsPlayer;
 
-
-    bool isSpawned = false;
 
     protected override void Awake() {
         base.Awake();
@@ -55,15 +59,7 @@ public class GameManger : Singleton<GameManger>
         aiSetSpeedArr = FindObjectsOfType<AiSetSpeed>();
 
         BackButtonInResultPanel.onClick.AddListener(BackButtonInResultPanel_OnClick);
-
-        isSpawned = false;
     }
-
-    void BackButtonInResultPanel_OnClick() {
-        Time.timeScale = 0; //todo DUNG GAME KHI QUAY VE MAIN MENU
-        results_UI.SetActive(false);
-        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
-    } 
 
     private void Start() {
         CountDownStart_Panel.SetActive(true);
@@ -71,10 +67,10 @@ public class GameManger : Singleton<GameManger>
         timerPanel.SetActive(false);
         isReady = false;
     }
+
     private void Update() {
         // spawm enemy theo delay time
         // neu ko phai la scen game (thirdPerson || testing_ThirdPerson) return
-
     }
 
     private void FixedUpdate() {
@@ -83,7 +79,7 @@ public class GameManger : Singleton<GameManger>
         if(SceneManager.GetActiveScene().name == "Testing_SpawnPlayer") return; */
 
         //? neu KO PHAI la scene thirdperson || testing thirdPerson => return
-        //if(!CheckSpawnerScene.IsInGameScene()) return;
+        /* if(!CheckSpawnerScene.IsInGameScene()) return; */
         if(CheckSpawnerScene.IsInMenuScene()) return;
         
         CountDownTime();
@@ -91,6 +87,14 @@ public class GameManger : Singleton<GameManger>
         
     }
 
+    //? Buttons Onclicked
+    void BackButtonInResultPanel_OnClick() {
+        Time.timeScale = 0; //todo DUNG GAME KHI QUAY VE MAIN MENU
+        results_UI.SetActive(false);
+        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
+    }
+
+    //? UI Countdown time
     private void CountDownTime() {
         if(timeLeft <= -5) return;
         
@@ -130,6 +134,7 @@ public class GameManger : Singleton<GameManger>
         countDownFlag = false;
 
         EnemySpawner(); // khi time count down xong thi spawn (spawn theo countine) -> khi freeze scale = 0 van chay
+        ItemsSpawner();
     }
 
     private void Timer() {
@@ -165,6 +170,7 @@ public class GameManger : Singleton<GameManger>
         LoadMainMenuScene_BackButtonInResultPanel(); // khi het gio bao ket qua => auto save
     }
 
+    //? spawner Enemy + itemPickup for Ai gun
     void EnemySpawner() {
         StartCoroutine(AiSpawnerCountine());
     }
@@ -175,24 +181,64 @@ public class GameManger : Singleton<GameManger>
             int randomTime = Random.Range(minTimeToSpawnEnemy, maxTimeToSpawnEnemy);
             yield return new WaitForSeconds(randomTime);
             WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
-            ////Instantiate(aiAgent_Zom, worldBounds.RandomPosition(), Quaternion.identity);
+
 
             //? spawn random trong mang chua 3 loai AI
             if(worldBounds != null) {
                 //radom vi tri ai theo wordbound object
                 /* Instantiate(aiSpawned[Random.Range(0, aiSpawned.Length)], worldBounds.RandomPosition(), Quaternion.identity); */
 
-                int randomNum = Random.Range(0, aiSpawned.Length);
-                Instantiate(aiSpawned[randomNum], worldBounds.RandomPosition_AroundPlayer(), Quaternion.identity);
+                int randomNum = Random.Range(0, spawnedAI.Length);
+                Instantiate(spawnedAI[randomNum], worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f), Quaternion.identity);
 
-                // if gunner ai (ai can trang bi sung) => spawn ai + gun
+                // if gunner ai i=0 (ai can trang bi sung) => spawn 2 times (ammo + health)
                 if(randomNum == 0) {
-                    for (int i = 0; i < itemsPickup_AiGunner.Length; i++)
-                        Instantiate(itemsPickup_AiGunner[i], worldBounds.RandomPosition_AroundPlayer(), Quaternion.identity);
+                    for (int i = 0; i < 2; i++)
+                    {
+                        for (int j = 0; i < itemsPickup_AiGunner.Length; i++)
+                            Instantiate(itemsPickup_AiGunner[j], worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f), Quaternion.identity);
+                    }
                 }
+
             }
         }
     }
+
+    //? spawn items for player
+    void ItemsSpawner() {
+        StartCoroutine(PlayerPickupItems_SpawnerCO());
+        StartCoroutine(PlayerWeapons_SpawnerCO());
+    }
+    IEnumerator PlayerPickupItems_SpawnerCO() {
+        while (true)
+        {
+            //yield return new WaitForSeconds(Random.Range(minTimeToSpawnPlayerItems, maxTimeToSpawnPlayerItems));
+            yield return new WaitForSeconds(15);
+
+            WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
+
+            if(worldBounds != null) {
+                for (int i = 0; i < 2; i++) {
+                    Instantiate(itemsPlayer[i], worldBounds.RandomPosition_AroundPlayer(15f, 1f, 15f), Quaternion.identity);
+                }
+                    
+            }
+        }
+    }
+
+    IEnumerator PlayerWeapons_SpawnerCO() {
+        while (true)
+        {
+            yield return new WaitForSeconds(Random.Range(50, 70));  //Random.Range(50, 70)
+            WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
+
+            if(worldBounds != null) {
+                int randomItems = Random.Range(2, itemsPlayer.Length);
+                Instantiate(itemsPlayer[randomItems], worldBounds.RandomPosition_AroundPlayer(30f, 1f, 30f), Quaternion.identity);
+            }
+        }
+    }
+
 
     //? se luu khi het gio + bang ket qua hien len
     public void LoadMainMenuScene_BackButtonInResultPanel() {

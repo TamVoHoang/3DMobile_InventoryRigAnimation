@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class WorldBounds : MonoBehaviour
 {
-    //todo Gameobject = Area object trong scene
+    //todo Gameobject = Area object TRONG SCENE
     public Transform max;   // transform minmax
     public Transform min;
 
@@ -24,10 +24,10 @@ public class WorldBounds : MonoBehaviour
         );
     }
 
-    // lay transform player offset => radom cho enemy spawn
-    public Vector3 RandomPosition_AroundPlayer() {
-        Vector3 min = playerCenter.position + new Vector3(-15, 0f, -15);
-        Vector3 max = playerCenter.position + new Vector3(15, 0f, 15);
+    // lay transform player + offset => radom posion cho enemy INSTANTIATE
+    public Vector3 RandomPosition_AroundPlayer(float x, float y, float z) {
+        Vector3 min = playerCenter.position + new Vector3(-x, y, -z);
+        Vector3 max = playerCenter.position + new Vector3(x, y, z);
 
         return new Vector3 (
             Random.Range(min.x, max.x),
@@ -36,7 +36,7 @@ public class WorldBounds : MonoBehaviour
         );
     }
 
-    // enemy random vi tri dua tren 2 vector no co san 
+    // enemy random destination (tham so 2 vector 3 Aiagent.cs) => de gioi han square ma no se chi di chuyen
     public Vector3 RandomPosition_AroundAi(Vector3 min_, Vector3 max_) {
         return new Vector3 (
             Random.Range(min_.x, max_.x),

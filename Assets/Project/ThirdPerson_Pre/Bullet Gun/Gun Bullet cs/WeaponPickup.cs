@@ -10,7 +10,9 @@ public class WeaponPickup : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         int weaponSlotIndex = (int)gunPrefab.weaponSlot; //=0
 
-        ActiveGun activeGun = other.GetComponent<ActiveGun>();
+        //todo gun pickup trigger with ActiveGun.cs - gameobject = player
+        //todo gun nay se dinh chat ko go ra khoi player
+        /* ActiveGun activeGun = other.GetComponent<ActiveGun>();
         if(activeGun)
         {
             RaycastWeapon newWeapon = Instantiate(gunPrefab, activeGun.weaponSlots[weaponSlotIndex].position,
@@ -20,8 +22,9 @@ public class WeaponPickup : MonoBehaviour
             activeGun.Equip(newWeapon);
 
             Destroy(gameObject);
-        }
+        } */
 
+        //todo gun pickup trigger with AiWeapons.cs - gameobject = ai gunner
         AiWeapons aiWeapons = other.gameObject.GetComponent<AiWeapons>();
         if(aiWeapons) {
             RaycastWeapon newWeapon = Instantiate(gunPrefab);
