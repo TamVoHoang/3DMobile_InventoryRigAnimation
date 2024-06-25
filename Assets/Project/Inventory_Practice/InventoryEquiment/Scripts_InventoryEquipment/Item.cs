@@ -209,6 +209,7 @@ public class Item
         //return true;
         return IsStackable(itemScriptableObject.itemType); // OK dung itemScriptable de kiem tra itemType
     }
+    
     public bool IsStackable(ItemType itemType) {
         switch (itemType) {
             default:

@@ -71,6 +71,11 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
         characterController.enabled = true;
     }
 
+    [SerializeField] private int levelTemp = 1;
+    [SerializeField] private int mapSelected = 0;
+    public int MapSelected{set => mapSelected = value; }
+    [SerializeField] private bool isTouchSpaceShip = false;
+
     #endregion SAVE LOAD
 
 
@@ -84,6 +89,9 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     void Start() {
         // plai co delay time - cho load data from coll 28 LoadData_IDataPersistence.cs
         StartCoroutine(SetPlayerPositionCoutine(0.3f));
+
+        levelTemp = PlayerDataJson.Instance.PlayerJson.level;
+        isTouchSpaceShip = false;
 
         SwitchState(Idle);
     }
@@ -126,8 +134,10 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
         if(SceneManager.GetActiveScene().name == "MainMenu") return;
         if(SceneManager.GetActiveScene().name == "AccountDataOverview") return;
         if(SceneManager.GetActiveScene().name == "Testing_SpawnPlayer") return;
+        if(SceneManager.GetActiveScene().name == "Login") return;
 
-        //if(!CheckSpawnerScene.IsInGameScene()) return; // neu ko la scene game thi ko chay
+
+        ////if(!CheckSpawnerScene.IsInGameScene()) return; // neu ko la scene game thi ko chay
 
         // neu dem chua xong count down thi return
         if(!GameManger.Instance.IsReady) return;
@@ -173,14 +183,34 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     public void JumpForce() => velocity.y += jumpForce;
     public void Jumped() => isJumped = true;
 
+    //? kiem tra co touch duoc vao SpaceShip 
+    private void OnTriggerEnter(Collider other) {
+        SpaceShip01 spaceShip01 = other.gameObject.GetComponent<SpaceShip01>();
+        Debug.Log("Player co cham vao space ship");
+        if(spaceShip01 && !isTouchSpaceShip && mapSelected >= levelTemp) {
+            // player touch spaceShip01 => tang gia tri level trong PlayerDataJson
+            isTouchSpaceShip = true;
+            levelTemp ++;
+            PlayerDataJson.Instance.PlayerJson.level = this.levelTemp;
+            var playerInfo_UI = GetComponentInChildren<PlayerInfo_UI>();
+            if(playerInfo_UI) playerInfo_UI.SetLevel(levelTemp);
+        }
+    }
+    
+
     #region IDataPersistence
     public void UpdateUIVisual(PlayerJson playerJson) {
         this.playerTransform = playerJson.position;
-
+        levelTemp = playerJson.level;
     }
 
     public void SavePlayerData(PlayerJson playerJson) {
+        // save position
         playerJson.position = this.playerTransform_TempSave;
+
+        // save level neu cham duoc SpaceShip
+        playerJson.level = this.levelTemp;
+
     }
     #endregion IDataPersistence
 

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 //* gameobject = UI_cnvas_PlayerInfo ben trong (Player)
 //* doi tuong chua canvas hien thi thong tin name, level, health, healthSlider, mini map
 
-public class PlayerInfo_UI : MonoBehaviour
+public class PlayerInfo_UI : MonoBehaviour, IDataPersistence
 {
 
     [SerializeField] TextMeshProUGUI userName;
@@ -38,7 +38,8 @@ public class PlayerInfo_UI : MonoBehaviour
     private void Start() {
         if(playerDataJson == null) return; //! TESTING
 
-        StartCoroutine(ShowPlayerInfo_GameUI_Countine(0.2f));
+        //? Old version - chua dung Interface de save load data thong qua list[] in LoadDataTo_IDataPersistence.cs
+        //StartCoroutine(ShowPlayerInfo_GameUI_Countine(0.2f));
         
         /* PlayerDataJson.Instance.LoadData_ToObjectsContainIDataPer(dataPersistenceObjects_InGame);
         InventoryDataJson.Instance.LoadData_ToObjectsContainIInventoryPer(inventoryPersistenceObjects_InGame); */
@@ -58,6 +59,9 @@ public class PlayerInfo_UI : MonoBehaviour
         this.health.text =""+ health.ToString();
         healthSlider.value = health;
     }
+    public void SetLevel(int level) {
+        this.level.text ="Lv: "+ level.ToString();
+    }
 
     /* private List<IDataPersistence> FindAllDataPersistenceObjects() {
         IEnumerable<IDataPersistence> dataPersistenceObjects = FindObjectsOfType<MonoBehaviour>()
@@ -73,7 +77,8 @@ public class PlayerInfo_UI : MonoBehaviour
         return new List<IData_InventoryPersistence>(dataPersistenceObjects);
     } */
 
-    //?BUTTONS IN MAIN GAME
+    //? OLD VERSION - THIRDPERSON SCENE
+    //? backbutton in Canvas In Game => goi phuong thuc tai day -> goi qua LoadDataTo_IDataPersistence.cs => save
     public void LoadMainMenuScene_BackButtonInGame() {
         StartCoroutine(DelayTimeSave_ToExitGame(0.1f));
     }
@@ -89,4 +94,19 @@ public class PlayerInfo_UI : MonoBehaviour
         SceneManager.LoadSceneAsync("MainMenu");
     }
 
+    #region IDataPersistence
+    public void UpdateUIVisual(PlayerJson playerJsonData)
+    {
+        this.userName.text =""+ playerJsonData.name;
+        this.level.text ="Lv: "+ playerJsonData.level.ToString();
+        this.health.text =""+ playerJsonData.health.ToString();
+        healthSlider.value = playerJsonData.health;
+    }
+
+    public void SavePlayerData(PlayerJson playerJsonData)
+    {
+        
+    }
+
+    #endregion IDataPersistence
 }

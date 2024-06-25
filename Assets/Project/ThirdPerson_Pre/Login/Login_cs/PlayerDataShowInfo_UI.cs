@@ -58,7 +58,8 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
 
     private void Start() {
         //? khi vao scene nay -> se auton load data
-        StartCoroutine(LoadData_ToShowPlayerInfo_Countine(2f));
+        //StartCoroutine(LoadData_ToShowPlayerInfo_Countine(2f));
+        UpdateUIVisual(playerDataJson.PlayerJson);  //? test auto load when back to main menu -> account
 
         // de awake bi null ko run duoc action
         RankingButton.onClick.AddListener(RankingButton_OnCliked);
@@ -164,7 +165,6 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
 
     private void OnError(PlayFabError error) => Debug.Log(error.GenerateErrorReport());
 
-    #region IDataPersistence
     IEnumerator LoadData_ToShowPlayerInfo_Countine(float time) {
         yield return new WaitForSeconds(time);
         playerDataJson.Load_PlayerDataJason_RealTime();         // de lay playerJson
@@ -174,9 +174,9 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
         UpdateUIVisual(playerDataJson.PlayerJson); // lay data playerJson xet UI
         isLoaded = true;
     }
-
+    
+    #region IDataPersistence
     public void UpdateUIVisual(PlayerJson playerJsonData) {
-        
         this.mail.text = playerJsonData.mail;
         this.userName.text = playerJsonData.name;
         this.level.text = playerJsonData.level.ToString();

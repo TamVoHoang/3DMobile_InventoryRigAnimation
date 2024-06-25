@@ -1,11 +1,11 @@
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
 //? gameobject = UI_canvas in game in spanwerscene
 
-public class UICanvas_SpawnerScene : MonoBehaviour
+public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
 {
     [Header("   Buttons")]
     [SerializeField] Button BackToMainMenuBtton;
@@ -21,9 +21,10 @@ public class UICanvas_SpawnerScene : MonoBehaviour
     [Header("   Level Map Selection")]
     [SerializeField] GameObject SelectMapPanel;
     [SerializeField] GameObject[] maps;
-    
+
     [SerializeField] Transform mapSelectTranform;   // gameobject = content in scroll view| transform chua cac button select map
     [SerializeField] int mapSelectIndex;
+    [SerializeField] int currentLevel = 0;
 
 
     private void Awake() {
@@ -47,6 +48,11 @@ public class UICanvas_SpawnerScene : MonoBehaviour
         {
             maps[i] = mapSelectTranform.GetChild(i).gameObject;
         }
+
+        //Khi quay lai map check level - interface ko goi ham Load PlayerDataJson(do chi goi 1 lan trong LoadDataTo_IDataPersistence.cs)
+        // dung truc tiep bien playerJson (da duoc load khi login) de gan vao currentLevel => update UnlockImage Level
+        currentLevel = PlayerDataJson.Instance.PlayerJson.level;
+        UnLockLevelMap(currentLevel);// co the bi null do ko co data currentlevel
     }
 
     private void OnGameStart()
@@ -69,10 +75,34 @@ public class UICanvas_SpawnerScene : MonoBehaviour
                 break;
         }
     }
-    void UpdataVisual(int mapSelectIndex) {
+    
+    void JoinGameButton_1_OnClick() {
+        mapSelectIndex = 1;
+        PlayerGun.Instance.MapSelected = mapSelectIndex;
+        UpdataVisualLevelMap(mapSelectIndex);
+    }
+    
+    private void JoinGameButton_2_OnClick()
+    {
+        mapSelectIndex = 2;
+        PlayerGun.Instance.MapSelected = mapSelectIndex;
+
+        UpdataVisualLevelMap(mapSelectIndex);
+    }
+
+    private void JoinGameButton_3_OnClick()
+    {
+        mapSelectIndex = 3;
+        PlayerGun.Instance.MapSelected = mapSelectIndex;
+
+        UpdataVisualLevelMap(mapSelectIndex);
+    }
+
+    //? hien thi nut stick khi nhan vao map image
+    void UpdataVisualLevelMap(int mapSelectIndex) {
         for (int i = 0; i < maps.Length; i++)
         {
-            if(i == mapSelectIndex-1) {
+            if(i == mapSelectIndex - 1) {
                 maps[i].transform.GetChild(0).gameObject.SetActive(true);
                 
             } else {
@@ -80,30 +110,33 @@ public class UICanvas_SpawnerScene : MonoBehaviour
             }
         }
     }
-    void JoinGameButton_1_OnClick() {
-        /* Time.timeScale = 1; //todo BAT DAU GAME
-        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_ThirdPerson); */
 
-        mapSelectIndex = 1;
-        UpdataVisual(mapSelectIndex);
+    // 0 1 2
+    IEnumerator UpdaVisualUnlockLevelMap(int currentLevel) {
+        yield return new WaitForSeconds(1);
+        for (int i = 0; i < maps.Length; i++)
+        {
+            if(i < currentLevel) {
+                maps[i].transform.GetChild(1).gameObject.SetActive(false);
+                maps[i].GetComponent<Button>().enabled = true;
+            } else {
+                maps[i].transform.GetChild(1).gameObject.SetActive(true);
+                maps[i].GetComponent<Button>().enabled = false;
+            }
+        }
     }
-    
-    private void JoinGameButton_2_OnClick()
-    {
-        /* Time.timeScale = 1; //todo BAT DAU GAME
-        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_BattleRoyale); */
-
-        mapSelectIndex = 2;
-        UpdataVisual(mapSelectIndex);
-    }
-
-    private void JoinGameButton_3_OnClick()
-    {
-        /* Time.timeScale = 1; //todo BAT DAU GAME
-        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_BattleRoyale); */
-
-        mapSelectIndex = 3;
-        UpdataVisual(mapSelectIndex);
+    void UnLockLevelMap(int currentLevel) {
+        StartCoroutine(UpdaVisualUnlockLevelMap(currentLevel));
+        /* for (int i = 0; i < maps.Length; i++)
+        {
+            if(i < currentLevel) {
+                maps[i].transform.GetChild(1).gameObject.SetActive(false);
+                maps[i].GetComponent<Button>().enabled = true;
+            } else {
+                maps[i].transform.GetChild(1).gameObject.SetActive(true);
+                maps[i].GetComponent<Button>().enabled = false;
+            }
+        } */
     }
 
     void BackToMainMenuBtton_OnClick() {
@@ -118,4 +151,17 @@ public class UICanvas_SpawnerScene : MonoBehaviour
         PlayerController.Instance.GetComponent<CharacterOutfitHandler>().OnCycleSkinPrevious();
     }
 
+    #region IDataJson
+    public void UpdateUIVisual(PlayerJson playerJsonData)
+    {
+        // lay data cua PlayerJson.cs -> sau khi load tu api da co san gia tri
+        // dung data de set gia tri trong level panel map
+        UnLockLevelMap(playerJsonData.level);
+    }
+
+    public void SavePlayerData(PlayerJson playerJsonData)
+    {
+        
+    }
+    #endregion IDataJson
 }
