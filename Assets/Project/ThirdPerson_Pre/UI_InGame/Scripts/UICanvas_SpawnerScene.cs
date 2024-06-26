@@ -28,7 +28,9 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
 
 
     private void Awake() {
-        StartGame.onClick.AddListener(OnGameStart);
+        Time.timeScale = 1; //todo khi vao spawner scene unfrezze
+
+        StartGame.onClick.AddListener(OnGameStart_OnClicked);
         JoinGameButton_1.onClick.AddListener(JoinGameButton_1_OnClick);
         JoinGameButton_2.onClick.AddListener(JoinGameButton_2_OnClick);
         JoinGameButton_3.onClick.AddListener(JoinGameButton_3_OnClick);
@@ -44,24 +46,28 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
     }
 
     private void Start() {
-        for (int i = 0; i < mapSelectTranform.childCount; i++)
-        {
+        for (int i = 0; i < mapSelectTranform.childCount; i++) {
             maps[i] = mapSelectTranform.GetChild(i).gameObject;
         }
 
         //Khi quay lai map check level - interface ko goi ham Load PlayerDataJson(do chi goi 1 lan trong LoadDataTo_IDataPersistence.cs)
         // dung truc tiep bien playerJson (da duoc load khi login) de gan vao currentLevel => update UnlockImage Level
-        currentLevel = PlayerDataJson.Instance.PlayerJson.level;
-        UnLockLevelMap(currentLevel);// co the bi null do ko co data currentlevel
+        var a = TryGetComponent<PlayerDataJson>(out PlayerDataJson playerDataJson);
+        if(a) {
+            currentLevel = PlayerDataJson.Instance.PlayerJson.level;
+            UnLockLevelMap(currentLevel);// co the bi null do ko co data currentlevel
+        }
+
+        
     }
 
-    private void OnGameStart()
+    void OnGameStart_OnClicked()
     {
         // check mapSelectIndex -> goi dung scene
         /* if(mapSelectIndex == 1) TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_ThirdPerson);
         else if(mapSelectIndex == 2) TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_BattleRoyale); */
 
-        Time.timeScale = 1; //todo BAT DAU GAME
+        Time.timeScale = 1; //todo BAT DAU GAME tu Sapwner scene
         switch (mapSelectIndex)
         {
             case 1:
@@ -78,28 +84,53 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
     
     void JoinGameButton_1_OnClick() {
         mapSelectIndex = 1;
-        PlayerGun.Instance.MapSelected = mapSelectIndex;
-        UpdataVisualLevelMap(mapSelectIndex);
+        JoinSelectMapLevel(mapSelectIndex);
+        /* PlayerGun.Instance.MapSelected = mapSelectIndex;
+        UpdataVisualLevelMap(mapSelectIndex); */
     }
     
-    private void JoinGameButton_2_OnClick()
-    {
+    void JoinGameButton_2_OnClick() {
         mapSelectIndex = 2;
-        PlayerGun.Instance.MapSelected = mapSelectIndex;
+        JoinSelectMapLevel(mapSelectIndex);
 
-        UpdataVisualLevelMap(mapSelectIndex);
+        /* PlayerGun.Instance.MapSelected = mapSelectIndex;
+        UpdataVisualLevelMap(mapSelectIndex); */
     }
 
-    private void JoinGameButton_3_OnClick()
-    {
+    void JoinGameButton_3_OnClick() {
         mapSelectIndex = 3;
-        PlayerGun.Instance.MapSelected = mapSelectIndex;
+        JoinSelectMapLevel(mapSelectIndex);
 
-        UpdataVisualLevelMap(mapSelectIndex);
+        /* PlayerGun.Instance.MapSelected = mapSelectIndex;
+        UpdataVisualLevelMap(mapSelectIndex); */
     }
+
+    void JoinSelectMapLevel(int mapSelectIndex) {
+        PlayerGun.Instance.MapSelected = mapSelectIndex;
+        UpdataVisualSelectedLevelMap(mapSelectIndex);
+    }
+
+    void UnLockLevelMap(int currentLevel) {
+        StartCoroutine(UpdaVisualUnlockLevelMap(currentLevel));
+    }
+
+    //Butotns
+    void BackToMainMenuBtton_OnClick() {
+        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
+    }
+
+    void ChangeNextSkinsButton_OnClick() {
+        PlayerController.Instance.GetComponent<CharacterOutfitHandler>().OnCycleSkin();
+        Time.timeScale = 0; // khi tu spawner ve mainmenu frezze
+    }
+
+    void ChangePreviousSkinsButton_OnClick() {
+        PlayerController.Instance.GetComponent<CharacterOutfitHandler>().OnCycleSkinPrevious();
+    }
+
 
     //? hien thi nut stick khi nhan vao map image
-    void UpdataVisualLevelMap(int mapSelectIndex) {
+    void UpdataVisualSelectedLevelMap(int mapSelectIndex) {
         for (int i = 0; i < maps.Length; i++)
         {
             if(i == mapSelectIndex - 1) {
@@ -111,7 +142,7 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
         }
     }
 
-    // 0 1 2
+    //? show lock image for unlocked levelMap
     IEnumerator UpdaVisualUnlockLevelMap(int currentLevel) {
         yield return new WaitForSeconds(1);
         for (int i = 0; i < maps.Length; i++)
@@ -125,42 +156,16 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
             }
         }
     }
-    void UnLockLevelMap(int currentLevel) {
-        StartCoroutine(UpdaVisualUnlockLevelMap(currentLevel));
-        /* for (int i = 0; i < maps.Length; i++)
-        {
-            if(i < currentLevel) {
-                maps[i].transform.GetChild(1).gameObject.SetActive(false);
-                maps[i].GetComponent<Button>().enabled = true;
-            } else {
-                maps[i].transform.GetChild(1).gameObject.SetActive(true);
-                maps[i].GetComponent<Button>().enabled = false;
-            }
-        } */
-    }
 
-    void BackToMainMenuBtton_OnClick() {
-        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
-    }
-
-    void ChangeNextSkinsButton_OnClick() {
-        PlayerController.Instance.GetComponent<CharacterOutfitHandler>().OnCycleSkin();
-    }
-
-    void ChangePreviousSkinsButton_OnClick() {
-        PlayerController.Instance.GetComponent<CharacterOutfitHandler>().OnCycleSkinPrevious();
-    }
 
     #region IDataJson
-    public void UpdateUIVisual(PlayerJson playerJsonData)
-    {
+    public void UpdateUIVisual(PlayerJson playerJsonData) {
         // lay data cua PlayerJson.cs -> sau khi load tu api da co san gia tri
         // dung data de set gia tri trong level panel map
         UnLockLevelMap(playerJsonData.level);
     }
 
-    public void SavePlayerData(PlayerJson playerJsonData)
-    {
+    public void SavePlayerData(PlayerJson playerJsonData) {
         
     }
     #endregion IDataJson

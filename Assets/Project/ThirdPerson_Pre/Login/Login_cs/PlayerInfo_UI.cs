@@ -36,10 +36,9 @@ public class PlayerInfo_UI : MonoBehaviour, IDataPersistence
     }
 
     private void Start() {
-        if(playerDataJson == null) return; //! TESTING
-
         //? Old version - chua dung Interface de save load data thong qua list[] in LoadDataTo_IDataPersistence.cs
-        //StartCoroutine(ShowPlayerInfo_GameUI_Countine(0.2f));
+        /* if(playerDataJson == null) return; //! TESTING
+        StartCoroutine(ShowPlayerInfo_GameUI_Countine(0.2f)); */
         
         /* PlayerDataJson.Instance.LoadData_ToObjectsContainIDataPer(dataPersistenceObjects_InGame);
         InventoryDataJson.Instance.LoadData_ToObjectsContainIInventoryPer(inventoryPersistenceObjects_InGame); */
@@ -47,10 +46,7 @@ public class PlayerInfo_UI : MonoBehaviour, IDataPersistence
 
     IEnumerator ShowPlayerInfo_GameUI_Countine(float time) {
         yield return new WaitForSeconds(time);
-        LoadPlayerInfo_GameUI(playerDataJson.PlayerJson.name,
-                            playerDataJson.PlayerJson.level,
-                            playerDataJson.PlayerJson.health);
-        
+        LoadPlayerInfo_GameUI(playerDataJson.PlayerJson.name, playerDataJson.PlayerJson.level, playerDataJson.PlayerJson.health);
     }
 
     private void LoadPlayerInfo_GameUI(string userName, int level, int health) {
@@ -58,9 +54,6 @@ public class PlayerInfo_UI : MonoBehaviour, IDataPersistence
         this.level.text ="Lv: "+ level.ToString();
         this.health.text =""+ health.ToString();
         healthSlider.value = health;
-    }
-    public void SetLevel(int level) {
-        this.level.text ="Lv: "+ level.ToString();
     }
 
     /* private List<IDataPersistence> FindAllDataPersistenceObjects() {
@@ -88,25 +81,29 @@ public class PlayerInfo_UI : MonoBehaviour, IDataPersistence
         
         PlayerDataJson.Instance.Save_PlayerDataJason_RealTime();
         InventoryDataJson.Instance.Save_InventoryDataJason_RealTime(); */
+
         loadDataTo_IDataPersistence.SaveData_BeforeOutOfGame();
         yield return new WaitForSeconds(time);
         Time.timeScale = 0f; //todo free game
         SceneManager.LoadSceneAsync("MainMenu");
     }
 
+    // xet level khi cham spaceship va len level trong qua trinh choi game
+    public void SetLevel(int level) => this.level.text ="Lv: "+ level.ToString();
+
     #region IDataPersistence
-    public void UpdateUIVisual(PlayerJson playerJsonData)
-    {
+    public void UpdateUIVisual(PlayerJson playerJsonData) {
         this.userName.text =""+ playerJsonData.name;
         this.level.text ="Lv: "+ playerJsonData.level.ToString();
         this.health.text =""+ playerJsonData.health.ToString();
         healthSlider.value = playerJsonData.health;
     }
 
-    public void SavePlayerData(PlayerJson playerJsonData)
-    {
+    public void SavePlayerData(PlayerJson playerJsonData) {
         
     }
 
     #endregion IDataPersistence
+    
+    //todo
 }

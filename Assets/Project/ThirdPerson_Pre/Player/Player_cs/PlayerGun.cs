@@ -58,10 +58,10 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     [HideInInspector] public Animator animator;
 
     #region SAVE LOAD
-    [SerializeField] private Vector3 playerTransform;
-    [SerializeField] private Vector3 playerTransform_TempSave;
+    Vector3 playerTransform;
+    Vector3 playerTransform_TempSave;
 
-    IEnumerator SetPlayerPositionCoutine(float time) {
+    /* IEnumerator SetPlayerPositionCoutine(float time) {
         characterController.enabled = false;
         yield return new WaitForSeconds(time);
         transform.position = new Vector3(playerTransform.x,
@@ -69,7 +69,7 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
                                         playerTransform.z);
         
         characterController.enabled = true;
-    }
+    } */
 
     [SerializeField] private int levelTemp = 1;
     [SerializeField] private int mapSelected = 0;
@@ -90,21 +90,16 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
         // plai co delay time - cho load data from coll 28 LoadData_IDataPersistence.cs
         StartCoroutine(SetPlayerPositionCoutine(0.3f));
 
-        levelTemp = PlayerDataJson.Instance.PlayerJson.level;
+        //levelTemp = PlayerDataJson.Instance.PlayerJson.level;
         isTouchSpaceShip = false;
 
         SwitchState(Idle);
     }
 
-    public void Update() {
-        /* if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.MainMenuScene)) return;
-        if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.DataOverviewScene)) return;
-        if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.SpawnerScene)) return; */
-        
-        //! testing thu ham true khi dang la 1 trong nhung scene menu
+    void Update() {
+        // testing thu ham true khi dang la 1 trong nhung scene menu
         if(CheckSpawnerScene.IsInMenuScene()) return;
 
-        
         // neu dem chua xong count down thi return
         if(!GameManger.Instance.IsReady) return;
 
@@ -117,27 +112,22 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
         animator.SetFloat("hzInput", hzInput); // setFloat bien ben (Blendtree) , float (nut nhan dau vao trai phai) 
         animator.SetFloat("vInput", vInput);   // gan gia tri input trai phai tai day cho gia tri float hv ben blendtree -> de biet duoc huong di tai moi state
 
-        // Gravity();
-        //Falling();
-        // GetDirectionAndMove();
-
         currentState.UpdateState(this);
         this.playerTransform_TempSave = transform.position;
     }
+
     private void FixedUpdate() {
-        //! camera bi lac khi dung fixedUpdate
-        /* Gravity();
-        Falling();
-        GetDirectionAndMove(); */ 
+        // camera bi lac khi dung fixedUpdate
     }
+
     private void LateUpdate() {
+        // testing thu ham true khi dang la 1 trong nhung scene menu
+        //if(CheckSpawnerScene.IsInMenuScene()) return;
+
         if(SceneManager.GetActiveScene().name == "MainMenu") return;
         if(SceneManager.GetActiveScene().name == "AccountDataOverview") return;
         if(SceneManager.GetActiveScene().name == "Testing_SpawnPlayer") return;
         if(SceneManager.GetActiveScene().name == "Login") return;
-
-
-        ////if(!CheckSpawnerScene.IsInGameScene()) return; // neu ko la scene game thi ko chay
 
         // neu dem chua xong count down thi return
         if(!GameManger.Instance.IsReady) return;
@@ -168,12 +158,14 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
 
         characterController.Move((dir.normalized * currentSpeed + airDir.normalized * airSpeed) * Time.deltaTime); //dir.normalized
     }
+
     public bool SetIsGrounded() {
         if (Physics.CheckSphere(groundCheck.position, groundDistance, groundMask)) return true;
         else return false;
     }
-    void Gravity() // method dung de tinh velocity.y => controller.Move(velocity.y)
-    {
+
+    // method dung de tinh velocity.y => controller.Move(velocity.y)
+    void Gravity() {
         if (!SetIsGrounded()) velocity.y += gravity * Time.deltaTime; // velocity.y += gravity * Time.deltaTime
         else if (velocity.y < 0) velocity.y = -2f; // khi da ko con la khong Grounded va velocity.y <0 do bi giam khi dang roi
         characterController.Move(velocity * Time.deltaTime); // player Move(tac dong Time va vector van toc theo huong y
@@ -185,18 +177,28 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
 
     //? kiem tra co touch duoc vao SpaceShip 
     private void OnTriggerEnter(Collider other) {
-        SpaceShip01 spaceShip01 = other.gameObject.GetComponent<SpaceShip01>();
         Debug.Log("Player co cham vao space ship");
+
+        SpaceShip01 spaceShip01 = other.gameObject.GetComponent<SpaceShip01>();
+
         if(spaceShip01 && !isTouchSpaceShip && mapSelected >= levelTemp) {
             // player touch spaceShip01 => tang gia tri level trong PlayerDataJson
             isTouchSpaceShip = true;
             levelTemp ++;
             PlayerDataJson.Instance.PlayerJson.level = this.levelTemp;
+
+            // set update lap tuc cho level hien tren playerInfo canvas
             var playerInfo_UI = GetComponentInChildren<PlayerInfo_UI>();
             if(playerInfo_UI) playerInfo_UI.SetLevel(levelTemp);
         }
     }
     
+    IEnumerator SetPlayerPositionCoutine(float time) {
+        characterController.enabled = false;
+        yield return new WaitForSeconds(time);
+        transform.position = new Vector3(playerTransform.x, playerTransform.y, playerTransform.z);
+        characterController.enabled = true;
+    }
 
     #region IDataPersistence
     public void UpdateUIVisual(PlayerJson playerJson) {
@@ -215,6 +217,4 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     #endregion IDataPersistence
 
     //todo
-
-    
 }

@@ -5,31 +5,25 @@ using UnityEngine;
 //todo camfollow and cam look around
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private CinemachineVirtualCamera virtualAimCamera;
-    [SerializeField] private CinemachineVirtualCamera virtualLookAroundCamera;
-    [SerializeField] private CinemachineVirtualCamera lookAtPlayerCam;
+    [SerializeField] private CinemachineVirtualCamera virtualAimCamera; //cam 3rd aiming
+    [SerializeField] private CinemachineVirtualCamera virtualLookAroundCamera;  // cam look around 360
+    [SerializeField] private GameObject spawnerCam; // cam nhin thang vao player khi o spawner scene
 
     private InputManager inputManager;
 
-    CrossHairTarget crossHairTarget;
 
     private void Awake() {
         inputManager = GetComponent<InputManager>();
-        crossHairTarget = FindObjectOfType<CrossHairTarget>();
+        spawnerCam.SetActive(false);
     }
 
-    private void LateUpdate() {
-        if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.SpawnerScene)) {
-            crossHairTarget.SetAimLookAt(new Vector3 (0, 0, -20));
-            lookAtPlayerCam.Priority = 50;
-        } 
-        else {
-            crossHairTarget.SetAimLookAt(new Vector3 (0, 0, 20));
-            lookAtPlayerCam.Priority = -1;
-            PriorityCamera();
-        }
+    private void Update() {
+        if(CheckSpawnerScene.CheckScene(CheckSpawnerScene.SpawnerScene)) spawnerCam.SetActive(true);
+        else spawnerCam.SetActive(false);
     }
 
+
+    //? nhan intput se xoay quanh player 360
     private void PriorityCamera() {
         if(inputManager.GetLook.normalized != Vector2.zero) {
             virtualAimCamera.Priority = 1;
@@ -38,7 +32,6 @@ public class CameraController : MonoBehaviour
             virtualAimCamera.Priority = 20;
             virtualLookAroundCamera.Priority = 1;
         }
-        
     }
 
     //todo
