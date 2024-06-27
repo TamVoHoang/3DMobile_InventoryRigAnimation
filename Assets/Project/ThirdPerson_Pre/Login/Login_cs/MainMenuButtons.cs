@@ -45,6 +45,8 @@ public class MainMenuButtons : MonoBehaviour
 
     private void Update() {
         EnableAccountButton();
+        if(Time.timeScale == 0) Debug.Log("dang frezzeeeeee");
+        else Debug.Log("dang KO frezzeeeeee");
     }
 
     //? kiem tra dieu kien nhap day du khi register => enable nut dang ky
@@ -72,7 +74,8 @@ public class MainMenuButtons : MonoBehaviour
     }
 
     void ResumeButton_OnClicked() {
-        Time.timeScale = 1; //todo UnFree game when resume game
+        //GameManger.Instance.UnFrezzeGame(); //todo UnFree game when resume game
+        SetTimeScale.UnFrezzeGame();
         TestLoadingScene.Instance.ResumeGame(); // can phai duoc xet gia tri currentSceneIndex ngay khi back to main menu
 
     }

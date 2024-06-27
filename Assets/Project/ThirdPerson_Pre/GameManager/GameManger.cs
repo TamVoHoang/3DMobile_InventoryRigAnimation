@@ -15,6 +15,7 @@ public class GameManger : Singleton<GameManger>
 {
     [Header ("  Timer To Start")]
     [SerializeField] private float timeLeft = 3f;
+    float timeLeft_tmp;
     [SerializeField] private GameObject CountDownStart_Panel;
     [SerializeField] private TextMeshProUGUI timeLeftText;
     private InputManager inputManager;
@@ -22,10 +23,11 @@ public class GameManger : Singleton<GameManger>
     private bool countDownFlag = false;
     
     [Header ("  Timer")]
-    [SerializeField] private GameObject timerPanel;
+    [SerializeField] private GameObject timerPanel; // dong ho dem gio trong game
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private float remainingTime;
-    public float RemainingTime {get { return remainingTime; } }
+    float remainingTime_tmp;
+    //public float RemainingTime {get { return remainingTime; } }
     private bool isReady = false;
     public bool IsReady => isReady;
 
@@ -51,6 +53,8 @@ public class GameManger : Singleton<GameManger>
     [SerializeField] int maxTimeToSpawnPlayerItems = 20;
     [SerializeField] GameObject[] itemsPlayer;
 
+    [SerializeField] private bool isJoined = false; // set True khi chon map image => khi true se khoa ko cho chon tiep
+    public bool IsJoined{get{return isJoined;} set{isJoined = value;} }
 
     protected override void Awake() {
         base.Awake();
@@ -62,15 +66,16 @@ public class GameManger : Singleton<GameManger>
     }
 
     private void Start() {
+        isJoined = false;
+
         CountDownStart_Panel.SetActive(true);
         results_UI.SetActive(false);
         timerPanel.SetActive(false);
-        isReady = false;
-    }
 
-    private void Update() {
-        // spawm enemy theo delay time
-        // neu ko phai la scen game (thirdPerson || testing_ThirdPerson) return
+        isReady = false;
+
+        remainingTime_tmp = remainingTime;
+        timeLeft_tmp = timeLeft;
     }
 
     private void FixedUpdate() {
@@ -81,16 +86,26 @@ public class GameManger : Singleton<GameManger>
         //? neu KO PHAI la scene thirdperson || testing thirdPerson => return
         /* if(!CheckSpawnerScene.IsInGameScene()) return; */
         if(CheckSpawnerScene.IsInMenuScene()) return;
-        
         CountDownTime();
         if(isReady) Timer();
         
     }
 
     //? Buttons Onclicked
+    public void ResetToStartGame() {
+        CountDownStart_Panel.SetActive(true);
+
+        timerPanel.SetActive(false);    // tat io dong ho ban gio
+        results_UI.SetActive(false);    // tat bang resul ket qua
+        
+        timeLeft = timeLeft_tmp;
+        remainingTime = remainingTime_tmp;
+        timerText.color = Color.white;
+    }
     void BackButtonInResultPanel_OnClick() {
-        Time.timeScale = 0; //todo DUNG GAME KHI QUAY VE MAIN MENU
-        results_UI.SetActive(false);
+        inputManager.enabled = true;
+        ResetToStartGame();
+
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
     }
 
@@ -113,13 +128,15 @@ public class GameManger : Singleton<GameManger>
     private void Freeze() {
         if(countDownFlag) return;
 
+        //of input player
         inputManager.enabled = false;
+
+        // set speed for AI enemy
         foreach (var item in aiSetSpeedArr) {
             item.IntialSpeed = item.GetComponent<NavMeshAgent>().speed; // toc do duoc set thuc su
             item.GetComponent<NavMeshAgent>().speed = 0;
         }
         countDownFlag = true;
-
     }
 
     private void UnFreeze() {
@@ -128,6 +145,7 @@ public class GameManger : Singleton<GameManger>
         isReady = true;
         inputManager.enabled = true;
 
+        // gan bien tam giu Ai speed luc Frezze vao cho speed cua AI coll 120 this.cs
         foreach (var item in aiSetSpeedArr) {
             item.GetComponent<NavMeshAgent>().speed = item.IntialSpeed;
         }
@@ -138,17 +156,20 @@ public class GameManger : Singleton<GameManger>
     }
 
     private void Timer() {
+        // on dong ho dem gio tren cung
         timerPanel.SetActive(true);
+
         // dieu kien de ko hien ve gia tri am
         if(remainingTime > 0) remainingTime -= Time.deltaTime;
         else if(remainingTime <= 0) {
             remainingTime = 0;
             // ket thuc game
             timerText.color = Color.red;
-            results_UI.SetActive(true);// hien bang ket qua trong match
+
+            // hien bang ket qua trong match
+            //results_UI.SetActive(true);
+            ////Freeze(); // stop game khi het gio
             ShowResultsInGame();
-            Freeze(); // stop game khi het gio
-            Time.timeScale = 0;
         }
 
         // timer run realTime
@@ -158,13 +179,22 @@ public class GameManger : Singleton<GameManger>
     }
     
     private void ShowResultsInGame() {
+        // hien bang ket qua trong match
+        results_UI.SetActive(true);
+
+        // set false - khi quay lai spawner level map -> interactable = true;
+        isJoined = false;
+        isReady = false;
+
+        // set ai speed = 0  va input player false => ko di chuyen
+        //inputManager.enabled = false;
         foreach (var item in aiSetSpeedArr) {
             item.GetComponent<NavMeshAgent>().speed = 0;
         }
-
+        
+        // show ket qua killed and die cua player len reseul panel
         var didedCountTemp = FindObjectOfType<PlayerHealth>().GetDiedCount;
         deathCount.text = didedCountTemp.ToString("0");
-
         killedCount.text = killedCountTemp.ToString("0");
 
         LoadMainMenuScene_BackButtonInResultPanel(); // khi het gio bao ket qua => auto save
@@ -181,7 +211,6 @@ public class GameManger : Singleton<GameManger>
             int randomTime = Random.Range(minTimeToSpawnEnemy, maxTimeToSpawnEnemy);
             yield return new WaitForSeconds(randomTime);
             WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
-
 
             //? spawn random trong mang chua 3 loai AI
             if(worldBounds != null) {
@@ -242,15 +271,18 @@ public class GameManger : Singleton<GameManger>
 
     //? se luu khi het gio + bang ket qua hien len
     public void LoadMainMenuScene_BackButtonInResultPanel() {
-        StartCoroutine(DelayTimeSave_ToExitGame(0.2f));
+        StartCoroutine(DelayTimeSave_ToExitGame(0.3f));
     }
     IEnumerator DelayTimeSave_ToExitGame(float time) {
         var loadDataTo_IDataPersistence = FindObjectOfType<LoadDataTo_IDataPersistence>();
         loadDataTo_IDataPersistence.SaveData_BeforeOutOfGame();
         yield return new WaitForSeconds(time);
-        Time.timeScale = 0f; //todo free game
+        //FrezzGame();
+        SetTimeScale.FrezzGame(); //! PHAI SET TIME.TIMESCALE = 0 => KO BI OVERLOAD SAVE API - DO DANG AUTOSAVE KHI HIEN BANG RESULT
         ////SceneManager.LoadSceneAsync("MainMenu");
     }
 
+    public void FrezzGame() => Time.timeScale = 0f;
+    public void UnFrezzeGame() => Time.timeScale = 1f;
     //todo
 }

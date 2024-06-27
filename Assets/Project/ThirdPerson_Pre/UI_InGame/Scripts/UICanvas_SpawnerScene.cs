@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,8 +29,7 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
 
 
     private void Awake() {
-        Time.timeScale = 1; //todo khi vao spawner scene unfrezze
-
+        
         StartGame.onClick.AddListener(OnGameStart_OnClicked);
         JoinGameButton_1.onClick.AddListener(JoinGameButton_1_OnClick);
         JoinGameButton_2.onClick.AddListener(JoinGameButton_2_OnClick);
@@ -46,6 +46,10 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
     }
 
     private void Start() {
+        Debug.Log("start method UI_Canvas_Sapwner.cs");
+        //GameManger.Instance.UnFrezzeGame();
+        SetTimeScale.UnFrezzeGame();
+
         for (int i = 0; i < mapSelectTranform.childCount; i++) {
             maps[i] = mapSelectTranform.GetChild(i).gameObject;
         }
@@ -54,12 +58,24 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
         // dung truc tiep bien playerJson (da duoc load khi login) de gan vao currentLevel => update UnlockImage Level
         var a = TryGetComponent<PlayerDataJson>(out PlayerDataJson playerDataJson);
         if(a) {
-            currentLevel = PlayerDataJson.Instance.PlayerJson.level;
-            UnLockLevelMap(currentLevel);// co the bi null do ko co data currentlevel
+            
         }
 
-        
+        currentLevel = PlayerDataJson.Instance.PlayerJson.level;
+        UnLockLevelMap(currentLevel);// co the bi null do ko co data currentlevel
+        SetInteractableButton();
     }
+
+    void SetInteractableButton() {
+        if(GameManger.Instance.IsJoined) StartGame.interactable = false;
+        else StartGame.interactable = true;
+    }
+
+    private void Update() {
+        if(Time.timeScale == 0) Debug.Log("dang frezzeeeeee");
+        else Debug.Log("dang KO frezzeeeeee");
+    }
+
 
     void OnGameStart_OnClicked()
     {
@@ -67,13 +83,16 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
         /* if(mapSelectIndex == 1) TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_ThirdPerson);
         else if(mapSelectIndex == 2) TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_BattleRoyale); */
 
-        Time.timeScale = 1; //todo BAT DAU GAME tu Sapwner scene
+        //GameManger.Instance.UnFrezzeGame(); //todo BAT DAU GAME tu Sapwner scene
+        SetTimeScale.UnFrezzeGame();
+        GameManger.Instance.ResetToStartGame(); // goi lai ham Start() GameManager.cs
+
         switch (mapSelectIndex)
         {
             case 1:
                 TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_ThirdPerson);
                 break;
-            case 2: 
+            case 2:
                 TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_BattleRoyale);
                 break;
 
@@ -84,29 +103,22 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
     
     void JoinGameButton_1_OnClick() {
         mapSelectIndex = 1;
-        JoinSelectMapLevel(mapSelectIndex);
-        /* PlayerGun.Instance.MapSelected = mapSelectIndex;
-        UpdataVisualLevelMap(mapSelectIndex); */
+        JoinSelectMapLevel(mapSelectIndex, true);
     }
     
     void JoinGameButton_2_OnClick() {
         mapSelectIndex = 2;
-        JoinSelectMapLevel(mapSelectIndex);
-
-        /* PlayerGun.Instance.MapSelected = mapSelectIndex;
-        UpdataVisualLevelMap(mapSelectIndex); */
+        JoinSelectMapLevel(mapSelectIndex, true);
     }
 
     void JoinGameButton_3_OnClick() {
         mapSelectIndex = 3;
-        JoinSelectMapLevel(mapSelectIndex);
-
-        /* PlayerGun.Instance.MapSelected = mapSelectIndex;
-        UpdataVisualLevelMap(mapSelectIndex); */
+        JoinSelectMapLevel(mapSelectIndex, true);
     }
 
-    void JoinSelectMapLevel(int mapSelectIndex) {
+    void JoinSelectMapLevel(int mapSelectIndex, bool isJoined) {
         PlayerGun.Instance.MapSelected = mapSelectIndex;
+        GameManger.Instance.IsJoined = isJoined;
         UpdataVisualSelectedLevelMap(mapSelectIndex);
     }
 
@@ -117,11 +129,13 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
     //Butotns
     void BackToMainMenuBtton_OnClick() {
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
+
+        //GameManger.Instance.FrezzGame();
+        SetTimeScale.FrezzGame();
     }
 
     void ChangeNextSkinsButton_OnClick() {
         PlayerController.Instance.GetComponent<CharacterOutfitHandler>().OnCycleSkin();
-        Time.timeScale = 0; // khi tu spawner ve mainmenu frezze
     }
 
     void ChangePreviousSkinsButton_OnClick() {

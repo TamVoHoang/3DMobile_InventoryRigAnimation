@@ -57,25 +57,15 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
 
     [HideInInspector] public Animator animator;
 
+    [Header("       Level Map Selection")]
+    [SerializeField] private int levelTemp = 1;
+    [SerializeField] private int mapSelected = 0;
+    public int MapSelected { set => mapSelected = value; }
+    [SerializeField] private bool isTouchSpaceShip = false;
+
     #region SAVE LOAD
     Vector3 playerTransform;
     Vector3 playerTransform_TempSave;
-
-    /* IEnumerator SetPlayerPositionCoutine(float time) {
-        characterController.enabled = false;
-        yield return new WaitForSeconds(time);
-        transform.position = new Vector3(playerTransform.x,
-                                        playerTransform.y, 
-                                        playerTransform.z);
-        
-        characterController.enabled = true;
-    } */
-
-    [SerializeField] private int levelTemp = 1;
-    [SerializeField] private int mapSelected = 0;
-    public int MapSelected{set => mapSelected = value; }
-    [SerializeField] private bool isTouchSpaceShip = false;
-
     #endregion SAVE LOAD
 
 
@@ -93,6 +83,7 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
         //levelTemp = PlayerDataJson.Instance.PlayerJson.level;
         isTouchSpaceShip = false;
 
+        // locomotion player
         SwitchState(Idle);
     }
 
@@ -192,6 +183,7 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
             if(playerInfo_UI) playerInfo_UI.SetLevel(levelTemp);
         }
     }
+
     
     IEnumerator SetPlayerPositionCoutine(float time) {
         characterController.enabled = false;

@@ -83,6 +83,9 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     //BUTTONS IN PLAYER INFO OVERVIEW
     void EquipButton_OnClicked() {
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_SpawnPlayer);
+
+        //GameManger.Instance.UnFrezzeGame();
+        SetTimeScale.UnFrezzeGame();
     }
 
     private void SettingButton_OnClicked() {

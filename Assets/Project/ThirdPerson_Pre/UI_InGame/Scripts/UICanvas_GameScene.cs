@@ -49,13 +49,12 @@ public class UICanvas_GameScene : MonoBehaviour
             pausePlayArray[1].gameObject.SetActive(true);
             pausePlayArray[2].gameObject.SetActive(true);
             Time.timeScale = 0;
-        } 
+        }
         else {
             Time.timeScale = 1; 
             pausePlayArray[0].gameObject.SetActive(true);
             pausePlayArray[1].gameObject.SetActive(false);
             pausePlayArray[2].gameObject.SetActive(false);
-
         } 
     }
 
@@ -69,7 +68,8 @@ public class UICanvas_GameScene : MonoBehaviour
 
         TestLoadingScene.Instance.SetCurrentScene(); // set currentSceneIndex in TestLoadingScene.cs
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu); // quay ve MainMenu Scene
-        Time.timeScale = 0; //todo DUNG GAME KHI QUAY VE MAN HINH MAIN MENE
+        //GameManger.Instance.FrezzGame(); //todo DUNG GAME KHI QUAY VE MAN HINH MAIN MENE
+        SetTimeScale.FrezzGame();
     }
 
     //todo
