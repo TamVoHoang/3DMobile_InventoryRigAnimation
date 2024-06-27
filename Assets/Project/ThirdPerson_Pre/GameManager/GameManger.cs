@@ -56,6 +56,7 @@ public class GameManger : Singleton<GameManger>
     [SerializeField] private bool isJoined = false; // set True khi chon map image => khi true se khoa ko cho chon tiep
     public bool IsJoined{get{return isJoined;} set{isJoined = value;} }
 
+
     protected override void Awake() {
         base.Awake();
 
@@ -284,5 +285,6 @@ public class GameManger : Singleton<GameManger>
 
     public void FrezzGame() => Time.timeScale = 0f;
     public void UnFrezzeGame() => Time.timeScale = 1f;
+
     //todo
 }

@@ -60,8 +60,10 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     [Header("       Level Map Selection")]
     [SerializeField] private int levelTemp = 1;
     [SerializeField] private int mapSelected = 0;
-    public int MapSelected { set => mapSelected = value; }
     [SerializeField] private bool isTouchSpaceShip = false;
+    public int MapSelected { set => mapSelected = value; }
+    public bool IsTouchSpaceShip { set => isTouchSpaceShip = value; }
+
 
     #region SAVE LOAD
     Vector3 playerTransform;
@@ -166,6 +168,8 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     public void JumpForce() => velocity.y += jumpForce;
     public void Jumped() => isJumped = true;
 
+
+
     //? kiem tra co touch duoc vao SpaceShip 
     private void OnTriggerEnter(Collider other) {
         Debug.Log("Player co cham vao space ship");
@@ -183,7 +187,10 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
             if(playerInfo_UI) playerInfo_UI.SetLevel(levelTemp);
         }
     }
-
+    public void SetMapSelectAndIsTouch(int mapSelected, bool isTouchSpaceShip) {
+        this.mapSelected = mapSelected;
+        this.isTouchSpaceShip = isTouchSpaceShip;
+    }
     
     IEnumerator SetPlayerPositionCoutine(float time) {
         characterController.enabled = false;
@@ -207,6 +214,7 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
 
     }
     #endregion IDataPersistence
+
 
     //todo
 }

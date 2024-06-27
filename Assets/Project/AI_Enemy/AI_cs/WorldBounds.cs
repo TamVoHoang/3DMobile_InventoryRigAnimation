@@ -6,9 +6,10 @@ public class WorldBounds : MonoBehaviour
     public Transform max;   // transform minmax
     public Transform min;
 
-    public Transform playerCenter; // transform cua player
+    Transform playerCenter; // transform cua player
 
     private void Awake() {
+        
         playerCenter = GameObject.FindGameObjectWithTag("Player").transform;
     }
 

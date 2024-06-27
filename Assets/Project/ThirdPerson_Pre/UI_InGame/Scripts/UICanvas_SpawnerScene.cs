@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
-using UnityEditor;
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
 
 //? gameobject = UI_canvas in game in spanwerscene
 
@@ -26,6 +24,14 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
     [SerializeField] Transform mapSelectTranform;   // gameobject = content in scroll view| transform chua cac button select map
     [SerializeField] int mapSelectIndex;
     [SerializeField] int currentLevel = 0;
+
+
+    [Header("   Player Spawner")]
+    [SerializeField] Vector3 minMap1 = new Vector3(-100, 0, -80);
+    [SerializeField] Vector3 maxMap1 = new Vector3(-30, 0, -50);
+
+    Vector3 minMap2 = new Vector3(-4, 0, -150);
+    Vector3 maxMap2 = new Vector3(4, 0, -115);
 
 
     private void Awake() {
@@ -67,8 +73,18 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
     }
 
     void SetInteractableButton() {
-        if(GameManger.Instance.IsJoined) StartGame.interactable = false;
-        else StartGame.interactable = true;
+        if(GameManger.Instance.IsJoined) {
+            StartGame.interactable = false;
+            JoinGameButton_1.interactable = false;
+            JoinGameButton_2.interactable = false;
+            JoinGameButton_3.interactable = false;
+        } 
+        else {
+            StartGame.interactable = true;
+            JoinGameButton_1.interactable = true;
+            JoinGameButton_2.interactable = true;
+            JoinGameButton_3.interactable = true;
+        } 
     }
 
     private void Update() {
@@ -86,6 +102,7 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
         //GameManger.Instance.UnFrezzeGame(); //todo BAT DAU GAME tu Sapwner scene
         SetTimeScale.UnFrezzeGame();
         GameManger.Instance.ResetToStartGame(); // goi lai ham Start() GameManager.cs
+        //PlayerGun.Instance.IsTouchSpaceShip = false;
 
         switch (mapSelectIndex)
         {
@@ -103,21 +120,26 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
     
     void JoinGameButton_1_OnClick() {
         mapSelectIndex = 1;
-        JoinSelectMapLevel(mapSelectIndex, true);
+        // random vi tri cho player tuy vao map
+        PlayerGun.Instance.transform.position = RandomPosition_PlayerSpwaner(minMap1, maxMap1);
+        JoinSelectMapLevel(mapSelectIndex, false, true);
     }
     
     void JoinGameButton_2_OnClick() {
         mapSelectIndex = 2;
-        JoinSelectMapLevel(mapSelectIndex, true);
+        PlayerGun.Instance.transform.position = RandomPosition_PlayerSpwaner(minMap2, maxMap2);
+
+        JoinSelectMapLevel(mapSelectIndex,false, true);
     }
 
     void JoinGameButton_3_OnClick() {
         mapSelectIndex = 3;
-        JoinSelectMapLevel(mapSelectIndex, true);
+        JoinSelectMapLevel(mapSelectIndex,false, true);
     }
 
-    void JoinSelectMapLevel(int mapSelectIndex, bool isJoined) {
-        PlayerGun.Instance.MapSelected = mapSelectIndex;
+    void JoinSelectMapLevel(int mapSelectIndex, bool isTouchedSpaceShip, bool isJoined) {
+        //PlayerGun.Instance.MapSelected = mapSelectIndex;
+        PlayerGun.Instance.SetMapSelectAndIsTouch(mapSelectIndex,isTouchedSpaceShip);
         GameManger.Instance.IsJoined = isJoined;
         UpdataVisualSelectedLevelMap(mapSelectIndex);
     }
@@ -126,7 +148,6 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
         StartCoroutine(UpdaVisualUnlockLevelMap(currentLevel));
     }
 
-    //Butotns
     void BackToMainMenuBtton_OnClick() {
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
 
@@ -171,6 +192,13 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
         }
     }
 
+    public Vector3 RandomPosition_PlayerSpwaner(Vector3 min_, Vector3 max_) {
+        return new Vector3 (
+            Random.Range(min_.x, max_.x),
+            Random.Range(min_.y, max_.y),
+            Random.Range(min_.z, max_.z)
+        );
+    }
 
     #region IDataJson
     public void UpdateUIVisual(PlayerJson playerJsonData) {
