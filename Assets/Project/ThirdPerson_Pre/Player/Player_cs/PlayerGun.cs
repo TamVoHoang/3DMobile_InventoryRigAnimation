@@ -61,7 +61,7 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     [SerializeField] private int levelTemp = 1;
     [SerializeField] private int mapSelected = 0;
     [SerializeField] private bool isTouchSpaceShip = false;
-    public int MapSelected { set => mapSelected = value; }
+    public int MapSelected { get { return mapSelected; } }
     public bool IsTouchSpaceShip { set => isTouchSpaceShip = value; }
 
 

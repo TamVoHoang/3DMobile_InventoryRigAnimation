@@ -40,9 +40,6 @@ public class GameManger : Singleton<GameManger>
     public void SetKilledCount(int killed) => killedCountTemp += killed;
 
     [Header("   Enemy Spawner")]
-    /* [SerializeField] AiAgent aiAgent;
-    [SerializeField] AiAgent_zom aiAgent_Zom; */
-
     [SerializeField] int minTimeToSpawnEnemy = 10;
     [SerializeField] int maxTimeToSpawnEnemy = 20;
     [SerializeField] GameObject[] spawnedAI;
@@ -56,6 +53,11 @@ public class GameManger : Singleton<GameManger>
     [SerializeField] private bool isJoined = false; // set True khi chon map image => khi true se khoa ko cho chon tiep
     public bool IsJoined{get{return isJoined;} set{isJoined = value;} }
 
+    [Header("   SpaceShip Spawner")]
+    [SerializeField] GameObject[] SpaceShips;
+    [SerializeField] int spaceShipIndex = 0;
+    public int SpaceShipIndex{set{spaceShipIndex = value;}}
+    [SerializeField] bool isSpaceShipSpawned = false;
 
     protected override void Awake() {
         base.Awake();
@@ -68,6 +70,7 @@ public class GameManger : Singleton<GameManger>
 
     private void Start() {
         isJoined = false;
+        isSpaceShipSpawned = false;
 
         CountDownStart_Panel.SetActive(true);
         results_UI.SetActive(false);
@@ -90,6 +93,10 @@ public class GameManger : Singleton<GameManger>
         CountDownTime();
         if(isReady) Timer();
         
+        // su kien de spawn spaceship theo remainingtime
+        if(remainingTime <= remainingTime_tmp * 0.5 && !isSpaceShipSpawned) {
+            SpaceShipSpawner();
+        }
     }
 
     //? Buttons Onclicked
@@ -102,9 +109,11 @@ public class GameManger : Singleton<GameManger>
         timeLeft = timeLeft_tmp;
         remainingTime = remainingTime_tmp;
         timerText.color = Color.white;
+        
     }
     void BackButtonInResultPanel_OnClick() {
         inputManager.enabled = true;
+        isSpaceShipSpawned = false;
         ResetToStartGame();
 
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
@@ -184,8 +193,9 @@ public class GameManger : Singleton<GameManger>
         results_UI.SetActive(true);
 
         // set false - khi quay lai spawner level map -> interactable = true;
-        isJoined = false;
+        isJoined = false;   // ko the de khi start - neu ko se ko xet duoc true
         isReady = false;
+        isSpaceShipSpawned = false; //! bi override col 97 - xet fail tai day, du dieu kien dong 90 xet lai true
 
         // set ai speed = 0  va input player false => ko di chuyen
         //inputManager.enabled = false;
@@ -269,6 +279,13 @@ public class GameManger : Singleton<GameManger>
         }
     }
 
+    void SpaceShipSpawner() {
+        WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
+        if(worldBounds) {
+            Instantiate(SpaceShips[spaceShipIndex], worldBounds.RandomPosition(), Quaternion.identity);
+            isSpaceShipSpawned = true;
+        }
+    }
 
     //? se luu khi het gio + bang ket qua hien len
     public void LoadMainMenuScene_BackButtonInResultPanel() {

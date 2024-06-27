@@ -102,7 +102,8 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
         //GameManger.Instance.UnFrezzeGame(); //todo BAT DAU GAME tu Sapwner scene
         SetTimeScale.UnFrezzeGame();
         GameManger.Instance.ResetToStartGame(); // goi lai ham Start() GameManager.cs
-        //PlayerGun.Instance.IsTouchSpaceShip = false;
+        GameManger.Instance.IsJoined = true;
+        ////PlayerGun.Instance.IsTouchSpaceShip = false;
 
         switch (mapSelectIndex)
         {
@@ -122,25 +123,26 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
         mapSelectIndex = 1;
         // random vi tri cho player tuy vao map
         PlayerGun.Instance.transform.position = RandomPosition_PlayerSpwaner(minMap1, maxMap1);
-        JoinSelectMapLevel(mapSelectIndex, false, true);
+        JoinSelectMapLevel(mapSelectIndex, false, true, 0);
     }
     
     void JoinGameButton_2_OnClick() {
         mapSelectIndex = 2;
         PlayerGun.Instance.transform.position = RandomPosition_PlayerSpwaner(minMap2, maxMap2);
 
-        JoinSelectMapLevel(mapSelectIndex,false, true);
+        JoinSelectMapLevel(mapSelectIndex,false, true, 1);
     }
 
     void JoinGameButton_3_OnClick() {
         mapSelectIndex = 3;
-        JoinSelectMapLevel(mapSelectIndex,false, true);
+        JoinSelectMapLevel(mapSelectIndex,false, true, 2);
     }
 
-    void JoinSelectMapLevel(int mapSelectIndex, bool isTouchedSpaceShip, bool isJoined) {
+    void JoinSelectMapLevel(int mapSelectIndex, bool isTouchedSpaceShip, bool isJoined, int spaceShipIndex) {
         //PlayerGun.Instance.MapSelected = mapSelectIndex;
         PlayerGun.Instance.SetMapSelectAndIsTouch(mapSelectIndex,isTouchedSpaceShip);
-        GameManger.Instance.IsJoined = isJoined;
+        //GameManger.Instance.IsJoined = isJoined;
+        GameManger.Instance.SpaceShipIndex = spaceShipIndex;
         UpdataVisualSelectedLevelMap(mapSelectIndex);
     }
 
