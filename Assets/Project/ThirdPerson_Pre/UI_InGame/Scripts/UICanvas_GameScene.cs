@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 //? game object = UI_canvas_Ingame in testing_third person
@@ -10,11 +9,13 @@ public class UICanvas_GameScene : MonoBehaviour
     [SerializeField] Button BackToMainMenuButton; // nut back button and save
     [SerializeField] Button PauseButton; // nut dung game tam thoi
     [SerializeField] bool isPaused = false;
+    [SerializeField] RectTransform directionImage; // show direction when spaceship is spawned
     [SerializeField] Transform pauseButton_Trasform;
     [SerializeField] GameObject[] pausePlayArray;
 
     bool isDataHandler;
     bool isSceneHandler;
+
 
     private void Awake() {
         BackToMainMenuButton.onClick.AddListener(BackButtonToMainMenu_OnClicked);
@@ -23,6 +24,7 @@ public class UICanvas_GameScene : MonoBehaviour
 
         isDataHandler = false;
         isSceneHandler = false;
+
     }
 
     private void Start() {
@@ -33,6 +35,29 @@ public class UICanvas_GameScene : MonoBehaviour
         for (int i = 0; i < pauseButton_Trasform.childCount; i++)
         {
             pausePlayArray[i] = pauseButton_Trasform.GetChild(i).gameObject;
+        }
+
+    }
+
+    private void Update() {
+        DirectionToSpaceship();
+    }
+
+    void DirectionToSpaceship() {
+        if(GameManger.Instance.IsSpaceShipSpawned) {
+            directionImage.GetComponent<Image>().enabled = true;
+            var playerGun = FindObjectOfType<PlayerGun>();
+            var spaceShip01 = FindObjectOfType<SpaceShip01>();
+
+            // xet vi tri tuong doi player and space ship
+            Vector3 direction = spaceShip01.transform.position - playerGun.transform.position;
+
+            // xoay directionImage facing spaceship
+            float angle = Vector3.SignedAngle(playerGun.transform.forward, direction, Vector3.up);
+            directionImage.transform.localRotation = Quaternion.Euler(0, 0, -angle);
+        }
+        else {
+            directionImage.GetComponent<Image>().enabled = false;
         }
     }
 

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -64,6 +65,7 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     public int MapSelected { get { return mapSelected; } }
     public bool IsTouchSpaceShip { set => isTouchSpaceShip = value; }
 
+    bool isSetRandomPlayerPosition = false;
 
     #region SAVE LOAD
     Vector3 playerTransform;
@@ -85,6 +87,8 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
         //levelTemp = PlayerDataJson.Instance.PlayerJson.level;
         isTouchSpaceShip = false;
 
+        isSetRandomPlayerPosition = false;
+
         // locomotion player
         SwitchState(Idle);
     }
@@ -92,6 +96,12 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     void Update() {
         // testing thu ham true khi dang la 1 trong nhung scene menu
         if(CheckSpawnerScene.IsInMenuScene()) return;
+
+        // random vi tri player khi vao navMesh -> truoc khi coundown =0
+        if(!isSetRandomPlayerPosition) {
+            Debug.Log("co vao random");
+            SpawnPlayerOnNavMesh();
+        }
 
         // neu dem chua xong count down thi return
         if(!GameManger.Instance.IsReady) return;
@@ -107,10 +117,6 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
 
         currentState.UpdateState(this);
         this.playerTransform_TempSave = transform.position;
-    }
-
-    private void FixedUpdate() {
-        // camera bi lac khi dung fixedUpdate
     }
 
     private void LateUpdate() {
@@ -192,11 +198,38 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
         this.isTouchSpaceShip = isTouchSpaceShip;
     }
     
+    //? lan dau tien khi spawn ra o Spawner Scene -> lay data PlayFab set vi tri
+    //? sau khi nhan map level button -> random den vi tri theo world bound -> set player's position
     IEnumerator SetPlayerPositionCoutine(float time) {
         characterController.enabled = false;
         yield return new WaitForSeconds(time);
         transform.position = new Vector3(playerTransform.x, playerTransform.y, playerTransform.z);
         characterController.enabled = true;
+    }
+
+    void SpawnPlayerOnNavMesh() {
+        WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
+        if(worldBounds != null) {
+            Vector3 randomPosition = RandomNavmeshLocation(10, worldBounds);
+            if (randomPosition != Vector3.zero)
+            {
+                this.transform.position = randomPosition;
+
+                isSetRandomPlayerPosition = true;
+            }
+        }
+    }
+
+    Vector3 RandomNavmeshLocation(float radius, WorldBounds worldBounds) {
+        var randomDirection = worldBounds.RandomPosition();
+
+        NavMeshHit hit;
+        Vector3 finalPosition = Vector3.zero;
+        if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
+        {
+            finalPosition = hit.position;
+        }
+        return finalPosition;
     }
 
     #region IDataPersistence
@@ -215,6 +248,6 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     }
     #endregion IDataPersistence
 
-
+    
     //todo
 }

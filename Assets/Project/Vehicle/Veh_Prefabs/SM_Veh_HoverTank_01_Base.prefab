@@ -280,7 +280,7 @@ Transform:
   m_GameObject: {fileID: 4481728097735763801}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -304,6 +304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd68eb746f3cea046bdca0738e8af803, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isTouchPlayerGun: 0
 --- !u!33 &2589701438923967284
 MeshFilter:
   m_ObjectHideFlags: 0

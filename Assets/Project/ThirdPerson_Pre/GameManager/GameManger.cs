@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -13,22 +14,22 @@ using UnityEngine.UI;
 
 public class GameManger : Singleton<GameManger>
 {
-    [Header ("  Timer To Start")]
+    [Header ("  Timer Count Down To Start")]
     [SerializeField] private float timeLeft = 3f;
     float timeLeft_tmp;
     [SerializeField] private GameObject CountDownStart_Panel;
     [SerializeField] private TextMeshProUGUI timeLeftText;
-    private InputManager inputManager;
+    InputManager inputManager;
     private AiSetSpeed[] aiSetSpeedArr; // class chung tat ca ca loai ai agent luu tam intial speed
-    private bool countDownFlag = false;
+    bool countDownFlag = false;
     
-    [Header ("  Timer")]
+    [Header ("  Timer In Game")]
     [SerializeField] private GameObject timerPanel; // dong ho dem gio trong game
     [SerializeField] private TextMeshProUGUI timerText;
     [SerializeField] private float remainingTime;
     float remainingTime_tmp;
     //public float RemainingTime {get { return remainingTime; } }
-    private bool isReady = false;
+    bool isReady = false;
     public bool IsReady => isReady;
 
     [Header ("  Results")]
@@ -58,6 +59,7 @@ public class GameManger : Singleton<GameManger>
     [SerializeField] int spaceShipIndex = 0;
     public int SpaceShipIndex{set{spaceShipIndex = value;}}
     [SerializeField] bool isSpaceShipSpawned = false;
+    public bool IsSpaceShipSpawned {get => isSpaceShipSpawned;}
 
     protected override void Awake() {
         base.Awake();
@@ -83,36 +85,34 @@ public class GameManger : Singleton<GameManger>
     }
 
     private void FixedUpdate() {
-        /* if(SceneManager.GetActiveScene().name == "MainMenu") return;
-        if(SceneManager.GetActiveScene().name == "AccountDataOverview") return;
-        if(SceneManager.GetActiveScene().name == "Testing_SpawnPlayer") return; */
-
-        //? neu KO PHAI la scene thirdperson || testing thirdPerson => return
-        /* if(!CheckSpawnerScene.IsInGameScene()) return; */
+        // neu la scene menus thi return
         if(CheckSpawnerScene.IsInMenuScene()) return;
         CountDownTime();
         if(isReady) Timer();
         
         // su kien de spawn spaceship theo remainingtime
-        if(remainingTime <= remainingTime_tmp * 0.5 && !isSpaceShipSpawned) {
+        if(remainingTime <= remainingTime_tmp * 0.8 && !isSpaceShipSpawned) {
             SpaceShipSpawner();
         }
+
     }
 
-    //? Buttons Onclicked
+    //? nut OnStartGame (UICanvasScene.cs call) sau khi chon map ke tiep va play
     public void ResetToStartGame() {
-        CountDownStart_Panel.SetActive(true);
+        CountDownStart_Panel.SetActive(true);   // bang dem gio count down GO
 
         timerPanel.SetActive(false);    // tat io dong ho ban gio
         results_UI.SetActive(false);    // tat bang resul ket qua
         
+        // gan lai gia tri ban dau cho time in Game + time countDown
         timeLeft = timeLeft_tmp;
         remainingTime = remainingTime_tmp;
         timerText.color = Color.white;
-        
+
     }
+
     void BackButtonInResultPanel_OnClick() {
-        inputManager.enabled = true;
+        inputManager.enabled = true;    // tra ve true, de khi quay lai spawner scene - player co the animation khi trang bi item
         isSpaceShipSpawned = false;
         ResetToStartGame();
 
@@ -135,10 +135,11 @@ public class GameManger : Singleton<GameManger>
             timeLeftText.text = "";
         }
     }
+    
     private void Freeze() {
         if(countDownFlag) return;
 
-        //of input player
+        //off input player
         inputManager.enabled = false;
 
         // set speed for AI enemy
@@ -193,7 +194,7 @@ public class GameManger : Singleton<GameManger>
         results_UI.SetActive(true);
 
         // set false - khi quay lai spawner level map -> interactable = true;
-        isJoined = false;   // ko the de khi start - neu ko se ko xet duoc true
+        isJoined = false;   // ko the de khi OnStartGame (UICanvas_SpawnerScene.cs) - neu ko se ko xet duoc true
         isReady = false;
         isSpaceShipSpawned = false; //! bi override col 97 - xet fail tai day, du dieu kien dong 90 xet lai true
 
@@ -249,6 +250,7 @@ public class GameManger : Singleton<GameManger>
         StartCoroutine(PlayerPickupItems_SpawnerCO());
         StartCoroutine(PlayerWeapons_SpawnerCO());
     }
+
     IEnumerator PlayerPickupItems_SpawnerCO() {
         while (true)
         {
@@ -261,7 +263,6 @@ public class GameManger : Singleton<GameManger>
                 for (int i = 0; i < 2; i++) {
                     Instantiate(itemsPlayer[i], worldBounds.RandomPosition_AroundPlayer(15f, 1f, 15f), Quaternion.identity);
                 }
-                    
             }
         }
     }
@@ -280,11 +281,14 @@ public class GameManger : Singleton<GameManger>
     }
 
     void SpaceShipSpawner() {
-        WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
+        /* WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
         if(worldBounds) {
             Instantiate(SpaceShips[spaceShipIndex], worldBounds.RandomPosition(), Quaternion.identity);
             isSpaceShipSpawned = true;
-        }
+        } */
+
+        isSpaceShipSpawned = true;
+        Instantiate(SpaceShips[spaceShipIndex]);
     }
 
     //? se luu khi het gio + bang ket qua hien len

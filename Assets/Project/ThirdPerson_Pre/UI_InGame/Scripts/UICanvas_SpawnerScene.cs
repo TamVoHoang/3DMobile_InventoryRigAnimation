@@ -48,7 +48,6 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
         SelectMapPanel.SetActive(false);
         mapSelectIndex = 0;
         maps = new GameObject[mapSelectTranform.childCount];
-        
     }
 
     private void Start() {
@@ -62,10 +61,6 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
 
         //Khi quay lai map check level - interface ko goi ham Load PlayerDataJson(do chi goi 1 lan trong LoadDataTo_IDataPersistence.cs)
         // dung truc tiep bien playerJson (da duoc load khi login) de gan vao currentLevel => update UnlockImage Level
-        var a = TryGetComponent<PlayerDataJson>(out PlayerDataJson playerDataJson);
-        if(a) {
-            
-        }
 
         currentLevel = PlayerDataJson.Instance.PlayerJson.level;
         UnLockLevelMap(currentLevel);// co the bi null do ko co data currentlevel
@@ -121,27 +116,28 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
     
     void JoinGameButton_1_OnClick() {
         mapSelectIndex = 1;
-        // random vi tri cho player tuy vao map
-        PlayerGun.Instance.transform.position = RandomPosition_PlayerSpwaner(minMap1, maxMap1);
-        JoinSelectMapLevel(mapSelectIndex, false, true, 0);
+        // random vi tri cho player tuy vao map | ko xet den navmesh -> co the bi ket trong object environment
+        /* PlayerGun.Instance.transform.position = RandomPosition_PlayerSpwaner(minMap1, maxMap1); */
+        JoinSelectMapLevel(mapSelectIndex, false, 0);
     }
     
     void JoinGameButton_2_OnClick() {
         mapSelectIndex = 2;
-        PlayerGun.Instance.transform.position = RandomPosition_PlayerSpwaner(minMap2, maxMap2);
+        /* PlayerGun.Instance.transform.position = RandomPosition_PlayerSpwaner(minMap2, maxMap2); */
 
-        JoinSelectMapLevel(mapSelectIndex,false, true, 1);
+        JoinSelectMapLevel(mapSelectIndex,false, 1);
     }
 
     void JoinGameButton_3_OnClick() {
         mapSelectIndex = 3;
-        JoinSelectMapLevel(mapSelectIndex,false, true, 2);
+        JoinSelectMapLevel(mapSelectIndex,false, 2);
     }
 
-    void JoinSelectMapLevel(int mapSelectIndex, bool isTouchedSpaceShip, bool isJoined, int spaceShipIndex) {
+    void JoinSelectMapLevel(int mapSelectIndex, bool isTouchedSpaceShip, int spaceShipIndex) {
         //PlayerGun.Instance.MapSelected = mapSelectIndex;
-        PlayerGun.Instance.SetMapSelectAndIsTouch(mapSelectIndex,isTouchedSpaceShip);
         //GameManger.Instance.IsJoined = isJoined;
+
+        PlayerGun.Instance.SetMapSelectAndIsTouch(mapSelectIndex,isTouchedSpaceShip);
         GameManger.Instance.SpaceShipIndex = spaceShipIndex;
         UpdataVisualSelectedLevelMap(mapSelectIndex);
     }
