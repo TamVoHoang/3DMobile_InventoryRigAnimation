@@ -30,7 +30,9 @@ public class TestLoadingScene : Singleton<TestLoadingScene>
         Testing_SpawnPlayer,//4
         Testing_ThirdPerson,//5
         Testing_BattleRoyale,//6
-        ThirdPerson         //7
+        BlackMarket,        //7
+        Corporation,        //8
+        ThirdPerson         //9
     }
 
     protected override void Awake() {

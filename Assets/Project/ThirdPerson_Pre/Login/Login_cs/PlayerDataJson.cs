@@ -70,7 +70,7 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
     //? Tao doi tuong lop playerJson local - gan gia tri -> save "Json" PlayFab.
     private PlayerJson ReturnClassPlayerJson_ToSignUp(string mail, string name) {
         ////string vector3ToString = JsonUtility.ToJson(initialVector3Player_ToRegister); // chi chuyen vector3 sang string luu theo hang doc
-        return new PlayerJson(mail, name, 1, 500, 0, 0, initialVector3Player_ToRegister); // vector3ToString
+        return new PlayerJson(mail, name, 1, 1000, 0, 0, initialVector3Player_ToRegister); // vector3ToString
     }
 
     //? SAVE KHI SIGN UP

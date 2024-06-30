@@ -82,8 +82,10 @@ public class InputManager : Singleton<InputManager>
 
     private void Update() {
         if(SceneManager.GetActiveScene().name == "MainMenu") return;
+        if(SceneManager.GetActiveScene().name == "Login") return;
         if(SceneManager.GetActiveScene().name == "AccountDataOverview") return;
         if(SceneManager.GetActiveScene().name == "Testing_SpawnPlayer") return;
+
 
         //? neu dung OnScreenControl (joyStick + WASD) thi DUNG dong nay
         //? neu chi dung UICanvasControllerInput (joyStick) thi KO DUNG dong nay (vi bi xung dot khi Set)

@@ -4,5 +4,7 @@ using UnityEngine;
 
 public class BaseSingleton : Singleton<BaseSingleton>
 {
-    
+    private void Start() {
+        
+    }
 }
