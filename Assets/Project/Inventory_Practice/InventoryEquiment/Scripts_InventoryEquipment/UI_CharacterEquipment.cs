@@ -125,7 +125,6 @@ public class UI_CharacterEquipment : MonoBehaviour
             e.item.RemoveFromItemHolder();
             characterEquipment.EquipItem(e.item);
         } */
-
     }
 #endregion droped Item on weaponSLot
 
