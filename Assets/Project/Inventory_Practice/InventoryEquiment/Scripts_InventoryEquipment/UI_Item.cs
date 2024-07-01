@@ -56,29 +56,29 @@ public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IE
 
     //? KHI NHAP CHUOT phai VAO O VAT PHAM SE CHIA DOI
     public void OnPointerDown(PointerEventData eventData) {
-        // if (eventData.button == PointerEventData.InputButton.Left) 
-        // {
-        //     if (item != null) {
-        //         // Has item
-        //         if (item.IsStackable()) {
-        //             // Is Stackable
-        //             if (item.amount > 1) {
-        //                 // More than 1
-        //                 if (item.GetItemHolder().CanAddItemEquipment()) {
-        //                     // Can split
-        //                     int splitAmount = Mathf.FloorToInt(item.amount / 2f);
-        //                     item.amount -= splitAmount;
-        //                     Debug.Log(item.amount +"/"+ splitAmount);
-        //                     Item duplicateItem = new Item { itemScriptableObject = item.itemScriptableObject, amount = splitAmount };
-        //                     //item.GetItemHolder().AddItemEquipment(duplicateItem);
-        //                     duplicateItem.isSplited = true;
-        //                     item.GetItemHolder().AddItemAfterSliting(duplicateItem);
-        //                     if(duplicateItem != null) Debug.Log(item.amount +"/"+ splitAmount);
-        //                 }
-        //             }
-        //         }
-        //     }
-        // }
+        /* if (eventData.button == PointerEventData.InputButton.Left) 
+        {
+            if (item != null) {
+                // Has item
+                if (item.IsStackable()) {
+                    // Is Stackable
+                    if (item.amount > 1) {
+                        // More than 1
+                        if (item.GetItemHolder().CanAddItemEquipment()) {
+                            // Can split
+                            int splitAmount = Mathf.FloorToInt(item.amount / 2f);
+                            item.amount -= splitAmount;
+                            Debug.Log(item.amount +"/"+ splitAmount);
+                            Item duplicateItem = new Item { itemScriptableObject = item.itemScriptableObject, amount = splitAmount };
+                            //item.GetItemHolder().AddItemEquipment(duplicateItem);
+                            duplicateItem.isSplited = true;
+                            item.GetItemHolder().AddItemAfterSliting(duplicateItem);
+                            if(duplicateItem != null) Debug.Log(item.amount +"/"+ splitAmount);
+                        }
+                    }
+                }
+            }
+        } */
     }
 
     public void SetSprite(Sprite sprite) {

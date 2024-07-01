@@ -84,7 +84,6 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     void EquipButton_OnClicked() {
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_SpawnPlayer);
 
-        //GameManger.Instance.UnFrezzeGame();
         SetTimeScale.UnFrezzeGame();
     }
 

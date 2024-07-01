@@ -237,8 +237,9 @@ public class UI_Inventory : MonoBehaviour
                 uiItem.SetItem(item);
                 
                 //? REMOVE VU KHI BANG BUTTON_UI.cs DUOC GAN TORNG DOI TUONG pfUI_Item
-                //todo neu o day DUNG MouseClick de use() -> ui_item phai dung MouseMidle de split()
-                // todo neu o day KO DUNG MouseClick de use() -> ui_Item co the dung DoubleClick de slit()
+                //  todo neu o day DUNG MouseClick de use() -> ui_item phai dung MouseMidle de split()
+                //  todo neu o day KO DUNG MouseClick de use() -> ui_Item co the dung DoubleClick de slit()
+                // todo mobile hieu click = touch = doublick
 
                 //! todo ko dung duoc doubleclik ben ui_item de Split() khi tai day su dung MouseClick 
                 //! Ly do: khi tai day co tin hieu mouseClick se use() va khong cho tin hieu doubleClick ben UI_item de split()

@@ -12,6 +12,8 @@ public class Testing : MonoBehaviour
     
     // Crafting
     [SerializeField] private UI_CraftingSystem uICraftingSystem;
+
+    [Header("       List Stores Output Recipe")]
     [SerializeField] private List<RecipeScriptableObject> recipeScriptableObjectList;
 
     // Crafting
