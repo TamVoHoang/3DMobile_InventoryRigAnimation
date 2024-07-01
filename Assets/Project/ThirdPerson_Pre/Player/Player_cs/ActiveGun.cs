@@ -74,6 +74,7 @@ public class ActiveGun : Singleton<ActiveGun>
             }
 
             weapon.UpdateWeapon(Time.deltaTime, crossHairTarget.position);
+            
         }
 
         /* if(Input.GetKeyDown(KeyCode.X)) 

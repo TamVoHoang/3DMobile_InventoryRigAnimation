@@ -229,15 +229,24 @@ public class GameManger : Singleton<GameManger>
                 //radom vi tri ai theo wordbound object
                 /* Instantiate(aiSpawned[Random.Range(0, aiSpawned.Length)], worldBounds.RandomPosition(), Quaternion.identity); */
 
+                var a = worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f);
+                var randomAIOnNav = worldBounds.RandomNavmeshLocation(10, a);
+
                 int randomNum = Random.Range(0, spawnedAI.Length);
-                Instantiate(spawnedAI[randomNum], worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f), Quaternion.identity);
+                //Instantiate(spawnedAI[randomNum], worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f), Quaternion.identity);//?OK
+                Instantiate(spawnedAI[randomNum], randomAIOnNav, Quaternion.identity);
 
                 // if gunner ai i=0 (ai can trang bi sung) => spawn 2 times (ammo + health)
                 if(randomNum == 0) {
                     for (int i = 0; i < 2; i++)
                     {
-                        for (int j = 0; i < itemsPickup_AiGunner.Length; i++)
-                            Instantiate(itemsPickup_AiGunner[j], worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f), Quaternion.identity);
+                        for (int j = 0; j < itemsPickup_AiGunner.Length; j++) {
+                            //Instantiate(itemsPickup_AiGunner[j], worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f), Quaternion.identity);//?OK
+                            var b = worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f);
+                            var randomItemsAIGunOnNav = worldBounds.RandomNavmeshLocation(10, b);
+                            Instantiate(itemsPickup_AiGunner[j], randomItemsAIGunOnNav, Quaternion.identity);
+                        }
+
                     }
                 }
 
@@ -261,7 +270,11 @@ public class GameManger : Singleton<GameManger>
 
             if(worldBounds != null) {
                 for (int i = 0; i < 2; i++) {
-                    Instantiate(itemsPlayer[i], worldBounds.RandomPosition_AroundPlayer(15f, 1f, 15f), Quaternion.identity);
+                    //Instantiate(itemsPlayer[i], worldBounds.RandomPosition_AroundPlayer(15f, 1f, 15f), Quaternion.identity); //?OK
+
+                    var a = worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f);
+                    var randomOnNav = worldBounds.RandomNavmeshLocation(10, a);
+                    Instantiate(itemsPlayer[i], randomOnNav, Quaternion.identity);
                 }
             }
         }
@@ -275,7 +288,11 @@ public class GameManger : Singleton<GameManger>
 
             if(worldBounds != null) {
                 int randomItems = Random.Range(2, itemsPlayer.Length);
-                Instantiate(itemsPlayer[randomItems], worldBounds.RandomPosition_AroundPlayer(30f, 1f, 30f), Quaternion.identity);
+                // Instantiate(itemsPlayer[randomItems], worldBounds.RandomPosition_AroundPlayer(30f, 1f, 30f), Quaternion.identity); //?OK
+
+                var a = worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f);
+                var randomOnNav = worldBounds.RandomNavmeshLocation(10, a);
+                Instantiate(itemsPlayer[randomItems], randomOnNav, Quaternion.identity);
             }
         }
     }

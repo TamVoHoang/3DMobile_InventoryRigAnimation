@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 
 public class WorldBounds : MonoBehaviour
 {
@@ -44,6 +45,19 @@ public class WorldBounds : MonoBehaviour
             Random.Range(min_.y, max_.y),
             Random.Range(min_.z, max_.z)
         );
+    }
+
+    public Vector3 RandomNavmeshLocation(float radius, Vector3 randomDirection) {
+
+        //var randomDirection = worldBounds.RandomPosition(); // vector3
+
+        NavMeshHit hit;
+        Vector3 finalPosition = Vector3.zero;
+        if (NavMesh.SamplePosition(randomDirection, out hit, radius, 1))
+        {
+            finalPosition = hit.position;
+        }
+        return finalPosition;
     }
 
     //todo
