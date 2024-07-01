@@ -10,10 +10,11 @@ public class Testing : MonoBehaviour
     [SerializeField] private UI_CharacterEquipment uICharacterEquipment;    // UI hien thi items duoc keo vao trang bi cho Player
     [SerializeField] private CharacterEquipment characterEquipment; // keo the player.go vao day (do player.GameObject chua characterEqipment.cs)
     
-    // Drafting
+    // Crafting
     [SerializeField] private UI_CraftingSystem uICraftingSystem;
     [SerializeField] private List<RecipeScriptableObject> recipeScriptableObjectList;
 
+    // Crafting
     /* [SerializeField] private GameObject UI_CraftingSystem_Go;
     [SerializeField] private GameObject UI_Inventory_Go;
     [SerializeField] private GameObject UI_CharacterEquipment_Go; */
