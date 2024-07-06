@@ -6423,6 +6423,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3370394943786146640}
   - {fileID: 9159656644420511342}
   - {fileID: 4476526252797298899}
   - {fileID: 8572357384270260017}
@@ -11852,6 +11853,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1829175765013896053
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3370394943786146640}
+  m_Layer: 0
+  m_Name: SwordSpawnPoint_Raycast
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3370394943786146640
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1829175765013896053}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.199, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1394223684347023429}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1860081754841207460
 GameObject:
   m_ObjectHideFlags: 0
@@ -51246,37 +51278,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!1 &6066796757321439248
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 332281045204172419}
-  m_Layer: 0
-  m_Name: SwordSpawnPoint_Raycast
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &332281045204172419
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6066796757321439248}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.2, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6338785901961128973}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6220004036168889570
 GameObject:
   m_ObjectHideFlags: 0
@@ -52095,8 +52096,7 @@ Transform:
   m_LocalPosition: {x: 0.08, y: 0.029, z: -0.032}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 332281045204172419}
+  m_Children: []
   m_Father: {fileID: 2074392704177108817}
   m_LocalEulerAnglesHint: {x: -10.968, y: 52.395, z: -88.701}
 --- !u!1 &6970571703447927239
@@ -68843,9 +68843,10 @@ MonoBehaviour:
   currenActiveWeapon: {fileID: 0}
   overrideControllers: {fileID: 0}
   timeBetweenAttacks: 0.5
-  swordSpawnPoint_Raycast: {fileID: 6066796757321439248}
+  swordSpawnPoint_Raycast: {fileID: 1829175765013896053}
   minSwordDisRaycast: 1.2
   isSwordTakeDamageEnemies: 0
+  crossHairTarget: {fileID: 0}
 --- !u!114 &4639977018484938451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -69337,7 +69338,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8694331582564027871}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

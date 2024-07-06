@@ -34,7 +34,12 @@ public class Item
         ISword_Red_01,
         ISword_Green_02,
         IMagPistol3D_01,
-        IHealthPickup3D_01
+        IHealthPickup3D_01,
+        GunSMWEP_01,
+        GunSMWEP_02,
+
+        GunPistol3D_02,
+        GunPistol3D_03,
     }
     public Item() {
         
@@ -115,8 +120,14 @@ public class Item
             case ItemType.Gold:                 return ItemAssets.Instance.gold;
 
             case ItemType.Sword3D_01:           return ItemAssets.Instance.swordSprite3D_01;
-            case ItemType.GunSMG3D_01:          return ItemAssets.Instance.gunSMGSprite3D_01;
+
             case ItemType.GunPistol3D_01:       return ItemAssets.Instance.gunPistolSprite3D_01;
+            case ItemType.GunPistol3D_02:       return ItemAssets.Instance.gunPistolSprite3D_02;
+            case ItemType.GunPistol3D_03:       return ItemAssets.Instance.gunPistolSprite3D_03;
+
+            case ItemType.GunSMG3D_01:          return ItemAssets.Instance.gunSMGSprite3D_01;
+            case ItemType.GunSMWEP_01:          return ItemAssets.Instance.gunSMWEPSprite3D_01;
+            case ItemType.GunSMWEP_02:          return ItemAssets.Instance.gunSMWEPSprite3D_02;
 
             case ItemType.IHand:                return ItemAssets.Instance.IHandSprite3D; //todo IWeapon
             case ItemType.ISword_Red_01:        return ItemAssets.Instance.ISword_Sprite3D_Red01; //todo IWeapon
@@ -170,9 +181,15 @@ public class Item
             case ItemType.Helmet_01:        return ItemAssets.Instance.helmetPrefab_01;
 
             case ItemType.Sword3D_01:       return ItemAssets.Instance.swordPrefab3D_01;
-            case ItemType.GunSMG3D_01:      return ItemAssets.Instance.gunSMGPrefab3D_01;
-            case ItemType.GunPistol3D_01:   return ItemAssets.Instance.gunPistolPrefab3D_01;
 
+            case ItemType.GunPistol3D_01:   return ItemAssets.Instance.gunPistolPrefab3D_01;
+            case ItemType.GunPistol3D_02:   return ItemAssets.Instance.gunPistolPrefab3D_02;
+            case ItemType.GunPistol3D_03:   return ItemAssets.Instance.gunPistolPrefab3D_03;
+
+            case ItemType.GunSMG3D_01:      return ItemAssets.Instance.gunSMGPrefab3D_01;
+            case ItemType.GunSMWEP_01:      return ItemAssets.Instance.gunSMWEPPrefab3D_01;
+            case ItemType.GunSMWEP_02:      return ItemAssets.Instance.gunSMWEPPrefab3D_02;
+            
             case ItemType.IHand:            return ItemAssets.Instance.IHandPrefab;                 //todo IWeapon
             case ItemType.ISword_Red_01:    return ItemAssets.Instance.ISword_Prefab3D_Red01;       //todo IWeapon
             case ItemType.ISword_Green_02:  return ItemAssets.Instance.ISword_Prefab3D_Green02;     //todo IWeapon
@@ -190,8 +207,14 @@ public class Item
     public ItemScriptableObject GetScriptableObject(ItemType itemType) {
         switch (itemType) {
             default:
-            case ItemType.GunSMG3D_01:          return ItemAssets.Instance.SO_SMG01_3D_01;
             case ItemType.GunPistol3D_01:       return ItemAssets.Instance.SO_Pistol01_3D_01;
+            case ItemType.GunPistol3D_02:       return ItemAssets.Instance.SO_Pistol01_3D_02;
+            case ItemType.GunPistol3D_03:       return ItemAssets.Instance.SO_Pistol01_3D_03;
+
+            case ItemType.GunSMG3D_01:          return ItemAssets.Instance.SO_SMG01_3D_01;
+            case ItemType.GunSMWEP_01:          return ItemAssets.Instance.SO_SMWEP_3D_01;
+            case ItemType.GunSMWEP_02:          return ItemAssets.Instance.SO_SMWEP_3D_02;
+            
 
             case ItemType.ISword_Red_01:        return ItemAssets.Instance.SO_ISword_01;        //todo IWeapon
             case ItemType.ISword_Green_02:      return ItemAssets.Instance.SO_ISword_02;        //todo IWeapon
@@ -235,13 +258,19 @@ public class Item
             case ItemType.Armor_02:
             
             case ItemType.Sword3D_01:
-            case ItemType.GunSMG3D_01:
+
             case ItemType.GunPistol3D_01:
+            case ItemType.GunPistol3D_02:
+            case ItemType.GunPistol3D_03:
+
+            case ItemType.GunSMG3D_01:
+            case ItemType.GunSMWEP_01:
+            case ItemType.GunSMWEP_02:
+            
 
             case ItemType.IHand: //todo IWeapon
             case ItemType.ISword_Red_01: //todo IWeapon
             case ItemType.ISword_Green_02: //todo IWeapon
-
 
                 return false;
         }

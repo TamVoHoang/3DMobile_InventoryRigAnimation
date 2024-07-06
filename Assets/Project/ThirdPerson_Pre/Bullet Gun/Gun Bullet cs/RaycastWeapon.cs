@@ -46,7 +46,7 @@ public class RaycastWeapon : MonoBehaviour
     [SerializeField] private float bulletDrop = 0.0f;       // bao xa bullet se roi xuong
     private List<Bullet> Bullets = new List<Bullet>();      //list add vien dan KHI FIRE
     public int bulletCount => Bullets.Count;
-    private float maxLifeTime = 0.05f;                       //todo 5
+    private float maxLifeTime = 0.05f;                      //todo 5
     [SerializeField] private float damage = 10.0f;          // damage of sung
     public float Damage { get => damage; private set => damage = value; }
     
@@ -60,6 +60,7 @@ public class RaycastWeapon : MonoBehaviour
     private void Awake() {
         
     }
+
     private Vector3 GetPosition(Bullet bullet)  //simualateBullet goi
                                                 // TINH VI TRI VIEN DAN THEO time = 0 va time = time.deltaTime tu simulateBullet 
                                                 // s1= s0 + vt + 1/2gt*t
@@ -157,6 +158,7 @@ public class RaycastWeapon : MonoBehaviour
             RaycastSegment(p0, p1, bullet);
         }); 
     }
+
     private void DestroyBullets() => Bullets.RemoveAll(bullet => bullet.time >= maxLifeTime); //!updateBullet goi
     private void DesTroyBulletTracer() {
         foreach (var bulletTracer in Bullets)
@@ -239,5 +241,4 @@ public class RaycastWeapon : MonoBehaviour
     } */
     
     //todo
-
 }

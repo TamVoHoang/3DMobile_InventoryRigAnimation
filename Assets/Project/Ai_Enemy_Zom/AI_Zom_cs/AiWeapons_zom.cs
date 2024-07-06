@@ -82,7 +82,7 @@ public class AiWeapons_zom : MonoBehaviour
 
     // sound
     public void PlaySound() {
-        audioSource.PlayOneShot(audioClip, 1);
+        //audioSource.PlayOneShot(audioClip, 1);
     }
     //todo
 }

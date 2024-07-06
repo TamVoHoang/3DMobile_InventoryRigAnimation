@@ -66,6 +66,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00c13f4a9c7c31a4a8e4f04683523fe3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isLoadedSuccessInLogin: 0
+  loggedPayfabID: 
 --- !u!114 &8603189907703044227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,16 +80,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29871ed1ef4bb994daa4377487054263, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item:
-    itemScriptableObject: {fileID: 0}
-    amount: 1
-    isSplited: 0
   inventoryJson:
     inventoryName: 
     itemsListJson: []
   IHealthPickup_01: {fileID: 11400000, guid: 2683f3ca57d4eb64b858eb8d6ea0df3b, type: 2}
   IMagPistol_01: {fileID: 11400000, guid: 4273d2d17cefa404fb91213116c666e7, type: 2}
   Pistol01_3D_01: {fileID: 11400000, guid: c7f1dbba69c5d854b937c162a95d585e, type: 2}
+  Pistol01_3D_02: {fileID: 11400000, guid: 9ac1dc7ceec05b44593fdfcc15388ff3, type: 2}
+  Pistol01_3D_03: {fileID: 11400000, guid: aedbc8aa1786e2f42bff2758e08e06c3, type: 2}
   SMG01_3D_01: {fileID: 11400000, guid: 4fb26163f37333d40ac8ed923401eba7, type: 2}
+  GunSMWEP_01: {fileID: 11400000, guid: ec71bf9a547e01140bc3a999a32cb4dd, type: 2}
+  GunSMWEP_02: {fileID: 11400000, guid: dc88472af547736449fe399ab2b66ef2, type: 2}
   ISword_01: {fileID: 11400000, guid: 7e0378519f1e76840a7119666719cd93, type: 2}
   ISword_02: {fileID: 11400000, guid: 1482893d79281764e8cac3fff198fd3c, type: 2}

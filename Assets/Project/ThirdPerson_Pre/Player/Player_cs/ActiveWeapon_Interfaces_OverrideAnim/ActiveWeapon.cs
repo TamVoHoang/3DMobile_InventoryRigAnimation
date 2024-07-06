@@ -1,5 +1,3 @@
-
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -25,8 +23,8 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
         return equipped_swords[index];
     }
 
-    public bool IsHolstered_Sword { get { return isHolstered_Sword; } }
-    public int GetActiveSwordIndex { get { return activeSwordIndex; } }
+    public bool IsHolstered_Sword { get {return isHolstered_Sword; }}
+    public int GetActiveSwordIndex { get {return activeSwordIndex; }}
     [SerializeField] private int activeSwordIndex = 1;
     [SerializeField] private bool isHolstered_Sword = false; // false = dang equip
     private CharacterEquipment characterEquipment;
@@ -41,7 +39,6 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     public AnimatorOverrideController overrideControllers;
     [SerializeField] private float timeBetweenAttacks;
     private string weaponName;
-    //private int weaponDamage;
     private bool isAttacking = false;
 
     //todo swords raycast
@@ -50,7 +47,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
     // [SerializeField] GameObject rightHand;
     [SerializeField] float minSwordDisRaycast = 1f;
     [SerializeField] bool isSwordTakeDamageEnemies;
-
+    [SerializeField] private Transform crossHairTarget;
     protected override void Awake() {
         base.Awake();
     }
@@ -66,6 +63,8 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
 
         AttackCoolDown();// testing thu
         isSwordTakeDamageEnemies = false;
+
+        crossHairTarget = GameObject.Find("CroosHairTarget").transform;
     }
     private void Update() {
         AttackCurrentWeapon();
@@ -116,10 +115,12 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
 
         //? neu co trang bi kiem + nhan giu nut tan cong => rayscast duoc ta co the take damage
         if(currenActiveWeapon != null && !isHolstered_Sword && InputManager.Instance.IsAttackButton) {
-            CheckSwordRaycast(swordSpawnPoint_Raycast.transform, Vector3.up);
+            Vector3 aimVector = crossHairTarget.position - swordSpawnPoint_Raycast.transform.position;
+            aimVector.Normalize();
+            CheckSwordRaycast(swordSpawnPoint_Raycast.transform, aimVector);
         }
-
     }
+
     IEnumerator TimeBetweenAttackRoutine() {
         yield return new WaitForSeconds(timeBetweenAttacks);
         isAttacking = false;
@@ -140,6 +141,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
             Debug.Log("Destroy old sword");
         }
     }
+
     public void HolsterSwordsBeforeDeath() {
         playerAnimator.SetBool("holster_sword", true);
         playerAnimator.SetBool("ReadyAttack", false);
@@ -166,6 +168,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
         yield return StartCoroutine(ActivateSword(activeIndex));
         activeSwordIndex = activeIndex;
     }
+
     IEnumerator HolsterSword(int index) {
         var sword = GetSword(index); // kiem tra xem cai o equiped_Weapon dang co hay ko de chuan bi thay, neu varWeapon co thi ko thuc hien animation cat sung
         if (sword)
@@ -189,6 +192,7 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
             isHolstered_Sword = true;
         }
     }
+
     private void Switch_DeafaultWeapon(MonoBehaviour weapon) {
         currenActiveWeapon = weapon;
         overrideControllers = (currenActiveWeapon as IWeapon).GetWeaponInfo().animatorOverrideController;
@@ -213,15 +217,14 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
             isHolstered_Sword = false;
         }
     }
-    
+
     private void CheckSwordRaycast(Transform RHand, Vector3 aimDirection) {
         Debug.Log($"CheckSwordRaycast methid is running");
 
         RaycastHit hit;
         int layerMask = LayerMask.GetMask("Character"); //! player and enemy have same LayerMask
-
-        if(Physics.Raycast(RHand.position, RHand.transform.TransformDirection(aimDirection), out hit, minSwordDisRaycast, layerMask)) {
-            Debug.DrawRay(RHand.position, RHand.transform.TransformDirection(aimDirection) * minSwordDisRaycast, Color.yellow);
+        if(Physics.Raycast(RHand.position, aimDirection, out hit, minSwordDisRaycast, layerMask)) {
+            Debug.DrawRay(RHand.position, aimDirection * minSwordDisRaycast, Color.yellow);
 
             if(hit.collider.gameObject.CompareTag("Player")) return;
 
@@ -237,14 +240,14 @@ public class ActiveWeapon : Singleton<ActiveWeapon>
                 ////StartCoroutine(PlayerEnemyTakeHealthCO(0.7f));
             }
         } else {
-            Debug.DrawRay(RHand.position, RHand.transform.TransformDirection(aimDirection) * minSwordDisRaycast, Color.red);
+            Debug.DrawRay(RHand.position, aimDirection * minSwordDisRaycast, Color.red);
         }
     }
+
     IEnumerator PlayerEnemyTakeHealthCO(float time) {
         yield return new WaitForSeconds(time);
         isSwordTakeDamageEnemies = false;
     }
-
     
     //todo
 }

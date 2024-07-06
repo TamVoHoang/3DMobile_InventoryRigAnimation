@@ -283,7 +283,7 @@ public class GameManger : Singleton<GameManger>
     IEnumerator PlayerWeapons_SpawnerCO() {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(50, 70));  //Random.Range(50, 70)
+            yield return new WaitForSeconds(Random.Range(10, 15));  //Random.Range(50, 70)
             WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
 
             if(worldBounds != null) {

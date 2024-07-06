@@ -27,7 +27,13 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
     [SerializeField] ItemScriptableObject IMagPistol_01;
 
     [SerializeField] ItemScriptableObject Pistol01_3D_01;
+    [SerializeField] ItemScriptableObject Pistol01_3D_02;
+    [SerializeField] ItemScriptableObject Pistol01_3D_03;
+
     [SerializeField] ItemScriptableObject SMG01_3D_01;
+    [SerializeField] ItemScriptableObject GunSMWEP_01;
+    [SerializeField] ItemScriptableObject GunSMWEP_02;
+
     [SerializeField] ItemScriptableObject ISword_01;
     [SerializeField] ItemScriptableObject ISword_02;
 
@@ -49,6 +55,11 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
     //? khoi to InvenJson de signup() - cho vu khi khi signup
     private InventoryJson ReturnInventoryJson_ToSingnUp() {
         CreateNewItemListJson_ToSignUp(Pistol01_3D_01, 1);
+        CreateNewItemListJson_ToSignUp(Pistol01_3D_02, 1);
+        CreateNewItemListJson_ToSignUp(Pistol01_3D_03, 1);
+        CreateNewItemListJson_ToSignUp(GunSMWEP_01, 1);
+        CreateNewItemListJson_ToSignUp(GunSMWEP_02, 1);
+
         CreateNewItemListJson_ToSignUp(IHealthPickup_01, 3);
         CreateNewItemListJson_ToSignUp(IMagPistol_01, 3);
         return new InventoryJson("ItemInventory", inventoryJson.itemsListJson);

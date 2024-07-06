@@ -33,8 +33,15 @@ public class ItemAssets : MonoBehaviour
     public Sprite iron; // cuc sat
     public Sprite gold; // cuc vang
     public Sprite swordSprite3D_01;
-    public Sprite gunSMGSprite3D_01;
+
     public Sprite gunPistolSprite3D_01;
+    public Sprite gunPistolSprite3D_02;
+    public Sprite gunPistolSprite3D_03;
+
+    public Sprite gunSMGSprite3D_01;
+    public Sprite gunSMWEPSprite3D_01;
+    public Sprite gunSMWEPSprite3D_02;
+
 #endregion 2D sprites
 
     public Sprite IHandSprite3D; //? IWeapon
@@ -59,8 +66,13 @@ public class ItemAssets : MonoBehaviour
 #endregion 2D Prefabs
 
     public GameObject swordPrefab3D_01;
-    public GameObject gunSMGPrefab3D_01;
     public GameObject gunPistolPrefab3D_01;
+    public GameObject gunPistolPrefab3D_02;
+    public GameObject gunPistolPrefab3D_03;
+
+    public GameObject gunSMGPrefab3D_01;
+    public GameObject gunSMWEPPrefab3D_01;
+    public GameObject gunSMWEPPrefab3D_02;
 
     public GameObject IHandPrefab;              //? IWeapon
     public GameObject ISword_Prefab3D_Red01;    //? IWeapon
@@ -74,8 +86,14 @@ public class ItemAssets : MonoBehaviour
     public ItemScriptableObject SO_IMagPistol_01;
     public ItemScriptableObject SO_ISword_01;
     public ItemScriptableObject SO_ISword_02;
+
     public ItemScriptableObject SO_Pistol01_3D_01;
+    public ItemScriptableObject SO_Pistol01_3D_02;
+    public ItemScriptableObject SO_Pistol01_3D_03;
+
     public ItemScriptableObject SO_SMG01_3D_01;
+    public ItemScriptableObject SO_SMWEP_3D_01;
+    public ItemScriptableObject SO_SMWEP_3D_02;
 
     //todo
 }

@@ -17,7 +17,7 @@ public class ItemWorld3D : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 45, 0);
         
         ItemWorld3D itemWorld3D = transform.GetComponent<ItemWorld3D>();
-        itemWorld3D.SetItem3D(item);
+        itemWorld3D.SetItem3D(item, transform);
 
         return itemWorld3D;
     }
@@ -38,11 +38,12 @@ public class ItemWorld3D : MonoBehaviour
     }
 
     //todo thay doi thuoc tinh cua loai vat pham duoc SpawnItemWorld(Vector3 pos, Item item)
-    public void SetItem3D(Item item) {
+    public void SetItem3D(Item item, Transform transform) {
         this.item = item;
-        meshFilter.mesh = item.itemScriptableObject.pfItem.GetComponent<MeshFilter>().sharedMesh;
-        meshRenderer.material = item.itemScriptableObject.pfItem.GetComponent<MeshRenderer>().sharedMaterial;
+        /* meshFilter.mesh = item.itemScriptableObject.pfItem.GetComponent<MeshFilter>().sharedMesh;
+        meshRenderer.material = item.itemScriptableObject.pfItem.GetComponent<MeshRenderer>().sharedMaterial; */
 
+        Instantiate(item.itemScriptableObject.pfItem, transform.position, transform.rotation, transform);
 
         if (item.amount > 1) {
             textMeshPro.SetText(item.amount.ToString());
