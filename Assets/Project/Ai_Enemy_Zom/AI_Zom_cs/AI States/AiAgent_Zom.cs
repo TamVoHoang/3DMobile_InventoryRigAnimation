@@ -68,7 +68,7 @@ public class AiAgent_zom : MonoBehaviour
         stateMachine_zom.Update();
     }
     
-    public void DesTroyOnSelfe() => Destroy(this.gameObject);
+    public void DesTroyOnSelfe() => Destroy(this.gameObject, 5f);
     
     //todo
 }

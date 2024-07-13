@@ -13,13 +13,14 @@ MonoBehaviour:
   m_Name: IHealthPickup_01
   m_EditorClassIdentifier: 
   itemType: 22
-  itemName: IHealthPickup3D_01
+  itemName: HealthPickup
   itemSprite: {fileID: 21300000, guid: e3b6113341d5a478baa0d3cdceb50350, type: 3}
   pfItem: {fileID: 2334020579491521255, guid: 26fd9b10612f9f44d891d90186713b85, type: 3}
   equipSlot: 0
   gunPrefabRaycast: {fileID: 0}
-  clipAmount: 0
-  healthAmout: 100
-  handSwordPrefab: {fileID: 0}
+  damage: 0
+  coolDownTime: 0
   pfWeaponInterface: {fileID: 2334020579491521255, guid: 26fd9b10612f9f44d891d90186713b85, type: 3}
   animatorOverrideController: {fileID: 0}
+  clipAmount: 0
+  healthAmout: 100

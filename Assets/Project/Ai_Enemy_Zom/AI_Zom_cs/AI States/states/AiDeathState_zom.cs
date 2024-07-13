@@ -16,6 +16,8 @@ public class AiDeathState_zom : AiState_Zom
         direction.y = 1f;
         agent.ragdoll.ApplyForceLying(direction * agent.configZombie.dieForece);
         agent.aiUIHealthBar.gameObject.SetActive(false);
+
+        agent.DesTroyOnSelfe();
     }
     public void Update(AiAgent_zom agent)
     {

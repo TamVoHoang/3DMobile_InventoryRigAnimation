@@ -87,7 +87,9 @@ public class UI_CraftingSystem : MonoBehaviour
         RectTransform itemRectTransform = itemTransform.GetComponent<RectTransform>(); //? vi tri trong rect Transform
         itemRectTransform.anchoredPosition = slotTransformArray[x, y].GetComponent<RectTransform>().anchoredPosition;//? gan vi tri rectTrasform cua grid -> recTransform pfUI_item
         
-        itemTransform.GetComponent<UI_Item>().SetItem(item); //pfUI_item chua UI_Item.cs nen co the Getcomponent
+        //itemTransform.GetComponent<UI_Item>().SetItem(item); //pfUI_item chua UI_Item.cs nen co the Getcomponent
+        itemTransform.GetComponent<UI_Item>().SetItem_OnCraftingUI(item); // chi hien thi hinh anh len UI_crafting - ko quan tam pfUI || pfUI Info
+
     }
 
     private void CreateItemOutput(Item item) {
@@ -97,7 +99,8 @@ public class UI_CraftingSystem : MonoBehaviour
         itemRectTransform.anchoredPosition = outputSlotTransform.GetComponent<RectTransform>().anchoredPosition;
 
         itemTransform.localScale = Vector3.one * 1.5f; // phong to anh len
-        itemTransform.GetComponent<UI_Item>().SetItem(item); // hien thi hinh anh tu trong .cs ra image transform
+        //itemTransform.GetComponent<UI_Item>().SetItem(item); // hien thi hinh anh tu trong .cs ra image transform
+        itemTransform.GetComponent<UI_Item>().SetItem_OnCraftingUI(item); // chi hien thi hinh anh len UI_crafting - ko quan tam pfUI || pfUI Info
     }
 
 }

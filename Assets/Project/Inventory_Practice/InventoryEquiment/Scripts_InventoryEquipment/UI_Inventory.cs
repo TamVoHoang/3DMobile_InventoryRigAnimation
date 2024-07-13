@@ -8,7 +8,7 @@ using CodeMonkey.Utils;
 //todo Gameobject = duoi tuong nam duoi Canvas Inventory
 public class UI_Inventory : MonoBehaviour
 {
-    [SerializeField] private Transform pfUI_Item;
+    [SerializeField] private Transform pfUI_Item; // loai co info va loai ko co info
     
     [SerializeField] private Inventory inventory; // se duoc gan vao khi SetInventory is called
     [SerializeField] private Inventory inventoryEquipment;

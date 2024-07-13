@@ -10,6 +10,9 @@ public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IE
 
     [SerializeField] private Image image;
     [SerializeField] private TextMeshProUGUI amountText;
+    [SerializeField] private TextMeshProUGUI itemsNameText;
+    [SerializeField] private TextMeshProUGUI powerText;
+
 
     private Canvas canvas;
     private RectTransform rectTransform;
@@ -95,6 +98,19 @@ public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IE
         }
     }
 
+    void SetItemName(string itemName) {
+        if (itemName != null) {
+            this.itemsNameText.text = itemName.ToString();
+        }
+    }
+
+    void SetPowerText(float power) {
+        if(power > 0)
+            powerText.text = "Power: " + power.ToString();
+        else
+            powerText.text = "";
+    }
+
     public void Hide() {
         gameObject.SetActive(false);
     }
@@ -109,7 +125,24 @@ public class UI_Item : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IE
         SetSprite(item.itemScriptableObject.itemSprite); // lay sprite ben trong ItemScriptableObject
 
         SetAmountText(item.amount);
+
+        SetItemName(item.itemScriptableObject.itemName);
+
+        SetPowerText(item.itemScriptableObject.damage);
     }
+
+    public void SetItem_OnCraftingUI(Item item) {
+        this.item = item;
+        //SetSprite(item.GetSprite()); //! lay sprite ben ngoai ItemAsset - co the dung ok
+        SetSprite(item.itemScriptableObject.itemSprite); // lay sprite ben trong ItemScriptableObject
+
+        SetAmountText(-1);
+
+        SetItemName("");
+
+        SetPowerText(-1);
+    }
+    
 
     public Item TryGetType() {
         return item;
