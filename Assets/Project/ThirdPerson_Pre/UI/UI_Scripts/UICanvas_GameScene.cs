@@ -40,7 +40,8 @@ public class UICanvas_GameScene : MonoBehaviour
     }
 
     private void Update() {
-        DirectionToSpaceship();
+        if(!CheckSpawnerScene.IsInGameScene()) return;
+            DirectionToSpaceship();
     }
 
     void DirectionToSpaceship() {

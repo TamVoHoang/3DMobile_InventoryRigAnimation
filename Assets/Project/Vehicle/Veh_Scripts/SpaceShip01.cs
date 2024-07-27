@@ -19,6 +19,8 @@ public class SpaceShip01 : MonoBehaviour
         isTouchPlayerGun = false;
         // move den vi tri random sau khi instantiate tu gameManager
         SpawnPrefabOnNavMesh();
+
+        DontDestroyOnLoad(this);
     }
 
     private void Update() {

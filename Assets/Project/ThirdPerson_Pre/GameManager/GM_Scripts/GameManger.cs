@@ -91,7 +91,7 @@ public class GameManger : Singleton<GameManger>
         if(isReady) Timer();
         
         // su kien de spawn spaceship theo remainingtime
-        if(remainingTime <= remainingTime_tmp * 0.8 && !isSpaceShipSpawned) {
+        if(remainingTime <= remainingTime_tmp * 0.5f && !isSpaceShipSpawned) {
             SpaceShipSpawner();
         }
 

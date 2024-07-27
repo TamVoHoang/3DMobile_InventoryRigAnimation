@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
 {
     [SerializeField] private Image sprintingImage;
-    private bool isSprinting = false;
+    [SerializeField] private bool isSprinting = false;
     public bool IsSprinting { get => isSprinting; }
 
     #region Movement
@@ -144,9 +144,10 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
         if(InputManager.Instance.IsSprintButton) {
             isSprinting = !isSprinting;
             InputManager.Instance.SetIsSprintButton(false);
+
             // thay doi mau sac cua nut nhan sprinting
-            if(!isSprinting) sprintingImage.color = new Color32(255, 255, 225, 225);
-            else sprintingImage.color = new Color32(255, 255, 225, 100);
+            if(!isSprinting) sprintingImage.color = new Color32(255, 255, 225, 100);
+            else sprintingImage.color = new Color32(255, 255, 225, 200);
         }
     }
 

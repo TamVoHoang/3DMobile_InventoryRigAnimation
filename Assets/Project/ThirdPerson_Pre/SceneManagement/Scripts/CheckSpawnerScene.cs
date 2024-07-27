@@ -13,6 +13,9 @@ public static class CheckSpawnerScene
     // Game scenes
     public const string Testing_ThirdPerson = "Testing_ThirdPerson";
     public const string Testing_BattleRoyale = "Testing_BattleRoyale";
+    public const string BlackMarket = "BlackMarket";
+    public const string Corporation = "Corporation";
+
 
     // scene with having player
     public const string ThirdPerson = "ThirdPerson";
@@ -24,7 +27,8 @@ public static class CheckSpawnerScene
 
     // true neu la scene game
     public static bool IsInGameScene() {
-        if(CheckScene(ThirdPerson) || CheckScene(Testing_ThirdPerson) || CheckScene(Testing_BattleRoyale))
+        if(CheckScene(ThirdPerson) || CheckScene(Testing_ThirdPerson) || 
+            CheckScene(Testing_BattleRoyale) || CheckScene(BlackMarket) || CheckScene(Corporation))
             return true;
         else return false;
     }
@@ -35,5 +39,5 @@ public static class CheckSpawnerScene
             return true;
         else return false;
     }
-    //todo
+    
 }

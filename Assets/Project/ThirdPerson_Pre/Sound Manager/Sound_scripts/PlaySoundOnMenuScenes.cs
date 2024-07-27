@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlaySoundOnMenuScenes : MonoBehaviour
 {
-    AudioSource audioSource;
+    [SerializeField] AudioSource audioSource;
     private void Awake() {
         audioSource = GetComponent<AudioSource>();
     }
