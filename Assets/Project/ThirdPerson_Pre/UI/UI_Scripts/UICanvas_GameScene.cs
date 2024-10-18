@@ -24,7 +24,6 @@ public class UICanvas_GameScene : MonoBehaviour
 
         isDataHandler = false;
         isSceneHandler = false;
-
     }
 
     private void Start() {

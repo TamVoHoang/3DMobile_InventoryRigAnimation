@@ -93,6 +93,7 @@ public class InputManager : Singleton<InputManager>
         Magnitude();
 
         aim = playerControls.Player.Aim.ReadValue<Vector2>();
+        aim.Normalize();
         //look = playerControls.Player.Look.ReadValue<Vector2>(); // look around bang onScreen
     }
     private void Magnitude() //? dam bao khi hz && vz = 1 => move.x && move.y = 1
@@ -104,4 +105,4 @@ public class InputManager : Singleton<InputManager>
     }
 
     //todo End
-} 
+}

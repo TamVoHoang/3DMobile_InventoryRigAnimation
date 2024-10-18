@@ -121,7 +121,7 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
             case Item.ItemType.Coin:
             {
                 Debug.Log("su dung Coin");
-                inventoryEquipment.RemoveItemEquip(new Item {itemScriptableObject = item.itemScriptableObject, amount =1});
+                inventoryEquipment.RemoveItemEquip(new Item {itemScriptableObject = item.itemScriptableObject, amount = 1});
                 break;
             }
         }
@@ -175,6 +175,7 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
 
             if(itemWorld3DEquipment.GetItem().IsStackable()) {
                 inventory.AddItem(itemWorld3DEquipment.GetItem());
+                Debug.Log($"_____" + itemWorld3DEquipment.GetItem());
                 itemWorld3DEquipment.DestroySelf();
             }
             else if(!itemWorld3DEquipment.GetItem().IsStackable() && equipedItemAmount < itemSlotAmount) {
@@ -241,7 +242,7 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
         {
             // set SO in item
             item.itemScriptableObject = item.GetScriptableObject(); // using itemType -> get SO from ItemAsset.cs
-
+            Debug.Log($"_____item trong IventoryJson" + item);
             if(item.IsStackable()) this.inventory.AddItem(item);
             if(!item.IsStackable()) this.inventoryEquipment.AddItemEquipment(item);
         }

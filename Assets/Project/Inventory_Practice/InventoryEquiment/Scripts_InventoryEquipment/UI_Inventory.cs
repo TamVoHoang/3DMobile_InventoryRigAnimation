@@ -25,11 +25,16 @@ public class UI_Inventory : MonoBehaviour
 
 
     private PlayerController playerController;
-    [SerializeField] private int ItemAmountOnRow = 5;
-    [SerializeField] float itemSlotCellSize = 100f;
 
-    [SerializeField] private int ItemAmountOnRow_scroll = 2;
-    [SerializeField] float itemSlotCellSize_scroll = 100f;
+    // kich thuoc moi slot chua item image | tang giam tuy vao inventory UI
+    [SerializeField] float itemSlotCellSize = 100f;
+    [SerializeField] private int ItemsAmountOnRow = 5;
+    [SerializeField] private int ItemEquipedAmountOnRow = 1;
+
+
+    // Not Using -> dung cho inventory pickup list
+    private int ItemAmountOnRow_scroll = 2;
+    float itemSlotCellSize_scroll = 100f;
     
     private void Awake() {
         //! ITEMSLOTCONTAINER PHAI GOI DAU TIEN NEU KO SE KO CO CHO DE ITEMSLOTTEMPLET INSTANTIATE COL 85 AND 147
@@ -195,7 +200,7 @@ public class UI_Inventory : MonoBehaviour
 
             // offset x, y vi tri o vat pham tren bang vat pham
             x++;
-            if (x >= ItemAmountOnRow) {
+            if (x >= 5) {
                 x = 0;
                 y++;
             }
@@ -282,7 +287,7 @@ public class UI_Inventory : MonoBehaviour
 
             // offset x, y vi tri o vat pham tren bang vat pham
             x++;
-            if (x >= ItemAmountOnRow) {
+            if (x >= ItemEquipedAmountOnRow) {
                 x = 0;
                 y++;
             }
@@ -291,4 +296,4 @@ public class UI_Inventory : MonoBehaviour
     }
 
     //todo
-    }
+}

@@ -233,20 +233,19 @@ public class GameManger : Singleton<GameManger>
                 var randomAIOnNav = worldBounds.RandomNavmeshLocation(10, a);
 
                 int randomNum = Random.Range(0, spawnedAI.Length);
-                //Instantiate(spawnedAI[randomNum], worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f), Quaternion.identity);//?OK
+                /* Instantiate(spawnedAI[randomNum], worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f), Quaternion.identity); *///?OK
                 Instantiate(spawnedAI[randomNum], randomAIOnNav, Quaternion.identity);
 
-                // if gunner ai i=0 (ai can trang bi sung) => spawn 2 times (ammo + health)
+                // if gunner ai i=0 (ai can trang bi sung) => spawn 3 times (ammo + health)
                 if(randomNum == 0) {
-                    for (int i = 0; i < 2; i++)
+                    for (int i = 0; i < 3; i++)
                     {
                         for (int j = 0; j < itemsPickup_AiGunner.Length; j++) {
-                            //Instantiate(itemsPickup_AiGunner[j], worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f), Quaternion.identity);//?OK
+                            /* Instantiate(itemsPickup_AiGunner[j], worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f), Quaternion.identity); *///?OK
                             var b = worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f);
                             var randomItemsAIGunOnNav = worldBounds.RandomNavmeshLocation(10, b);
                             Instantiate(itemsPickup_AiGunner[j], randomItemsAIGunOnNav, Quaternion.identity);
                         }
-
                     }
                 }
 
@@ -263,16 +262,16 @@ public class GameManger : Singleton<GameManger>
     IEnumerator PlayerPickupItems_SpawnerCO() {
         while (true)
         {
-            //yield return new WaitForSeconds(Random.Range(minTimeToSpawnPlayerItems, maxTimeToSpawnPlayerItems));
-            yield return new WaitForSeconds(15);
+            yield return new WaitForSeconds(Random.Range(minTimeToSpawnPlayerItems, maxTimeToSpawnPlayerItems));
+            /* yield return new WaitForSeconds(15); */
 
             WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
 
             if(worldBounds != null) {
                 for (int i = 0; i < 2; i++) {
-                    //Instantiate(itemsPlayer[i], worldBounds.RandomPosition_AroundPlayer(15f, 1f, 15f), Quaternion.identity); //?OK
+                    /* Instantiate(itemsPlayer[i], worldBounds.RandomPosition_AroundPlayer(15f, 1f, 15f), Quaternion.identity); */ //?OK
 
-                    var a = worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f);
+                    var a = worldBounds.RandomPosition_AroundPlayer(15f, 1f, 15f);
                     var randomOnNav = worldBounds.RandomNavmeshLocation(10, a);
                     Instantiate(itemsPlayer[i], randomOnNav, Quaternion.identity);
                 }
@@ -283,14 +282,14 @@ public class GameManger : Singleton<GameManger>
     IEnumerator PlayerWeapons_SpawnerCO() {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(10, 15));  //Random.Range(50, 70)
+            yield return new WaitForSeconds(Random.Range(30, 60));  //Random.Range(50, 70)
             WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
 
             if(worldBounds != null) {
                 int randomItems = Random.Range(2, itemsPlayer.Length);
-                // Instantiate(itemsPlayer[randomItems], worldBounds.RandomPosition_AroundPlayer(30f, 1f, 30f), Quaternion.identity); //?OK
+                /* Instantiate(itemsPlayer[randomItems], worldBounds.RandomPosition_AroundPlayer(30f, 1f, 30f), Quaternion.identity); */ //?OK
 
-                var a = worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f);
+                var a = worldBounds.RandomPosition_AroundPlayer(25f, 1f, 25f);
                 var randomOnNav = worldBounds.RandomNavmeshLocation(10, a);
                 Instantiate(itemsPlayer[randomItems], randomOnNav, Quaternion.identity);
             }
