@@ -39,6 +39,7 @@ public class ChracterAim : Singleton<ChracterAim> // co the bo singleton tai day
         
         xAixs += InputManager.Instance.GetAim.x * currentMouseSensitivity;
         yAxis -= InputManager.Instance.GetAim.y * currentMouseSensitivity;
+        
         yAxis = Mathf.Clamp(yAxis, -yAxixLimit.x, yAxixLimit.y);
     }
 

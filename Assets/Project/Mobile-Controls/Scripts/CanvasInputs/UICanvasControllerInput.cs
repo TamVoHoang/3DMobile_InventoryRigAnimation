@@ -19,6 +19,9 @@ public class UICanvasControllerInput : MonoBehaviour
     public void VirtualAimInput(Vector2 virtualLookDirection)
     {
         inputs.SetAim(Vector2.ClampMagnitude(virtualLookDirection, 1));
+
+        // var delta = virtualLookDirection.normalized;
+        // inputs.SetAim(delta);
     }
 
     public void VirtualLookInput(Vector2 virtualLookDirection)

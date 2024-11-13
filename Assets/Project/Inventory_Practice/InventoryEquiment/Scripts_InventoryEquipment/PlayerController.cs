@@ -25,6 +25,7 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
     //TODO SAVE AND LOAD LIST<ITEM>
 
     [SerializeField] bool isPicked = false;
+
     
     protected override void Awake() {
         base.Awake();
@@ -38,6 +39,7 @@ public class PlayerController : Singleton<PlayerController>, IData_InventoryPers
         characterEquipment = GetComponent<CharacterEquipment>();
 
         isPicked = false;
+        
     }
     private void Start() {
         //? dung static itemWorld goi phuong thuc Spawnworld ra vat phan world

@@ -58,6 +58,7 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
 
     public string loggedPayfabID;
 
+
     protected override void Awake() {
         base.Awake();
         /* playerDataLocal_Temp = FindObjectOfType<PlayerDataLocal_Temp>();
@@ -66,6 +67,7 @@ public class PlayerDataJson : Singleton<PlayerDataJson>
         isLoadedSuccessInLogin = false;
         isLoadedSuccessInGame = false;
     }
+
 
     //? Tao doi tuong lop playerJson local - gan gia tri -> save "Json" PlayFab.
     private PlayerJson ReturnClassPlayerJson_ToSignUp(string mail, string name) {

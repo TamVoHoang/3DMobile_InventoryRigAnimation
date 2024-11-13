@@ -1,9 +1,7 @@
 using System.Collections;
 using TMPro;
-using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 //* gameobject = gameManager object, kem theo cavas CountDown, timmer, result
@@ -37,8 +35,7 @@ public class GameManger : Singleton<GameManger>
     [SerializeField] private GameObject results_UI;
     [SerializeField] TextMeshProUGUI killedCount;
     [SerializeField] TextMeshProUGUI deathCount;
-    private int killedCountTemp = 0; // bien luu tam trong 1 lan choi
-    public void SetKilledCount(int killed) => killedCountTemp += killed;
+    [SerializeField] int killedCountCurrInGame;
 
     [Header("   Enemy Spawner")]
     [SerializeField] int minTimeToSpawnEnemy = 10;
@@ -205,11 +202,14 @@ public class GameManger : Singleton<GameManger>
         }
         
         // show ket qua killed and die cua player len reseul panel
-        var didedCountTemp = FindObjectOfType<PlayerHealth>().GetDiedCount;
-        deathCount.text = didedCountTemp.ToString("0");
-        killedCount.text = killedCountTemp.ToString("0");
-
+        var deadCountCurrInGame = FindObjectOfType<PlayerHealth>().GetDeadCountCurrInGame;
+        deathCount.text = deadCountCurrInGame.ToString("0");
+        killedCount.text = this.killedCountCurrInGame.ToString("0");
         LoadMainMenuScene_BackButtonInResultPanel(); // khi het gio bao ket qua => auto save
+    }
+
+    public void SetKilledCountCurrInGame(int count) {
+        killedCountCurrInGame += count;
     }
 
     //? spawner Enemy + itemPickup for Ai gun

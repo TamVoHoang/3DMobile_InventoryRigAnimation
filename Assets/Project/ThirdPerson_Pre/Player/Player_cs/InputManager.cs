@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 public class InputManager : Singleton<InputManager>
 {
     private PlayerControls playerControls;
-    private Vector2 move;//ok
-    private Vector2 aim;//aming
+    private Vector2 move;   //ok
+    private Vector2 aim;    //aming code || gamePad
     private Vector2 look; //look arount
     [SerializeField] private bool isAttackButton;
     private bool isJumpButton;
@@ -55,9 +55,10 @@ public class InputManager : Singleton<InputManager>
 
     private void OnEnable() {
         playerControls.Player.Move.Enable();
-        //playerControls.Player.Look.Enable(); // look around bang onScreen
-        playerControls.Player.Aim.Enable();
+        playerControls.Player.Aim.Enable();     //? right stick GamePad
         playerControls.Player.Attack.Enable();
+
+        //playerControls.Player.Look.Enable(); // look around bang onScreen
         //playerControls.Player.Jump.Enable();
         //playerControls.Player.Sprint.Enable();
         //playerControls.Player.SwitchState.Enable();
@@ -92,8 +93,10 @@ public class InputManager : Singleton<InputManager>
         move = playerControls.Player.Move.ReadValue<Vector2>();
         Magnitude();
 
+        //? right stick GamePad
         aim = playerControls.Player.Aim.ReadValue<Vector2>();
         aim.Normalize();
+
         //look = playerControls.Player.Look.ReadValue<Vector2>(); // look around bang onScreen
     }
     private void Magnitude() //? dam bao khi hz && vz = 1 => move.x && move.y = 1

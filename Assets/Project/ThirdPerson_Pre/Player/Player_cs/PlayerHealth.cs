@@ -14,8 +14,8 @@ public class PlayerHealth : Health, IDataPersistence
     private Animator animator;
     [SerializeField] private CameraManager cameraManager;
     private PlayerGun playerMovement;
-    private int diedCount;
-    public int GetDiedCount => diedCount;
+    private int deadCountCurrInGame;
+    public int GetDeadCountCurrInGame => deadCountCurrInGame;
     //private bool isGetDiedPoint = false; // die bi tinh diem tru
 
     Slider sliderHealth;
@@ -25,7 +25,7 @@ public class PlayerHealth : Health, IDataPersistence
         Debug.Log("OnStart() PlayerHealth.cs run");
 
         //SetCurrentHealth = MaxHealth; // neu ko tinh luong duoc luu, thi xet mac dinh maxHealth
-        diedCount = 0;
+        deadCountCurrInGame = 0;
         lowHealthLimit = MaxHealth;  //? xet rieng lowHealth cho player
         isReadyToTakeDamage = true;     // true - san sang bi tru mau
         //isGetDiedPoint = false;         // chau bi tru diem died
@@ -55,7 +55,7 @@ public class PlayerHealth : Health, IDataPersistence
         if(IsDead && isReadyToTakeDamage) {
             isReadyToTakeDamage = false;
             ////PlayerDataLocal_Temp.Instance.died += 1; //todo tang so luong die
-            diedCount ++;
+            deadCountCurrInGame += 1;
         }
 
         //chua nbi respawn song lai
@@ -123,6 +123,6 @@ public class PlayerHealth : Health, IDataPersistence
 
     public void SavePlayerData(PlayerJson playerJsonData) {
         playerJsonData.health = (int)CurrentHealth;
-        playerJsonData.died += diedCount;
+        playerJsonData.died += deadCountCurrInGame;
     }
 }

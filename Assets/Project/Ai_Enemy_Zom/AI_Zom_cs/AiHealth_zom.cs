@@ -24,6 +24,8 @@ public class AiHealth_zom : Health
 
         if(IsDead && isReadyToTakeDamage) {
             isReadyToTakeDamage = !isReadyToTakeDamage;
+
+            GameManger.Instance.SetKilledCountCurrInGame(1);
             PlayerDataJson.Instance.PlayerJson.killed += 1;
         }
         
