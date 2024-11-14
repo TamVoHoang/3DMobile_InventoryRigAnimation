@@ -67,6 +67,10 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
 
     bool isSetRandomPlayerPosition = false;
 
+    [Header("       Check Fall")]
+    [SerializeField] float fallHightToRespawn = -8f;
+    [SerializeField] bool isRespawnRequested = false;
+
     #region SAVE LOAD
     Vector3 playerTransform;
     Vector3 playerTransform_TempSave;
@@ -94,8 +98,11 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     }
 
     void Update() {
+        CheckFallToRespawn();
         // testing thu ham true khi dang la 1 trong nhung scene menu
         if(CheckSpawnerScene.IsInMenuScene()) return;
+        if(isRespawnRequested) return;
+
 
         // random vi tri player khi vao navMesh -> truoc khi coundown =0
         if(!isSetRandomPlayerPosition) {
@@ -232,6 +239,25 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
         }
         return finalPosition;
     }
+
+    //? check Player Fall down
+    #region Check Fall Down
+    private void CheckFallToRespawn() {
+        if(transform.position.y < fallHightToRespawn) {
+            Debug.Log($"request respawn");
+            StartCoroutine(RespawnPlayerCo(0.5f));
+        }
+    }
+
+    IEnumerator RespawnPlayerCo(float time) {
+        isRespawnRequested = true;
+        characterController.enabled = false;
+        SpawnPlayerOnNavMesh();
+        yield return new WaitForSeconds(time);
+        characterController.enabled = true;
+        isRespawnRequested = false;
+    }
+    #endregion
 
     #region IDataPersistence
     public void UpdateUIVisual(PlayerJson playerJson) {

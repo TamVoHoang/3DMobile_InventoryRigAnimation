@@ -49,7 +49,7 @@ public class WorldBounds : MonoBehaviour
 
     public Vector3 RandomNavmeshLocation(float radius, Vector3 randomDirection) {
 
-        //var randomDirection = worldBounds.RandomPosition(); // vector3
+        /* var randomDirection = worldBounds.RandomPosition(); */ // vector3
 
         NavMeshHit hit;
         Vector3 finalPosition = Vector3.zero;
