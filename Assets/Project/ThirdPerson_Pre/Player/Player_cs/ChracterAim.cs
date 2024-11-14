@@ -4,7 +4,7 @@ public class ChracterAim : Singleton<ChracterAim> // co the bo singleton tai day
 {
 
     [Range(1f, 5f)]
-    [SerializeField] float currentMouseSensitivity = 1.2f;
+    [SerializeField] float currentMouseSensitivity = 1f;
     [SerializeField] public float xAixs, yAxis;
     [SerializeField] private Transform camFollowPos; // maincamera se move den day, vi trong main camera co virtul camera
     [SerializeField] private Vector2 yAxixLimit = new Vector2(30, 30);
@@ -13,8 +13,8 @@ public class ChracterAim : Singleton<ChracterAim> // co the bo singleton tai day
     //public float aimDuration = 0.3f;
 
     public float MouseSensitivity {get { return currentMouseSensitivity; } set { currentMouseSensitivity = value; }}
+    float minSensitivity = 1f;
     float maxSensitivity = 5;
-    float minSensitivity = 0.5f;
     public float MaxSensitivity { get { return maxSensitivity;}}
     public float MinSensitivity { get { return minSensitivity;}}
 
@@ -37,8 +37,8 @@ public class ChracterAim : Singleton<ChracterAim> // co the bo singleton tai day
 
         //?using virtual UI to aim player. gia tri lay tu khi SetAIm trong UICanvasControllerInput.cs coll 33
         
-        xAixs += InputManager.Instance.GetAim.x * currentMouseSensitivity;
-        yAxis -= InputManager.Instance.GetAim.y * currentMouseSensitivity;
+        xAixs += InputManager.Instance.GetAim.x * currentMouseSensitivity/10;
+        yAxis -= InputManager.Instance.GetAim.y * currentMouseSensitivity/10;
         
         yAxis = Mathf.Clamp(yAxis, -yAxixLimit.x, yAxixLimit.y);
     }

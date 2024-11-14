@@ -39,13 +39,13 @@ public class UI_Setting : MonoBehaviour
 
     private void MinusButton_OnClicked()
     {
-        mouseSensitivity_Slider.value -= 0.2f;
+        mouseSensitivity_Slider.value -= 1f;
         SetMouseSensitivity();
     }
 
     private void PlusButton_OnClicked()
     {
-        mouseSensitivity_Slider.value += 0.2f;
+        mouseSensitivity_Slider.value += 1f;
         SetMouseSensitivity();
     }
 

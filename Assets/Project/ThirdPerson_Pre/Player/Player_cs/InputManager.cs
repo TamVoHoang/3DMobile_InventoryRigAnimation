@@ -55,7 +55,7 @@ public class InputManager : Singleton<InputManager>
 
     private void OnEnable() {
         playerControls.Player.Move.Enable();
-        playerControls.Player.Aim.Enable();     //? right stick GamePad
+        //playerControls.Player.Aim.Enable();     //? right stick GamePad
         playerControls.Player.Attack.Enable();
 
         //playerControls.Player.Look.Enable(); // look around bang onScreen
@@ -94,9 +94,10 @@ public class InputManager : Singleton<InputManager>
         Magnitude();
 
         //? right stick GamePad
-        aim = playerControls.Player.Aim.ReadValue<Vector2>();
-        aim.Normalize();
+        /* aim = playerControls.Player.Aim.ReadValue<Vector2>();
+        aim.Normalize(); */
 
+        //? look around player
         //look = playerControls.Player.Look.ReadValue<Vector2>(); // look around bang onScreen
     }
     private void Magnitude() //? dam bao khi hz && vz = 1 => move.x && move.y = 1
