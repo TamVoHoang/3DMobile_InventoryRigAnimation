@@ -6,7 +6,10 @@ public class WeaponPickup : MonoBehaviour
     //? giu gun prefab on player || Ai
     //? layer = pickup => chi trigger voi player and character Ai
     [SerializeField] private RaycastWeapon gunPrefab;
-
+    private void Start() {
+        Destroy(this, 30f);
+    }
+    
     private void OnTriggerEnter(Collider other) {
         int weaponSlotIndex = (int)gunPrefab.weaponSlot; //=0
 

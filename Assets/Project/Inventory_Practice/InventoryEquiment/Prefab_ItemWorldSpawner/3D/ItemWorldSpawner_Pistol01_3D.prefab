@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2583574617023625597}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.38268343, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -49,8 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item:
     itemType: 17
-    itemScriptableObject: {fileID: 11400000, guid: c7f1dbba69c5d854b937c162a95d585e, type: 2}
     amount: 1
+    itemScriptableObject: {fileID: 11400000, guid: c7f1dbba69c5d854b937c162a95d585e, type: 2}
     isSplited: 0
 --- !u!33 &2646402447233919021
 MeshFilter:

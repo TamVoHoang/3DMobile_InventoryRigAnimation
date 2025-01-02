@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ActiveGun : Singleton<ActiveGun>
 {
@@ -61,6 +62,8 @@ public class ActiveGun : Singleton<ActiveGun>
     private void Update() {
         var weapon = GetWeapon(activeWeaponIndex);
         var canFire = !isHolstered && !isChangingGun;// ko dang cat sung + ko dang change sung + ko dang toggle
+        
+        if(SceneManager.GetActiveScene().name == "Testing_SpawnPlayer") return;
         if(weapon) {
             if(InputManager.Instance.IsAttackButton && !weapon.IsFiring & canFire) {
                 weapon.StartFiring();

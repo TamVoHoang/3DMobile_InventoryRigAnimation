@@ -8,7 +8,7 @@ public class ItemWorldSpawner3D : MonoBehaviour
 
     private void Start() {
         Debug.Log(item);
-        ItemWorld3D.SpawnItemWorld3D(transform.position, item);
+        ItemWorld3D.SpawnItemWorld3D(transform.position + new Vector3(0, 1, 0), item);
         Destroy(gameObject);
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -89,6 +90,7 @@ public class GameManger : Singleton<GameManger>
         
         // su kien de spawn spaceship theo remainingtime
         if(remainingTime <= remainingTime_tmp * 0.5f && !isSpaceShipSpawned) {
+            isSpaceShipSpawned = true;
             SpaceShipSpawner();
         }
 
@@ -112,6 +114,20 @@ public class GameManger : Singleton<GameManger>
         inputManager.enabled = true;    // tra ve true, de khi quay lai spawner scene - player co the animation khi trang bi item
         isSpaceShipSpawned = false;
         ResetToStartGame();
+
+        // xoa tat ca ai con tren scene
+        var aiArr = FindObjectsOfType<AiSetSpeed>();
+        foreach (var item in aiArr)
+        {
+            Destroy(item.gameObject);
+        }
+
+        // xoa spaceship con tren scene
+        var spaceShips = FindObjectsOfType<SpaceShip01>();
+        foreach (var item in spaceShips)
+        {
+            Destroy(item.gameObject);
+        }
 
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
     }
@@ -234,7 +250,7 @@ public class GameManger : Singleton<GameManger>
 
                 int randomNum = Random.Range(0, spawnedAI.Length);
                 /* Instantiate(spawnedAI[randomNum], worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f), Quaternion.identity); *///?OK
-                Instantiate(spawnedAI[randomNum], randomAIOnNav, Quaternion.identity);
+                GameObject newAi = Instantiate(spawnedAI[randomNum], randomAIOnNav, Quaternion.identity);
 
                 // if gunner ai i=0 (ai can trang bi sung) => spawn 3 times (ammo + health)
                 if(randomNum == 0) {
@@ -242,7 +258,7 @@ public class GameManger : Singleton<GameManger>
                     {
                         for (int j = 0; j < itemsPickup_AiGunner.Length; j++) {
                             /* Instantiate(itemsPickup_AiGunner[j], worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f), Quaternion.identity); *///?OK
-                            var b = worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f);
+                            var b = worldBounds.RandomPosition_AroundPlayer(32f, 0f, 32f);
                             var randomItemsAIGunOnNav = worldBounds.RandomNavmeshLocation(10, b);
                             Instantiate(itemsPickup_AiGunner[j], randomItemsAIGunOnNav, Quaternion.identity);
                         }
@@ -303,7 +319,7 @@ public class GameManger : Singleton<GameManger>
             isSpaceShipSpawned = true;
         } */
 
-        isSpaceShipSpawned = true;
+        
         Instantiate(SpaceShips[spaceShipIndex]);
     }
 

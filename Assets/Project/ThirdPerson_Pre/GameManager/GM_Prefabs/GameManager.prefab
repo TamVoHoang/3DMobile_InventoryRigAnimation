@@ -571,13 +571,14 @@ MonoBehaviour:
   timeLeftText: {fileID: 140160092338588489}
   timerPanel: {fileID: 5706509315341861423}
   timerText: {fileID: 9027723140466622810}
-  remainingTime: 120
+  remainingTime: 180
   BackButtonInResultPanel: {fileID: 5658434316785428265}
   results_UI: {fileID: 1832744807008780968}
   killedCount: {fileID: 5241569308377196965}
   deathCount: {fileID: 342266903652735991}
-  minTimeToSpawnEnemy: 15
-  maxTimeToSpawnEnemy: 30
+  killedCountCurrInGame: 0
+  minTimeToSpawnEnemy: 10
+  maxTimeToSpawnEnemy: 20
   spawnedAI:
   - {fileID: 4145539315362994681, guid: 9b562b71b0ca9064aa47a56a03a4dcca, type: 3}
   - {fileID: 5740925118200123006, guid: 059b8093739ce3c478907ee95eccda02, type: 3}
@@ -587,8 +588,8 @@ MonoBehaviour:
   - {fileID: 113929828341038496, guid: 0d06fdb599ed4f44db191190d4e8cb33, type: 3}
   - {fileID: 570596380508848197, guid: ac0e61eb35719bb4c8d673fb905ec20f, type: 3}
   - {fileID: 2338409416823559281, guid: 280a7338d08c78a47ac21658ddabfddc, type: 3}
-  minTimeToSpawnPlayerItems: 10
-  maxTimeToSpawnPlayerItems: 20
+  minTimeToSpawnPlayerItems: 15
+  maxTimeToSpawnPlayerItems: 25
   itemsPlayer:
   - {fileID: 4917809278806914010, guid: b6ee9bb541b60f940ba429b5549c33b3, type: 3}
   - {fileID: 3739553664099909655, guid: 6482abba715594e43981ce493f169929, type: 3}

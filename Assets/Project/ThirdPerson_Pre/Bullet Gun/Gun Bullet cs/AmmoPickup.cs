@@ -3,7 +3,10 @@ using UnityEngine;
 public class AmmoPickup : MonoBehaviour
 {
     public int clipAmount = 1;
-
+    private void Start() {
+        Destroy(this, 30f);
+    }
+    
     private void OnTriggerEnter(Collider other) {
         //? tang dan cho player khi va cham. co the dung de khi use bang dan trong kho do
         ActiveGun activeGun = other.GetComponent<ActiveGun>();      //co activeGun.cs tren player

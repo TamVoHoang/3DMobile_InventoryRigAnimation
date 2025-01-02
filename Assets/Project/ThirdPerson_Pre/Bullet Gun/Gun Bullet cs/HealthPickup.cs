@@ -5,6 +5,10 @@ public class HealthPickup : MonoBehaviour
     //gameobject = vat pham healthPickup bom mau cho ai
 
     [SerializeField] private float amount = 100f;
+
+    private void Start() {
+        Destroy(this, 30f);
+    }
     private void OnTriggerEnter(Collider other) {
         Health health = other.GetComponent<Health>();                   //co helath.cs
         AiHealth aiHealth = other.GetComponent<AiHealth>();             //co aiHealth.cs Enemy cham vao
