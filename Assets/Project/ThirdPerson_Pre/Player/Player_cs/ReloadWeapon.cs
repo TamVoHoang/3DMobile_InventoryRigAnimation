@@ -11,10 +11,11 @@ public class ReloadWeapon : MonoBehaviour
     [SerializeField] private bool isReloading = false;
     public bool GetIsReloading {get {return isReloading;}}
 
+    InputManager inputManager;
     void Start() {
         isReloading = false; // ko co thay dan
         activeGun = GetComponent<ActiveGun>();
-        
+        inputManager = GetComponent<InputManager>();
         animationEvents.WeaponAnimationEvent.AddListener(OnAnimationEvent);
     }
 
@@ -22,7 +23,7 @@ public class ReloadWeapon : MonoBehaviour
         RaycastWeapon weapon = activeGun.GetActiveWeapon();
         
         if (weapon) {
-            if ((Input.GetKeyDown(KeyCode.R) || weapon.ShouldReload()) && !activeGun.IsHolstered && !activeGun.IsChangingGun) {
+            if ((inputManager.IsReloadButton || weapon.ShouldReload()) && !activeGun.IsHolstered && !activeGun.IsChangingGun) {
                 isReloading = true; // dang thay dan
                 rigController.SetTrigger("reload_weapon");
             }

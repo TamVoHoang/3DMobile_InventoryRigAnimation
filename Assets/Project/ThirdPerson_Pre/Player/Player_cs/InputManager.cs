@@ -12,6 +12,7 @@ public class InputManager : Singleton<InputManager>
     private bool isJumpButton;
     [SerializeField] private bool isSprintButton;
     private bool isSwitchStateButton;
+    bool isReloadButton = false;
 
     public Vector2 GetMove {get{return move;}}
     public Vector2 GetAim {get{return aim;}}
@@ -20,7 +21,8 @@ public class InputManager : Singleton<InputManager>
     public bool IsJumpButton {get{return isJumpButton;}}
     public bool IsSprintButton {get{return isSprintButton;}}
     public bool IsSwitchStateButton {get{return isSwitchStateButton;}}
-    
+    public bool IsReloadButton {get => isReloadButton;}
+
     public void SetMove(Vector2 move) => this.move = move;
     public void SetAim(Vector2 aim) => this.aim = aim;
     public void SetLook(Vector2 look) => this.look = look;
@@ -51,13 +53,18 @@ public class InputManager : Singleton<InputManager>
         //todo lay gia tri trong PlayerOCntrols -> Ctrl
         // playerControls.Player.SwitchState.started += _ => isSwitchBallButton = true;
         // playerControls.Player.SwitchState.canceled += _ => isSwitchBallButton = false;
+
+        //todo relaod
+        playerControls.Player.Reload.started += _ => isReloadButton = true;
+        playerControls.Player.Reload.canceled += _ => isReloadButton = false;
+
     }
 
     private void OnEnable() {
         playerControls.Player.Move.Enable();
         //playerControls.Player.Aim.Enable();     //? right stick GamePad
         playerControls.Player.Attack.Enable();
-
+        playerControls.Player.Reload.Enable();
         //playerControls.Player.Look.Enable(); // look around bang onScreen
         //playerControls.Player.Jump.Enable();
         //playerControls.Player.Sprint.Enable();
@@ -65,6 +72,7 @@ public class InputManager : Singleton<InputManager>
     }
     private void OnDisable() {
         playerControls.Player.Attack.Disable();
+        playerControls.Player.Reload.Disable();
     }
 
     private void StopPressing_AttackButton(InputAction.CallbackContext context)
