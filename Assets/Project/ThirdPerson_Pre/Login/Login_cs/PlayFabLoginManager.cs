@@ -59,7 +59,7 @@ public class PlayFabLoginManager : MonoBehaviour
     [SerializeField] TMP_InputField loginEmail;
     [SerializeField] TMP_InputField loginPassword;
     [SerializeField] TextMeshProUGUI ResultLogin_Text;
-    
+
     public void OnLoginAutoPressed() => 
         Login(PlayerPrefs.GetString(LAST_EMAIL_KEY), PlayerPrefs.GetString(LAST_PASSWORD_KEY));
     
@@ -84,7 +84,6 @@ public class PlayFabLoginManager : MonoBehaviour
 
             Debug.Log("Successfully Logged In User: " + PlayerPrefs.GetString("Username"));
             ResultLogin_Text.text = "Successfully Logged In User: " + PlayerPrefs.GetString("Username"); // hien thi ket qua khi login thanh cong
-
         },
 
         PlayFabFailure);

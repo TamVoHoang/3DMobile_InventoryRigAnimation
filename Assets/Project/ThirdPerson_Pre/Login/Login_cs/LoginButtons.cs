@@ -25,11 +25,16 @@ public class LoginButtons : MonoBehaviour
     [Header("Reset Password Screen")]
     [SerializeField] Button RequestResetButton; // in reset password screen
 
+    [SerializeField] GameObject LoadingAnimation_Image;
+
+    [SerializeField] const float DELAYTIME_TO_OVERVIEW_SCENE = 2f;
+
     private void Awake() {
         LoginButton.onClick.AddListener(LoginButton_OnClick);
         BackMainMenuButton.onClick.AddListener(BackMainMenuButton_OnClicked);
 
         RequestResetButton.onClick.AddListener(SendResetPassWord_OnClick);
+        LoadingAnimation_Image.SetActive(false);
     }
     void Start()
     {
@@ -58,7 +63,12 @@ public class LoginButtons : MonoBehaviour
         PlayerPrefs.SetString(LAST_MAIL, loginEmail.text);
         PlayerPrefs.SetString(PASS, loginPassword.text);
 
-        StartCoroutine(DelayTimeLogin_ToLoad_CO(4f)); //sau 3s chuyen qua onverview
+        // hien thi loading animation
+        LoadingAnimation_Image.SetActive(true);
+
+        //sau 3s chuyen qua onverview
+        
+        StartCoroutine(DelayTimeLogin_ToLoad_CO(DELAYTIME_TO_OVERVIEW_SCENE));
     }
 
     IEnumerator DelayTimeLogin_ToLoad_CO(float time) {
@@ -74,11 +84,19 @@ public class LoginButtons : MonoBehaviour
         
         // load next scene - player information overview (playerInfo + inventoryInfo)
         yield return new WaitForSeconds(time);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1);
+        /* SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1); */
+
+        SceneManager.LoadScene(TestLoadingScene.AccountOverview_Scene);
     }
 
     //void BackMainMenuButton_OnClicked() => TestLoadingScene.Instance.Load_MainMenu_Scene();
     void BackMainMenuButton_OnClicked() {
+        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
+        /* StartCoroutine(BackToMainMenuCo(0.2f)); */
+    }
+
+    IEnumerator BackToMainMenuCo(float time) {
+        yield return new WaitForSeconds(time);
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
     }
     

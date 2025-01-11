@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem.EnhancedTouch;
+using UnityEngine.SceneManagement;
 using Touch = UnityEngine.InputSystem.EnhancedTouch.Touch;
 public class TouchRotationView : MonoBehaviour
 {
@@ -7,6 +8,8 @@ public class TouchRotationView : MonoBehaviour
     [SerializeField] private bool isAiming;
     [SerializeField] private int touchID;
     [SerializeField] private Vector2 delta;
+
+    const string TESTING_PAWN_PLAYER_SCENE = "Testing_SpawnPlayer";
     private void Awake()
     {
         EnhancedTouchSupport.Enable();
@@ -15,6 +18,8 @@ public class TouchRotationView : MonoBehaviour
     }
     private void Update()
     {
+        if(SceneManager.GetActiveScene().name == TESTING_PAWN_PLAYER_SCENE) return;
+        
         var activeTouches = Touch.activeTouches;
         for (var i = 0; i < activeTouches.Count; ++i)
             Debug.Log("Active touch: " + activeTouches[i]);

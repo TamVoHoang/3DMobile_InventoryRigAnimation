@@ -41,6 +41,9 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     [Header("Leader Board")]
     [SerializeField] GameObject rowPrefab;
     [SerializeField] Transform rowParent;
+
+    [SerializeField] GameObject LoadingAnimation_Image;
+    [SerializeField] const float DELAYTIME_TO_MAINMENU_SCENE = 1f;
     private void Awake() {
         isLoaded = false;
 
@@ -54,6 +57,7 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
         EquipButton.onClick.AddListener(EquipButton_OnClicked); // button at Overdata Scene -> di den scen spawner player
         SettingButton.onClick.AddListener(SettingButton_OnClicked); //button hien thi screen dieu chinh am thanh
 
+        LoadingAnimation_Image.SetActive(false);
     }
 
     private void Start() {
@@ -82,6 +86,9 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
 
     //BUTTONS IN PLAYER INFO OVERVIEW
     void EquipButton_OnClicked() {
+
+        // hien thi loading animation
+        LoadingAnimation_Image.SetActive(true);
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_SpawnPlayer);
 
         SetTimeScale.UnFrezzeGame();
@@ -96,6 +103,13 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
         /* TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.ThirdPerson); */
     }
     void BackMainMenuButton_OnClicked() {
+        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
+        /* StartCoroutine(BackToMainMenuSceneCo(DELAYTIME_TO_MAINMENU_SCENE)); */
+    }
+
+    IEnumerator BackToMainMenuSceneCo(float time) {
+        LoadingAnimation_Image.SetActive(true);
+        yield return new WaitForSeconds(time);
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
     }
 

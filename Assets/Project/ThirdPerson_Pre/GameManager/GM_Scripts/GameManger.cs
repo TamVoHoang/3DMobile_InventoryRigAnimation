@@ -245,7 +245,7 @@ public class GameManger : Singleton<GameManger>
                 //radom vi tri ai theo wordbound object
                 /* Instantiate(aiSpawned[Random.Range(0, aiSpawned.Length)], worldBounds.RandomPosition(), Quaternion.identity); */
 
-                var a = worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f);
+                var a = worldBounds.RandomPosition_AroundPlayer(20f, 0f, 20f);
                 var randomAIOnNav = worldBounds.RandomNavmeshLocation(10, a);
 
                 int randomNum = Random.Range(0, spawnedAI.Length);
@@ -258,7 +258,7 @@ public class GameManger : Singleton<GameManger>
                     {
                         for (int j = 0; j < itemsPickup_AiGunner.Length; j++) {
                             /* Instantiate(itemsPickup_AiGunner[j], worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f), Quaternion.identity); *///?OK
-                            var b = worldBounds.RandomPosition_AroundPlayer(32f, 0f, 32f);
+                            var b = worldBounds.RandomPosition_AroundPlayer(30f, 0f, 30f);
                             var randomItemsAIGunOnNav = worldBounds.RandomNavmeshLocation(10, b);
                             Instantiate(itemsPickup_AiGunner[j], randomItemsAIGunOnNav, Quaternion.identity);
                         }

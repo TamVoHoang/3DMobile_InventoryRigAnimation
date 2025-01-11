@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,22 +9,40 @@ public class UICanvas_GameScene : MonoBehaviour
 {
     [SerializeField] Button BackToMainMenuButton; // nut back button and save
     [SerializeField] Button PauseButton; // nut dung game tam thoi
+    [SerializeField] Button SettingButton;
     [SerializeField] bool isPaused = false;
     [SerializeField] RectTransform directionImage; // show direction when spaceship is spawned
     [SerializeField] Transform pauseButton_Trasform;
     [SerializeField] GameObject[] pausePlayArray;
 
+    [SerializeField] GameObject SettingPanel;
+    bool isShowingSettingPanel = false;
+
+
     bool isDataHandler;
     bool isSceneHandler;
 
+    [SerializeField] GameObject LoadingAnimation_Image;
+    [SerializeField] const float DELAYTIME_TO_LOAD_SCENE = 1f;
 
     private void Awake() {
         BackToMainMenuButton.onClick.AddListener(BackButtonToMainMenu_OnClicked);
         PauseButton.onClick.AddListener(PauseButton_OnClicked);
+        SettingButton.onClick.AddListener(SettingButton_Onclicked);
         pausePlayArray = new GameObject[pauseButton_Trasform.childCount];
 
         isDataHandler = false;
         isSceneHandler = false;
+        isShowingSettingPanel = false;
+        SettingPanel.SetActive(false);
+        LoadingAnimation_Image.SetActive(false);
+    }
+
+    private void SettingButton_Onclicked()
+    {
+        isShowingSettingPanel = !isShowingSettingPanel;
+        if(isShowingSettingPanel) SettingPanel.SetActive(true);
+        else SettingPanel.SetActive(false);
     }
 
     private void Start() {
@@ -64,7 +83,9 @@ public class UICanvas_GameScene : MonoBehaviour
     private void BackButtonToMainMenu_OnClicked()
     {
         /* if(!TryGetComponent<LoadDataTo_IDataPersistence>(out LoadDataTo_IDataPersistence loadDataTo_IDataPersistence)) return; */
-        StartCoroutine(DelayTimeSave_ToExitGame(0.3f));
+        LoadingAnimation_Image.SetActive(true);
+        
+        StartCoroutine(DelayTimeSave_ToExitGame(DELAYTIME_TO_LOAD_SCENE));
     }
 
     void PauseButton_OnClicked() {

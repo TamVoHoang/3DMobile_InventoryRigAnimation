@@ -19,7 +19,7 @@ public class AiFindTargetState_zom : AiState_Zom
 
         // neu tim ma ko thay target (ko thay player) -> huy doi tuong sau timer
         agent.timer += Time.deltaTime;
-        if(agent.timer >= 20f) {
+        if(agent.timer >= 30f) {
             agent.DesTroyOnSelfe();
             return;
         }

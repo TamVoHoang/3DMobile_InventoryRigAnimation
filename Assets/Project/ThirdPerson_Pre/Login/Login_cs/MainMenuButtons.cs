@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -25,6 +26,8 @@ public class MainMenuButtons : MonoBehaviour
     [SerializeField] Button RegisterButton; // nut dang ky sau khi nhap mail va pass
     [SerializeField] Button LoadLoginScreen; // load Login_Scene - button at ResgisterScreen (mainMenuScene)
 
+    [SerializeField] GameObject LoadingAnimation_Image;
+
     private void Awake() {
         LoginButton.onClick.AddListener(LoginButton_OnClicked);
         ResumeButton.onClick.AddListener(ResumeButton_OnClicked);
@@ -33,10 +36,11 @@ public class MainMenuButtons : MonoBehaviour
 
         RegisterButton.onClick.AddListener(RegisterButton_OnClicked); // registerScreen
 
-        ////LoadLoginScreen.onClick.AddListener(TestLoadingScene.Instance.Load_Login_Scene); // sau khi dang ki chuyen scene de Login
         LoadLoginScreen.onClick.AddListener(LoginScreenButton_Onclicked);
 
         playFabLoginManager = FindObjectOfType<PlayFabLoginManager>();
+
+        LoadingAnimation_Image.SetActive(false);
     }
 
     private void Start() {
@@ -56,34 +60,36 @@ public class MainMenuButtons : MonoBehaviour
             loginPassword.text.Length <= maxPassLength;
     }
 
-    //? dieu kien de nut Resume va Account cho phen interactable
+    //? dieu kien de nut Resume va Account and Login Button cho phen interactable
     void EnableAccountButton() {
         if(PlayerDataJson.Instance.IsLoadedSuccessInLogin) AccountButton.enabled = true;
         else AccountButton.enabled = false;
 
         if(PlayerDataJson.Instance.IsLoadedSuccessInGame) ResumeButton.enabled = true;
         else ResumeButton.enabled = false;
+
+        if(PlayerDataJson.Instance.IsLoadedSuccessInLogin) LoginButton.enabled = false;
+        else LoginButton.enabled = true;
     }
 
     //? Button OnCliked in Canvas MainMenu scene
     //void LoginButton_OnClicked() => TestLoadingScene.Instance.Load_Login_Scene();
     void LoginButton_OnClicked() {
-        ////TestLoadingScene.Instance.LoadScene(TestLoadingScene.Login_Scene);
-        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Login);
-
+        LoadingAnimation_Image.SetActive(true);
+        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Login);  //! co the dung
     }
 
     void ResumeButton_OnClicked() {
-        //GameManger.Instance.UnFrezzeGame(); //todo UnFree game when resume game
+        LoadingAnimation_Image.SetActive(true);
         SetTimeScale.UnFrezzeGame();
         TestLoadingScene.Instance.ResumeGame(); // can phai duoc xet gia tri currentSceneIndex ngay khi back to main menu
-
     }
 
     //void AccountButton_OnClicked() => TestLoadingScene.Instance.Load_AccountDataOverview_Scene();
     void AccountButton_OnClicked() {
-        //TestLoadingScene.Instance.LoadScene(TestLoadingScene.AccountOverview_Scene); // den scene dang ky
-        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.AccountDataOverview);
+        LoadingAnimation_Image.SetActive(true);
+        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.AccountDataOverview);    //! co the dung
+
     }
     
     void QuitButton_OnClicked() => Application.Quit();
@@ -98,11 +104,10 @@ public class MainMenuButtons : MonoBehaviour
     }
 
     void LoginScreenButton_Onclicked() {
-        ////TestLoadingScene.Instance.LoadScene(TestLoadingScene.Login_Scene); // di den login_Scene
-        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Login); // truyen vao tham so kieu enume
+        LoadingAnimation_Image.SetActive(true);
 
+        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Login); // truyen vao tham so kieu enume
     }
 
-    
     //todo
 }

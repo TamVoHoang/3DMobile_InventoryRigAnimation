@@ -55,7 +55,7 @@ public class UI_Invnetory_Alls : MonoBehaviour
             itemSlotRectTransform.gameObject.SetActive(true); // hien cac o chua
             
             //? xet vi tri cho o vat pham UI
-            itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, -0.6f * y * itemSlotCellSize);
+            itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, -0.5f * y * itemSlotCellSize);
 
             //? equip chen ngang khi co tin hieu mouse click
             if (!inventorySlot.IsEmpty()) {

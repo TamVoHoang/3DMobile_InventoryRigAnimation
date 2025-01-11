@@ -35,7 +35,8 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
     Vector3 minMap2 = new Vector3(-4, 0, -150);
     Vector3 maxMap2 = new Vector3(4, 0, -115);
 
-
+    [SerializeField] GameObject LoadingAnimation_Image;
+    [SerializeField] const float DELAYTIME_TO_LOAD_SCENE = 1f;
     private void Awake() {
         
         StartGame.onClick.AddListener(OnGameStart_OnClicked);
@@ -52,6 +53,8 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
         SelectMapPanel.SetActive(false);
         mapSelectIndex = 0;
         maps = new GameObject[mapSelectTranform.childCount];
+
+        LoadingAnimation_Image.SetActive(false);
     }
 
     private void Start() {
@@ -103,6 +106,8 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
         else if(mapSelectIndex == 2) TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_BattleRoyale); */
 
         //GameManger.Instance.UnFrezzeGame(); //todo BAT DAU GAME tu Sapwner scene
+
+        LoadingAnimation_Image.SetActive(true);
         SetTimeScale.UnFrezzeGame();
         GameManger.Instance.ResetToStartGame(); // goi lai ham Start() GameManager.cs
         GameManger.Instance.IsJoined = true;
@@ -165,6 +170,18 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
     }
 
     void BackToMainMenuBtton_OnClick() {
+        /* LoadingAnimation_Image.SetActive(true);
+        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
+
+        //GameManger.Instance.FrezzGame();
+        SetTimeScale.FrezzGame(); */
+        //TestLoadingScene.Instance.SetCurrentScene();
+        StartCoroutine(LoadToMainMenuSceneCo(DELAYTIME_TO_LOAD_SCENE));
+    }
+
+    IEnumerator LoadToMainMenuSceneCo(float time) {
+        LoadingAnimation_Image.SetActive(true);
+        yield return new WaitForSeconds(time);
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
 
         //GameManger.Instance.FrezzGame();
