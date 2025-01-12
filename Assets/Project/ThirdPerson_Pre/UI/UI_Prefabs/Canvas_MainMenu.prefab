@@ -1007,7 +1007,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -300}
+  m_AnchoredPosition: {x: 0, y: -250}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &299607329495834181
@@ -1882,6 +1882,7 @@ RectTransform:
   m_Children:
   - {fileID: 1273852651085898927}
   - {fileID: 8248649154265578699}
+  - {fileID: 2092334037770756023}
   - {fileID: 2721995503705343673}
   - {fileID: 4605538762421173766}
   - {fileID: 9138186227437784108}
@@ -3700,7 +3701,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Account
+  m_text: Main Lobby
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 38aecd77a18d544bfb836befe83883b7, type: 2}
   m_sharedMaterial: {fileID: 6434564289584660316, guid: 38aecd77a18d544bfb836befe83883b7, type: 2}
@@ -4956,31 +4957,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 677780839229686173}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 5360797839588597794}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2262867827867810769}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: SetActive
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &3673729640069238333
 GameObject:
   m_ObjectHideFlags: 0
@@ -6828,6 +6805,7 @@ MonoBehaviour:
   loginPassword: {fileID: 888198142239803726}
   minPassLength: 1
   maxPassLength: 12
+  CreateAccountButton: {fileID: 6245766202195676388}
   LoginButton: {fileID: 1698215260331057912}
   ResumeButton: {fileID: 5908854324971049111}
   AccountButton: {fileID: 2398344193281651741}
@@ -6836,6 +6814,9 @@ MonoBehaviour:
   RegisterButton: {fileID: 2971223817219488696}
   LoadLoginScreen: {fileID: 8060721772879045689}
   LoadingAnimation_Image: {fileID: 892507318874903267}
+  logTxt: {fileID: 6310448853550137326}
+  MainMenu_Screen: {fileID: 5360797839588597794}
+  Register_Screeen: {fileID: 2262867827867810769}
 --- !u!223 &5267888858774443242
 Canvas:
   m_ObjectHideFlags: 0
@@ -7489,7 +7470,6 @@ RectTransform:
   - {fileID: 6199198999431504514}
   - {fileID: 1297495613561038879}
   - {fileID: 3580337946130957332}
-  - {fileID: 2092334037770756023}
   m_Father: {fileID: 8248649154265578699}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -8396,7 +8376,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -200}
+  m_AnchoredPosition: {x: 0, y: -150}
   m_SizeDelta: {x: 0, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2636083646676019618
@@ -8454,10 +8434,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 150
+  m_fontSize: 100
+  m_fontSizeBase: 100
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 3
@@ -9706,12 +9686,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8569363567119939128}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9086494973553922213}
+  m_Father: {fileID: 37315173043592723}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
@@ -9894,7 +9874,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -200}
+  m_AnchoredPosition: {x: 0, y: -150}
   m_SizeDelta: {x: 0, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9130922898929215612
@@ -9952,10 +9932,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
-  m_fontSizeBase: 150
+  m_fontSize: 100
+  m_fontSizeBase: 100
   m_fontWeight: 400
-  m_enableAutoSizing: 1
+  m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 2
@@ -10179,15 +10159,15 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6365793953572325243}
-  - {fileID: 1268750493761347109}
   - {fileID: 5672971244751004805}
+  - {fileID: 1268750493761347109}
   - {fileID: 354045751973246600}
   - {fileID: 3716589651164989935}
   m_Father: {fileID: 2460247552850103335}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -116}
+  m_AnchoredPosition: {x: 0, y: -70}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7174559317130879724

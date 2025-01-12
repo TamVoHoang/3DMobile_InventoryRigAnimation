@@ -31,8 +31,9 @@ public class TestLoadingScene : Singleton<TestLoadingScene>
         Testing_SpawnPlayer,//4
         Testing_ThirdPerson,//5
         Testing_BattleRoyale,//6
-        BlackMarket,        //7
-        Corporation,        //8
+        Corporation,        //7
+        
+        //BlackMarket,        //8
         ThirdPerson         //9
     }
 
@@ -59,6 +60,7 @@ public class TestLoadingScene : Singleton<TestLoadingScene>
     //? resume scene just left
     public void ResumeGame() {
         SceneManager.LoadSceneAsync(currentSceneIndex);
+        Debug.Log($"_____" + currentSceneIndex);
     }
 
     public void ExitGame() => Application.Quit();

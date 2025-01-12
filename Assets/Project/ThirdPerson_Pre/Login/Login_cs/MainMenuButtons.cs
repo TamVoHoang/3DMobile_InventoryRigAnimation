@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -13,6 +14,7 @@ public class MainMenuButtons : MonoBehaviour
 
     // Button in MainMenu scene
     [Header("MainMneu Screen")]
+    [SerializeField] Button CreateAccountButton;
     [SerializeField] Button LoginButton; // load Login Scene - button at MainScreen (MainMenu Scene)
     [SerializeField] Button ResumeButton;
 
@@ -27,8 +29,14 @@ public class MainMenuButtons : MonoBehaviour
     [SerializeField] Button LoadLoginScreen; // load Login_Scene - button at ResgisterScreen (mainMenuScene)
 
     [SerializeField] GameObject LoadingAnimation_Image;
+    public TextMeshProUGUI logTxt;
+    public static Action<string> OnUpdateRegisterStatus;
+
+    [SerializeField] GameObject MainMenu_Screen;
+    [SerializeField] GameObject Register_Screeen;
 
     private void Awake() {
+        CreateAccountButton.onClick.AddListener(CreateAccountButton_OnClicked);
         LoginButton.onClick.AddListener(LoginButton_OnClicked);
         ResumeButton.onClick.AddListener(ResumeButton_OnClicked);
         AccountButton.onClick.AddListener(AccountButton_OnClicked);
@@ -45,6 +53,14 @@ public class MainMenuButtons : MonoBehaviour
 
     private void Start() {
         HandlePassChanged();
+        StopAllCoroutines();
+    }
+
+    private void OnEnable() {
+        OnUpdateRegisterStatus += OnUpdateRegisterStatus_MainMenuButtons;
+    }
+    private void OnDisable() {
+        OnUpdateRegisterStatus -= OnUpdateRegisterStatus_MainMenuButtons;
     }
 
     private void Update() {
@@ -68,19 +84,42 @@ public class MainMenuButtons : MonoBehaviour
         if(PlayerDataJson.Instance.IsLoadedSuccessInGame) ResumeButton.enabled = true;
         else ResumeButton.enabled = false;
 
-        if(PlayerDataJson.Instance.IsLoadedSuccessInLogin) LoginButton.enabled = false;
-        else LoginButton.enabled = true;
+        //old version active and deactive CreateAccountButton and LoginButton
+        /* if(PlayerDataJson.Instance.IsLoadedSuccessInLogin) {
+            LoginButton.interactable = false;
+            CreateAccountButton.interactable = false;
+        } 
+        else {
+            LoginButton.interactable = true;
+            CreateAccountButton.interactable = true;
+        } */ 
     }
 
     //? Button OnCliked in Canvas MainMenu scene
     //void LoginButton_OnClicked() => TestLoadingScene.Instance.Load_Login_Scene();
+    void CreateAccountButton_OnClicked() {
+        if(PlayerDataJson.Instance.IsLoadedSuccessInLogin || PlayerDataJson.Instance.IsLoadedSuccessInGame) {
+            ShowLogMsg("Oops! Please quit game and create a new account.");
+        } else {
+            MainMenu_Screen.SetActive(false);
+            Register_Screeen.SetActive(true);
+        }
+    }
+
     void LoginButton_OnClicked() {
-        LoadingAnimation_Image.SetActive(true);
-        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Login);  //! co the dung
+        if(PlayerDataJson.Instance.IsLoadedSuccessInLogin || PlayerDataJson.Instance.IsLoadedSuccessInGame) {
+            ShowLogMsg("You are logged in");
+
+        } else {
+            LoadingAnimation_Image.SetActive(true);
+            TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Login);  //! co the dung
+        }
     }
 
     void ResumeButton_OnClicked() {
+        if(TestLoadingScene.Instance.GetCurrentSceneIndex == 0) return;
         LoadingAnimation_Image.SetActive(true);
+
         SetTimeScale.UnFrezzeGame();
         TestLoadingScene.Instance.ResumeGame(); // can phai duoc xet gia tri currentSceneIndex ngay khi back to main menu
     }
@@ -96,6 +135,7 @@ public class MainMenuButtons : MonoBehaviour
 
     //? Button OnClicked in Register Screen 
     void RegisterButton_OnClicked() {
+        LoadingAnimation_Image.SetActive(true);
         playFabLoginManager.OnRegisterPressed();
         /* Register()_PlayfabLoginManager.cs cl 25
         if sucessed -> khoi tao new PlayerJson(email, username) AND new InventoryJson
@@ -107,6 +147,25 @@ public class MainMenuButtons : MonoBehaviour
         LoadingAnimation_Image.SetActive(true);
 
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Login); // truyen vao tham so kieu enume
+    }
+
+    void OnUpdateRegisterStatus_MainMenuButtons(string str) {
+        ShowLogMsg(str);
+    }
+
+    void ShowLogMsg(string msg)
+    {
+        logTxt.text = msg;
+        Debug.Log($"__________ co vao showlog");
+        StartCoroutine(TextFadeOut(3f));
+    }
+    IEnumerator TextFadeOut(float time) {
+        Debug.Log($"__________ co vao TextFadeOut");
+        yield return new WaitForSeconds(time);
+        logTxt.text = "";
+        Debug.Log($"__________ co vao set string = ");
+        if (LoadingAnimation_Image != null)
+            LoadingAnimation_Image.SetActive(false);
     }
 
     //todo

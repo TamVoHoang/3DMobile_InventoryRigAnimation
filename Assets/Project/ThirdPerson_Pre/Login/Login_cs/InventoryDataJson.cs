@@ -60,8 +60,8 @@ public class InventoryDataJson : Singleton<InventoryDataJson>
         CreateNewItemListJson_ToSignUp(GunSMWEP_01, 1);
         CreateNewItemListJson_ToSignUp(GunSMWEP_02, 1);
 
-        CreateNewItemListJson_ToSignUp(IHealthPickup_01, 3);
-        CreateNewItemListJson_ToSignUp(IMagPistol_01, 3);
+        CreateNewItemListJson_ToSignUp(IHealthPickup_01, 5);
+        CreateNewItemListJson_ToSignUp(IMagPistol_01, 5);
         return new InventoryJson("ItemInventory", inventoryJson.itemsListJson);
     }
 

@@ -356,7 +356,7 @@ MonoBehaviour:
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
   m_RaycastTarget: 1
-  m_RaycastPadding: {x: -30, y: -30, z: -30, w: -30}
+  m_RaycastPadding: {x: -35, y: -35, z: -35, w: -35}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -383,7 +383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9d677f1681015749b15c436eec6d880, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MovementRange: 100
+  m_MovementRange: 60
   m_DynamicOriginRange: 100
   m_ControlPath: <Gamepad>/leftStick
   m_Behaviour: 1
@@ -876,7 +876,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.39215687}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2635,7 +2635,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7337669197079251099, guid: c4dd275b8a60f2b4d99076f276e6bd6c, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1350
+      value: 1450
       objectReference: {fileID: 0}
     - target: {fileID: 7337669197079251099, guid: c4dd275b8a60f2b4d99076f276e6bd6c, type: 3}
       propertyPath: m_SizeDelta.y

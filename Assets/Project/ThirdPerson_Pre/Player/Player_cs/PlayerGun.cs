@@ -61,9 +61,12 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
     [Header("       Level Map Selection")]
     [SerializeField] private int levelTemp = 1;
     [SerializeField] private int mapSelected = 0;
+    [SerializeField] int maxMap_UICanvas_SpawnerScene = 0;
+
     [SerializeField] private bool isTouchSpaceShip = false;
     public int MapSelected { get { return mapSelected; } }
     public bool IsTouchSpaceShip { set => isTouchSpaceShip = value; }
+
 
     bool isSetRandomPlayerPosition = false;
 
@@ -190,7 +193,7 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
 
         SpaceShip01 spaceShip01 = other.gameObject.GetComponent<SpaceShip01>();
 
-        if(spaceShip01 && !isTouchSpaceShip && mapSelected >= levelTemp) {
+        if(spaceShip01 && !isTouchSpaceShip && mapSelected >= levelTemp && mapSelected < maxMap_UICanvas_SpawnerScene) {
             // player touch spaceShip01 => tang gia tri level trong PlayerDataJson
             isTouchSpaceShip = true;
             levelTemp ++;
@@ -201,9 +204,10 @@ public class PlayerGun : Singleton<PlayerGun>, IDataPersistence
             if(playerInfo_UI) playerInfo_UI.SetLevel(levelTemp);
         }
     }
-    public void SetMapSelectAndIsTouch(int mapSelected, bool isTouchSpaceShip) {
+    public void SetMapSelectAndIsTouch(int mapSelected, bool isTouchSpaceShip, int maxMap) {
         this.mapSelected = mapSelected;
         this.isTouchSpaceShip = isTouchSpaceShip;
+        this.maxMap_UICanvas_SpawnerScene = maxMap;
     }
     
     //? lan dau tien khi spawn ra o Spawner Scene -> lay data PlayFab set vi tri

@@ -28,6 +28,8 @@ public class LoginButtons : MonoBehaviour
     [SerializeField] GameObject LoadingAnimation_Image;
 
     [SerializeField] const float DELAYTIME_TO_OVERVIEW_SCENE = 2f;
+    public TextMeshProUGUI logTxt;
+    public static Action<string> OnUpdateLoginStatus;
 
     private void Awake() {
         LoginButton.onClick.AddListener(LoginButton_OnClick);
@@ -35,7 +37,9 @@ public class LoginButtons : MonoBehaviour
 
         RequestResetButton.onClick.AddListener(SendResetPassWord_OnClick);
         LoadingAnimation_Image.SetActive(false);
+        OnUpdateLoginStatus += OnUpdateLoginStatus_LoginButton;
     }
+
     void Start()
     {
         playFabLoginManager = FindObjectOfType<PlayFabLoginManager>();
@@ -49,6 +53,13 @@ public class LoginButtons : MonoBehaviour
         loginPassword.text = PlayerPrefs.GetString(PASS, string.Empty);
 
         HandlePassChanged();
+    }
+
+    private void OnEnable() {
+        OnUpdateLoginStatus += OnUpdateLoginStatus_LoginButton;
+    }
+    private void OnDisable() {
+        OnUpdateLoginStatus -= OnUpdateLoginStatus_LoginButton;
     }
 
     //? add vao nut InputField - value changed
@@ -69,6 +80,7 @@ public class LoginButtons : MonoBehaviour
         //sau 3s chuyen qua onverview
         
         StartCoroutine(DelayTimeLogin_ToLoad_CO(DELAYTIME_TO_OVERVIEW_SCENE));
+        
     }
 
     IEnumerator DelayTimeLogin_ToLoad_CO(float time) {
@@ -87,19 +99,31 @@ public class LoginButtons : MonoBehaviour
         /* SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex +1); */
 
         SceneManager.LoadScene(TestLoadingScene.AccountOverview_Scene);
+
     }
 
     //void BackMainMenuButton_OnClicked() => TestLoadingScene.Instance.Load_MainMenu_Scene();
     void BackMainMenuButton_OnClicked() {
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
-        /* StartCoroutine(BackToMainMenuCo(0.2f)); */
-    }
-
-    IEnumerator BackToMainMenuCo(float time) {
-        yield return new WaitForSeconds(time);
-        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
     }
     
     void SendResetPassWord_OnClick() => playFabLoginManager.OnSendResetPressed();
+
+    void OnUpdateLoginStatus_LoginButton(string str) {
+        ShowLogMsg(str);
+    }
+
+    void ShowLogMsg(string msg)
+    {
+        logTxt.text = msg;
+        StartCoroutine(TextFadeOut(3f));
+    }
+    IEnumerator TextFadeOut(float time) {
+        yield return new WaitForSeconds(time);
+        logTxt.text = "";
+
+        if (LoadingAnimation_Image != null)
+            LoadingAnimation_Image.SetActive(false);
+    }
     //todo
 }

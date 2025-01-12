@@ -22,8 +22,7 @@ public class UICanvas_GameScene : MonoBehaviour
     bool isDataHandler;
     bool isSceneHandler;
 
-    [SerializeField] GameObject LoadingAnimation_Image;
-    [SerializeField] const float DELAYTIME_TO_LOAD_SCENE = 1f;
+    [SerializeField] const float DELAYTIME_TO_LOAD_SCENE = 0.2f;    // default = 0
 
     private void Awake() {
         BackToMainMenuButton.onClick.AddListener(BackButtonToMainMenu_OnClicked);
@@ -35,7 +34,6 @@ public class UICanvas_GameScene : MonoBehaviour
         isSceneHandler = false;
         isShowingSettingPanel = false;
         SettingPanel.SetActive(false);
-        LoadingAnimation_Image.SetActive(false);
     }
 
     private void SettingButton_Onclicked()
@@ -83,7 +81,6 @@ public class UICanvas_GameScene : MonoBehaviour
     private void BackButtonToMainMenu_OnClicked()
     {
         /* if(!TryGetComponent<LoadDataTo_IDataPersistence>(out LoadDataTo_IDataPersistence loadDataTo_IDataPersistence)) return; */
-        LoadingAnimation_Image.SetActive(true);
         
         StartCoroutine(DelayTimeSave_ToExitGame(DELAYTIME_TO_LOAD_SCENE));
     }

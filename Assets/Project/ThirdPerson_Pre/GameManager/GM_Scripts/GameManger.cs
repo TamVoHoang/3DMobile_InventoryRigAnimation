@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
@@ -47,6 +46,11 @@ public class GameManger : Singleton<GameManger>
     [Header("   Player Items Spawner")]
     [SerializeField] int minTimeToSpawnPlayerItems = 10;
     [SerializeField] int maxTimeToSpawnPlayerItems = 20;
+
+    [SerializeField] int minTimeToSpawnPlayerWeapon = 30;
+    [SerializeField] int maxTimeToSpawnPlayerWeapon = 50;
+
+
     [SerializeField] GameObject[] itemsPlayer;
 
     [SerializeField] private bool isJoined = false; // set True khi chon map image => khi true se khoa ko cho chon tiep
@@ -298,14 +302,14 @@ public class GameManger : Singleton<GameManger>
     IEnumerator PlayerWeapons_SpawnerCO() {
         while (true)
         {
-            yield return new WaitForSeconds(Random.Range(30, 60));  //Random.Range(50, 70)
+            yield return new WaitForSeconds(Random.Range(minTimeToSpawnPlayerWeapon, maxTimeToSpawnPlayerWeapon));  //Random.Range(50, 70)
             WorldBounds worldBounds = GameObject.FindObjectOfType<WorldBounds>();
 
             if(worldBounds != null) {
                 int randomItems = Random.Range(2, itemsPlayer.Length);
                 /* Instantiate(itemsPlayer[randomItems], worldBounds.RandomPosition_AroundPlayer(30f, 1f, 30f), Quaternion.identity); */ //?OK
 
-                var a = worldBounds.RandomPosition_AroundPlayer(25f, 1f, 25f);
+                var a = worldBounds.RandomPosition_AroundPlayer(20f, 1f, 20f);
                 var randomOnNav = worldBounds.RandomNavmeshLocation(10, a);
                 Instantiate(itemsPlayer[randomItems], randomOnNav, Quaternion.identity);
             }

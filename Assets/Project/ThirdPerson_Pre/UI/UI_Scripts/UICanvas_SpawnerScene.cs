@@ -12,7 +12,7 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
     [SerializeField] Button JoinGameButton_1; // nut chon map trong UI canvas in game - level select
     [SerializeField] Button JoinGameButton_2;
     [SerializeField] Button JoinGameButton_3;
-    [SerializeField] Button JoinGameButton_4;
+    //[SerializeField] Button JoinGameButton_4;
 
 
     [Header("   Buttons Change Skins")]
@@ -36,14 +36,13 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
     Vector3 maxMap2 = new Vector3(4, 0, -115);
 
     [SerializeField] GameObject LoadingAnimation_Image;
-    [SerializeField] const float DELAYTIME_TO_LOAD_SCENE = 1f;
+    [SerializeField] const float DELAYTIME_TO_LOAD_SCENE = 0.3f;
     private void Awake() {
-        
         StartGame.onClick.AddListener(OnGameStart_OnClicked);
         JoinGameButton_1.onClick.AddListener(JoinGameButton_1_OnClick);
         JoinGameButton_2.onClick.AddListener(JoinGameButton_2_OnClick);
         JoinGameButton_3.onClick.AddListener(JoinGameButton_3_OnClick);
-        JoinGameButton_4.onClick.AddListener(JoinGameButton_4_OnClick);
+        //JoinGameButton_4.onClick.AddListener(JoinGameButton_4_OnClick);
 
 
         BackToMainMenuBtton.onClick.AddListener(BackToMainMenuBtton_OnClick);
@@ -80,7 +79,7 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
             JoinGameButton_1.interactable = false;
             JoinGameButton_2.interactable = false;
             JoinGameButton_3.interactable = false;
-            JoinGameButton_4.interactable = false;
+            //JoinGameButton_4.interactable = false;
 
         } 
         else {
@@ -88,7 +87,7 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
             JoinGameButton_1.interactable = true;
             JoinGameButton_2.interactable = true;
             JoinGameButton_3.interactable = true;
-            JoinGameButton_4.interactable = true;
+            //JoinGameButton_4.interactable = true;
 
         } 
     }
@@ -121,10 +120,10 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
             case 2:
                 TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_BattleRoyale);
                 break;
-            case 3:
+            /* case 3:
                 TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.BlackMarket);
-                break;
-            case 4:
+                break; */
+            case 3:
                 TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Corporation);
                 break;
             default:
@@ -160,7 +159,7 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
         //PlayerGun.Instance.MapSelected = mapSelectIndex;
         //GameManger.Instance.IsJoined = isJoined;
 
-        PlayerGun.Instance.SetMapSelectAndIsTouch(mapSelectIndex,isTouchedSpaceShip);
+        PlayerGun.Instance.SetMapSelectAndIsTouch(mapSelectIndex,isTouchedSpaceShip, mapSelectTranform.childCount);
         GameManger.Instance.SpaceShipIndex = spaceShipIndex;
         UpdataVisualSelectedLevelMap(mapSelectIndex);
     }
@@ -175,6 +174,7 @@ public class UICanvas_SpawnerScene : MonoBehaviour, IDataPersistence
 
         //GameManger.Instance.FrezzGame();
         SetTimeScale.FrezzGame(); */
+
         //TestLoadingScene.Instance.SetCurrentScene();
         StartCoroutine(LoadToMainMenuSceneCo(DELAYTIME_TO_LOAD_SCENE));
     }

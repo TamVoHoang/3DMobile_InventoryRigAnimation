@@ -20,7 +20,7 @@ public class PlayFabLoginManager : MonoBehaviour
     [SerializeField] TMP_InputField registerUnsername;
     [SerializeField] TMP_InputField registerPassword;
     [SerializeField] TextMeshProUGUI ResultRegister_Text;
-
+    
     // Register Button in Register_Screen call this function - sau khi da nhap mail va pass
     public void OnRegisterPressed() {
         Register(registerEmail.text, registerUnsername.text, registerPassword.text);
@@ -35,15 +35,21 @@ public class PlayFabLoginManager : MonoBehaviour
         },
         successResult => {
             Login(email, password);
-            ResultRegister_Text.text = "Register Success";
+            //ResultRegister_Text.text = "Register Successfully";
+            MainMenuButtons.OnUpdateRegisterStatus?.Invoke("Successfully registered");
+
 
             //? email user name - gan vao PlayerJson - save len "Json" PlayFab
             PlayerDataJson.Instance.Save_PlayerDataJason_SignUp(email,username);
             
             //? khoi tao new inventory - gan vao InventoryJson - save len "InventoryJson" PlayFab
             StartCoroutine(SaveInventoryDataJson_ToSignUpContine(4)); //! neu luu ngay lap tuc inventoryJson se bi loi
-        }, 
-        PlayFabFailure);
+        },
+        (PlayFabError error) => {
+            MainMenuButtons.OnUpdateRegisterStatus?.Invoke("Registration failed. Please try again");
+            PlayFabFailure(error);
+        });
+        //PlayFabFailure);
     }
 
     IEnumerator SaveInventoryDataJson_ToSignUpContine(float time) {
@@ -83,10 +89,15 @@ public class PlayFabLoginManager : MonoBehaviour
             PlayerPrefs.SetString("Username", successResult.InfoResultPayload.PlayerProfile.DisplayName);
 
             Debug.Log("Successfully Logged In User: " + PlayerPrefs.GetString("Username"));
-            ResultLogin_Text.text = "Successfully Logged In User: " + PlayerPrefs.GetString("Username"); // hien thi ket qua khi login thanh cong
+            //ResultLogin_Text.text = "Successfully Logged In User: " + PlayerPrefs.GetString("Username"); // hien thi ket qua khi login thanh cong
+            LoginButtons.OnUpdateLoginStatus?.Invoke("Successfully Logged In User: " + PlayerPrefs.GetString("Username"));
         },
+        (PlayFabError error) => {
+            LoginButtons.OnUpdateLoginStatus?.Invoke("Login unsuccessful. Try again");
+            PlayFabFailure(error);
+        });
 
-        PlayFabFailure);
+        //PlayFabFailure);
     }
 
     #endregion Login
@@ -107,18 +118,41 @@ public class PlayFabLoginManager : MonoBehaviour
         },
         successResult => {
             Debug.Log("Successfully sent reset mail");
-            ResultRequest_Text.text = "Successfully sent reset mail";
+            //ResultRequest_Text.text = "Successfully sent the reset mail. Check your mail";
+            ShowLogMsg_RequestReuslt("Successfully sent the reset mail. Check your mail");
         },
-        PlayFabFailure);
+        (PlayFabError error) => {
+            //ResultRequest_Text.text = "Unable to send reset email. Please try again";
+            ShowLogMsg_RequestReuslt("Unable to send reset email. Please try again");
+            
+            PlayFabFailure(error);
+        });
+        //PlayFabFailure);
     }
 
     #endregion Forgot password
 
     private void PlayFabFailure(PlayFabError error) {
+        // LoginButtons.OnUpdateLoginStatus?.Invoke("Login Fail Try Again");
+        // MainMenuButtons.OnUpdateRegisterStatus?.Invoke("Register Fail Try Again");
+
         Debug.Log(error.Error + " : " + error.GenerateErrorReport());
-        ResultRegister_Text.text = error.Error + " : " + error.GenerateErrorReport();
-        ResultLogin_Text.text = error.Error + " : " + error.GenerateErrorReport();
-        ResultRequest_Text.text = error.Error + " : " + error.GenerateErrorReport();
+        //ResultRegister_Text.text = error.Error + " : " + error.GenerateErrorReport();
+        //ResultLogin_Text.text = error.Error + " : " + error.GenerateErrorReport();
+        //ResultRequest_Text.text = error.Error + " : " + error.GenerateErrorReport();
+
+    }
+
+    void ShowLogMsg_RequestReuslt(string msg)
+    {
+        ResultRequest_Text.text = msg;
+        Debug.Log($"__________ co vao showlog");
+        StartCoroutine(TextFadeOut(3f));
+    }
+    IEnumerator TextFadeOut(float time) {
+        Debug.Log($"__________ co vao TextFadeOut");
+        yield return new WaitForSeconds(time);
+        ResultRequest_Text.text = "";
 
     }
 

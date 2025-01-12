@@ -43,7 +43,6 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     [SerializeField] Transform rowParent;
 
     [SerializeField] GameObject LoadingAnimation_Image;
-    [SerializeField] const float DELAYTIME_TO_MAINMENU_SCENE = 1f;
     private void Awake() {
         isLoaded = false;
 
@@ -61,6 +60,7 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
     }
 
     private void Start() {
+        SetTimeScale.UnFrezzeGame();    //! rat quan trong neu ko UICanvas_GameScene se bi free
         //? khi vao scene nay -> se auton load data
         //StartCoroutine(LoadData_ToShowPlayerInfo_Countine(2f));
         UpdateUIVisual(playerDataJson.PlayerJson);  //? test auto load when back to main menu -> account
@@ -89,9 +89,9 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
 
         // hien thi loading animation
         LoadingAnimation_Image.SetActive(true);
+        SetTimeScale.UnFrezzeGame();
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.Testing_SpawnPlayer);
 
-        SetTimeScale.UnFrezzeGame();
     }
 
     private void SettingButton_OnClicked() {
@@ -103,13 +103,6 @@ public class PlayerDataShowInfo_UI : MonoBehaviour, IDataPersistence
         /* TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.ThirdPerson); */
     }
     void BackMainMenuButton_OnClicked() {
-        TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
-        /* StartCoroutine(BackToMainMenuSceneCo(DELAYTIME_TO_MAINMENU_SCENE)); */
-    }
-
-    IEnumerator BackToMainMenuSceneCo(float time) {
-        LoadingAnimation_Image.SetActive(true);
-        yield return new WaitForSeconds(time);
         TestLoadingScene.Instance.LoadScene_Enum(TestLoadingScene.ScenesEnum.MainMenu);
     }
 

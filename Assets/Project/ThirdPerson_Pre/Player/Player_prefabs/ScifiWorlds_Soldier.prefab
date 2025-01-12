@@ -12305,7 +12305,7 @@ Transform:
   m_GameObject: {fileID: 2039223973835820965}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.38, y: 1.63, z: -1.7}
+  m_LocalPosition: {x: 0.265, y: 1.6, z: -1.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -51336,13 +51336,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6220731532101711040}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.9659258, z: -0.2588191, w: 0}
-  m_LocalPosition: {x: 0, y: 0.023, z: 0.053}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1458022935289283643}
-  m_LocalEulerAnglesHint: {x: 30, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1187103119915303236
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -68624,7 +68624,7 @@ MonoBehaviour:
   xAixs: 0
   yAxis: 0
   camFollowPos: {fileID: 1387708475248796281}
-  yAxixLimit: {x: 15, y: 15}
+  yAxixLimit: {x: 20, y: 10}
 --- !u!95 &5211043433913165012
 Animator:
   serializedVersion: 5

@@ -831,12 +831,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3514429420090121900}
+  - component: {fileID: 3141729940516260759}
   - component: {fileID: 5068330308752305795}
   - component: {fileID: 1714332031578995085}
   - component: {fileID: 3272124496246798908}
   - component: {fileID: 5805889897187683095}
   - component: {fileID: 6069516274583086405}
-  - component: {fileID: 3141729940516260759}
   m_Layer: 5
   m_Name: Canvas_SpawnerScene
   m_TagString: Untagged
@@ -864,6 +864,21 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &3141729940516260759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1640595559264334579}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cda30a0fcfe7cf34e845c998becf1664, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LoadingImage: {fileID: 7897263861102123937}
+  waittingRommPF: {fileID: 7874815373422527186, guid: 2c7ca675a2aa7f94f8b2e6c3cf78125a, type: 3}
+  waittingRommTemp_Destroy: {fileID: 0}
 --- !u!114 &5068330308752305795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -881,7 +896,6 @@ MonoBehaviour:
   JoinGameButton_1: {fileID: 280739435983964366}
   JoinGameButton_2: {fileID: 3867500162159962744}
   JoinGameButton_3: {fileID: 7349448386192335297}
-  JoinGameButton_4: {fileID: 5802492603813107523}
   ChangeNextSkinsButton: {fileID: 2973337210223751328}
   ChangePreviousSkinsButton: {fileID: 3987134774158068677}
   SelectMapPanel: {fileID: 7934441646759139205}
@@ -974,21 +988,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &3141729940516260759
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1640595559264334579}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cda30a0fcfe7cf34e845c998becf1664, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  LoadingImage: {fileID: 7897263861102123937}
-  waittingRommPF: {fileID: 7874815373422527186, guid: 2c7ca675a2aa7f94f8b2e6c3cf78125a, type: 3}
-  waittingRommTemp_Destroy: {fileID: 0}
 --- !u!1 &1766683362013452336
 GameObject:
   m_ObjectHideFlags: 0
@@ -1794,7 +1793,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4237978530008180201
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1812,9 +1811,9 @@ RectTransform:
   - {fileID: 2105208655113092027}
   m_Father: {fileID: 7098234310917666263}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1090, y: -150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 220, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5187550697204056811
@@ -2435,7 +2434,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &201625673136509997
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2453,9 +2452,9 @@ RectTransform:
   - {fileID: 3818160805597552761}
   m_Father: {fileID: 7098234310917666263}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1330, y: -150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 220, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6006110231506485270
@@ -6152,7 +6151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7432541710088602571
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6170,9 +6169,9 @@ RectTransform:
   - {fileID: 917572463323331103}
   m_Father: {fileID: 7098234310917666263}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 850, y: -150}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 220, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1509625677123377509
