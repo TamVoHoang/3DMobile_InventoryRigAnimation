@@ -99,7 +99,7 @@ public class InputManager : Singleton<InputManager>
         //? neu dung OnScreenControl (joyStick + WASD) thi DUNG dong nay
         //? neu chi dung UICanvasControllerInput (joyStick) thi KO DUNG dong nay (vi bi xung dot khi Set)
         move = playerControls.Player.Move.ReadValue<Vector2>();
-        Magnitude();
+        move = ConvertCadirnalDir(move);
 
         //? right stick GamePad
         /* aim = playerControls.Player.Aim.ReadValue<Vector2>();
@@ -114,6 +114,22 @@ public class InputManager : Singleton<InputManager>
         else if(move.normalized.x < -0.5f && move.normalized.y > 0.5) move = new Vector2(-1,1);
         else if(move.normalized.x > 0.5f && move.normalized.y < -0.5f) move = new Vector2(1,-1);
         else if(move.normalized.x > 0.5f && move.normalized.y > 0.5f) move = new Vector2(1,1);
+    }
+
+    Vector2  ConvertCadirnalDir(Vector2 move) {
+        // Small deadzone to prevent drift
+        if (move.magnitude > 0.1f) {
+            // Determine which direction is stronger
+            if (Mathf.Abs(move.x) > Mathf.Abs(move.y)) {
+                // Horizontal movement is stronger
+                return new Vector2(Mathf.Sign(move.x), 0);
+            } else {
+                // Vertical movement is stronger
+                return new Vector2(0, Mathf.Sign(move.y));
+            }
+        } else {
+            return Vector2.zero;
+        }
     }
 
     //todo End
